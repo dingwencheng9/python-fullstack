@@ -96,4 +96,4 @@ python -m pytest tests/ -q
 
 完成本课后继续学习：
 
-- [L05: 文件操作](../L06-file-operations/README.md)
+- [L06: 文件操作](../L06-file-operations/README.md)
