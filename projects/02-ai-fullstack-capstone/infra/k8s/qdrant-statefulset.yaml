@@ -1,0 +1,175 @@
+---
+# ==============================================================================
+# Qdrant Vector Database - Kubernetes StatefulSet
+# ==============================================================================
+# Purpose: Stateful vector database with persistent storage
+# Note: Uses StatefulSet for stable network identity and ordered deployment
+
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: qdrant
+  namespace: default
+  labels:
+    app: qdrant
+    component: vector-db
+spec:
+  serviceName: qdrant-headless
+  replicas: 1 # 单副本（生产环境可考虑 3 副本 + Raft 共识）
+  selector:
+    matchLabels:
+      app: qdrant
+      component: vector-db
+
+  # ==============================================================================
+  # Pod Template
+  # ==============================================================================
+  template:
+    metadata:
+      labels:
+        app: qdrant
+        component: vector-db
+    spec:
+      terminationGracePeriodSeconds: 60
+
+      containers:
+        - name: qdrant
+          image: qdrant/qdrant:latest
+          imagePullPolicy: IfNotPresent
+
+          # 端口配置
+          ports:
+            - name: http
+              containerPort: 6333
+              protocol: TCP
+            - name: grpc
+              containerPort: 6334
+              protocol: TCP
+
+          # 环境变量
+          env:
+            - name: QDRANT__SERVICE__GRPC_PORT
+              value: "6334"
+
+          # 资源限制
+          resources:
+            requests:
+              memory: "1Gi"
+              cpu: "500m"
+            limits:
+              memory: "2Gi"
+              cpu: "2000m"
+
+          # 持久化存储挂载
+          volumeMounts:
+            - name: qdrant-storage
+              mountPath: /qdrant/storage
+
+          # ==============================================================================
+          # Liveness Probe (TCP Socket)
+          # ==============================================================================
+          livenessProbe:
+            tcpSocket:
+              port: http
+            initialDelaySeconds: 30
+            periodSeconds: 10
+            timeoutSeconds: 3
+            successThreshold: 1
+            failureThreshold: 3
+
+          # ==============================================================================
+          # Readiness Probe (TCP Socket)
+          # ==============================================================================
+          readinessProbe:
+            tcpSocket:
+              port: http
+            initialDelaySeconds: 15
+            periodSeconds: 5
+            timeoutSeconds: 3
+            successThreshold: 1
+            failureThreshold: 2
+
+          # ==============================================================================
+          # Startup Probe (TCP Socket)
+          # ==============================================================================
+          startupProbe:
+            tcpSocket:
+              port: http
+            initialDelaySeconds: 0
+            periodSeconds: 5
+            timeoutSeconds: 3
+            successThreshold: 1
+            failureThreshold: 12 # 最多等待 60 秒
+
+  # ==============================================================================
+  # Volume Claim Templates
+  # ==============================================================================
+  volumeClaimTemplates:
+    - metadata:
+        name: qdrant-storage
+        labels:
+          app: qdrant
+          component: vector-db
+      spec:
+        accessModes:
+          - ReadWriteOnce
+        resources:
+          requests:
+            storage: 50Gi # 向量数据存储空间
+        # storageClassName: fast-ssd  # 根据集群配置调整
+
+---
+# ==============================================================================
+# Qdrant Headless Service
+# ==============================================================================
+# Purpose: Stable network identity for StatefulSet pods
+apiVersion: v1
+kind: Service
+metadata:
+  name: qdrant-headless
+  namespace: default
+  labels:
+    app: qdrant
+    component: vector-db
+spec:
+  clusterIP: None # Headless service
+  selector:
+    app: qdrant
+    component: vector-db
+  ports:
+    - name: http
+      port: 6333
+      targetPort: http
+      protocol: TCP
+    - name: grpc
+      port: 6334
+      targetPort: grpc
+      protocol: TCP
+
+---
+# ==============================================================================
+# Qdrant ClusterIP Service
+# ==============================================================================
+# Purpose: Load-balanced access to Qdrant from app pods
+apiVersion: v1
+kind: Service
+metadata:
+  name: qdrant-service
+  namespace: default
+  labels:
+    app: qdrant
+    component: vector-db
+spec:
+  type: ClusterIP
+  selector:
+    app: qdrant
+    component: vector-db
+  ports:
+    - name: http
+      port: 6333
+      targetPort: http
+      protocol: TCP
+    - name: grpc
+      port: 6334
+      targetPort: grpc
+      protocol: TCP

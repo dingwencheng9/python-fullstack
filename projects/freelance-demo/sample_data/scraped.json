@@ -1,0 +1,32 @@
+[
+  {
+    "url": "https://example.com/python-tutorial",
+    "title": "Python 入门教程：变量与类型",
+    "text": "Python 是一门动态类型语言。变量可以赋值任何类型。常见类型有 int、str、float、bool、list、dict。学习 Python 从基础语法开始。",
+    "html": "",
+    "status_code": 200,
+    "fetch_time": 0.5,
+    "extracted_date": "2025-10-01",
+    "metadata": {}
+  },
+  {
+    "url": "https://example.com/fastapi-intro",
+    "title": "FastAPI 框架介绍",
+    "text": "FastAPI 是基于 Python 类型注解的现代 Web 框架。它支持异步、自动生成 OpenAPI 文档、Pydantic 数据校验。性能接近 Node.js。",
+    "html": "",
+    "status_code": 200,
+    "fetch_time": 0.4,
+    "extracted_date": "2025-10-02",
+    "metadata": {}
+  },
+  {
+    "url": "https://example.com/duckdb-guide",
+    "title": "DuckDB 嵌入式分析数据库",
+    "text": "DuckDB 是一款适合数据分析的嵌入式 OLAP 数据库。无需服务进程，单文件即可。SQL 兼容、性能优于 SQLite 多倍。",
+    "html": "",
+    "status_code": 200,
+    "fetch_time": 0.3,
+    "extracted_date": "2025-10-03",
+    "metadata": {}
+  }
+]

@@ -1,0 +1,303 @@
+# ============================================================
+# Python 3.13 全栈课程 .gitignore
+# 最后更新: 2026-06-09
+# ============================================================
+
+# ─────────────────────────────────────────────────────────
+# 归档与备份（防止误提交历史包袱）
+# ─────────────────────────────────────────────────────────
+.archive/
+.backup/
+**/archive/
+**/archived_reports/
+**/historical_reports/
+**/_archive/
+daily-logs/
+**/legacy*/
+*.tar.gz
+*.zip
+
+# ─────────────────────────────────────────────────────────
+# Python 运行时缓存
+# ─────────────────────────────────────────────────────────
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+share/python-wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+pip-log.txt
+pip-delete-this-directory.txt
+
+# ─────────────────────────────────────────────────────────
+# 测试与代码检查缓存
+# ─────────────────────────────────────────────────────────
+.coverage
+.coverage.*
+htmlcov/
+.tox/
+.nox/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.pyre/
+.pytype/
+.hypothesis/
+cov.xml
+*.cover
+*.py,cover
+nosetests.xml
+coverage.xml
+
+# ─────────────────────────────────────────────────────────
+# 虚拟环境（包括课程级独立环境）
+# ─────────────────────────────────────────────────────────
+.venv/
+venv/
+ENV/
+env/
+.virtualenv/
+**/venv/
+**/.venv/
+
+# ─────────────────────────────────────────────────────────
+# IDE 和编辑器
+# ─────────────────────────────────────────────────────────
+.idea/
+.vscode/
+*.sublime-project
+*.sublime-workspace
+.project
+.pydevproject
+.settings/
+*.code-workspace
+*.swp
+*.swo
+
+# ─────────────────────────────────────────────────────────
+# 系统文件（macOS / Windows / Linux）
+# ─────────────────────────────────────────────────────────
+.DS_Store
+.AppleDouble
+.LSOverride
+._*
+.Spotlight-V100
+.Trashes
+Thumbs.db
+ehthumbs.db
+ehthumbs_vista.db
+Desktop.ini
+$RECYCLE.BIN/
+*.cab
+*.msi
+*.msix
+*.msm
+*.msp
+*.lnk
+
+# ─────────────────────────────────────────────────────────
+# 临时文件和备份
+# ─────────────────────────────────────────────────────────
+*.log
+*.tmp
+*.temp
+*.bak
+*.backup
+*.orig
+*.rej
+*~
+
+# Demo / 项目运行时输出（不入仓）
+**/output/
+test.db
+*.sqlite
+*.sqlite3
+
+# 大数据样本（由 generate_data.py 按需重建，不入仓）
+# L44 pandas 性能数据集 (~80MB)
+stage4-data-intelligence/lessons/L44-pandas-performance/data/sample_orders.csv
+# L45 NumPy 图像数据集 (~42MB)
+stage4-data-intelligence/lessons/L45-numpy-computing/data/sample_images/
+
+# L20 教学脚本运行时副产物（运行 solutions/exercises 02-intermediate.py 会生成）
+/test-config-project/
+
+# ─────────────────────────────────────────────────────────
+# 文档构建
+# ─────────────────────────────────────────────────────────
+site/
+.mkdocs_cache/
+docs/_build/
+
+# ─────────────────────────────────────────────────────────
+# 环境变量
+# ─────────────────────────────────────────────────────────
+.env
+.env.local
+.env.*.local
+
+# ─────────────────────────────────────────────────────────
+# 数据库文件
+# ─────────────────────────────────────────────────────────
+*.db
+*.sqlite
+*.sqlite3
+
+# ─────────────────────────────────────────────────────────
+# 包管理器
+# ─────────────────────────────────────────────────────────
+node_modules/
+# uv.lock：依赖锁文件，需进入版本管理以保证环境可复现。
+package-lock.json
+yarn.lock
+
+# ─────────────────────────────────────────────────────────
+# Jupyter Notebook
+# ─────────────────────────────────────────────────────────
+.ipynb_checkpoints/
+*.ipynb_checkpoints
+
+# ─────────────────────────────────────────────────────────
+# 大文件和二进制（按需排除教学示例）
+# ─────────────────────────────────────────────────────────
+*.pkl
+*.pickle
+*.h5
+*.hdf5
+*.parquet
+
+# 数据文件（保留示例和测试数据）
+*.csv
+!**/example*.csv
+!**/test*.csv
+!**/sample*.csv
+
+# ─────────────────────────────────────────────────────────
+# Git 冲突标记
+# ─────────────────────────────────────────────────────────
+*.BACKUP.*
+*.BASE.*
+*.LOCAL.*
+*.REMOTE.*
+*_BACKUP_*.txt
+*_BASE_*.txt
+*_LOCAL_*.txt
+*_REMOTE_*.txt
+
+# ─────────────────────────────────────────────────────────
+# 课程特定（运行时生成）
+# ─────────────────────────────────────────────────────────
+00-modern-dev-camp/learner_profile.json
+00-modern-dev-camp/diagnostic_report.json
+00-modern-dev-camp/activate.sh
+pipeline_checkpoint.json
+artifacts/benchmarks/latest.json
+
+# ─────────────────────────────────────────────────────────
+# 项目特定
+# ─────────────────────────────────────────────────────────
+05-data/projects/ecommerce-analysis/reports/*.html
+10-project/*/k8s/*.yaml
+.venv-py314/
+.venv-py313t/
+.venv-py314t/
+.venv-ft/
+
+# 归档目录（历史记录和临时文件，不入仓）
+# ─────────────────────────────────────────────────────────
+artifacts/
+**/artifacts/
+
+# ============================================
+# Development tools and configurations
+# ============================================
+CLAUDE.md
+.claude/
+DEVELOPMENT.md
+KNOWN_ISSUES.md
+settings.py
+
+# ============================================
+# Archive directories
+# ============================================
+scripts/archive/
+docs/archive/
+docs/superpowers/
+
+# ============================================
+# Runtime data
+# ============================================
+artifacts/
+
+# ============================================
+# Metadata
+# ============================================
+config/metadata/
+
+# Scripts with non-ASCII docstrings
+scripts/scan_unfinished_markers.py
+
+# 大数据文件（通过脚本生成）
+stage4-data-intelligence/lessons/L44-pandas-performance/data/*.csv
+
+# 动态生成的质量报告
+artifacts/*.json
+
+# ============================================================
+# 系统文件（操作系统生成的临时文件）
+# ============================================================
+
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+._*
+
+# Windows
+Thumbs.db
+Thumbs.db:encryptable
+ehthumbs.db
+ehthumbs_vista.db
+Desktop.ini
+$RECYCLE.BIN/
+
+# Linux
+*~
+.directory
+
+# ============================================================
+# 编辑器临时文件
+# ============================================================
+
+# Vim
+*.swp
+*.swo
+*.swn
+*~
+
+# Emacs
+\#*\#
+.\#*
+
+# VS Code workspace files (if not shared)
+# *.code-workspace
+
+# Python 版本管理
+.python-version
+.superpowers/

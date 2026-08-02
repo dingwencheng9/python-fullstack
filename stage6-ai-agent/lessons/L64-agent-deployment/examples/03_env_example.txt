@@ -1,0 +1,34 @@
+# L55 生产环境变量模板
+# 复制为 .env 后填写真实值。不要提交 .env。
+
+APP_ENV=production
+APP_HOST=0.0.0.0
+APP_PORT=8000
+LOG_LEVEL=INFO
+
+# 数据库
+POSTGRES_DB=agent_app
+POSTGRES_USER=agent
+POSTGRES_PASSWORD=change-me-please
+DATABASE_URL=postgresql+asyncpg://agent:change-me-please@postgres:5432/agent_app
+
+# Redis
+REDIS_URL=redis://redis:6379/0
+
+# Qdrant
+QDRANT_URL=http://qdrant:6333
+QDRANT_COLLECTION=agent_documents
+
+# LLM / Agent
+ANTHROPIC_API_KEY=
+OPENAI_API_KEY=
+MODEL_NAME=claude-sonnet-4-6
+
+# 安全
+JWT_SECRET=change-me-minimum-32-chars
+JWT_EXPIRE_MINUTES=60
+ALLOWED_ORIGINS=https://example.com
+
+# 可观测性
+OTEL_SERVICE_NAME=python-fullstack-agent
+OTEL_EXPORTER_OTLP_ENDPOINT=http://otel-collector:4317

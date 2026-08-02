@@ -1,0 +1,7 @@
+<li id="task-{{ task.id }}">
+  <form hx-put="/tasks/{{ task.id }}" hx-target="#task-{{ task.id }}" hx-swap="outerHTML">
+    <input name="title" value="{{ task.title }}" required>
+    <label><input type="checkbox" name="completed" value="true"{% if task.completed %} checked{% endif %}> 完成</label>
+    <button type="submit">保存</button>
+  </form>
+</li>

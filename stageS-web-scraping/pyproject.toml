@@ -1,0 +1,9 @@
+[project]
+name = "stageP-web-scraping"
+version = "1.0.0"
+description = "Stage P - Python 爬虫专精"
+requires-python = ">=3.13"
+dependencies = []
+
+[project.optional-dependencies]
+dev = []

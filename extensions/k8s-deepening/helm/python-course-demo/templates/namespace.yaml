@@ -1,0 +1,9 @@
+{{- if .Values.namespace.create }}
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: {{ .Values.namespace.name }}
+  labels:
+    {{- include "python-course-demo.labels" . | nindent 4 }}
+    app.kubernetes.io/part-of: python-course-k8s-deepening
+{{- end }}

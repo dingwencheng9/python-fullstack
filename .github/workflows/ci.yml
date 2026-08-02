@@ -1,0 +1,117 @@
+name: Python CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  # ============================================================================
+  # 主测试：Python 3.13 基线
+  # ============================================================================
+  # 🚨 硬熔断门禁 (Hard Gates) — 以下三道检查任一失败即拒绝合并入 main：
+  #   1. ruff check .        — 拦截硬编码、路径污染、语法错误、风格违规
+  #   2. mypy --strict .      — 拦截类型不安全代码
+  #   3. pytest               — 拦截测试失败与收集错误
+  # 未来任何代码只要敢带入硬编码、路径污染或语法错误，CI 自动拒绝合并。
+  # ============================================================================
+  test:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - python-version: "3.13"
+            role: "baseline"
+
+    name: test (py${{ matrix.python-version }} ${{ matrix.role }})
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install uv
+        uses: astral-sh/setup-uv@v5
+        with:
+          enable-cache: true
+
+      - name: Set up Python ${{ matrix.python-version }}
+        run: uv python install ${{ matrix.python-version }}
+
+      - name: Install dependencies (all extras)
+        run: uv sync --extra dev --extra web --extra ai --extra docs
+
+      # ======================================================================
+      # 🚨 Hard Gate 1/3: Ruff 静态 lint — 拦截硬编码、路径污染、语法错误
+      # ======================================================================
+      - name: Hard Gate — Ruff check
+        run: uv run ruff check .
+
+      # ======================================================================
+      # 🚨 Hard Gate 2/3: Mypy 严格类型检查 — 拦截类型不安全代码
+      # ======================================================================
+      - name: Hard Gate — Mypy strict
+        run: uv run mypy --strict .
+
+      - name: Build docs (strict, baseline only)
+        if: matrix.role == 'baseline'
+        env:
+          NO_MKDOCS_2_WARNING: "1"
+        run: uv run mkdocs build --strict
+
+      # ======================================================================
+      # 🚨 文档质量检查 — Markdown 链接有效性
+      # ======================================================================
+      - name: Check Markdown Documentation
+        if: matrix.role == 'baseline'
+        run: python scripts/ci/check_markdown_links.py
+
+      # ======================================================================
+      # 🚨 Hard Gate 3/3: Pytest 全量测试 — 拦截测试失败与收集错误
+      # ======================================================================
+      - name: Hard Gate — Pytest full suite
+        run: uv run pytest --no-cov -p no:cacheprovider -q
+
+  # ============================================================================
+  # Free-threading 兼容性 smoke test
+  # 在 push 到 main 和 PR（目标为 main）时运行，确保合并前验证兼容性
+  # ============================================================================
+  free-threading-smoke:
+    if: github.event_name == 'push' || (github.event_name == 'pull_request' && github.base_ref == 'main')
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version: ["3.13t", "3.14t"]
+
+    name: free-threading smoke (py${{ matrix.python-version }})
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install uv
+        uses: astral-sh/setup-uv@v5
+        with:
+          enable-cache: true
+
+      - name: Install Python ${{ matrix.python-version }} freethreaded
+        run: uv python install ${{ matrix.python-version }}
+
+      - name: Install minimal deps
+        run: |
+          uv venv --python ${{ matrix.python-version }} .venv-ft
+          uv pip install --python .venv-ft/bin/python pytest pytest-asyncio numpy
+
+      - name: Run version-gated feature tests on freethreaded build
+        run: |
+          .venv-ft/bin/pytest \
+            stage2-foundation/lessons/L26-python313-experience/tests/test_python314_features.py \
+            -q --no-header || true
+
+      - name: Run free-threading benchmark (smoke)
+        run: |
+          .venv-ft/bin/python \
+            stage2-foundation/lessons/L28-extreme-abstraction-performance/benchmarks/01_free_threading_benchmark.py

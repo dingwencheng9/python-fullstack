@@ -1,0 +1,14 @@
+<!doctype html>
+<html lang="zh-CN">
+<head><meta charset="utf-8"><title>HTMX CRUD 示例</title><script src="/static/htmx.min.js"></script></head>
+<body>
+  <h1>任务列表</h1>
+  <form hx-post="/tasks" hx-target="#task-list" hx-swap="beforeend">
+    <input name="title" placeholder="新任务" required>
+    <button type="submit">添加</button>
+  </form>
+  <ul id="task-list">
+    {% include "crud/task_list.html" %}
+  </ul>
+</body>
+</html>

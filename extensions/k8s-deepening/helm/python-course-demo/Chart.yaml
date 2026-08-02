@@ -1,0 +1,6 @@
+apiVersion: v2
+name: python-course-demo
+description: A Helm chart for Python Course Demo Nginx application
+type: application
+version: 0.1.0
+appVersion: "1.27"

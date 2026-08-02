@@ -1,0 +1,6 @@
+<li class="message-item">
+    <span class="message-content">{{ message.content }}</span>
+    <span class="message-actions">
+        <button class="delete" hx-delete="/messages/{{ message.id }}" hx-confirm="确定删除？">删除</button>
+    </span>
+</li>

@@ -1,0 +1,6 @@
+# 运行时输出，不入版本控制
+output/
+*.html
+
+# 但保留 sample_data 用于演示
+!sample_data/

@@ -1,0 +1,288 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>AI Knowledge Assistant</title>
+    <script src="https://unpkg.com/htmx.org@2.0.1/dist/htmx.min.js"></script>
+    <script src="https://unpkg.com/htmx-ext-sse@2.2.1/sse.js"></script>
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css"
+    />
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family:
+          -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+        line-height: 1.6;
+        color: #333;
+        max-width: 900px;
+        margin: 0 auto;
+        padding: 2rem;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        min-height: 100vh;
+      }
+
+      main {
+        background: white;
+        border-radius: 16px;
+        padding: 3rem;
+        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+      }
+
+      h1 {
+        text-align: center;
+        color: #667eea;
+        margin-bottom: 2rem;
+        font-size: 2.5rem;
+      }
+
+      section {
+        margin-bottom: 2.5rem;
+        padding: 2rem;
+        border-radius: 12px;
+        background: #f8f9ff;
+        border: 1px solid #e0e7ff;
+      }
+
+      h2 {
+        color: #4f46e5;
+        margin-bottom: 1.5rem;
+        font-size: 1.5rem;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+      }
+
+      h2 i {
+        color: #667eea;
+      }
+
+      form {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+      }
+
+      input,
+      textarea {
+        width: 100%;
+        padding: 1rem;
+        border: 2px solid #e5e7eb;
+        border-radius: 8px;
+        font-size: 1rem;
+        transition: border-color 0.3s;
+        font-family: inherit;
+      }
+
+      input:focus,
+      textarea:focus {
+        outline: none;
+        border-color: #667eea;
+        box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+      }
+
+      textarea {
+        resize: vertical;
+        min-height: 120px;
+      }
+
+      button {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        border: none;
+        padding: 1rem 2rem;
+        border-radius: 8px;
+        font-size: 1rem;
+        font-weight: 600;
+        cursor: pointer;
+        transition:
+          transform 0.2s,
+          box-shadow 0.2s;
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+      }
+
+      button:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 10px 20px rgba(102, 126, 234, 0.3);
+      }
+
+      button:active {
+        transform: translateY(0);
+      }
+
+      pre,
+      #answer {
+        background: #1e293b;
+        color: #e2e8f0;
+        padding: 1.5rem;
+        border-radius: 8px;
+        margin-top: 1rem;
+        font-family: "Monaco", "Menlo", monospace;
+        font-size: 0.9rem;
+        line-height: 1.6;
+        white-space: pre-wrap;
+        word-wrap: break-word;
+        min-height: 60px;
+      }
+
+      #answer {
+        background: #f0f9ff;
+        color: #1e293b;
+        border: 1px solid #bae6fd;
+        min-height: 100px;
+      }
+
+      #doc-result {
+        background: #f0fdf4;
+        color: #166534;
+        border: 1px solid #bbf7d0;
+      }
+
+      .loading {
+        display: inline-block;
+        width: 20px;
+        height: 20px;
+        border: 3px solid rgba(102, 126, 234, 0.3);
+        border-radius: 50%;
+        border-top-color: #667eea;
+        animation: spin 1s ease-in-out infinite;
+        margin-right: 0.5rem;
+        vertical-align: middle;
+      }
+
+      @keyframes spin {
+        to {
+          transform: rotate(360deg);
+        }
+      }
+
+      .success {
+        color: #10b981;
+        font-weight: 600;
+      }
+
+      .info {
+        color: #3b82f6;
+      }
+
+      .stats {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 1rem;
+        margin-top: 1rem;
+      }
+
+      .stat-card {
+        background: white;
+        padding: 1.5rem;
+        border-radius: 8px;
+        text-align: center;
+        border: 1px solid #e5e7eb;
+      }
+
+      .stat-number {
+        font-size: 2rem;
+        font-weight: 700;
+        color: #667eea;
+      }
+
+      .stat-label {
+        color: #6b7280;
+        font-size: 0.9rem;
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <h1><i class="fa fa-robot"></i> AI 知识助手</h1>
+
+      <!-- 知识库状态 -->
+      <div
+        class="stats"
+        hx-get="/documents/stats"
+        hx-trigger="load, document:doc-imported"
+      >
+        <div class="stat-card">
+          <div class="stat-number" id="doc-count">-</div>
+          <div class="stat-label">文档数量</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-number" id="chunk-count">-</div>
+          <div class="stat-label">片段总数</div>
+        </div>
+      </div>
+
+      <section>
+        <h2><i class="fa fa-upload"></i> 导入文档</h2>
+        <form
+          hx-post="/documents"
+          hx-target="#doc-result"
+          hx-ext="json-enc"
+          hx-swap="innerHTML"
+        >
+          <input name="title" placeholder="文档标题" required />
+          <textarea
+            name="content"
+            placeholder="粘贴文档内容..."
+            required
+            rows="6"
+          ></textarea>
+          <button type="submit">
+            <i class="fa fa-cloud-upload"></i> 导入文档
+          </button>
+        </form>
+        <div id="doc-result" role="alert" aria-live="polite"></div>
+      </section>
+
+      <section>
+        <h2><i class="fa fa-comments"></i> 智能问答</h2>
+        <form hx-get="/chat/stream" hx-target="#answer" hx-swap="beforeend">
+          <input name="question" placeholder="输入你的问题..." required />
+          <button type="submit">
+            <i class="fa fa-paper-plane"></i> 发送问题
+          </button>
+        </form>
+        <div id="answer" role="status" aria-live="polite">
+          👋 你好！先导入文档，然后就可以开始提问了。
+        </div>
+        <button
+          type="button"
+          onclick="
+            document.getElementById('answer').innerHTML = '👋 已清空对话。'
+          "
+          style="margin-top: 1rem; background: #ef4444"
+        >
+          <i class="fa fa-trash"></i> 清空对话
+        </button>
+      </section>
+    </main>
+
+    <script>
+      // 流式回答处理
+      document.body.addEventListener("htmx:beforeRequest", function (evt) {
+        if (evt.detail.path === "/chat/stream") {
+          document.getElementById("answer").innerHTML =
+            '<div class="loading"></div> 思考中...';
+        }
+      });
+
+      // 文档导入成功事件
+      document.body.addEventListener("htmx:afterRequest", function (evt) {
+        if (evt.detail.path === "/documents" && evt.detail.successful) {
+          const event = new CustomEvent("doc-imported");
+          document.dispatchEvent(event);
+          document.querySelector("form").reset();
+        }
+      });
+    </script>
+  </body>
+</html>

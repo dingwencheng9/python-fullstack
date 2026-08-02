@@ -1,0 +1,6 @@
+<li id="task-{{ task.id }}">
+  <span{% if task.completed %} style="text-decoration: line-through"{% endif %}>{{ task.title }}</span>
+  <button hx-post="/tasks/{{ task.id }}/toggle" hx-target="#task-{{ task.id }}" hx-swap="outerHTML">切换</button>
+  <button hx-get="/tasks/{{ task.id }}/edit" hx-target="#task-{{ task.id }}" hx-swap="outerHTML">编辑</button>
+  <button hx-delete="/tasks/{{ task.id }}" hx-target="#task-{{ task.id }}" hx-swap="delete">删除</button>
+</li>

@@ -1,0 +1,53 @@
+[project]
+name = "data-intelligence-pipeline"
+version = "0.1.0"
+description = "数据智能流水线 - ETL + 分析 + 可视化"
+readme = "README.md"
+requires-python = ">=3.13"
+authors = [
+    {name = "Python 3.13 Fullstack Course"}
+]
+dependencies = [
+    "pandas>=2.1.0",
+    "polars>=0.19.0",
+    "duckdb>=0.9.0",
+    "numpy>=1.26.0",
+    "pyarrow>=14.0.0",
+    "matplotlib>=3.8.0",
+    "seaborn>=0.13.0",
+    "sqlalchemy>=2.0.0",
+    "pydantic>=2.5.0",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=7.4.0",
+    "pytest-cov>=4.1.0",
+    "ruff>=0.1.0",
+    "mypy>=1.7.0",
+    "ipython>=8.17.0",
+    "jupyter>=1.0.0",
+]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.ruff]
+target-version = "py313"
+line-length = 100
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "N", "W", "UP"]
+
+[tool.mypy]
+python_version = "3.13"
+strict = true
+warn_return_any = true
+warn_unused_configs = true
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+python_files = ["test_*.py"]
+python_functions = ["test_*"]
+addopts = "-v --tb=short"

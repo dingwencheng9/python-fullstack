@@ -1,0 +1,14 @@
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
+  name: python-course-demo
+  namespace: flux-system
+spec:
+  interval: 10m
+  targetNamespace: python-course-demo
+  sourceRef:
+    kind: GitRepository
+    name: python-course-demo
+  path: ./extensions/k8s-deepening/manifests
+  prune: true
+  timeout: 1m

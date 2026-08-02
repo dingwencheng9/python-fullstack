@@ -1,0 +1,225 @@
+---
+# ==============================================================================
+# AI Fullstack Capstone - Kubernetes Deployment Manifest
+# ==============================================================================
+# Purpose: High-availability multi-replica deployment with rolling updates
+# Target: Production-grade K8s cluster with persistent storage and load balancing
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ai-fullstack-app
+  namespace: default
+  labels:
+    app: ai-fullstack
+    component: api
+    tier: backend
+spec:
+  # ==============================================================================
+  # Replica Configuration
+  # ==============================================================================
+  replicas: 3
+  selector:
+    matchLabels:
+      app: ai-fullstack
+      component: api
+
+  # ==============================================================================
+  # Rolling Update Strategy
+  # ==============================================================================
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 1 # 最多额外启动 1 个 Pod（总共 4 个）
+      maxUnavailable: 0 # 滚动更新期间始终保持 3 个 Pod 可用（零停机）
+
+  # ==============================================================================
+  # Pod Template
+  # ==============================================================================
+  template:
+    metadata:
+      labels:
+        app: ai-fullstack
+        component: api
+      annotations:
+        prometheus.io/scrape: "true"
+        prometheus.io/port: "8000"
+        prometheus.io/path: "/metrics"
+    spec:
+      # 优雅终止配置
+      terminationGracePeriodSeconds: 30
+
+      # ==============================================================================
+      # Containers
+      # ==============================================================================
+      containers:
+        - name: fastapi-app
+          image: ai-fullstack-capstone:latest
+          imagePullPolicy: IfNotPresent
+
+          # 端口配置
+          ports:
+            - name: http
+              containerPort: 8000
+              protocol: TCP
+
+          # ==============================================================================
+          # Environment Variables
+          # ==============================================================================
+          env:
+            - name: APP_ENV
+              value: "production"
+            - name: APP_HOST
+              value: "0.0.0.0"
+            - name: APP_PORT
+              value: "8000"
+            - name: MODEL_NAME
+              value: "mock"
+            - name: QDRANT_URL
+              value: "http://qdrant-service:6333"
+            - name: DUCKDB_PATH
+              value: "/app/data/app.duckdb"
+            - name: JSON_LOGS
+              value: "true"
+
+            # 敏感配置（从 Secret 读取）
+            - name: SECRET_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: app-secrets
+                  key: secret-key
+            - name: ALGORITHM
+              value: "HS256"
+            - name: ACCESS_TOKEN_EXPIRE_MINUTES
+              value: "30"
+
+          # ==============================================================================
+          # Resource Limits
+          # ==============================================================================
+          resources:
+            requests:
+              memory: "512Mi"
+              cpu: "250m"
+            limits:
+              memory: "1Gi"
+              cpu: "1000m"
+
+          # ==============================================================================
+          # Volume Mounts
+          # ==============================================================================
+          volumeMounts:
+            - name: duckdb-storage
+              mountPath: /app/data
+
+          # ==============================================================================
+          # Liveness Probe
+          # ==============================================================================
+          # 检测容器是否存活（失败则重启容器）
+          livenessProbe:
+            httpGet:
+              path: /health
+              port: http
+              scheme: HTTP
+            initialDelaySeconds: 30
+            periodSeconds: 10
+            timeoutSeconds: 3
+            successThreshold: 1
+            failureThreshold: 3
+
+          # ==============================================================================
+          # Readiness Probe
+          # ==============================================================================
+          # 检测容器是否就绪（失败则从 Service 负载均衡中移除）
+          readinessProbe:
+            httpGet:
+              path: /health
+              port: http
+              scheme: HTTP
+            initialDelaySeconds: 10
+            periodSeconds: 5
+            timeoutSeconds: 3
+            successThreshold: 1
+            failureThreshold: 2
+
+          # ==============================================================================
+          # Startup Probe
+          # ==============================================================================
+          # 检测容器是否启动完成（避免慢启动应用被 liveness 杀死）
+          startupProbe:
+            httpGet:
+              path: /health
+              port: http
+              scheme: HTTP
+            initialDelaySeconds: 0
+            periodSeconds: 5
+            timeoutSeconds: 3
+            successThreshold: 1
+            failureThreshold: 12 # 最多等待 60 秒（12 * 5s）
+
+      # ==============================================================================
+      # Volumes
+      # ==============================================================================
+      volumes:
+        - name: duckdb-storage
+          persistentVolumeClaim:
+            claimName: duckdb-pvc
+
+---
+# ==============================================================================
+# Kubernetes Service - Load Balancer
+# ==============================================================================
+apiVersion: v1
+kind: Service
+metadata:
+  name: ai-fullstack-service
+  namespace: default
+  labels:
+    app: ai-fullstack
+    component: api
+spec:
+  type: ClusterIP
+  selector:
+    app: ai-fullstack
+    component: api
+  ports:
+    - name: http
+      port: 80
+      targetPort: http
+      protocol: TCP
+  sessionAffinity: None
+
+---
+# ==============================================================================
+# Persistent Volume Claim - DuckDB Storage
+# ==============================================================================
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: duckdb-pvc
+  namespace: default
+  labels:
+    app: ai-fullstack
+    component: storage
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 10Gi
+  # storageClassName: fast-ssd  # 根据集群配置调整
+
+---
+# ==============================================================================
+# Kubernetes Secret - Application Credentials
+# ==============================================================================
+apiVersion: v1
+kind: Secret
+metadata:
+  name: app-secrets
+  namespace: default
+  labels:
+    app: ai-fullstack
+type: Opaque
+stringData:
+  # 注意：实际生产环境应使用外部密钥管理系统（如 Vault、AWS Secrets Manager）
+  secret-key: "CHANGE-ME-IN-PRODUCTION-USE-EXTERNAL-SECRET-MANAGER"

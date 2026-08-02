@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}HTMX 基础示例{% endblock %}</title>
+    <style>
+        * { box-sizing: border-box; }
+        body { font-family: system-ui, sans-serif; max-width: 800px; margin: 2rem auto; padding: 0 1rem; }
+        h1 { color: #333; }
+        .message-list { list-style: none; padding: 0; }
+        .message-item { padding: 1rem; margin: 0.5rem 0; background: #f5f5f5; border-radius: 8px; display: flex; justify-content: space-between; align-items: center; }
+        .message-content { flex: 1; }
+        .message-actions { display: flex; gap: 0.5rem; }
+        button { padding: 0.5rem 1rem; border: none; border-radius: 4px; cursor: pointer; }
+        button.delete { background: #dc3545; color: white; }
+        button:hover { opacity: 0.8; }
+        form { margin-top: 1rem; }
+        input[type="text"] { padding: 0.5rem; border: 1px solid #ddd; border-radius: 4px; width: 70%; }
+        .error { color: #dc3545; padding: 0.5rem; background: #ffe6e6; border-radius: 4px; margin-top: 0.5rem; }
+        .htmx-indicator { color: #666; font-style: italic; }
+    </style>
+    <script src="/static/htmx.min.js"></script>
+</head>
+<body>
+    {% block content %}
+    <h1>📋 消息列表</h1>
+
+    <!-- 添加消息表单 -->
+    <form hx-post="/messages" hx-target="#message-list" hx-swap="beforeend">
+        <input type="text" name="content" placeholder="输入消息..." required>
+        <button type="submit">添加</button>
+    </form>
+
+    <!-- 消息列表 -->
+    <ul id="message-list" class="message-list">
+        {% for message in messages %}
+        <li class="message-item">
+            <span class="message-content">{{ message.content }}</span>
+            <span class="message-actions">
+                <button class="delete" hx-delete="/messages/{{ message.id }}" hx-confirm="确定删除？">删除</button>
+            </span>
+        </li>
+        {% endfor %}
+    </ul>
+
+    <!-- 加载指示器 -->
+    <div class="htmx-indicator">处理中...</div>
+    {% endblock %}
+</body>
+</html>

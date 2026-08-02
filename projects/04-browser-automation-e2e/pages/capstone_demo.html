@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <title>AI Fullstack Capstone Demo</title>
+    <script src="https://unpkg.com/htmx.org@2"></script>
+  </head>
+  <body>
+    <main>
+      <h1>AI Knowledge Assistant</h1>
+
+      <section id="document-import">
+        <h2>导入文档</h2>
+        <form
+          id="document-form"
+          hx-post="/documents"
+          hx-target="#document-result"
+          hx-ext="json-enc"
+        >
+          <input id="doc-title" name="title" required placeholder="标题" />
+          <textarea
+            id="doc-content"
+            name="content"
+            required
+            placeholder="文档内容"
+          ></textarea>
+          <button type="submit">导入</button>
+        </form>
+        <pre id="document-result"></pre>
+      </section>
+
+      <section id="chat-section">
+        <h2>提问</h2>
+        <form
+          id="chat-form"
+          hx-get="/chat/stream"
+          hx-target="#answer"
+          hx-swap="innerHTML"
+        >
+          <input
+            id="question"
+            name="question"
+            required
+            placeholder="问一个问题"
+          />
+          <button type="submit">开始回答</button>
+        </form>
+        <div id="answer" aria-live="polite"></div>
+      </section>
+    </main>
+  </body>
+</html>

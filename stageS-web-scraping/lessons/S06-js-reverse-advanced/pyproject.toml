@@ -1,0 +1,12 @@
+[project]
+name = "P06-js-reverse-advanced"
+version = "1.0.0"
+description = "P 阶段课程: P06-js-reverse-advanced"
+requires-python = ">=3.13"
+dependencies = []
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+
+[tool.ruff]
+target-version = "py313"

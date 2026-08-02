@@ -1,0 +1,101 @@
+name: Basic Validation
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  python-compile:
+    name: Python compile check (py${{ matrix.python-version }})
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version: ["3.13"]
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+
+      - name: Compile Python files
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          import py_compile
+          import sys
+
+          exclude_dirs = {
+              ".git",
+              ".venv",
+              ".venv-py314",
+              ".venv-py313t",
+              ".venv-py314t",
+              ".venv-ft",
+              "venv",
+              "__pycache__",
+              ".mypy_cache",
+              ".pytest_cache",
+              ".ruff_cache",
+              "node_modules",
+          }
+
+          # 含 t-string 的文件需要 Python 3.14+ 才能编译
+          # 在 3.13 上跳过这些文件，避免误报
+          py314_only = {
+              "examples/example_06_python314_tstring.py",
+              "exercises/06-tstring-shell-safe.py",
+              "solutions/06-tstring-shell-safe.py",
+          }
+
+          py_version = sys.version_info[:2]
+          failures = []
+          checked = 0
+          skipped = 0
+
+          for path in Path(".").rglob("*.py"):
+              if any(part in exclude_dirs for part in path.parts):
+                  continue
+              # 在 3.13 上跳过 t-string 文件
+              if py_version < (3, 14) and any(suffix in str(path) for suffix in py314_only):
+                  skipped += 1
+                  continue
+              checked += 1
+              try:
+                  py_compile.compile(str(path), doraise=True)
+              except Exception as exc:
+                  failures.append((path, exc))
+
+          print(f"Python {sys.version_info[:3]} compiled {checked} files (skipped {skipped} 3.14-only)")
+
+          if failures:
+              print("Python compile failures:")
+              for path, exc in failures:
+                  print(f"- {path}: {exc}")
+              sys.exit(1)
+          PY
+
+  markdown-link-check:
+    name: Markdown link check
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+
+      - name: Validate active Markdown links
+        run: python scripts/check_markdown_links.py

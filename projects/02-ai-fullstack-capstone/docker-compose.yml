@@ -1,0 +1,102 @@
+services:
+  # Nginx 反向代理（TLS 终结 + 速率限制）
+  nginx:
+    image: nginx:alpine
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./infra/nginx/nginx.conf:/etc/nginx/nginx.conf:ro
+      - ./infra/nginx/ssl:/etc/nginx/ssl:ro
+    depends_on:
+      app:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "wget", "-q", "--spider", "http://localhost:80/health"]
+      interval: 10s
+      timeout: 3s
+      retries: 3
+      start_period: 5s
+    restart: unless-stopped
+    networks:
+      - frontend
+      - backend
+
+  # FastAPI 应用服务
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    expose:
+      - "8000"
+    environment:
+      # 应用配置
+      - APP_ENV=production
+      - APP_HOST=0.0.0.0
+      - APP_PORT=8000
+      # 模型配置
+      - MODEL_NAME=mock
+      # 存储配置
+      - QDRANT_URL=http://qdrant:6333
+      - DUCKDB_PATH=/app/data/app.duckdb
+      # 安全配置（从宿主机环境变量读取）
+      - SECRET_KEY=${SECRET_KEY:-dev-only-insecure-key-change-in-production}
+      - ALGORITHM=HS256
+      - ACCESS_TOKEN_EXPIRE_MINUTES=30
+    volumes:
+      # DuckDB 数据持久化
+      - duckdb_data:/app/data
+    depends_on:
+      qdrant:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/health"]
+      interval: 10s
+      timeout: 3s
+      retries: 3
+      start_period: 10s
+    restart: unless-stopped
+    networks:
+      - backend
+
+  # Qdrant 向量数据库服务
+  qdrant:
+    image: qdrant/qdrant:latest
+    ports:
+      - "6333:6333"
+      - "6334:6334" # gRPC 端口
+    volumes:
+      # 向量数据持久化
+      - qdrant_data:/qdrant/storage
+    environment:
+      # Qdrant 配置
+      - QDRANT__SERVICE__GRPC_PORT=6334
+    healthcheck:
+      test:
+        ["CMD-SHELL", "timeout 1 bash -c '</dev/tcp/localhost/6333' || exit 1"]
+      interval: 10s
+      timeout: 3s
+      retries: 5
+      start_period: 15s
+    restart: unless-stopped
+    networks:
+      - backend
+
+# 网络定义
+networks:
+  # 前端网络（Nginx <-> 外部）
+  frontend:
+    driver: bridge
+  # 后端网络（Nginx <-> App <-> Qdrant）
+  backend:
+    driver: bridge
+    internal: true # 隔离后端网络，禁止直接外部访问
+
+# 持久化卷定义
+volumes:
+  # Qdrant 向量数据卷
+  qdrant_data:
+    driver: local
+  # DuckDB 关系数据卷
+  duckdb_data:
+    driver: local

@@ -1,0 +1,141 @@
+site_name: Python 3.13 全栈课程
+site_description: 现代化 Python 全栈开发完整教程（基线 Python 3.13；3.14 仅作试验性补充）
+site_author: Python 3.13 全栈教研团队
+site_url: https://python313-fullstack.dev
+
+repo_name: nexo/python313-fullstack
+repo_url: https://github.com/nexo/python313-fullstack
+
+theme:
+  name: material
+  language: zh
+  palette:
+    # 日间模式
+    - media: "(prefers-color-scheme: light)"
+      scheme: default
+      primary: indigo
+      accent: indigo
+      toggle:
+        icon: material/brightness-7
+        name: 切换到夜间模式
+    # 夜间模式
+    - media: "(prefers-color-scheme: dark)"
+      scheme: slate
+      primary: indigo
+      accent: indigo
+      toggle:
+        icon: material/brightness-4
+        name: 切换到日间模式
+
+  features:
+    - navigation.instant
+    - navigation.tracking
+    - navigation.tabs
+    - navigation.sections
+    - navigation.expand
+    - navigation.top
+    - search.suggest
+    - search.highlight
+    - content.code.copy
+    - content.code.annotate
+
+markdown_extensions:
+  - pymdownx.highlight:
+      anchor_linenums: true
+      line_spans: __span
+      pygments_lang_class: true
+  - pymdownx.inlinehilite
+  - pymdownx.snippets
+  - pymdownx.superfences:
+      custom_fences:
+        - name: mermaid
+          class: mermaid
+          format: !!python/name:pymdownx.superfences.fence_code_format
+  - pymdownx.tabbed:
+      alternate_style: true
+  - admonition
+  - pymdownx.details
+  - pymdownx.emoji:
+      emoji_index: !!python/name:material.extensions.emoji.twemoji
+      emoji_generator: !!python/name:material.extensions.emoji.to_svg
+  - attr_list
+  - md_in_html
+  - tables
+  - footnotes
+  # 用 unicode-friendly slugify 让中文标题生成可识别的锚点（匹配 FAQ.md /
+  # TESTING_GUIDE.md 等中文目录链接）。默认 ASCII slugify 会把"课程相关"
+  # 直接剥成空字符串。
+  - toc:
+      permalink: true
+      slugify: !!python/object/apply:pymdownx.slugs.slugify
+        kwds:
+          case: lower
+
+nav:
+  - 技术参考:
+      - Python 版本兼容性: technical/PYTHON_VERSION.md
+      - Free-threading 事实手册: technical/FREE_THREADING_TRUTH.md
+      - 测试规范: development/TESTING_CONVENTIONS.md
+      - Lesson 格式标准: development/LESSON_FORMAT_STANDARD.md
+      - README 格式标准: development/README_FORMAT_STANDARD.md
+
+  - 审计报告:
+      - 课程综合审计: COURSE_AUDIT_REPORT.md
+
+  - 关于:
+      - 贡献指南: about/contributing.md
+
+# 不出现在 nav 但允许构建的页面。
+# 用 mkdocs 1.6+ 的 not_in_nav 显式声明，避免构建期间 INFO 噪音。
+not_in_nav: |
+  /CODE_QUALITY_STANDARD.md
+  /COMPATIBILITY.md
+  /FAQ.md
+  /STARTUP_GUIDE.md
+  /TESTING_GUIDE.md
+  /TESTING_CONVENTIONS.md
+  /ALERTING_GUIDE.md
+  /DOCUMENTATION_MATRIX.md
+  /LEARNING_PATH.md
+  /TROUBLESHOOTING.md
+  /TODO_STANDARD.md
+  /guides/
+  /superpowers/
+  /archived/
+  /development/
+  /knowledge/
+
+# 用 hook 抑制 git-revision-date-localized-plugin 内部用 root logger 输出的
+# "First revision timestamp" 伪报。它属于 plugin 上游 quirk（不走 mkdocs
+# logger），不影响 strict，但污染 build 输出。
+hooks:
+  - scripts/docs/mkdocs_hooks.py
+
+plugins:
+  - search:
+      lang:
+        - zh
+        - en
+  - git-revision-date-localized:
+      enable_creation_date: true
+      type: timeago
+      enable_git_follow: false
+      # plugin 自身的 strict（默认 true）会把 first>last 的 git follow 伪报转成
+      # mkdocs strict 模式下的致命警告。本仓库有大量重命名提交，关闭这层 strict
+      # 不影响最终页面的显示（仍走 fallback 时间戳逻辑）。
+      strict: false
+      fallback_to_build_date: true
+
+extra:
+  social:
+    - icon: fontawesome/brands/github
+      link: https://github.com/nexo/python313-fullstack
+    - icon: fontawesome/brands/python
+      link: https://python.org
+
+  # 如需启用 Google Analytics，复制下方 3 行并填入真实 property（如 G-ABC1234567）
+  # analytics:
+  #   provider: google
+  #   property: G-XXXXXXXXXX
+
+copyright: Copyright &copy; 2026 Python 3.13 全栈教研团队

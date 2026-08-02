@@ -1,0 +1,15 @@
+apiVersion: source.toolkit.fluxcd.io/v1
+kind: GitRepository
+metadata:
+  name: python-course-demo
+  namespace: flux-system
+spec:
+  interval: 5m
+  url: https://github.com/dingwencheng9/python-fullstack-course.git
+  ref:
+    branch: main
+  ignore: |
+    # exclude all
+    /*
+    # include manifests directory
+    !/extensions/k8s-deepening/manifests

@@ -1,0 +1,38 @@
+# ============================================================
+# AI Agent Chat API V2 - Python 依赖
+# ============================================================
+# 升级策略：固定版本 → 最小版本约束（>=），让 uv resolver 选最佳兼容
+# 升级日期：2026-06-14（Phase 3.2）
+# 关键升级：asyncpg 0.29→0.31（Python 3.14 支持），opentelemetry 1.24→1.42
+
+# Web 框架
+fastapi>=0.115.0,<0.140
+uvicorn[standard]>=0.32.0
+pydantic>=2.10.0
+
+# HTTP 客户端
+httpx>=0.27.0
+
+# V2 可选依赖：数据库/缓存
+# 基础 SSE 示例与测试不要求本机 PostgreSQL/Redis；运行 app_v2.py、
+# agent_chat_router_v2.py、checkpoint_system.py 时再安装并启动对应服务。
+asyncpg>=0.31.0          # ↑ 0.29.0 — 0.31 加入 Python 3.14 wheel
+redis>=5.0.0
+langchain-core>=0.3.0
+langgraph>=0.2.0
+
+# V2 可选依赖：OpenTelemetry（可观测性）
+opentelemetry-api>=1.42.1                          # ↑ 1.24.0
+opentelemetry-sdk>=1.42.1                          # ↑ 1.24.0
+opentelemetry-exporter-otlp-proto-grpc>=1.42.1     # ↑ 1.24.0
+opentelemetry-instrumentation-fastapi>=0.63b1      # ↑ 0.45b0
+
+# CLI 终端渲染
+rich>=13.9.0
+
+# 开发依赖（可选）
+# pytest>=8.3.0
+# pytest-asyncio>=0.24.0
+# pytest-cov>=6.0.0
+# ruff>=0.8.0
+# mypy>=1.13.0

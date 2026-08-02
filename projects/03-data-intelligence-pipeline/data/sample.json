@@ -1,0 +1,23 @@
+[
+  {
+    "url": "https://example.com/a",
+    "title": "FastAPI 教程",
+    "text": "FastAPI 是现代 Python Web 框架，支持异步和类型提示。",
+    "source": "example.com",
+    "status_code": 200
+  },
+  {
+    "url": "https://example.com/b",
+    "title": "DuckDB 分析",
+    "text": "DuckDB 是嵌入式 OLAP 数据库，可直接查询 CSV 和 Parquet。",
+    "source": "example.com",
+    "status_code": 200
+  },
+  {
+    "url": "https://docs.python.org/3",
+    "title": "Python 文档",
+    "text": "Python 3.13 提供新的类型系统和性能改进。",
+    "source": "docs.python.org",
+    "status_code": 200
+  }
+]

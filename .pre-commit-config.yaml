@@ -1,0 +1,163 @@
+# Python 3.13 全栈课程 - Pre-commit 配置
+# 🎯 目标: 拦截所有不符合工业标准的代码
+# 🔥 最严厉的防腐门禁配置；与 pyproject.toml 中 python_version = "3.13" / target-version = "py313" 保持一致
+
+repos:
+  # ============================================================================
+  # Ruff - 极速 Linter + Formatter
+  # ============================================================================
+  - repo: https://github.com/astral-sh/ruff-pre-commit
+    rev: v0.15.16
+    hooks:
+      # 🔥 Linter (先执行) - 检测代码质量问题
+      - id: ruff
+        name: ruff-lint
+        args: [--fix, --exit-non-zero-on-fix]
+        types_or: [python, pyi]
+
+      # 🔥 Formatter (后执行) - 统一代码格式
+      - id: ruff-format
+        name: ruff-format
+        types_or: [python, pyi]
+
+  # ============================================================================
+  # Mypy - 类型检查防线（最严格）
+  # ============================================================================
+  - repo: https://github.com/pre-commit/mirrors-mypy
+    rev: v1.13.0
+    hooks:
+      - id: mypy
+        name: mypy-strict-check
+        args:
+          - --strict
+          - --python-version=3.13
+          - --show-error-codes
+          - --pretty
+        additional_dependencies:
+          - types-aiofiles
+          - types-requests
+          - aiohttp
+          - httpx
+        # 🔥 只检查核心源代码（projects/src）
+        files: ^stage.*/projects/.*/src/.*\.py$
+        exclude: ^(tests|scripts|_archive)/
+
+  # ============================================================================
+  # Pytest - 测试必须通过（可选，根据需要启用）
+  # ============================================================================
+  # - repo: local
+  #   hooks:
+  #     - id: pytest-check
+  #       name: pytest-local
+  #       entry: bash -c 'uv run pytest tests/ -q --tb=line || true'
+  #       language: system
+  #       pass_filenames: false
+  #       stages: [commit]
+  #       files: ^tests/.*\.py$
+
+  # ============================================================================
+  # Markdown 文档质量检查
+  # ============================================================================
+  - repo: local
+    hooks:
+      - id: markdown-link-check
+        name: markdown-link-check
+        description: 检查 Markdown 文档中的失效链接
+        entry: python scripts/ci/check_markdown_links.py
+        language: python
+        files: \.md$
+        pass_filenames: false
+        stages: [commit]
+
+  # ============================================================================
+  # Pre-commit Hooks - 通用安全检查
+  # ============================================================================
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v5.0.0
+    hooks:
+      # 🔥 文件格式检查
+      - id: check-yaml
+        name: check-yaml
+        # mkdocs 使用自定义 yaml 标签；Helm templates 是 Go template + YAML，
+        # 需要由 `helm template` 渲染后再校验，不应直接交给 YAML parser。
+        exclude: ^(mkdocs\.yml|k8s/.*\.yaml|extensions/k8s-deepening/helm/.*/templates/.*\.yaml|projects/.*/k8s/.*\.yaml)$
+      - id: check-toml
+        name: check-toml
+      - id: check-json
+        name: check-json
+
+      # 🔥 代码格式检查
+      - id: end-of-file-fixer
+        name: end-of-file-fixer
+      - id: trailing-whitespace
+        name: trailing-whitespace
+        args: [--markdown-linebreak-ext=md]
+
+      # 🔥 安全检查
+      - id: detect-private-key
+        name: detect-private-key
+        description: 检测私钥泄露（防止提交 .pem, .key 等文件）
+
+      - id: check-added-large-files
+        name: check-large-files
+        args: [--maxkb=1000]
+        description: 防止提交超过 1MB 的文件
+
+      # 🔥 分支保护
+      - id: no-commit-to-branch
+        name: no-commit-to-branch
+        args: [--branch, main, --branch, master]
+        description: 禁止直接提交到 main/master 分支
+
+      # 🔥 Python 特定检查
+      - id: check-ast
+        name: check-python-ast
+        description: 检查 Python 语法树
+
+      - id: check-builtin-literals
+        name: check-builtin-literals
+        description: 检查内置类型字面量
+
+      - id: check-docstring-first
+        name: check-docstring-first
+        description: 检查 docstring 位置
+        # 教学课程常以模块 docstring + 第二段 """...""" 写背景说明，跳过课程目录避免误报
+        exclude: ^(stage\d+-[^/]+/lessons/.*|projects/.*)$
+
+      - id: debug-statements
+        name: check-debug-statements
+        description: 检查调试语句 (pdb, ipdb)
+
+      - id: check-merge-conflict
+        name: check-merge-conflict
+        description: 检查合并冲突标记
+
+  # ============================================================================
+  # 可选：Bandit - 安全漏洞扫描
+  # ============================================================================
+  # - repo: https://github.com/PyCQA/bandit
+  #   rev: 1.7.5
+  #   hooks:
+  #     - id: bandit
+  #       name: bandit-security-check
+  #       args: [-r, src/, -ll]
+  #       files: ^stage.*/projects/.*/src/.*\.py$
+
+# ============================================================================
+# 全局配置
+# ============================================================================
+default_language_version:
+  python: python3.13
+
+# CI 配置
+ci:
+  autofix_commit_msg: |
+    [pre-commit.ci] auto fixes from pre-commit hooks
+
+    for more information, see https://pre-commit.ci
+  autofix_prs: true
+  autoupdate_branch: ""
+  autoupdate_commit_msg: "[pre-commit.ci] pre-commit autoupdate"
+  autoupdate_schedule: weekly
+  skip: []
+  submodules: false

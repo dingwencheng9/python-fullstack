@@ -1,0 +1,81 @@
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: ai-fullstack-capstone
+  namespace: argocd
+  # Finalizer 确保删除 Application 时同时清理 K8s 资源
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+spec:
+  # 项目命名空间（ArgoCD 多租户隔离）
+  project: default
+
+  # Git 仓库源配置
+  source:
+    # 替换为实际仓库 URL
+    repoURL: https://github.com/YOUR_ORG/ai-fullstack-capstone.git
+    targetRevision: main # 或 master / production 分支
+    path: infra/k8s # Kubernetes 清单目录
+
+    # 可选：Helm / Kustomize 配置
+    # helm:
+    #   valueFiles:
+    #     - values-production.yaml
+    # kustomize:
+    #   namePrefix: prod-
+
+  # 目标 Kubernetes 集群
+  destination:
+    server: https://kubernetes.default.svc # 集群内部署
+    namespace: ai-fullstack # 应用部署命名空间
+
+  # 自动同步策略（GitOps 核心）
+  syncPolicy:
+    # 启用自动同步
+    automated:
+      # prune: 删除 Git 中不存在但 K8s 中存在的资源（垃圾回收）
+      prune: true
+      # selfHeal: 自动修复漂移（手动 kubectl 修改会被回滚）
+      selfHeal: true
+      # allowEmpty: 允许空提交触发同步
+      allowEmpty: false
+
+    # 同步选项
+    syncOptions:
+      # CreateNamespace: 自动创建目标命名空间
+      - CreateNamespace=true
+      # PrunePropagationPolicy: 级联删除策略
+      - PrunePropagationPolicy=foreground
+      # PruneLast: 最后删除资源（避免服务中断）
+      - PruneLast=true
+      # ApplyOutOfSyncOnly: 仅应用不同步的资源（减少 API 调用）
+      - ApplyOutOfSyncOnly=true
+      # RespectIgnoreDifferences: 尊重 ignoreDifferences 配置
+      - RespectIgnoreDifferences=true
+
+    # 重试策略（应对瞬时错误）
+    retry:
+      limit: 5 # 最大重试次数
+      backoff:
+        duration: 5s # 初始回退时间
+        factor: 2 # 指数回退因子
+        maxDuration: 3m # 最大回退时间
+
+  # 忽略差异（防止误判为漂移）
+  ignoreDifferences:
+    # 忽略 Deployment 副本数（由 HPA 控制）
+    - group: apps
+      kind: Deployment
+      jsonPointers:
+        - /spec/replicas
+    # 忽略 Secret 的动态字段
+    - group: ""
+      kind: Secret
+      jsonPointers:
+        - /data
+
+  # 健康评估（自定义健康检查）
+  # info:
+  #   - name: 'Version'
+  #     value: 'v1.0.0'

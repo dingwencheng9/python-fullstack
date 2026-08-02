@@ -1,0 +1,33 @@
+# L57: 多 Agent 协同编排依赖
+# 升级日期：2026-06-14（Phase 3.2）
+# 关键升级：langgraph 0.0.50→0.2+ （主版本号大幅前进，API 已稳定）
+
+# 核心框架
+langgraph>=0.2.50,<2.0    # ↑ 0.0.50 — 0.2.x 是首个稳定 API 系列
+langchain-core>=0.3.0     # ↑ 0.1.0 — 与 langgraph 0.2 配套
+
+# 数据处理
+pandas>=2.2.0,<3.0        # ↑ 2.0.0 — 锁定 2.x 避免 3.0 breaking change
+numpy>=2.0.0              # ↑ 1.24.0 — Python 3.13 全面支持
+
+# 可观测性
+opentelemetry-api>=1.30.0           # ↑ 1.20.0
+opentelemetry-sdk>=1.30.0           # ↑ 1.20.0
+# Jaeger exporter 已废弃（停更于 1.21），改用 OTLP exporter（Jaeger 自 1.35 起原生支持 OTLP）
+opentelemetry-exporter-otlp-proto-grpc>=1.30.0
+opentelemetry-instrumentation>=0.51b0
+
+# 数据验证
+pydantic>=2.10.0          # ↑ 2.0.0
+
+# 异步支持
+asyncio-mqtt>=0.16.0  # 可选：用于真实的消息队列
+
+# 测试
+pytest>=8.3.0,<9.0        # ↑ 7.4.0 — 锁定 8.x 避免 9.0 breaking change
+pytest-asyncio>=0.24.0
+pytest-mock>=3.14.0
+
+# 开发工具
+ruff>=0.8.0               # ↑ 0.1.0
+mypy>=1.13.0,<2.0         # ↑ 1.5.0 — 锁定 1.x 避免 2.0 breaking change

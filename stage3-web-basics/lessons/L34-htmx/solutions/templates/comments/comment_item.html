@@ -1,0 +1,11 @@
+<li id="comment-{{ comment.id }}">
+  <span>{{ comment.content }}</span>
+  <button hx-delete="/comments/{{ comment.id }}" hx-target="#comment-{{ comment.id }}" hx-swap="delete">删除</button>
+  {% if comment.replies %}
+  <ul>
+    {% for comment in comment.replies %}
+    {% include "comments/comment_item.html" %}
+    {% endfor %}
+  </ul>
+  {% endif %}
+</li>

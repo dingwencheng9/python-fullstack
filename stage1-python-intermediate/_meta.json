@@ -1,0 +1,102 @@
+{
+  "name": "stage1-python-intermediate",
+  "displayName": "Stage 1: Python 进阶",
+  "description": "Python 进阶课程：类型系统、生成器、装饰器、异步编程",
+  "courses": [
+    {
+      "id": "L10",
+      "name": "Python 类型系统完整指南",
+      "path": "lessons/L10-type-system",
+      "duration": "6h",
+      "difficulty": "⭐⭐⭐",
+      "status": "complete"
+    },
+    {
+      "id": "L11",
+      "name": "迭代器与生成器",
+      "path": "lessons/L11-generators",
+      "duration": "6h",
+      "difficulty": "⭐⭐⭐",
+      "status": "complete"
+    },
+    {
+      "id": "L12",
+      "name": "生成器进阶",
+      "path": "lessons/L12-generator-advanced",
+      "duration": "4h",
+      "difficulty": "⭐⭐⭐",
+      "status": "complete",
+      "description": "yield from、send()、异步生成器"
+    },
+    {
+      "id": "L13",
+      "name": "Python 高级特性（入门）",
+      "path": "lessons/L13-advanced-features",
+      "duration": "5h",
+      "difficulty": "⭐⭐⭐",
+      "status": "complete",
+      "note": "闭包基础、装饰器入门、上下文管理器入门"
+    },
+    {
+      "id": "L14",
+      "name": "装饰器进阶",
+      "path": "lessons/L14-decorator-advanced",
+      "duration": "6h",
+      "difficulty": "⭐⭐⭐⭐",
+      "status": "complete",
+      "description": "带参装饰器、装饰器链、类装饰器"
+    },
+    {
+      "id": "L15",
+      "name": "描述符与属性",
+      "path": "lessons/L15-descriptors",
+      "duration": "5h",
+      "difficulty": "⭐⭐⭐",
+      "status": "complete"
+    },
+    {
+      "id": "L16",
+      "name": "并发编程入门",
+      "path": "lessons/L16-concurrency-intro",
+      "duration": "6h",
+      "difficulty": "⭐⭐⭐⭐",
+      "status": "complete",
+      "note": "async/await、asyncio、异步队列"
+    },
+    {
+      "id": "L17",
+      "name": "函数式编程",
+      "path": "lessons/L17-functional",
+      "duration": "5h",
+      "difficulty": "⭐⭐⭐",
+      "status": "complete"
+    },
+    {
+      "id": "L18",
+      "name": "正则表达式",
+      "path": "lessons/L18-regex",
+      "duration": "2h",
+      "difficulty": "⭐⭐⭐",
+      "status": "complete"
+    }
+  ],
+  "totalCourses": 9,
+  "totalDuration": "~55h",
+  "difficulty": "⭐⭐~⭐⭐⭐⭐ (中级)",
+  "prerequisites": [
+    "Stage 0: Python 编程基础（L01-L09）"
+  ],
+  "nextStage": "Stage 2: 现代化基础内功",
+  "changelog": [
+    {
+      "date": "2026-08-01",
+      "changes": [
+        "课程编号重排：L11.5→L12, L12→L13, L12.5→L14, L13→L15, L14→L16, L15→L17, L16→L18",
+        "L12: 生成器进阶（yield from、send、异步生成器）",
+        "L13: Python 高级特性（入门）- 闭包基础、装饰器入门",
+        "L14: 装饰器进阶 - 带参装饰器、类装饰器",
+        "L16: 并发编程入门 - async/await、asyncio"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,16 @@
+<!doctype html>
+<html lang="zh-CN">
+<head><meta charset="utf-8"><title>HTMX 评论系统</title><script src="/static/htmx.min.js"></script></head>
+<body>
+  <h1>评论系统</h1>
+  <form hx-post="/comments" hx-target="#comments" hx-swap="beforeend">
+    <input name="content" placeholder="写下评论" required>
+    <button type="submit">发表</button>
+  </form>
+  <ul id="comments">
+    {% for comment in comments %}
+    {% include "comments/comment_item.html" %}
+    {% endfor %}
+  </ul>
+</body>
+</html>

@@ -1,0 +1,51 @@
+name: CI
+
+on:
+  push:
+    branches: [main, master]
+  pull_request:
+    branches: [main, master]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+
+      - name: Install uv
+        uses: astral-sh/setup-uv@v5
+        with:
+          enable-cache: true
+
+      - name: Install dependencies
+        working-directory: projects/02-ai-fullstack-capstone
+        run: |
+          uv sync
+
+      - name: Run ruff linter
+        working-directory: projects/02-ai-fullstack-capstone
+        run: |
+          uv run ruff check .
+
+      - name: Run tests
+        working-directory: projects/02-ai-fullstack-capstone
+        run: |
+          uv run pytest tests/ -v --tb=short
+
+      - name: Verify test count
+        working-directory: projects/02-ai-fullstack-capstone
+        run: |
+          # 确保至少有 19 个测试通过
+          TEST_COUNT=$(uv run pytest tests/ --collect-only -q | grep -E "^test_" | wc -l)
+          echo "Collected $TEST_COUNT tests"
+          if [ "$TEST_COUNT" -lt 19 ]; then
+            echo "Error: Expected at least 19 tests, but found $TEST_COUNT"
+            exit 1
+          fi

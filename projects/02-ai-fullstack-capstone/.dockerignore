@@ -1,0 +1,57 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+*.egg-info/
+dist/
+build/
+
+# 虚拟环境
+.venv/
+venv/
+ENV/
+
+# 测试和覆盖率
+.pytest_cache/
+.coverage
+htmlcov/
+.tox/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Git
+.git/
+.gitignore
+.gitattributes
+
+# 文档和示例
+README.md
+docs/
+tests/
+*.md
+
+# 环境变量（不要打包到镜像）
+.env
+.env.*
+!.env.example
+
+# 数据文件（运行时生成）
+data/
+*.db
+*.duckdb
+
+# CI/CD
+.github/
+.gitlab-ci.yml
+
+# 其他
+*.log
+.DS_Store
+Thumbs.db

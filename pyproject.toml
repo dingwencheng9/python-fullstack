@@ -1,0 +1,697 @@
+# Python 3.13 全栈开发课程 V4.1 - 根目录防线配置
+# 🎯 运行环境: Python 3.13 (基线) / Python 3.14t (试验性补充, Free-threading)
+# 🎯 交付标准: Python 3.13 (100%现代化，前沿特性全覆盖)
+# 🎯 包管理器: uv (弃用pip/venv，拥抱现代化工具链)
+
+[tool.uv.workspace]
+# 🔑 Workspace 成员：所有 stage 和 projects 作为可编辑包
+# 这样可以通过标准包路径导入，无需 sys.path 污染
+# 📝 2026-07-30: 修复 workspace 配置与实际目录不匹配问题
+members = [
+    # Core 通用核心阶段
+    "stage0-python-basics",
+    "stage1-python-intermediate",
+    "stage2-engineering",
+    "stage3-web-basics",
+    "stage4-web-advanced",
+    "stage5-data-engineering",
+    "stage6-ai-agent",
+    # Specialization 垂直专精阶段
+    "stageA-ai-enterprise",
+    "stageK-devops",
+    "stageM-enterprise",
+    "stageP-web-scraping",
+    "stageR-frontier",
+    # Projects 综合项目
+    "projects/01-web-scraper",
+    "projects/02-ai-fullstack-capstone",
+    "projects/03-data-intelligence-pipeline",
+    "projects/04-browser-automation-e2e",
+    # Extensions 扩展模块
+    "extensions/multimodal-agent",
+]
+
+[project]
+name = "python-fullstack-v4.1"
+version = "4.1.0"
+description = "Python 3.13 全栈开发课程 V4.1 - 螺旋上升架构 + 云本双轨LLM + Free-threading"
+readme = "README.md"
+requires-python = ">=3.13"  # 🔑 课程基线 Python 3.13+，3.14 作为试验性补充
+license = { text = "MIT" }
+authors = [
+    { name = "Python全栈课程团队" }
+]
+keywords = ["python", "fullstack", "asyncio", "fastapi", "llm", "uv", "python313", "free-threading"]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Education",
+    "Programming Language :: Python :: 3.13",
+    "Programming Language :: Python :: 3.14",
+    "Programming Language :: Python :: 3 :: Only",
+    "Topic :: Education :: Computer Aided Instruction (CAI)",
+]
+
+# 核心依赖（阶段1基础）
+# 升级策略（Phase 3.2，2026-06-14）：
+#   - 主版本号变化会带来 breaking changes 的关键库（pandas/sqlalchemy/pydantic/numpy）加上限
+#   - 工具类（ruff/mypy/pytest）也加上限，避免规则突然收紧打挂教学示例
+#   - 其余库保持仅有下限，让 uv resolver 选最新兼容
+dependencies = [
+    "aiofiles>=25.1.0,<26.0",
+    "aiohttp>=3.14.0,<4.0",
+    "aiosqlite>=0.22.1,<1.0",
+    "anthropic>=0.111.0,<1.0",
+    "asyncpg>=0.31.0,<1.0",       # 0.31 加入 Python 3.14 wheel 标记
+    "beautifulsoup4>=4.12,<5.0",
+    "duckdb>=1.0,<2.0",      # 1.5 已稳定，2.0 待出
+    "email-validator[web]>=2.3.0",
+    "httpx>=0.27.0,<1.0",      # HTTP客户端（异步爬虫项目）
+    "jinja2>=3.1.6,<4.0",
+    "langchain-core>=1.4.8",
+    "langgraph>=1.2.6",
+    "lxml>=5.0,<7.0",        # 6.x 稳定；7.x 待出
+    "opentelemetry-api>=1.42.1,<2.0",
+    "opentelemetry-instrumentation-fastapi>=0.43b0,<1.0",
+    "opentelemetry-instrumentation-sqlalchemy>=0.63b1,<1.0",
+    "opentelemetry-sdk>=1.42.1,<2.0",
+    "pandas>=2.2,<3.0",      # 锁定 2.x 系列，3.0 有 breaking change
+    "pydantic>=2.0,<3.0",    # 锁定 2.x 系列
+    "pydantic-settings>=2.6.0,<3.0",  # Stage4 核心代码需要
+    "pyyaml>=6.0,<7.0",
+    "requests>=2.32,<3.0",
+    "rich>=13.9.0,<14.0",       # 终端美化输出
+    "tomli>=2.4.1,<3.0",
+    "tomli-w>=1.2.0,<2.0",
+    "zai-sdk>=0.2.3,<1.0",
+]
+
+# 开发依赖（分阶段按需安装）
+[project.optional-dependencies]
+dev = [
+    # 🔧 代码质量工具（阶段1核心）
+    "ruff>=0.8.0,<2.0",         # 极速Linter + Formatter
+    "mypy>=1.13.0,<2.0",        # 类型检查防线（2.0 规则更严，先锁 1.x）
+                                   # >=1.11.0 确保完整支持 PEP 695 新语法（type 关键字、内联泛型）
+                                   # 参考: python/mypy#15238 — 1.11.0+ 才默认启用 PEP 695
+
+    # 🧪 测试框架（阶段1引入）
+    "pytest>=8.3.0,<10.0",      # 测试框架（pytest 9 是 8 的平滑后继）
+    "pytest-cov>=6.0.0",        # 覆盖率报告
+    "pytest-asyncio>=1.4.0",    # 异步测试支持
+    "pytest-mock>=3.14.0",      # Mock工具
+
+    # 📝 开发辅助
+    "ipython>=8.29.0",          # 增强REPL
+    "pre-commit>=4.0.0",        # Git钩子管理
+
+    # 🏷️ 类型 stub（projects/ 工程代码用）
+    "types-PyYAML>=6.0,<7.0",
+]
+
+# 阶段2: Web全栈
+web = [
+    "fastapi>=0.115.0,<1.0",     # 锁 0.x 系列，未来 1.0 时统一升级
+    "uvicorn[standard]>=0.32.0,<1.0",
+    "sqlalchemy[asyncio]>=2.0.0,<3.0",  # 锁 2.x
+    "alembic>=1.13.0,<2.0",
+    "pydantic>=2.10.0,<3.0",
+    "pydantic-settings>=2.6.0,<3.0",
+    "python-jose[cryptography]>=3.3.0,<4.0",
+    "passlib>=1.7.4,<2.0",
+    "bcrypt>=4.0.0,<4.3.0",       # 锁定 4.x 系列，5.0+ 与 passlib 不兼容
+    "python-multipart>=0.0.9,<1.0",
+    "asyncpg>=0.31.0,<1.0",            # ↑ 0.30.0
+    "strawberry-graphql[fastapi]>=0.240.0,<1.0",  # GraphQL
+]
+
+# 阶段3: AI与数据
+ai = [
+    "pandas>=2.2.0,<3.0",
+    "numpy>=2.0.0,<3.0",          # 2.0+ 全面 Python 3.13/3.14 支持
+    "openai>=1.54.0,<2.0",        # 云端LLM
+    "ollama>=0.3.0",              # 本地LLM (云本双轨)
+    "qdrant-client>=1.11.0,<2.0", # 向量数据库
+    "tiktoken>=0.8.0",            # Token计数
+    "mcp>=1.1.0,<2.0",            # MCP SDK (Model Context Protocol)
+]
+
+# 阶段4: 微服务与部署
+deploy = [
+    "docker>=7.0.0,<8.0",
+    "kubernetes>=30.0.0,<31.0",
+]
+
+# 文档构建依赖
+docs = [
+    "mkdocs>=1.6.0,<2.0",
+    "mkdocs-material>=9.5.0,<10.0",
+    "mkdocs-git-revision-date-localized-plugin>=1.2.0,<2.0",
+    "pygments>=2.18.0,<3.0",
+    "pymdown-extensions>=10.9,<11.0",
+    "jieba>=0.42.0,<1.0",            # 中文搜索分词
+]
+
+# 完整开发环境
+all = [
+    "python-fullstack-v4.1[dev,web,ai,deploy,docs]",
+]
+
+# ============================================================================
+# Ruff 配置 - Rust驱动的极速代码质量工具
+# 🎯 target-version = "py313" - 前沿标准锁定Python 3.13
+# ============================================================================
+
+[tool.ruff]
+target-version = "py313"  # 🔑 关键：静态检查锁定Python 3.13
+line-length = 100
+indent-width = 4
+
+# 排除目录
+exclude = [
+    ".git",
+    ".venv",
+    ".ruff_cache",
+    ".mypy_cache",
+    ".pytest_cache",
+    "__pycache__",
+    "build",
+    "dist",
+    "*.egg-info",
+    "_archive",
+    # 项目骨架代码：故意保留 TODO 与未使用 import，供学习者按提示填充
+    "projects/*/skeleton",
+    # 归档课程内容：历史遗留，暂不维护
+    "stage0-python-basics/lessons-archived",
+    # 包含 Markdown 代码块的示例文件：Ruff 无法解析 Shell 语法
+    "stage2-engineering/lessons/L18-toolchain/examples/example_05_git_advanced.py",
+    # 比较源目录：临时下载的 GitHub 仓库，不参与 CI 检查
+    "compare-source",
+]
+
+[tool.ruff.lint]
+# 🚨 Strict模式 - 启用关键规则集
+select = [
+    "E",      # pycodestyle errors
+    "W",      # pycodestyle warnings
+    "F",      # pyflakes
+    "I",      # isort (import排序)
+    "N",      # pep8-naming (命名规范)
+    "UP",     # pyupgrade (语法现代化)
+    "B",      # flake8-bugbear (反模式检测) ⭐
+    "C4",     # flake8-comprehensions (推导式优化)
+    "DTZ",    # flake8-datetimez (时区安全)
+    "T10",    # flake8-debugger (禁止debugger)
+    "ISC",    # flake8-implicit-str-concat
+    "ICN",    # flake8-import-conventions
+    "PIE",    # flake8-pie (反模式简化)
+    "PT",     # flake8-pytest-style (pytest规范)
+    "Q",      # flake8-quotes (引号规范)
+    "RSE",    # flake8-raise (异常规范)
+    "RET",    # flake8-return (return规范)
+    "SIM",    # flake8-simplify (代码简化)
+    "ARG",    # flake8-unused-arguments (未使用参数)
+    "PTH",    # flake8-use-pathlib (Path优于os.path)
+    "PL",     # pylint (全面代码质量)
+    "TRY",    # tryceratops (异常处理最佳实践)
+    "RUF",    # ruff-specific rules
+
+    # 🔥 类型注解强制检查（必须）
+    "ANN",    # flake8-annotations (强制类型提示)
+    "TCH",    # flake8-type-checking (TYPE_CHECKING 优化)
+    "FA",     # flake8-future-annotations (future annotations)
+]
+
+# 🎯 精准忽略（教学项目特殊性）
+ignore = [
+    "E501",    # line-too-long (由line-length统一处理)
+    "TRY003",  # long-exception-message (教学代码需要详细异常说明)
+    "PLR0913", # too-many-arguments (某些场景合理)
+    "PLR2004", # magic-value-comparison (教学示例允许魔法值)
+    "D100", "D101", "D102", "D103", "D104", "D105", "D107",  # docstring要求(按需开启)
+    "ANN401",  # Any 允许在特定场景（但 mypy 会严格检查）
+    "COM812", "ISC001",  # 与formatter冲突的规则
+    "T201",    # 允许教学演示使用 print
+    "RUF001",  # 允许中文全角标点
+    "RUF002",  # Docstring 中文字符
+    "RUF003",  # 注释中文字符
+    "RUF006",  # asyncio.create_task 未存储返回值（教学演示允许）
+    "D400",    # 放宽 Docstring 格式
+    "D415",    # 放宽 Docstring 格式
+    "D205",    # 放宽 Docstring 格式
+    "PLC0415", # 非顶层导入
+]
+
+# 🚨 拦截危险反模式（关键防线）
+# B006: 可变默认参数 (如 def foo(data=[]):)
+# B008: 函数调用作为默认参数 (如 def foo(now=datetime.now()):)
+# B904: 裸except后未使用raise from
+# B905: zip()未使用strict=True (Python 3.10+)
+# TRY002: 抛出通用Exception (应使用具体异常)
+# TRY300: try-except-pass反模式 (静默吞掉错误)
+
+# 🎯 按文件定制规则
+[tool.ruff.lint.per-file-ignores]
+"**/tests/**/*.py" = [
+    "S101",    # assert在测试中是必需的
+    "PLR2004", # 测试中的魔法值可接受
+    "ARG",     # 测试fixture参数未使用正常
+    "ANN",     # 测试代码可放宽类型要求
+    "E402",    # 测试中先 importorskip 后再 import 是合规模式
+    "PT006",   # 教学测试保留字符串签名便于初学者识读
+    "PT011",   # 教学测试可宽泛 pytest.raises
+    "PT012",   # 异步生成器场景需在 with 内迭代
+    "F841",    # 教学示例可显式保留中间结果变量
+    "TRY300",  # 教学保留 try/return 结构以体现异常路径
+    "TRY301",  # 教学保留 try 内 raise
+    "SIM117",  # 教学双层 with 反例可读性更好
+    "N802",    # 教学测试方法名可使用驼峰映射被测代码
+    "N806",    # 教学测试可使用大写常量
+    "PLR0915", # 教学集成测试可较长
+]
+"**/test_*.py" = [
+    "S101", "PLR2004", "ARG", "ANN",
+    "E402", "PT006", "PT011", "PT012",
+    "F841", "TRY300", "TRY301", "SIM117",
+    "N802", "N806", "PLR0915",
+]
+"**/conftest.py" = [
+    "ARG", "ANN", "E402", "TRY300",
+]
+"scripts/**/*.py" = [
+    "T201",    # 脚本允许print
+    "INP001",  # 脚本目录不需要__init__.py
+    "ANN",     # 脚本可放宽类型要求
+    "DTZ005",  # 脚本允许 datetime.now() 不带时区
+    "PTH118",  # 脚本可保留 os.path.join（教学也用得到）
+    "PTH119",  # 脚本可保留 os.path.basename
+    "PTH120",  # 脚本可保留 os.path.dirname
+    "PTH123",  # 脚本可保留 open()
+    "PTH100",  # 脚本可保留 os.path.abspath
+    "B007",    # 脚本循环索引可不用
+    "PLR0911", # 脚本可多 return
+    "PLR0912", # 脚本可多分支
+    "PLR0913", # 脚本可多参数
+    "PLR0915", # 脚本函数可较长
+    "SIM103",  # 脚本可显式 if/else 而非直接返回 condition
+    "ARG001",  # 脚本回调函数可有未使用参数
+    "C901",    # 脚本复杂度允许稍高
+    "TRY300",  # 脚本可保留 try/return
+    "TRY401",  # 脚本可在 logging.exception 中包含异常对象
+    "RUF012",  # 脚本可使用可变默认值
+    "RUF013",  # 脚本可保留 Optional 隐式
+]
+"tools/**/*.py" = [
+    "ANN",     # 工具脚本可放宽类型要求
+    "N801",    # 工具脚本类名可灵活（如 tqdm fallback）
+    "ARG002",  # 工具脚本可有未使用参数
+    "SIM102",  # 工具脚本可保留嵌套 if（可读性优先）
+    "SIM117",  # 工具脚本可保留嵌套 with（可读性优先）
+    "TRY401",  # 工具脚本可在 logging.exception 中包含异常对象
+]
+"**/examples/**/*.py" = [
+    "F821",    # 示例文件中的字符串字面量内的代码示例
+    "RUF001",  # 全角标点（中文教学代码）
+    "RUF002",  # 全角标点
+    "RUF003",  # 全角标点
+    "F541",    # 无占位符f-string（展示字面量）
+    "E501",    # 行过长（中文注释较长）
+    "UP003",   # type() 教学演示（L01 核心教学内容）
+]
+"**/exercises/**/*.py" = [
+    "RUF001",  # 全角标点（中文教学代码）
+    "RUF002",  # 全角标点
+    "RUF003",  # 全角标点
+    "E501",    # 行过长（中文注释较长）
+]
+"stage*/core/**/*.py" = [
+    "ANN204",  # 教学辅助代码 __init__ 可省返回类型
+    "TRY300",  # 教学保留 try/return 模式
+    "TRY301",  # 教学保留 try 内 raise
+    "PLR0913", # 教学可多参数
+    "TC002",   # 教学辅助代码可保留运行时第三方 import
+    "E721",    # 教学保留 type == 比较（演示反模式 / 与 dtype 比较）
+]
+"stage*/tests/**/*.py" = [
+    "S101", "PLR2004", "ARG", "ANN",
+    "E402", "PT006", "PT011", "PT012",
+    "F841", "TRY300", "TRY301", "SIM117",
+    "N802", "N806", "PLR0915",
+    "PLW0108", # 教学保留显式 lambda 用于实现对比
+    "PLW1510", # 教学允许 subprocess.run without check
+    "PTH201",  # 教学允许 Path(".") 显式
+    "RUF043",  # 教学保留 raises match= 中的非 raw 模式
+    "RET505",  # 教学允许不必要的 else（教学可读性）
+    "PIE810",  # 教学允许 startswith 重复调用（可读性优先）
+    "UP046",   # 教学保留 Generic[T] 旧写法对照 PEP 695
+]
+"stage*/lessons/**/*.py" = [
+    "T201",    # 教学代码允许print
+    "ANN",     # 教学示例可放宽类型要求
+    "N999",    # 教学示例文件名以数字开头按教学习惯保留
+    "F841",    # 教学示例可保留中间变量
+    "F401",    # 教学示例可演示未使用 import
+    "RET504",  # 教学示例可显式中间变量
+    "TRY300",  # 教学保留 try/return
+    "TRY301",  # 教学保留 try 内 raise
+    "B007",    # 教学循环计数可命名为 i
+    "B008",    # 教学函数默认参数可显式调用
+    "PTH123",  # 教学保留 open()
+    "PTH108",  # 教学保留 os.unlink
+    "PTH109",  # 教学保留 os.getcwd
+    "DTZ005",  # 教学保留 datetime.now()
+    "DTZ003",  # 教学保留 datetime.utcnow()
+    "DTZ006",  # 教学保留 datetime.fromtimestamp() 不带 tz
+    "DTZ001",  # 教学保留 datetime() 不带 tz
+    "B904",    # 教学保留简化 raise（无 from err）
+    "TRY201",  # 教学保留 raise（不指定异常名）
+    "ARG001",  # 教学函数签名一致性的未使用参数
+    "ARG002",  # 教学方法签名一致性的未使用参数
+    "RUF013",  # 教学保留 Optional 隐式形式
+    "PLR0915", # 教学综合示例可较长
+    "PLR0911", # 教学综合示例可多 return
+    "C417",    # 教学保留显式 lambda 写法
+    "SIM110",  # 教学保留显式循环替代 any/all
+    "SIM117",  # 教学双层 with 可读性优先
+    "PT006",   # 教学保留字符串签名
+    "UP042",   # 教学保留显式枚举写法
+    "PLW0603", # 教学保留 global 关键字
+    "F811",    # 教学示范同名重定义
+    "F405",    # 教学保留 import * 反例
+    "F821",    # 教学伪代码块可引用未定义符号（lesson.md 代码片段）
+    "N802",    # 教学允许驼峰函数名映射外部约定
+    "N803",    # 教学允许驼峰参数名
+    "N806",    # 教学允许大写局部变量
+    "E402",    # 教学示例先 importorskip 再 import 合规
+    "UP047",   # 教学保留 typing.Generic 写法对照 PEP 695 新语法
+    "TC002",   # 教学保留运行时第三方 import（不强制 TYPE_CHECKING）
+    "TC003",   # 教学保留运行时标准库 import（不强制 TYPE_CHECKING）
+    "RUF059",  # 教学允许未使用占位变量（如示例展示）
+    "PT017",   # 教学保留 try/except + assert 反例
+    "RUF012",  # 教学保留可变类属性反例
+    "SIM102",  # 教学保留嵌套 if 用于讲解
+    "SIM103",  # 教学保留显式 if/else 而非直接返回 condition
+    "SIM222",  # 教学保留显式 or True
+    "SIM223",  # 教学保留显式 and False
+    "PLR0912", # 教学综合示例可多分支
+    "ICN001",  # 教学保留 import 别名约定（如 import numpy as np）
+    "UP036",   # 教学保留旧版兼容写法
+    "N801",    # 教学允许特殊类名（如装饰器、Context Manager 风格）
+    "I001",    # 教学课内 import 顺序由作者决定
+    "E731",    # 教学保留 lambda 赋值（演示 lambda 用法）
+    "E721",    # 教学保留 type == 比较（演示反模式）
+    "UP028",   # 教学保留 yield from 旧写法对照
+    "B011",    # 教学保留 assert False（演示反模式）
+    "B018",    # 教学保留无用表达式（演示运行时不报错）
+    "B006",    # 教学保留可变默认参数（演示常见陷阱）
+    "B023",    # 教学保留闭包绑定问题示例
+    "PLR0133", # 教学保留常量比较（演示）
+    "PLW1641", # 教学保留无 __hash__（演示）
+    "PT015",   # 教学保留 assert False
+    "PT019",   # 教学保留特殊 fixture 命名
+    "PTH110",  # 教学保留 os.path.exists()
+    "RET503",  # 教学保留隐式 None 返回
+    "RUF005",  # 教学保留显式列表拼接
+    "RUF100",  # 教学保留 noqa 注释（即使规则未启用）
+    "SIM115",  # 教学保留无 with 的 open()（演示）
+    "SIM118",  # 教学保留 dict.keys() 显式
+    "TRY002",  # 教学保留 raise Exception() 通用形式
+    "F403",    # 教学保留 from X import * 模式
+    "F823",    # 教学保留 LEGB 演示中的 NameError
+    "N816",    # 教学保留 mixedCase 演示
+    "PLW0602", # 教学保留 global 但无赋值（演示）
+    "PLW2901", # 教学保留循环变量重写
+    "PT018",   # 教学保留 assert a and b（不强求拆分）
+    "TRY004",  # 教学保留 raise ValueError 而非 TypeError
+]
+
+# 🔥 核心源代码严格模式（不允许类型豁免）
+"stage*/projects/**/src/**/*.py" = []  # P1等项目核心代码必须有完整类型提示
+
+# 自动修复配置
+fixable = ["ALL"]
+unfixable = []
+
+[tool.ruff.format]
+quote-style = "double"
+indent-style = "space"
+skip-magic-trailing-comma = false
+line-ending = "auto"
+
+# isort配置
+[tool.ruff.lint.isort]
+combine-as-imports = true
+force-sort-within-sections = true
+known-first-party = ["stage1", "stage2", "stage3", "stage4"]
+
+# ============================================================================
+# Mypy 配置 - 类型检查防线
+# 🎯 python_version = "3.13" - 类型检查锁定Python 3.13
+# ============================================================================
+
+[tool.mypy]
+# ============================================================================
+# Mypy 配置说明
+# ----------------------------------------------------------------------------
+# - 课程基线：Python 3.13；目标只对"工程代码"启用 strict（projects/、
+#   extensions/<lib>/src/、stage*/core/ 等）；教学代码（lessons/<>/solutions /
+#   exercises / examples / tests / 等）通过 exclude 路径模式整体豁免。
+# - `uv run mypy .` 当前 0 错误（39 source files），CI 中作为门禁。
+# - FastAPI 路由的 untyped-decorator 通过文件级 `# mypy: disable-error-code`
+#   关闭（上游已知 quirk），其他 strict 规则保留。
+# ============================================================================
+python_version = "3.13"  # 🔑 关键：类型检查锁定 Python 3.13
+
+# 🚨 Strict模式 - 最严格类型安全
+strict = true
+ignore_missing_imports = true
+explicit_package_bases = true
+namespace_packages = true
+disallow_untyped_defs = true
+# 关闭 disallow_any_unimported：本仓库大量使用无类型 stub 的第三方库
+# （pandas 旧 stub、langgraph、httpx-related 等），强制此项会让 projects/
+# 工程代码淹没在 [no-any-unimported] 警告里。仍保留 ignore_missing_imports
+# 给具体已知库提供豁免（见下方 overrides）。
+disallow_any_unimported = false
+warn_return_any = true
+warn_unused_ignores = true
+warn_redundant_casts = true
+warn_unused_configs = true
+no_implicit_reexport = true
+strict_equality = true
+disallow_incomplete_defs = true
+disallow_untyped_calls = true
+disallow_any_generics = true
+disallow_subclassing_any = true
+disallow_untyped_decorators = true
+strict_concatenate = true
+
+# 🔥 死代码检测（必须）
+warn_unreachable = true
+warn_no_return = true
+
+# 🔥 Any 泄露检测
+disallow_any_expr = false  # 项目根目录设为 false，子模块可覆盖
+
+# 🔥 Python 3.12+ 特性启用
+enable_error_code = [
+    "explicit-override",      # 强制 @override 装饰器
+    "ignore-without-code",    # 禁止裸 # type: ignore
+    "redundant-expr",         # 冗余表达式
+    "truthy-bool",            # bool 类型判断
+    "truthy-iterable",        # 可迭代对象判断
+    "unused-awaitable",       # 未使用的 awaitable
+    "redundant-self",         # 冗余的 self 类型
+]
+
+# 错误报告配置
+show_error_codes = true
+show_column_numbers = true
+pretty = true
+color_output = true
+error_summary = true
+
+# 性能优化
+cache_dir = ".mypy_cache"
+incremental = true
+
+# 排除目录
+# 教学代码（solutions / exercises / examples / tests / benchmarks / data）大量
+# 是动态类型演示、TODO 模板、脚本式 demo，不适用 strict 类型检查；只对真正
+# 的"工程代码"（projects/.../src、extensions、stage*/lessons/L**/src 等）
+# 跑 strict。命中需求时通过具体 override 重新启用。
+exclude = [
+    "^_archive/",
+    "^build/",
+    "^dist/",
+    "^scaffolds/",           # 实验性脚手架代码，类型检查豁免
+    "^scripts/",              # 教学辅助脚本豁免（未做严格类型注解）
+    "^compare-source/",        # 临时下载的 GitHub 仓库，不参与检查
+    # Stage 0-9 教学代码豁免（legacy 模式，保留兼容性）
+    "^stage[0-9].*/lessons/L[0-9]+[^/]*/(solutions|exercises|examples|tests|benchmarks|data|demos|project|projects|supplementary|taskmaster)(/|$)",
+    "^stage[0-9].*/lessons/L[0-9]+[^/]*/(verify\\.py|verify_env\\.py|demo-docker)(/|$)",  # 验证脚本豁免
+    "^stage[0-9].*/lessons/L[0-9]+[^/]*/report\\.py$",  # 报告脚本豁免
+    "^stage[0-9][^/]*/tests(/|$)",
+    # Stage A/K/M/P/R 教学代码豁免（新模式，支持字母前缀）
+    "^stageA-ai-enterprise/lessons/A[0-9]+[^/]*/(solutions|exercises|examples|tests|benchmarks|data|demos|project|projects|supplementary)(/|$)",
+    "^stageK-devops/lessons/K[0-9]+[^/]*/(solutions|exercises|examples|tests|benchmarks|data|demos|project|projects|supplementary)(/|$)",
+    "^stageM-enterprise/lessons/M[0-9]+[^/]*/(solutions|exercises|examples|tests|benchmarks|data|demos|project|projects|supplementary)(/|$)",
+    "^stageP-web-scraping/lessons/P[0-9]+[^/]*/(solutions|exercises|examples|tests|benchmarks|data|demos|project|projects|supplementary)(/|$)",
+    "^stageR-frontier/lessons/R[0-9]+[^/]*/(solutions|exercises|examples|tests|benchmarks|data|demos|project|projects|supplementary)(/|$)",
+    "^projects/[^/]+/(tests|skeleton)(/|$)",
+    "^stage[0-9].*/projects/[^/]+/tests(/|$)",
+    "^extensions/.*/(tests|exercises|solutions)(/|$)",
+    # 教学辅助脚本 / 验证脚本未做严格类型注解；mkdocs_hooks.py 等构建关键
+    # 文件单独 include（命名不在下面这份豁免列表里）。
+    "^scripts/quality/",      # 质量扫描脚本豁免
+    "^scripts/(analyze_cleanup|audit_markdown|lesson_md_analyzer|refactor_courses|refactor_lesson_docs|validate_lesson_format|verify_course_mapping)\\.py$",
+    "/conftest\\.py$",
+    ".*/__pycache__/",
+]
+
+# 🔧 第三方库配置（无类型存根的库）
+# 只列**当前实际被工程代码（非 lesson）import 且缺类型 stub**的库；其他
+# 第三方库已装好类型或上游自带 stub，不需要 override。删除 unused override
+# 让 `mypy .` 输出干净。
+[[tool.mypy.overrides]]
+module = [
+    "qdrant_client.*",
+]
+ignore_missing_imports = true
+
+# FastAPI 路由装饰器 (@router.get / @app.get) 在某些版本下被 mypy 视为
+# untyped decorator（路由函数返回类型在 FastAPI typing 模型中信息不足以
+# 让装饰器透传 inner func 类型）。这是上游已知问题；FastAPI 路由层不强制
+# 此项检查（仍保留其他 strict 规则）。
+#
+# projects/02-ai-fullstack-capstone 包名以 "02-" 开头不能作为 mypy module
+# 模式，改用每个文件顶部的 # mypy: disable-error-code="untyped-decorator"。
+
+# 注：教学代码（lessons/<>/solutions, exercises 等）通过上方 [tool.mypy].exclude
+# 路径排除，不再用 module pattern 覆盖（旧写法 "lessons.*.solutions" 永远命不
+# 中实际目录结构 stage{N}/lessons/L{XX}/solutions）。
+
+# ============================================================================
+# Pytest 配置 - 测试框架
+# ============================================================================
+
+[tool.pytest.ini_options]
+minversion = "8.0"
+testpaths = [
+    "stage0-python-basics",
+    "stage1-python-intermediate",
+    "stage2-engineering",
+    "stage3-web-basics",
+    "stage4-web-advanced",
+    "stage5-data-engineering",
+    "stage6-ai-agent",
+]
+python_files = ["test_*.py", "*_test.py"]
+python_classes = ["Test*"]
+python_functions = ["test_*"]
+markers = [
+    "slow: 慢速测试 (运行时间 >1s)",
+    "integration: 集成测试 (需要外部服务)",
+    "unit: 单元测试 (快速、隔离)",
+    "benchmark: 性能基准测试",
+]
+norecursedirs = [
+    "skeleton",
+    "*/skeleton",
+    "skeleton/*",
+    ".venv",
+    ".git",
+    "__pycache__",
+    "site",
+    "build",
+    "dist",
+    # 归档和过渡目录：历史遗留
+    "lessons-archived",
+    "*/lessons-archived",
+    "lessons-new",
+    "*/lessons-new",
+]
+
+# 输出配置
+addopts = [
+    "-ra",                       # 显示所有测试摘要
+    "--strict-markers",          # 严格标记检查
+    "--strict-config",           # 严格配置检查
+    "--showlocals",              # 失败时显示局部变量
+    "--tb=short",                # 简短回溯
+    "--import-mode=importlib",   # 解决 stage 间同名 test 模块碰撞
+]
+
+# 异步测试支持
+asyncio_mode = "auto"
+
+# ============================================================================
+# Coverage 配置 - 覆盖率追踪
+# ============================================================================
+
+[tool.coverage.run]
+branch = true
+source = [
+    "stage0-python-basics",
+    "stage1-python-intermediate",
+    "stage2-engineering",
+    "stage3-web-apis-advanced",
+    "stage4-data-intelligence",
+    "stage5-ai-agent",
+]
+omit = [
+    "*/tests/*",
+    "*/__pycache__/*",
+    "*/.venv/*",
+    "*/migrations/*",
+]
+
+[tool.coverage.report]
+precision = 2
+show_missing = true
+skip_covered = false
+exclude_lines = [
+    "pragma: no cover",
+    "def __repr__",
+    "if TYPE_CHECKING:",
+    "raise AssertionError",
+    "raise NotImplementedError",
+    "if __name__ == .__main__.:",
+    "@abstractmethod",
+    "@overload",
+]
+
+# 覆盖率目标
+fail_under = 60.0  # 阶段1: 60% → 阶段2+: 80%
+
+[tool.coverage.html]
+directory = "htmlcov"
+show_contexts = true
+
+[tool.coverage.xml]
+output = "coverage.xml"
+
+# ============================================================================
+# 构建系统配置
+# ============================================================================
+
+[build-system]
+requires = ["hatchling>=1.25.0"]
+build-backend = "hatchling.build"
+
+[dependency-groups]
+dev = [
+    "aiohttp>=3.14.1",
+    "asyncpg>=0.31.0",
+    "pytest>=9.0.3",
+    "pytest-asyncio>=1.4.0",
+]
+
+[tool.hatch.build.targets.wheel]
+packages = [
+    "stage0-python-basics",
+    "stage1-python-intermediate",
+    "stage2-engineering",
+    "stage3-web-apis-advanced",
+    "stage4-data-intelligence",
+    "stage5-ai-agent",
+]
