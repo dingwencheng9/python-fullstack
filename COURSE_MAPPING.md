@@ -14,7 +14,7 @@
 
 | Stage | 名称 | 课程范围 | 课程数 | CORE | ELECTIVE | 状态 |
 |-------|------|----------|--------|------|----------|------|
-| Stage 0 | Python 基础 | L01-L10 | 9 | L01-L10 | — | ✅ 完整 |
+| Stage 0 | Python 基础 | L01-L10 | 10 | L01-L10 | — | ✅ 完整 |
 | Stage 1 | Python 进阶 | L10-L18 | 9 | L10-L11 | L12-L18 | ✅ 完整 |
 | Stage 2 | 现代工程 | L19-L27 | 9 | L19-L27 | — | ✅ 完整 |
 | Stage 3 | Web 开发基础 | L26-L35 | 10 | L26-L35 | — | ✅ 完整 |
@@ -27,14 +27,14 @@
 | Stage | 名称 | 课程范围 | 课程数 | CORE | ELECTIVE | 状态 |
 |-------|------|----------|--------|------|----------|------|
 | Stage A | AI Agent 企业级 | A01-A20 | 20 | A01-A05 | A06-A20 | 🔶 完善中（A01-A05 完整） |
-| Stage P | Python 爬虫专精 | S01-S09 | 9 | S01-S09 | — | 🔶 骨架 |
+| Stage S | Python 爬虫专精 | S01-S09 | 9 | S01-S09 | — | 🔶 骨架 |
 | Stage K | DevOps 与平台工程 | K01-K05 | 5 | K01-K05 | — | ✅ 完整 |
 | Stage M | 企业级 AI 应用 | M01-M08 | 8 | M01-M08 | — | 🔶 骨架 |
 | Stage R | 前沿探索实验室 | R01-R10 | 10 | R01-R10 | — | 🔶 骨架 |
 
-**总计**: 11 个 Stage · 118 节课程（含 L05 补充课）
+**总计**: 11 个 Stage · 119 节课程
 **通用核心**: 66 节课（L01-L65）
-**垂直专精**: 52 节（P:9 + K:5 + M:8 + R:10 + A:20）
+**垂直专精**: 52 节（S:9 + K:5 + M:8 + R:10 + A:20）
 **建议总学时**: ~615 小时
 
 ---
@@ -71,17 +71,15 @@
 | L02 | `L02-operators-control` | 运算符与控制流 | 7 | 9 | 7 |
 | L03 | `L03-data-structures` | 数据结构 | 4 | 6 | 4 |
 | L04 | `L04-functions-modules` | 函数与模块 | 4 | 5 | 5 |
-| L05 | `L05-dev-tools-debugging` | 调试工具与开发环境 | 2 | 2 | — |
-| L05 | `L06-file-operations` | 文件操作 | 4 | 5 | 7 |
-| L06 | `L07-oop-basics` | 面向对象基础 | 4 | 10 | 4 |
-| L07 | `L08-magic-methods` | 魔术方法（Magic Methods） | 4 | 9 | 4 |
-| L08 | `L09-exceptions` | 异常处理（Exceptions） | 4 | 6 | 4 |
-| L09 | `L10-basics-project` | Python 基础实战（收官项目） | 3 | 5 | 4 |
+| L05 | `L05-debugging-tools` | 调试工具与开发环境 | 2 | 2 | — |
+| L06 | `L06-file-operations` | 文件操作 | 4 | 5 | 7 |
+| L07 | `L07-oop-basics` | 面向对象基础 | 4 | 10 | 4 |
+| L08 | `L08-magic-methods` | 魔术方法（Magic Methods） | 4 | 9 | 4 |
+| L09 | `L09-exceptions` | 异常处理（Exceptions） | 4 | 6 | 4 |
+| L10 | `L10-basics-project` | Python 基础实战（收官项目） | 3 | 5 | 4 |
 
 **前置要求**: 无
-
-> **注意**: L05 是补充课程（标记为软依赖），不影响主线学习进度。
-**建议学时**: 40 小时
+**建议学时**: 45 小时
 
 ---
 
