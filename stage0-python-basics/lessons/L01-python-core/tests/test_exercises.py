@@ -1,10 +1,16 @@
-"""L01 Python 核心语法 - 学员练习测试
+"""L01 Python 核心语法 - 演示型练习测试
 
-测试 exercises/ 目录下学员编写的代码。
-采用与 L04 相同的 importlib 模式，不污染 sys.path。
+测试 exercises/ 目录下的演示型练习。
+演示型练习是完整实现，学员运行并观察输出。
+
+注意：
+- 演示型练习不要求学员"实现"代码
+- 测试验证模块可加载、变量存在、无语法错误
 """
 
 import importlib.util
+import subprocess
+import sys
 from pathlib import Path
 
 import pytest
@@ -60,28 +66,44 @@ def fstring_module():
 
 
 class TestHelloPractice:
-    """测试 01_hello_practice.py"""
+    """测试 01_hello_practice.py
+
+    验证：
+    1. 模块可正常加载
+    2. 定义了 name, age, city, hobby 变量
+    3. 包含 f-string 格式化
+    4. 脚本可执行（无语法错误）
+    """
 
     def test_module_exists(self, hello_module) -> None:
         """验证模块可加载"""
         assert hello_module is not None
 
-    def test_has_print_greeting_function(self, hello_module) -> None:
-        """验证模块定义了 print_greeting 函数"""
-        assert hasattr(hello_module, "print_greeting"), "请定义 print_greeting 函数"
+    def test_has_variables(self, hello_module) -> None:
+        """验证定义了基本变量（无 def 函数）"""
+        assert hasattr(hello_module, "name"), "应定义 name 变量"
+        assert hasattr(hello_module, "age"), "应定义 age 变量"
+        assert hasattr(hello_module, "city"), "应定义 city 变量"
+        assert hasattr(hello_module, "hobby"), "应定义 hobby 变量"
 
-    def test_print_greeting_accepts_arguments(self, hello_module, capsys) -> None:
-        """测试 print_greeting 能接受姓名、年龄、城市、爱好参数"""
-        func = getattr(hello_module, "print_greeting", None)
-        assert func is not None, "请定义 print_greeting 函数"
+    def test_no_function_definitions(self, hello_module) -> None:
+        """验证不包含 def 函数定义（符合 L01 知识边界）"""
+        # 获取模块的源代码
+        source_file = EXERCISES_DIR / "01_hello_practice.py"
+        source = source_file.read_text()
 
-        # 调用函数并捕获输出
-        func("张三", 25, "北京", "编程")
-        captured = capsys.readouterr()
+        # 检查源代码中不包含 def 关键字
+        assert "def " not in source, "L01 演示型练习不应包含 def 函数定义"
 
-        # 验证输出包含关键信息
-        assert "张三" in captured.out, "输出应包含姓名"
-        assert "北京" in captured.out, "输出应包含城市"
+    def test_script_runs_without_error(self) -> None:
+        """验证脚本可直接运行（无语法错误）"""
+        result = subprocess.run(
+            [sys.executable, str(EXERCISES_DIR / "01_hello_practice.py")],
+            capture_output=True,
+            text=True,
+            timeout=5,
+        )
+        assert result.returncode == 0, f"脚本执行失败: {result.stderr}"
 
 
 # ============================================================
@@ -90,22 +112,23 @@ class TestHelloPractice:
 
 
 class TestIOPractice:
-    """测试 02_io_practice.py"""
+    """测试 02_io_practice.py
+
+    验证：
+    1. 模块可正常加载
+    2. 不包含 def 函数定义
+    3. 脚本可执行
+    """
 
     def test_module_exists(self, io_module) -> None:
         """验证模块可加载"""
         assert io_module is not None
 
-    def test_has_interactive_input(self, io_module, monkeypatch, capsys) -> None:
-        """测试交互式输入输出"""
-        # 模拟用户输入
-        inputs = iter(["Alice", "30"])
-        monkeypatch.setattr("builtins.input", lambda _: next(inputs))
-
-        if hasattr(io_module, "interactive_greeting"):
-            io_module.interactive_greeting()
-            captured = capsys.readouterr()
-            assert "Alice" in captured.out or "30" in captured.out
+    def test_no_function_definitions(self, io_module) -> None:
+        """验证不包含 def 函数定义"""
+        source_file = EXERCISES_DIR / "02_io_practice.py"
+        source = source_file.read_text()
+        assert "def " not in source, "L01 演示型练习不应包含 def 函数定义"
 
 
 # ============================================================
@@ -114,27 +137,34 @@ class TestIOPractice:
 
 
 class TestTypeBasics:
-    """测试 03_type_basics.py"""
+    """测试 03_type_basics.py
+
+    验证：
+    1. 模块可正常加载
+    2. 定义了各种类型的变量
+    3. 不包含 def 函数定义
+    """
 
     def test_module_exists(self, types_module) -> None:
         """验证模块可加载"""
         assert types_module is not None
 
-    def test_has_calculate_total_function(self, types_module) -> None:
-        """验证定义了 calculate_total 函数"""
-        assert hasattr(types_module, "calculate_total"), "请定义 calculate_total 函数"
+    def test_has_type_examples(self, types_module) -> None:
+        """验证包含类型示例变量"""
+        # 检查是否定义了示例变量（通过检查模块属性）
+        attrs = dir(types_module)
+        # 模块应包含一些变量，但不是函数
+        has_variables = any(
+            not callable(getattr(types_module, attr)) and not attr.startswith("_")
+            for attr in attrs
+        )
+        assert has_variables, "应包含变量示例"
 
-    def test_calculate_total_returns_correct_value(self, types_module) -> None:
-        """测试 calculate_total 返回正确结果"""
-        func = getattr(types_module, "calculate_total", None)
-        assert func is not None, "请定义 calculate_total 函数"
-
-        # 测试几个典型用例
-        result = func(100, 50, 25)
-        assert result == 175, f"calculate_total(100, 50, 25) 应返回 175，实际得到 {result}"
-
-        result = func(10, 20, 30)
-        assert result == 60, f"calculate_total(10, 20, 30) 应返回 60，实际得到 {result}"
+    def test_no_function_definitions(self, types_module) -> None:
+        """验证不包含 def 函数定义"""
+        source_file = EXERCISES_DIR / "03_type_basics.py"
+        source = source_file.read_text()
+        assert "def " not in source, "L01 演示型练习不应包含 def 函数定义"
 
 
 # ============================================================
@@ -143,32 +173,23 @@ class TestTypeBasics:
 
 
 class TestTypeConversion:
-    """测试 04_type_conversion.py"""
+    """测试 04_type_conversion.py
+
+    验证：
+    1. 模块可正常加载
+    2. 不包含 def 函数定义
+    3. 不包含 if 语句（知识边界）
+    """
 
     def test_module_exists(self, conversion_module) -> None:
         """验证模块可加载"""
         assert conversion_module is not None
 
-    def test_has_safe_divide_function(self, conversion_module) -> None:
-        """验证定义了 safe_divide 函数"""
-        assert hasattr(conversion_module, "safe_divide"), "请定义 safe_divide 函数"
-
-    def test_safe_divide_normal_cases(self, conversion_module) -> None:
-        """测试 safe_divide 正常情况"""
-        func = getattr(conversion_module, "safe_divide", None)
-        assert func is not None, "请定义 safe_divide 函数"
-
-        assert func(10, 2) == 5.0, "10 / 2 = 5.0"
-        assert func(7, 2) == 3.5, "7 / 2 = 3.5"
-        assert func(-10, 2) == -5.0, "-10 / 2 = -5.0"
-
-    def test_safe_divide_by_zero(self, conversion_module) -> None:
-        """测试除数为零时返回 None"""
-        func = getattr(conversion_module, "safe_divide", None)
-        assert func is not None, "请定义 safe_divide 函数"
-
-        result = func(10, 0)
-        assert result is None, "除数为零时应返回 None"
+    def test_no_function_definitions(self, conversion_module) -> None:
+        """验证不包含 def 函数定义"""
+        source_file = EXERCISES_DIR / "04_type_conversion.py"
+        source = source_file.read_text()
+        assert "def " not in source, "L01 演示型练习不应包含 def 函数定义"
 
 
 # ============================================================
@@ -177,34 +198,65 @@ class TestTypeConversion:
 
 
 class TestFStringPractice:
-    """测试 05_fstring_practice.py"""
+    """测试 05_fstring_practice.py
+
+    验证：
+    1. 模块可正常加载
+    2. 包含 f-string 示例
+    3. 不包含 def 函数定义
+    """
 
     def test_module_exists(self, fstring_module) -> None:
         """验证模块可加载"""
         assert fstring_module is not None
 
-    def test_has_format_user_info_function(self, fstring_module) -> None:
-        """验证定义了 format_user_info 函数"""
-        assert hasattr(fstring_module, "format_user_info"), "请定义 format_user_info 函数"
+    def test_has_fstring_examples(self, fstring_module) -> None:
+        """验证包含 f-string 示例变量"""
+        # 检查模块中是否有示例变量
+        source_file = EXERCISES_DIR / "05_fstring_practice.py"
+        source = source_file.read_text()
+        assert 'f"' in source or "f'" in source, "应包含 f-string 示例"
 
-    def test_format_user_info_returns_string(self, fstring_module) -> None:
-        """测试 format_user_info 返回格式化字符串"""
-        func = getattr(fstring_module, "format_user_info", None)
-        assert func is not None, "请定义 format_user_info 函数"
+    def test_no_function_definitions(self, fstring_module) -> None:
+        """验证不包含 def 函数定义"""
+        source_file = EXERCISES_DIR / "05_fstring_practice.py"
+        source = source_file.read_text()
+        assert "def " not in source, "L01 演示型练习不应包含 def 函数定义"
 
-        result = func("张三", 25, "北京")
-        assert isinstance(result, str), "应返回字符串"
-        assert "张三" in result, "应包含姓名"
-        assert "25" in result, "应包含年龄"
-        assert "北京" in result, "应包含城市"
 
-    def test_format_user_info_with_fstring(self, fstring_module) -> None:
-        """测试使用了 f-string 格式化"""
-        func = getattr(fstring_module, "format_user_info", None)
-        assert func is not None, "请定义 format_user_info 函数"
+# ============================================================
+# 整体验证
+# ============================================================
 
-        # 验证能正确处理中文
-        result = func("李四", 30, "上海")
-        assert "李四" in result
-        assert "30" in result
-        assert "上海" in result
+
+class TestStage0L01Compliance:
+    """整体验证：L01 exercises 符合知识边界定义"""
+
+    def test_all_exercises_no_def(self) -> None:
+        """验证所有 L01 exercises 不包含 def 函数定义"""
+        for py_file in EXERCISES_DIR.glob("*.py"):
+            if py_file.name == "__init__.py":
+                continue
+            source = py_file.read_text()
+            assert "def " not in source, f"{py_file.name} 不应包含 def 函数定义"
+
+    def test_all_exercises_no_if(self) -> None:
+        """验证所有 L01 exercises 不包含 if 语句（越界 L02）"""
+        for py_file in EXERCISES_DIR.glob("*.py"):
+            if py_file.name == "__init__.py":
+                continue
+            source = py_file.read_text()
+            # 注意：注释中的 "if" 可以忽略，但实际代码中的 if 语句不行
+            lines = source.split("\n")
+            for line in lines:
+                stripped = line.strip()
+                if stripped and not stripped.startswith("#"):
+                    assert not stripped.startswith("if "), f"{py_file.name} 不应包含 if 语句"
+
+    def test_all_exercises_no_class(self) -> None:
+        """验证所有 L01 exercises 不包含 class 定义（越界 L07）"""
+        for py_file in EXERCISES_DIR.glob("*.py"):
+            if py_file.name == "__init__.py":
+                continue
+            source = py_file.read_text()
+            assert "class " not in source, f"{py_file.name} 不应包含 class 定义"

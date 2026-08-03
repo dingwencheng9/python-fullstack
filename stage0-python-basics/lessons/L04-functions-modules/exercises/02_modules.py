@@ -55,29 +55,32 @@ def calculate_total(items: list[int]) -> int:
     return len(items) * 10
 
 
-# ============ 练习 3: 使用类定义配置 ============
+# ============ 练习 3: 使用字典定义配置 ============
+# 注意：L04 阶段我们使用字典来模拟配置对象
+# 类定义将在 L07（面向对象基础）中学习
 
 
-class AppConfig:
-    """应用配置类（手动实现，等价于 dataclass）"""
+def create_config(name: str, version: str, debug: bool = False) -> dict:
+    """创建应用配置（字典形式）
 
-    def __init__(
-        self,
-        name: str,
-        version: str,
-        debug: bool = False,
-    ) -> None:
-        self.name = name
-        self.version = version
-        self.debug = debug
-
-    def __repr__(self) -> str:
-        return f"AppConfig(name={self.name!r}, version={self.version!r}, debug={self.debug})"
+    注意：这是演示型练习，使用字典代替类。
+    真正的类定义将在 L07 中学习。
+    """
+    return {
+        "name": name,
+        "version": version,
+        "debug": debug,
+    }
 
 
-def create_config(name: str, version: str, debug: bool = False) -> AppConfig:
-    """创建应用配置"""
-    return AppConfig(name=name, version=version, debug=debug)
+def get_config_value(config: dict, key: str, default=None):
+    """从配置字典中获取值"""
+    return config.get(key, default)
+
+
+def is_debug_mode(config: dict) -> bool:
+    """检查是否开启调试模式"""
+    return config.get("debug", False)
 
 
 # ============ 练习 4: 模块导入与使用 ============

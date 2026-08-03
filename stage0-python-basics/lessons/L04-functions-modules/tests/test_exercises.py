@@ -177,21 +177,35 @@ class TestCalculateTotal:
 
 
 class TestAppConfig:
-    """测试 AppConfig dataclass"""
+    """测试配置字典函数（注意：L04 使用字典而非类，L07 才学类定义）"""
 
     def test_create_config(self, modules_module) -> None:
-        """测试创建配置"""
+        """测试创建配置字典"""
         config = modules_module.create_config("MyApp", "1.0.0", debug=True)
-        assert config.name == "MyApp"
-        assert config.version == "1.0.0"
-        assert config.debug is True
+        assert config["name"] == "MyApp"
+        assert config["version"] == "1.0.0"
+        assert config["debug"] is True
 
     def test_default_values(self, modules_module) -> None:
         """测试默认值"""
         config = modules_module.create_config("TestApp", "2.0.0")
-        assert config.name == "TestApp"
-        assert config.version == "2.0.0"
-        assert config.debug is False
+        assert config["name"] == "TestApp"
+        assert config["version"] == "2.0.0"
+        assert config["debug"] is False
+
+    def test_get_config_value(self, modules_module) -> None:
+        """测试获取配置值"""
+        config = modules_module.create_config("MyApp", "1.0.0", debug=True)
+        assert modules_module.get_config_value(config, "name") == "MyApp"
+        assert modules_module.get_config_value(config, "missing") is None
+        assert modules_module.get_config_value(config, "missing", "default") == "default"
+
+    def test_is_debug_mode(self, modules_module) -> None:
+        """测试调试模式检查"""
+        config_debug = modules_module.create_config("App", "1.0", debug=True)
+        config_release = modules_module.create_config("App", "1.0", debug=False)
+        assert modules_module.is_debug_mode(config_debug) is True
+        assert modules_module.is_debug_mode(config_release) is False
 
 
 class TestFormatUsername:

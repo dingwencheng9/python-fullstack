@@ -4,27 +4,90 @@
 预计时间: 10 分钟
 知识点: 变量定义、type()、id()
 
+学习方式:
+本练习是"演示型练习"——代码已经完整实现，
+你需要运行它，观察输出，理解代码的工作原理。
+
 任务描述:
-1. 创建不同类型的变量（int, float, str, bool）
+1. 运行这个文件，观察不同类型的变量
 2. 使用 type() 检查变量类型
-3. 使用 id() 查看变量地址
-4. 观察变量引用行为
+3. 使用 id() 查看变量在内存中的地址
+4. 理解 Python 的"引用模型"——变量是标签，不是盒子
+
+关键概念:
+- Python 中一切皆对象
+- 变量是对象的引用（标签），不是存储数据的容器
+- id() 返回对象的内存地址
+- type() 返回对象的类型
 """
 
 # ============================================================
-# 练习：实现 calculate_total 函数
+# 演示：基本数据类型
 # ============================================================
 
-def calculate_total(price1: float, price2: float, price3: float) -> float:
-    """计算三件商品的总价。
+# 整数 (int)
+price = 100
+print(f"price = {price}")
+print(f"  type: {type(price)}")
+print(f"  id:   {id(price)}")
 
-    Args:
-        price1: 第一件商品价格
-        price2: 第二件商品价格
-        price3: 第三件商品价格
+# 浮点数 (float)
+pi = 3.14159
+print(f"\npi = {pi}")
+print(f"  type: {type(pi)}")
+print(f"  id:   {id(pi)}")
 
-    Returns:
-        三件商品的总价
-    """
-    # TODO: 计算并返回三件商品的总价
-    pass
+# 字符串 (str)
+message = "Hello, Python!"
+print(f"\nmessage = {message}")
+print(f"  type: {type(message)}")
+print(f"  id:   {id(message)}")
+
+# 布尔值 (bool)
+is_student = True
+is_working = False
+print(f"\nis_student = {is_student}")
+print(f"  type: {type(is_student)}")
+print(f"  id:   {id(is_student)}")
+
+# ============================================================
+# 演示：变量引用模型
+# ============================================================
+print("\n--- 变量引用模型 ---")
+
+a = 100
+b = a  # b 和 a 指向同一个对象
+
+print(f"a = {a}, id(a) = {id(a)}")
+print(f"b = {b}, id(b) = {id(b)}")
+print(f"a is b: {a is b}")  # True 表示是同一个对象
+
+# 修改变量 a
+a = 200
+print(f"\n修改 a = 200 后:")
+print(f"a = {a}, id(a) = {id(a)}")
+print(f"b = {b}, id(b) = {id(b)}")
+print(f"a is b: {a is b}")  # False，现在 a 和 b 是不同的对象
+
+# ============================================================
+# 演示：字符串的不可变性
+# ============================================================
+print("\n--- 字符串不可变性 ---")
+
+s1 = "Hello"
+s2 = s1
+print(f"s1 = {s1}, id(s1) = {id(s1)}")
+print(f"s2 = {s2}, id(s2) = {id(s2)}")
+
+# 字符串方法返回新字符串，不修改原字符串
+s3 = s1.upper()
+print(f"\ns1.upper() = {s3}")
+print(f"s1 = {s1} (未改变!)")
+print(f"s1 is s3: {s1 is s3}")  # False，是不同的对象
+
+# ============================================================
+# 思考题
+# ============================================================
+# 1. 为什么 a = 200 后，b 还是 100？
+# 2. type() 和 id() 有什么区别？
+# 3. 为什么字符串方法不修改原字符串？
