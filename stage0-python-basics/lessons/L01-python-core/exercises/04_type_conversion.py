@@ -15,3 +15,21 @@
 - float("3.14") 将字符串转为浮点数
 - bool(0) = False, bool("非空字符串") = True
 """
+
+# ============================================================
+# 练习：实现 safe_divide 函数
+# ============================================================
+
+def safe_divide(dividend: float, divisor: float) -> float | None:
+    """安全除法，除数为零时返回 None。
+
+    Args:
+        dividend: 被除数
+        divisor: 除数
+
+    Returns:
+        除法结果，除数为零时返回 None
+    """
+    # TODO: 实现安全除法
+    # 提示: 使用 if 判断 divisor 是否为 0
+    pass
