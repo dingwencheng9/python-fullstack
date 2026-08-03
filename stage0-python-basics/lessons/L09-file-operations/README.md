@@ -33,7 +33,7 @@
 从仓库根目录执行：
 
 ```bash
-cd stage0-python-basics/lessons/L06-file-operations
+cd stage0-python-basics/lessons/L09-file-operations
 ```
 
 运行示例：
