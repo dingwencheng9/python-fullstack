@@ -26,6 +26,11 @@ class Person:
     """人员类"""
 
     def __init__(self, name: str, age: int) -> None:
+        # 💡 L06 知识点：防御性属性校验，使用 raise 抛出异常
+        if age < 0:
+            raise ValueError("年龄不能为负数")
+        if not name or not name.strip():
+            raise ValueError("姓名不能为空")
         self.name = name
         self.age = age
 
@@ -46,6 +51,9 @@ class BankAccount:
     """银行账户类"""
 
     def __init__(self, owner: str, balance: float = 0) -> None:
+        # 💡 L06 知识点：初始余额校验
+        if balance < 0:
+            raise ValueError("初始余额不能为负数")
         self.owner = owner
         self.__balance = balance  # 私有属性
 
@@ -127,6 +135,9 @@ class Vector:
     """
 
     def __init__(self, x: float, y: float) -> None:
+        # 💡 L06 知识点：坐标校验
+        if not isinstance(x, (int, float)) or not isinstance(y, (int, float)):
+            raise TypeError("坐标必须是数字类型")
         self.x = x
         self.y = y
 
