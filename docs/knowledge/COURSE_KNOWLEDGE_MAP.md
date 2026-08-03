@@ -58,10 +58,10 @@
 | L03 | 数据结构 | 9 | list、dict、set、列表推导式、collections |
 | L04 | 函数与模块 | 7 | def、参数传递、作用域、import、lambda、__init__.py |
 | L05 | 调试工具与开发环境 | 6 | pdb、breakpoint、traceback、IDE 调试、uv 工具链 |
-| L06 | 文件操作 | 8 | 文件读写、pathlib、JSON、with 上下文、基础 OOP |
-| L07 | 面向对象基础 | 8 | 类、对象、继承、super()、@property、类变量 vs 实例变量、MRO |
-| L08 | 魔术方法 | 10 | __init__、__str__、__repr__、__iter__、__next__、__enter__、__exit__、__call__、描述符协议 |
-| L09 | 异常处理 | 8 | try/except、raise、自定义异常、else/finally、异常链、traceback |
+| L06 | 异常处理 | 8 | try/except、raise、自定义异常、else/finally、异常链、traceback |
+| L07 | 文件操作 | 8 | 文件读写、pathlib、JSON、with 上下文、基础 OOP |
+| L08 | 面向对象基础 | 8 | 类、对象、继承、super()、@property、类变量 vs 实例变量、MRO |
+| L09 | 魔术方法 | 10 | __init__、__str__、__repr__、__iter__、__next__、__enter__、__exit__、__call__、描述符协议 |
 | P01 | 学员管理系统 | 6 | 综合实战：文件操作、OOP、异常处理、命令行参数、项目结构 |
 
 **阶段知识点总数**: ~81 个

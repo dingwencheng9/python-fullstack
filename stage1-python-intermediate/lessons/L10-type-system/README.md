@@ -3,6 +3,7 @@
 > **课程编号**: L10
 > **所属阶段**: Stage 1 - Python 进阶
 > **预计时长**: 6 小时
+> **前置课程**: L04 函数与模块, L06 文件操作
 > **核心内容**: 类型注解、Union/Optional、Callable、Protocol、PEP 695 泛型、TypedDict、mypy
 
 ---

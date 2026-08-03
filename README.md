@@ -1,7 +1,7 @@
 <!-- 文档层级: L0 - 入口门面 -->
 <!-- 受众: 新用户、GitHub 访客 -->
 <!-- 更新频率: 低（重大变更时） -->
-<!-- 最后更新: 2026-07-26 - 课程体系 v5.0 完成全面清理 + 文档整合 -->
+<!-- 最后更新: 2026-08-02 - 课程编号全面修正 -->
 
 # Python 3.13 全栈课程体系
 
@@ -13,7 +13,7 @@
 ![Redis](https://img.shields.io/badge/Redis-7-red?style=for-the-badge&logo=redis)
 ![License](https://img.shields.io/badge/License-MIT-yellow?style=for-the-badge)
 
-> 🎓 **完整课程体系**: 117 节课程 · 11 个 Stage · ~610 小时
+> 🎓 **完整课程体系**: 118 节课程 · 11 个 Stage · ~610 小时
 > Core（通用核心） + Specialization（垂直专精）双轨制
 >
 > 📚 [课程体系](#-课程导航) · [快速开始](#-开发者快速启动指南) · [学习路径](#-学习路径) · [文档中心](#-文档)
@@ -49,36 +49,36 @@
 
 ### ⚡ 快速通道（推荐）
 
-**适合**: 有 Python 基础、想快速掌握现代全栈开发  
-**学时**: ~180 小时  
-**起点**: Stage 2（L27 Pytest）  
+**适合**: 有 Python 基础、想快速掌握现代全栈开发
+**学时**: ~180 小时
+**起点**: Stage 2（L19 Pytest）
 👉 [快速通道指南](QUICKSTART.md)
 
 ---
 
 ### 📚 完整通道
 
-**适合**: 零基础、想系统学习  
-**学时**: ~400 小时  
-**起点**: Stage 0（L01 Python 核心语法）  
+**适合**: 零基础、想系统学习
+**学时**: ~400 小时
+**起点**: Stage 0（L01 Python 核心语法）
 👉 [完整学习路径](COURSE_MAPPING.md)
 
 ---
 
 ### 🤖 AI Agent 专项通道
 
-**适合**: 想深入 AI Agent 开发  
-**学时**: ~150 小时  
-**起点**: Stage 4（L36 异步背压）  
+**适合**: 想深入 AI Agent 开发
+**学时**: ~150 小时
+**起点**: Stage 4（L36 异步背压）
 👉 [Agent 专项路径](COURSE_MAPPING.md#学习路径建议)
 
 ---
 
 ### ☸️ DevOps 专项通道
 
-**适合**: 想掌握 K8s + GitOps + 监控  
-**学时**: ~120 小时  
-**起点**: Stage 4（L36 异步背压）  
+**适合**: 想掌握 K8s + GitOps + 监控
+**学时**: ~120 小时
+**起点**: Stage 4（L36 异步背压）
 👉 [DevOps 专项路径](COURSE_MAPPING.md#学习路径建议)
 
 ---
@@ -89,9 +89,9 @@
 
 | Stage | 名称 | 课程范围 | 课程数 | 状态 |
 |-------|------|----------|--------|------|
-| 0 | Python 基础 | L01-L10 | 9 | ✅ 完整 |
-| 1 | Python 进阶 | L10-L16 | 7 | ✅ 完整 |
-| 2 | 现代工程 | L27-L27 | 9 | ✅ 完整 |
+| 0 | Python 基础 | L01-L09, P01 | 10 | ✅ 完整 |
+| 1 | Python 进阶 | L10-L18 | 9 | ✅ 完整 |
+| 2 | 现代工程 | L19-L27 | 9 | ✅ 完整 |
 | 3 | Web 开发基础 | L26-L35 | 10 | ✅ 完整 |
 | 4 | Web 开发进阶 | L36-L46 | 11 | ✅ 完整 |
 | 5 | 数据工程 | L47-L53 | 7 | ✅ 完整 |
@@ -102,13 +102,13 @@
 | Stage | 名称 | 课程范围 | 课程数 | 状态 |
 |-------|------|----------|--------|------|
 | A | AI Agent 企业级 | A01-A20 | 20 | 🔶 完善中（A01-A05 完整） |
-| P | Python 爬虫专精 | S01-S09 | 9 | 🔶 骨架 |
+| S | Python 爬虫专精 | S01-S09 | 9 | 🔶 骨架 |
 | K | DevOps 平台工程 | K01-K05 | 5 | ✅ 完整 |
 | M | 企业级 AI 应用 | M01-M08 | 8 | 🔶 骨架 |
 | R | 前沿探索实验室 | R01-R10 | 10 | 🔶 骨架 |
 
-**总计**: 11 个 Stage · 117 节课程 · ~610 学时
-**完整度**: 67% (78 课完整 / 20 课完善中 / 19 课骨架)
+**总计**: 11 个 Stage · 118 节课程 · ~610 学时
+**完整度**: 67% (78 课完整 / 28 课完善中 / 12 课骨架)
 
 ---
 
@@ -160,8 +160,8 @@ cd stage0-python-basics/lessons/L01-python-core
 cat README.md
 uv run python examples/01_*.py
 
-# Stage 4 - Web 进阶
-cd stage4-web-advanced/lessons/L37-web-security-complete
+# Stage 2 - 现代工程
+cd stage2-engineering/lessons/L19-pytest-complete
 uv run pytest tests/ -v
 ```
 
@@ -169,7 +169,7 @@ uv run pytest tests/ -v
 
 ## 📚 课程导航
 
-### Stage 0: Python 基础（L01-L10）
+### Stage 0: Python 基础（L01-L09, P01）
 
 零基础入门段，从变量到面向对象。
 
@@ -179,13 +179,14 @@ uv run pytest tests/ -v
 | L02 | 运算符与控制流 | if/else、for、while |
 | L03 | 数据结构 | list、dict、set、tuple |
 | L04 | 函数与模块 | def、import、参数传递 |
-| L05 | 字符串与文件处理 | 字符串操作、文件读写 |
-| L06 | 面向对象基础 | 类、对象、继承 |
-| L07 | 魔术方法 | __init__、__str__、__call__ |
-| L08 | 异常处理 | try/except、自定义异常 |
-| L09 | Python 基础实战 | 综合项目 |
+| L05 | 调试工具与开发环境 | pdb、breakpoint、uv |
+| L06 | 异常处理 | try/except、raise、自定义异常 |
+| L07 | 面向对象基础 | 类、对象、继承 |
+| L08 | 魔术方法 | __init__、__str__、__call__ |
+| L09 | 文件操作 | 文件读写、pathlib、JSON |
+| P01 | 学员管理系统 | 综合项目实战 |
 
-### Stage 1: Python 进阶（L10-L16）
+### Stage 1: Python 进阶（L10-L18）
 
 进阶语法与工程思维，为生产代码奠基。
 
@@ -193,25 +194,27 @@ uv run pytest tests/ -v
 |------|----------|----------|
 | L10 | Python 类型系统 | typing、Protocol、Generic |
 | L11 | 迭代器与生成器 | __iter__、yield、生成器表达式 |
-| L12 | Python 高级特性 | 装饰器、上下文管理器 |
-| L13 | 描述符与属性 | property、__get__、__set__ |
-| L14 | 并发编程入门 | asyncio、async/await |
-| L15 | 函数式编程 | map/filter/reduce、lambda |
-| L16 | 正则表达式 | re 模块、模式匹配 |
+| L12 | 生成器进阶 | yield from、协程、生成器模式 |
+| L13 | Python 高级特性 | 闭包、上下文管理器 |
+| L14 | 装饰器进阶 | 参数装饰器、类装饰器 |
+| L15 | 描述符与属性 | property、__get__、__set__ |
+| L16 | 并发编程入门 | asyncio、async/await |
+| L17 | 函数式编程 | map/filter/reduce、lambda |
+| L18 | 正则表达式 | re 模块、模式匹配 |
 
-### Stage 2: 现代工程（L27-L27）
+### Stage 2: 现代工程（L19-L27）
 
 工程化内功与异步核心。
 
 | 编号 | 课程标题 | 核心内容 |
 |------|----------|----------|
-| L27 | Pytest 完整实战 | 单元测试、fixture、Mock |
-| L26 | 现代化工具链 | uv、ruff、mypy、pre-commit |
-| L27 | 异步编程核心 | asyncio、Task、Future |
-| L26 | 装饰器深度探索 | 参数装饰器、类装饰器 |
-| L27 | Python 3.13 体验 | 新特性、类型参数、改进 |
-| L26 | 高阶流控与异步协同 | 信号量、事件、条件 |
-| L27 | 极限抽象与性能优化 | __slots__、猴子补丁 |
+| L19 | Pytest 完整实战 | 单元测试、fixture、Mock |
+| L20 | 现代化工具链 | uv、ruff、mypy、pre-commit |
+| L21 | 异步核心进阶 | asyncio、Task、Future |
+| L22 | 装饰器深度探索 | 参数装饰器、类装饰器 |
+| L23 | Python 新特性 | 3.13 新特性、版本迁移 |
+| L24 | 高阶流控与异步协同 | 信号量、事件、条件 |
+| L25 | 极限抽象与性能优化 | __slots__、猴子补丁 |
 | L26 | 线程与并发 | Thread、Lock、Queue |
 | L27 | 工程化综合项目 | 测试 + CI/CD |
 
@@ -256,10 +259,10 @@ Pandas + DuckDB + NumPy + 异步管道 + 向量检索。
 
 | 编号 | 课程标题 | 核心内容 |
 |------|----------|----------|
-| L47 | NumPy 科学计算基础 | 数组、广播、索引 |
+| L47 | Pandas 完整实战 | DataFrame、聚合、清洗 |
 | L48 | 数据可视化 | Matplotlib、Seaborn、Plotly |
 | L49 | DuckDB 嵌入式分析 | OLAP、SQLite 替代 |
-| L50 | Pandas 数据处理实战 | DataFrame、聚合、清洗 |
+| L50 | Pandas 进阶数据处理 | 高级技巧、性能优化 |
 | L51 | 异步数据管道 | 异步 ETL、批量处理 |
 | L52 | NumPy RAG PoC *(+ES扩展)* | 向量检索、相似度计算、Elasticsearch |
 | L53 | DuckDB OLAP 实战 | 性能调优、物化视图 |
@@ -270,18 +273,18 @@ LangGraph + LangChain + Agent 基础 + MCP + 多智能体 + RAG。所有 AI 应�
 
 | 编号 | 课程标题 | 核心内容 |
 |------|----------|----------|
-| L54 | LangGraph 工作流编排 | 状态机、节点、边、条件分支 |
-| L55 | LangChain 基础与应用 | LCEL、Chain、Prompt 工程 |
-| L56 | Agent 基础与工具调用 | ReAct、Tool Use、Function Calling |
-| L57 | LangGraph 进阶 | 持久化、内存、检查点 |
-| L58 | Agent 记忆管理 | 短期/长期记忆、摘要压缩 |
-| L59 | Agent 规划与推理 | CoT、ToT、ReAct 模式 |
-| L60 | MCP 协议入门 | Model Context Protocol 工具调用 |
+| L54 | Agent 基础与工具调用 | ReAct、Tool Use、Function Calling |
+| L55 | MCP 协议入门 | Model Context Protocol 工具调用 |
+| L56 | LangChain 基础与应用 | LCEL、Chain、Prompt 工程 |
+| L57 | RAG 向量数据库 | Qdrant、Milvus、Embedding |
+| L58 | LangGraph 工作流编排（基础） | 状态机、节点、边、条件分支 |
+| L59 | Agent 记忆与上下文管理 | 短期/长期记忆、摘要压缩 |
+| L60 | Agent 规划与推理 | CoT、ToT、ReAct 模式 |
 | L61 | 多智能体编排 | Agent 协作、任务分配、层级 |
-| L62 | Agent 评估与调试 | 指标、日志、回放、Trace |
-| L63 | Agent 部署与监控 | Docker、K8s、OpenTelemetry |
-| L64 | Agent SSE 流式路由 | 流式输出、Token 控制 |
-| L65 | RAG 向量数据库 | Qdrant、Milvus、Embedding |
+| L62 | LangGraph 高级模式与生产部署 | 持久化、内存、检查点 |
+| L63 | Agent 评估与调试 | 指标、日志、回放、Trace |
+| L64 | Agent 部署与监控 | Docker、K8s、OpenTelemetry |
+| L65 | Agent SSE 流式路由 | 流式输出、Token 控制 |
 
 ### 🚀 Stage A: AI Agent 企业级（A01-A20）- SPECIALIZATION
 

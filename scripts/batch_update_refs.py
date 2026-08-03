@@ -1,6 +1,5 @@
 #!/usr/bin/env python3
 """批量更新课程编号引用"""
-import re
 from pathlib import Path
 
 # 定义替换规则
@@ -76,7 +75,7 @@ def main():
                 if update_file(filepath):
                     updated_files.append(filepath)
 
-    print(f"=== 更新完成 ===")
+    print("=== 更新完成 ===")
     print(f"共更新 {len(updated_files)} 个文件:")
     for f in sorted(updated_files):
         print(f"  - {f.relative_to(base)}")

@@ -509,7 +509,7 @@ def log_exception(exc_type, exc_value, exc_tb):
 sys.excepthook = log_exception
 ```
 
-> 📖 **前置知识**: 本节内容基于 [L08 异常处理](../../../stage0-python-basics/lessons/L09-exceptions/lesson.md) 的基础异常处理知识。
+> 📖 **前置知识**: 本节内容基于 [L09 异常处理](../../../stage0-python-basics/lessons/L09-exceptions/lesson.md) 的基础异常处理知识。
 
 ---
 

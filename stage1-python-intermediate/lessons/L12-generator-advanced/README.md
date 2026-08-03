@@ -4,7 +4,7 @@
 > **所属阶段**: Stage 1 - Python 进阶  
 > **预计时长**: 4 小时  
 > **难度**: ⭐⭐⭐☆☆（中级进阶）  
-> **前置课程**: L11 迭代器与生成器  
+> **前置课程**: L10 类型系统, L11 迭代器与生成器  
 > **学习目标**: 掌握 yield from、send() 双向通信、异步生成器
 
 ---
@@ -77,7 +77,7 @@ L12-generator-advanced/
 
 - **前置课程**: [L11 迭代器与生成器](../L11-generators/lesson.md)
 - **后续课程**: 
-  - [L12 Python 高级特性（入门）](../L12-advanced-features/lesson.md)
+  - [L13 Python 高级特性（入门）](../L13-advanced-features/lesson.md)
   - [L14 并发编程入门](../L14-concurrency-intro/lesson.md)
 
 ---

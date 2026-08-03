@@ -1,9 +1,9 @@
-# L17: Pytest 完整实战 — 从单元测试到 CI/CD
+# L19: Pytest 完整实战 — 从单元测试到 CI/CD
 
-> **课程代码**: L17-pytest-complete
+> **课程编号**: L19
 > **课程时长**: 5-6 小时
 > **难度**: ⭐⭐⭐⭐☆（中高级）
-> **前置课程**: L01-L16（Python 基础与进阶）
+> **前置课程**: L01-L18（Python 基础与进阶）
 
 ## 📚 课程概述
 
@@ -135,4 +135,4 @@ uv run pytest stage2-engineering/lessons/L17-pytest-complete/solutions/*.py -q
 ## 🔗 前后衔接
 
 - 上一阶段：[Stage 1: Python 进阶](../../../stage1-python-intermediate/README.md)
-- 下一课：[L18: 现代化工具链](../L18-toolchain/README.md)
+- 下一课：[L20: 现代化工具链](../L20-toolchain/README.md)

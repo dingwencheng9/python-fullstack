@@ -3,6 +3,7 @@
 > **课程编号**: L13
 > **所属阶段**: Stage 1 - Python 进阶
 > **预计时长**: 9 小时
+> **前置课程**: L10 类型系统、L11 迭代器与生成器
 > **核心内容**: 闭包、装饰器、装饰器工厂、上下文管理器、`contextlib`
 
 ---
@@ -98,5 +99,5 @@ python -m py_compile   stage1-python-intermediate/lessons/L13-advanced-features/
 
 完成本课后继续学习：
 
-- [L13: 描述符与属性](../L13-descriptors/README.md)
+- [L14: 装饰器进阶](../L14-decorator-advanced/README.md)
 - L13 会继续深入对象属性访问协议，是理解 ORM、验证框架和属性管理的关键。

@@ -3,6 +3,7 @@
 > **课程编号**: L15
 > **所属阶段**: Stage 1 - Python 进阶
 > **预计时长**: 5 小时
+> **前置课程**: L10 类型系统, L13 Python 高级特性
 > **核心内容**: 描述符协议、`property`、数据描述符/非数据描述符、懒加载、属性验证
 
 ---
@@ -107,5 +108,5 @@ uv run pytest tests -q
 
 完成本课后继续学习：
 
-- [L14: 并发编程入门](../L14-concurrency-intro/README.md)
+- [L16: 并发编程入门](../L16-concurrency-intro/README.md)
 - L14 会进入线程、进程和协程的并发基础，为后续工程化异步编程做准备。

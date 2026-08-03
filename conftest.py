@@ -397,7 +397,7 @@ def _lesson_fixture_injector(  # noqa: PLR0912, PLR0915
             if other_cache_key not in _LOADED_MODULES:
                 _load_modules(lesson_dir_abs, other_dir, other_type)
 
-    if "L08" in lesson_name:
+    if "L06" in lesson_name:
         pkg = sys.modules.get("solutions")
         if pkg:
             request.module.__dict__["solutions_pkg"] = pkg
@@ -405,6 +405,14 @@ def _lesson_fixture_injector(  # noqa: PLR0912, PLR0915
                 val = getattr(pkg, sub, None)
                 if val is not None:
                     request.module.__dict__[sub] = val
+
+    elif "P01" in lesson_name:
+        # P01 独立分支：lesson_name 含 "L01"，必须放在 L10 之前
+        _inject_solutions_attrs(lesson_dir, {
+            "Student": "Student",
+            "StudentManager": "StudentManager",
+            "student_manager": "student_manager",
+        })
 
     elif "L10" in lesson_name:
         pkg = sys.modules.get("solutions")
@@ -424,14 +432,7 @@ def _lesson_fixture_injector(  # noqa: PLR0912, PLR0915
             except (ImportError, FileNotFoundError, OSError):
                 pass
 
-    elif "L11" in lesson_name:
-        _inject_solutions_attrs(lesson_dir, {
-            "generator_exercises": "solution_02_generator_exercises",
-            "iterator_protocol": "solution_01_iterator_protocol",
-            "itertools_exercises": "solution_03_itertools_exercises",
-        })
-
-    elif "L12" in lesson_name:
+    elif "L11" in lesson_name or "L12" in lesson_name:
         _inject_solutions_attrs(lesson_dir, {
             "generator_exercises": "solution_02_generator_exercises",
             "iterator_protocol": "solution_01_iterator_protocol",
@@ -444,14 +445,7 @@ def _lesson_fixture_injector(  # noqa: PLR0912, PLR0915
             "decorators": "solution_01_decorators",
         })
 
-    elif "L14" in lesson_name:
-        _inject_solutions_attrs(lesson_dir, {
-            "descriptors": "solution_01_descriptors",
-            "property_desc": "solution_02_property",
-            "property_": "solution_02_property",
-        })
-
-    elif "L15" in lesson_name:
+    elif "L14" in lesson_name or "L15" in lesson_name:
         _inject_solutions_attrs(lesson_dir, {
             "descriptors": "solution_01_descriptors",
             "property_desc": "solution_02_property",
