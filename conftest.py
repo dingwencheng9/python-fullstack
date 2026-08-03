@@ -397,7 +397,7 @@ def _lesson_fixture_injector(  # noqa: PLR0912, PLR0915
             if other_cache_key not in _LOADED_MODULES:
                 _load_modules(lesson_dir_abs, other_dir, other_type)
 
-    if "L08" in lesson_name:
+    if "L06" in lesson_name:
         pkg = sys.modules.get("solutions")
         if pkg:
             request.module.__dict__["solutions_pkg"] = pkg
