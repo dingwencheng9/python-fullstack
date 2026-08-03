@@ -72,10 +72,10 @@
 | L03 | `L03-data-structures` | 数据结构 | 4 | 6 | 4 |
 | L04 | `L04-functions-modules` | 函数与模块 | 4 | 5 | 5 |
 | L05 | `L05-debugging-tools` | 调试工具与开发环境 | 2 | 2 | — |
-| L06 | `L06-file-operations` | 文件操作 | 4 | 5 | 7 |
+| L06 | `L06-exceptions` | 异常处理（Exceptions） | 4 | 6 | 4 |
 | L07 | `L07-oop-basics` | 面向对象基础 | 4 | 10 | 4 |
 | L08 | `L08-magic-methods` | 魔术方法（Magic Methods） | 4 | 9 | 4 |
-| L09 | `L09-exceptions` | 异常处理（Exceptions） | 4 | 6 | 4 |
+| L09 | `L09-file-operations` | 文件操作 | 4 | 5 | 7 |
 | P01 | `P01-student-manager` | 学员管理系统（收官项目） | 3 | 5 | 4 |
 
 **前置要求**: 无
