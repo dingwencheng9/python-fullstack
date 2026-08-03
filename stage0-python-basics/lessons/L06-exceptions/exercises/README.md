@@ -5,7 +5,7 @@
 运行方式：
 
 ```bash
-cd stage0-python-basics/lessons/L09-exceptions
+cd stage0-python-basics/lessons/L06-exceptions
 python3 exercises/01_basic_handling.py
 ```
 

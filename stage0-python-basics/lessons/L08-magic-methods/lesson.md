@@ -924,10 +924,10 @@ print(repr(m1 + m2))  # Money(4, 25)
 
 完成本课程后，继续学习：
 
-- [L09: 异常处理](../L09-exceptions/lesson.md)
+- [L09: 文件操作](../L09-file-operations/lesson.md)
 
 在下一课中，我们将学习：
-- 异常的概念和分类
-- try/except 语句
+- 文件读写操作
+- pathlib 路径处理
 - 自定义异常类
 - 异常的最佳实践

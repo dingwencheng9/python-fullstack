@@ -11,7 +11,7 @@ uv run python examples/01_read_write.py
 或进入 examples 目录运行：
 
 ```bash
-cd stage0-python-basics/lessons/L06-file-operations/examples
+cd stage0-python-basics/lessons/L09-file-operations/examples
 python 01_read_write.py
 ```
 

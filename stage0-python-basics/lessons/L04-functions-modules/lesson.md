@@ -1180,10 +1180,9 @@ if __name__ == "__main__":
 
 完成本课程后，继续学习：
 
-- [L05: 文件操作](../L06-file-operations/lesson.md)
+- [L05: 调试工具](../L05-debugging-tools/lesson.md)
 
 在下一课中，我们将学习：
-- 读取和写入文本文件
-- 使用上下文管理器（`with` 语句）
-- 处理 CSV 和 JSON 文件
-- 目录操作和路径处理
+- 使用 pdb 进行断点调试
+- 使用 breakpoint() 内置函数
+- 分析 traceback 追踪错误

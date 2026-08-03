@@ -11,7 +11,7 @@ uv run pytest tests/ -q
 从仓库根目录运行：
 
 ```bash
-uv run pytest stage0-python-basics/lessons/L06-file-operations/tests -q
+uv run pytest stage0-python-basics/lessons/L09-file-operations/tests -q
 ```
 
 ## 测试覆盖

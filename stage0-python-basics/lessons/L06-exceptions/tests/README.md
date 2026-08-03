@@ -5,7 +5,7 @@
 运行方式：
 
 ```bash
-cd stage0-python-basics/lessons/L09-exceptions
+cd stage0-python-basics/lessons/L06-exceptions
 uv run pytest tests/ -q
 ```
 

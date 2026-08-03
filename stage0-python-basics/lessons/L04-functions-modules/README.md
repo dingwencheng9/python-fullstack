@@ -102,4 +102,4 @@ python -m pytest tests/ -q
 
 完成本课后继续学习：
 
-- [L06: 文件操作](../L06-file-operations/README.md)
+- [L05: 调试工具](../L05-debugging-tools/README.md)

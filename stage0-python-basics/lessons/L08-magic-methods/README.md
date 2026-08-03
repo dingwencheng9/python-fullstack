@@ -102,6 +102,6 @@ python3 -m pytest tests/ -q
 
 ## 🔗 下一步
 
-[L09: 异常处理](../L09-exceptions/README.md)
+[L09: 文件操作](../L09-file-operations/README.md)
 
-下一课会学习异常分类、`try/except`、自定义异常和异常处理最佳实践。
+下一课会学习文件读写、pathlib 路径处理、JSON/CSV 持久化。

@@ -180,10 +180,10 @@ uv run pytest tests/ -v
 | L03 | 数据结构 | list、dict、set、tuple |
 | L04 | 函数与模块 | def、import、参数传递 |
 | L05 | 调试工具与开发环境 | pdb、breakpoint、uv |
-| L06 | 文件操作 | 文件读写、pathlib、JSON |
+| L06 | 异常处理 | try/except、raise、自定义异常 |
 | L07 | 面向对象基础 | 类、对象、继承 |
 | L08 | 魔术方法 | __init__、__str__、__call__ |
-| L09 | 异常处理 | try/except、自定义异常 |
+| L09 | 文件操作 | 文件读写、pathlib、JSON |
 | P01 | 学员管理系统 | 综合项目实战 |
 
 ### Stage 1: Python 进阶（L10-L18）

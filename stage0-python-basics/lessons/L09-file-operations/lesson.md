@@ -1,6 +1,6 @@
-# L06: 文件操作
+# L09: 文件操作
 
-> **课程编号**: L06
+> **课程编号**: L09
 > **所属阶段**: Stage 0 - Python 编程基础
 > **预计时长**: 8 小时
 > **难度**: ⭐⭐☆☆☆ (入门进阶)
@@ -696,8 +696,8 @@ with tempfile.NamedTemporaryFile(mode='w', delete=True) as tmp:
 完成 `exercises/` 目录下的练习，运行测试验证：
 
 ```bash
-# 运行 L05 测试
-uv run pytest stage0-python-basics/lessons/L06-file-operations/tests/ -v
+# 运行 L09 测试
+uv run pytest stage0-python-basics/lessons/L09-file-operations/tests/ -v
 ---
 
 ## 📝 快速参考

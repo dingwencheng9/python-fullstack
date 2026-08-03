@@ -53,7 +53,7 @@
 从仓库根目录运行：
 
 ```bash
-cd stage0-python-basics/lessons/L09-exceptions
+cd stage0-python-basics/lessons/L06-exceptions
 python3 examples/01_basic_try_except.py
 python3 examples/05_custom_exceptions.py
 uv run pytest tests/ -q

@@ -96,4 +96,4 @@ pdb 基础 → breakpoint() → traceback 分析 → IDE 调试 → uv 工具链
 - [L04: 函数与模块](../L04-functions-modules/README.md) - 需要理解函数定义和模块导入
 
 **后续课程**：
-- [L06: 文件操作](../L06-file-operations/README.md) - 使用调试技能排查文件操作问题
+- [L06: 异常处理](../L06-exceptions/README.md) - 使用调试技能分析异常
