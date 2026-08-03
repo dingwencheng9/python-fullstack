@@ -1071,13 +1071,13 @@ p.unlink()      # 删除文件
 
 - 完成 `exercises/` 目录下的练习题巩固知识
 - 运行 `uv run pytest tests/ -v` 验证掌握程度
-- 继续学习 [L06 - 面向对象基础](../L07-oop-basics/lesson.md)
+- 继续学习 [L07 - 面向对象基础](../L07-oop-basics/lesson.md)
 
 ---
 
 ## 🔮 在下一课中，我们将学习：
 
-### L06: 面向对象基础
+### L07: 面向对象基础
 
 在下一课中，我们将进入 Python 面向对象编程（OOP）的世界：
 

@@ -1,10 +1,10 @@
-# L25: 工程化综合项目
+# L27: 工程化综合项目
 
-> **课程编号**: L25
+> **课程编号**: L27
 > **所属阶段**: Stage 2 - 现代工程
 > **预计时长**: 5-8 小时
 > **难度**: ⭐⭐⭐⭐☆
-> **前置课程**: L17 (pytest), L18 (工具链), L19-L24 (异步/装饰器/并发)
+> **前置课程**: L19 (pytest), L20 (工具链), L21-L26 (异步/装饰器/并发)
 > **版本**: v1.0
 > **核心版本**: Python 3.13
 
@@ -14,7 +14,7 @@
 
 ```bash
 # 从仓库根目录进入本课
-cd stage2-engineering/lessons/L25-engineering-project
+cd stage2-engineering/lessons/L27-engineering-project
 
 # 运行课程自检
 uv run python verify.py

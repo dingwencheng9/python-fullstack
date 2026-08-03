@@ -1,17 +1,17 @@
-# L19: 异步核心进阶
+# L21: 异步核心进阶
 
-> **课程编号**: L19
+> **课程编号**: L21
 > **所属阶段**: Stage 2 - 工程化进阶
 > **预计时长**: 4 小时
 > **难度**: ⭐⭐⭐☆☆（高级）
-> **前置课程**: L14 并发基础（async/await、gather、create_task、async with）
+> **前置课程**: L16 并发基础（async/await、gather、create_task、async with）
 > **Python 版本**: 3.13+
 
 ---
 
 ## 前置说明
 
-**本课程不重复 L14 已讲内容**（async/await、asyncio.run、gather、create_task、async with、Semaphore）。如果你对以下概念不熟悉，请先完成 L14。
+**本课程不重复 L16 已讲内容**（async/await、asyncio.run、gather、create_task、async with、Semaphore）。如果你对以下概念不熟悉，请先完成 L16。
 
 ---
 
@@ -89,7 +89,7 @@ uv run python stage2-engineering/lessons/L19-async-programming/exercises/exercis
 
 ## 🔗 下一课
 
-[L20: 装饰器深度探索](../L20-decorators/README.md)
+[L22: 装饰器深度探索](../L22-decorators/README.md)
 
 ## 🎓 延伸阅读
 

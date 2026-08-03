@@ -3,6 +3,7 @@
 > **课程编号**: L11
 > **所属阶段**: Stage 1 - Python 进阶
 > **预计时长**: 6 小时
+> **前置课程**: L04 函数与模块
 > **核心内容**: 迭代器协议、`yield`、惰性求值、生成器管道、`itertools`
 
 ---
@@ -99,5 +100,5 @@ python -m py_compile   stage1-python-intermediate/lessons/L11-generators/example
 
 完成本课后继续学习：
 
-- [L12: Python 高级特性](../L12-advanced-features/README.md)
+- [L12: 生成器进阶](../L12-generator-advanced/README.md)
 - 后续 L14 的异步编程会继续使用“惰性流式处理”的思维模型。

@@ -1,14 +1,14 @@
-# L08: 异常处理（Exceptions）
+# L09: 异常处理（Exceptions）
 
-> **课程编号**: L08
+> **课程编号**: L09
 >
 > **所属阶段**: Stage 0 - Python 编程基础
 >
 > **建议学习时间**: 3-4 小时
 >
-> **前置课程**: L07 魔术方法
+> **前置课程**: L08 魔术方法
 >
-> **后续课程**: L09 Python 基础实战
+> **后续课程**: P01 Python 基础实战
 
 ---
 
@@ -109,6 +109,6 @@ python3 -m pytest tests/ -q
 
 ## 🔗 下一步
 
-[L09: Python 基础实战](../L10-basics-project/README.md)
+[P01: 学员管理系统](../P01-student-manager/README.md)
 
 下一课会把 Stage 0 的语法、数据结构、函数、文件、OOP、魔术方法和异常处理整合到一个基础项目中。

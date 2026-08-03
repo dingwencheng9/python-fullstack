@@ -1,8 +1,8 @@
-# L24: 线程与并发
+# L26: 线程与并发
 
-> **课程编号**: L24  
-> **所属阶段**: Stage 2 - 现代化基础内功  
-> **预计时长**: 4-5 小时  
+> **课程编号**: L26
+> **所属阶段**: Stage 2 - 现代化基础内功
+> **预计时长**: 4-5 小时
 > **难度**: ⭐⭐⭐⭐ (中高级)
 
 ---
@@ -12,7 +12,7 @@
 - **位置**: Stage 2 / 第 8 课
 - **学习时长**: 4-5 小时
 - **难度**: ⭐⭐⭐⭐
-- **前置课程**: L19-L23（异步/装饰器/性能优化）
+- **前置课程**: L21-L25（异步/装饰器/性能优化）
 - **后续课程**: Stage 3 Web APIs
 
 线程是 Python 后端工程中处理 I/O 并发的基础工具。
@@ -117,25 +117,25 @@ cd <项目根目录>
 运行线程基础示例：
 
 ```bash
-python stage2-engineering/lessons/L24-threading/examples/01_threading_basics.py
+python stage2-engineering/lessons/L26-threading/examples/01_threading_basics.py
 ```
 
 运行同步原语示例：
 
 ```bash
-python stage2-engineering/lessons/L24-threading/examples/02_lock_synchronization.py
+python stage2-engineering/lessons/L26-threading/examples/02_lock_synchronization.py
 ```
 
 运行线程池示例：
 
 ```bash
-python stage2-engineering/lessons/L24-threading/examples/03_threadpool.py
+python stage2-engineering/lessons/L26-threading/examples/03_threadpool.py
 ```
 
 运行课程测试：
 
 ```bash
-python -m pytest stage2-engineering/lessons/L24-threading/tests/ -o addopts="" -v
+python -m pytest stage2-engineering/lessons/L26-threading/tests/ -o addopts="" -v
 ```
 
 ## 🛠️ 练习要求
@@ -175,4 +175,4 @@ python -m pytest stage2-engineering/lessons/L24-threading/tests/ -o addopts="" -
 
 ## 🔗 下一步
 
-[L25: 工程化综合项目](../L25-engineering-project/README.md)
+[L27: 工程化综合项目](../L27-engineering-project/README.md)

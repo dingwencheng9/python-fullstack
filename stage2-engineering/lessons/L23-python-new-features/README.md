@@ -1,10 +1,11 @@
-# L21: Python 新特性与版本迁移
+# L23: Python 新特性与版本迁移
 
-> **课程编号**: L21
+> **课程编号**: L23
 > **课程名称**: Python 新特性与版本迁移
 > **所属阶段**: Stage 2 - 现代化基础内功
 > **预计时长**: 4 小时
 > **难度**: ⭐⭐☆☆☆ (初级)
+> **前置课程**: L19 Pytest 完整实战, L20 工具链
 
 > **核心版本**: Python 3.13+（动态更新）/ 3.14.x（Part 4 试验性补充；free-threading 实测需 `python3.14t` 独立构建）
 
@@ -240,4 +241,4 @@ export PYTHON_COLORS=0
 
 ## 🔗 下一步
 
-[L22: 高级流程控制与异步进阶](../L22-advanced-flow-async/README.md)
+[L25: 极限抽象与性能优化](../L25-extreme-abstraction-performance/README.md)
