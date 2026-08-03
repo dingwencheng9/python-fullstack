@@ -84,6 +84,33 @@ python3 -m pytest tests/ -q
 
 ## 📚 推荐学习路径
 
+### 🗺️ Milestone 开发步骤
+
+建议按以下里程碑分步完成项目，每个里程碑完成后运行测试验证：
+
+**Milestone 1: 基础数据模型**
+1. 实现 `Student` 类，包含 `__init__`、`__repr__`、`__eq__`
+2. 添加属性校验：`age > 0`、`student_id` 非空
+3. 运行 `python -m pytest tests/test_student.py -v` 验证
+
+**Milestone 2: 内存管理**
+1. 实现 `StudentManager` 的 `add`、`get`、`remove`、`update`
+2. 实现 `list_students` 返回列表副本
+3. 运行 `python -m pytest tests/test_manager.py -v` 验证
+
+**Milestone 3: 搜索与统计**
+1. 实现 `search_by_name`（不区分大小写的模糊搜索）
+2. 实现 `get_statistics`（总人数、平均/最小/最大年龄）
+3. 运行 `python -m pytest tests/test_search.py -v` 验证
+
+**Milestone 4: 文件持久化 + 类型检查**
+1. 实现 JSON 文件的保存与加载（使用 `pathlib.Path`）
+2. 添加异常处理：文件不存在、JSON 解析错误
+3. 运行 `uv run mypy .` 检查类型注解
+4. 运行 `uv run pytest tests/ -v` 全部通过
+
+### 详细步骤
+
 1. 阅读 `lesson.md` 的项目概述，先明确最终要实现的功能。
 2. 运行 `examples/01_student_basics.py`，观察最小可用的对象管理方式。
 3. 运行 `examples/02_class_student.py`，理解如何手动实现类的等价功能。
@@ -135,3 +162,24 @@ python3 -m pytest tests/ -q
 ## 🔗 下一步
 
 恭喜完成 Stage 0！继续进入 [Stage 1: Python 进阶 / L10 类型系统](../../../stage1-python-intermediate/lessons/L10-type-system/README.md)。
+
+---
+
+## 🎯 Stage 1 预告：静态类型检查
+
+本项目使用了类型注解 (`age: int`, `Student | None`)，但还没有正式验证过。
+
+如果你好奇自己的代码是否类型安全，可以运行：
+
+```bash
+# 安装 mypy
+uv add --dev mypy
+
+# 检查本项目
+uv run mypy exercises/01_student_manager.py
+
+# 检查参考答案
+uv run mypy solutions/student_manager.py
+```
+
+这会为 Stage 1 的 [L10: 类型系统](../stage1/lessons/L10-type-system/) 打下基础！
