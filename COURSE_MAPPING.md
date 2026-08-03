@@ -1,10 +1,10 @@
 # Python 3.13 全栈课程 — 完整课程映射表
 
 > **文档层级**: L1 - 核心导航
-> **文档版本**: v2.2
+> **文档版本**: v2.3
 > **受众**: 所有学习者、课程维护者
 > **更新频率**: 低（课程编号变化时更新）
-> **最后更新**: 2026-07-26（v2.2: 修正 Stage A/P/K/M/R 状态与 README.md 一致；Stage A 课程数已验证为 20 完整）
+> **最后更新**: 2026-08-02（v2.3: 课程编号全面修正，P01 收官项目，Stage S 编号修正）
 
 ---
 
@@ -14,7 +14,7 @@
 
 | Stage | 名称 | 课程范围 | 课程数 | CORE | ELECTIVE | 状态 |
 |-------|------|----------|--------|------|----------|------|
-| Stage 0 | Python 基础 | L01-L10 | 10 | L01-L10 | — | ✅ 完整 |
+| Stage 0 | Python 基础 | L01-L09, P01 | 10 | L01-L09, P01 | — | ✅ 完整 |
 | Stage 1 | Python 进阶 | L10-L18 | 9 | L10-L11 | L12-L18 | ✅ 完整 |
 | Stage 2 | 现代工程 | L19-L27 | 9 | L19-L27 | — | ✅ 完整 |
 | Stage 3 | Web 开发基础 | L26-L35 | 10 | L26-L35 | — | ✅ 完整 |
@@ -32,7 +32,7 @@
 | Stage M | 企业级 AI 应用 | M01-M08 | 8 | M01-M08 | — | 🔶 骨架 |
 | Stage R | 前沿探索实验室 | R01-R10 | 10 | R01-R10 | — | 🔶 骨架 |
 
-**总计**: 11 个 Stage · 119 节课程
+**总计**: 11 个 Stage · 118 节课程
 **通用核心**: 66 节课（L01-L65）
 **垂直专精**: 52 节（S:9 + K:5 + M:8 + R:10 + A:20）
 **建议总学时**: ~615 小时
@@ -61,7 +61,7 @@
 
 ---
 
-## 🎓 Stage 0: Python 基础（L01-L10, L05）
+## 🎓 Stage 0: Python 基础（L01-L09, P01）
 
 **定位**: 零基础入门段，从变量到面向对象
 
@@ -76,10 +76,10 @@
 | L07 | `L07-oop-basics` | 面向对象基础 | 4 | 10 | 4 |
 | L08 | `L08-magic-methods` | 魔术方法（Magic Methods） | 4 | 9 | 4 |
 | L09 | `L09-exceptions` | 异常处理（Exceptions） | 4 | 6 | 4 |
-| L10 | `L10-basics-project` | Python 基础实战（收官项目） | 3 | 5 | 4 |
+| P01 | `P01-student-manager` | 学员管理系统（收官项目） | 3 | 5 | 4 |
 
 **前置要求**: 无
-**建议学时**: 45 小时
+**建议学时**: 50 小时
 
 ---
 
@@ -87,17 +87,17 @@
 
 **定位**: 进阶语法与工程思维，为生产代码奠基
 
-| 编号 | 目录名 | 课程标题 | 练习 | 答案 | 测试 |
-|------|--------|----------|------|------|------|
-| L10 | `L10-type-system` | Python 类型系统完整指南 | 4 | 6 | 6 |
-| L11 | `L11-generators` | 迭代器与生成器 | 4 | 6 | 6 |
-| L12 | `L12-generator-advanced` | 生成器进阶 | — | — | — |
-| L13 | `L13-advanced-features` | Python 高级特性 | — | — | — |
-| L14 | `L14-decorator-advanced` | 装饰器进阶 | — | — | — |
-| L15 | `L15-descriptors` | 描述符与属性 | — | — | — |
-| L16 | `L16-concurrency-intro` | 并发编程入门 | — | — | — |
-| L17 | `L17-functional` | 函数式编程 | — | — | — |
-| L18 | `L18-regex` | 正则表达式 | — | — | — |
+| 编号 | 目录名 | 课程标题 | 练习 | 答案 | 测试 | 轨道 |
+|------|--------|----------|------|------|------|------|
+| L10 | `L10-type-system` | Python 类型系统完整指南 | 4 | 6 | 6 | CORE |
+| L11 | `L11-generators` | 迭代器与生成器 | 4 | 6 | 6 | CORE |
+| L12 | `L12-generator-advanced` | 生成器进阶 | — | — | — | ELECTIVE |
+| L13 | `L13-advanced-features` | Python 高级特性 | — | — | — | ELECTIVE |
+| L14 | `L14-decorator-advanced` | 装饰器进阶 | — | — | — | ELECTIVE |
+| L15 | `L15-descriptors` | 描述符与属性 | — | — | — | ELECTIVE |
+| L16 | `L16-concurrency-intro` | 并发编程入门 | — | — | — | ELECTIVE |
+| L17 | `L17-functional` | 函数式编程 | — | — | — | ELECTIVE |
+| L18 | `L18-regex` | 正则表达式 | — | — | — | ELECTIVE |
 
 **前置要求**: Stage 0 完成
 **建议学时**: 45 小时
@@ -112,7 +112,7 @@
 |------|--------|----------|------|------|------|
 | L19 | `L19-pytest-complete` | Pytest 完整实战 — 从单元测试到 CI/CD | 6 | 9 | 4 |
 | L20 | `L20-toolchain` | 现代化工具链 - 从环境到生态 | 9 | 12 | 19 |
-| L21 | `L21-async-programming` | 异步编程核心 | 6 | 8 | 4 |
+| L21 | `L21-async-programming` | 异步核心进阶 | 6 | 8 | 4 |
 | L22 | `L22-decorators` | 装饰器深度探索 | 7 | 7 | 10 |
 | L23 | `L23-python-new-features` | Python 新特性与版本迁移 | 7 | 11 | 5 |
 | L24 | `L24-advanced-flow-async` | 高阶流控与异步协同 | 2 | 5 | 5 |
@@ -151,19 +151,19 @@
 
 **定位**: 安全、性能、微服务、分布式系统
 
-| 编号 | 目录名 | 课程标题 | 练习 | 答案 | 测试 |
-|------|--------|----------|------|------|------|
-| L36 | `L36-async-backpressure` | 异步背压机制 | 3 | 2 | 4 |
-| L37 | `L37-web-security-complete` | Web 安全完整实践 | 3 | 5 | 3 |
-| L38 | `L38-auth-authorization` | 认证与授权 | 1 | 3 | 4 |
-| L39 | `L39-e2e-testing` | E2E 测试工程化 | 1 | 2 | 4 |
-| L40 | `L40-message-queue` | 消息队列 | 2 | 4 | 3 |
-| L41 | `L41-api-performance` | API 性能优化 | 1 | 3 | 4 |
-| L42 | `L42-caching-strategy` | 缓存策略与实现 | 2 | 2 | 2 |
-| L43 | `L43-async-tasks` | 异步任务处理 | 1 | 2 | 4 |
-| L44 | `L44-microservices-basics` | 微服务架构基础 | 2 | 2 | 2 |
-| L45 | `L45-distributed-systems` | 分布式系统实战 | 1 | 3 | 4 |
-| L46 | `L46-websocket-advanced` | WebSocket 高级应用 | 1 | 3 | 4 |
+| 编号 | 目录名 | 课程标题 | 练习 | 答案 | 测试 | 轨道 |
+|------|--------|----------|------|------|------|------|
+| L36 | `L36-async-backpressure` | 异步背压机制 | 3 | 2 | 4 | CORE |
+| L37 | `L37-web-security-complete` | Web 安全完整实践 | 3 | 5 | 3 | CORE |
+| L38 | `L38-auth-authorization` | 认证与授权 | 1 | 3 | 4 | CORE |
+| L39 | `L39-e2e-testing` | E2E 测试工程化 | 1 | 2 | 4 | CORE |
+| L40 | `L40-message-queue` | 消息队列 | 2 | 4 | 3 | CORE |
+| L41 | `L41-api-performance` | API 性能优化 | 1 | 3 | 4 | CORE |
+| L42 | `L42-caching-strategy` | 缓存策略与实现 | 2 | 2 | 2 | CORE |
+| L43 | `L43-async-tasks` | 异步任务处理 | 1 | 2 | 4 | CORE |
+| L44 | `L44-microservices-basics` | 微服务架构基础 | 2 | 2 | 2 | ELECTIVE |
+| L45 | `L45-distributed-systems` | 分布式系统实战 | 1 | 3 | 4 | CORE |
+| L46 | `L46-websocket-advanced` | WebSocket 高级应用 | 1 | 3 | 4 | CORE |
 
 **前置要求**: Stage 3 完成
 **建议学时**: 50 小时
@@ -176,10 +176,10 @@
 
 | 编号 | 目录名 | 课程标题 | 练习 | 答案 | 测试 | 轨道 |
 |------|--------|----------|------|------|------|------|
-| L47 | `L47-pandas` | Pandas 完整实战基础 | 3 | 4 | 7 | CORE |
+| L47 | `L47-pandas` | Pandas 完整实战 | 3 | 4 | 7 | CORE |
 | L48 | `L48-visualization` | 数据可视化 | 4 | 4 | 3 | CORE |
 | L49 | `L49-duckdb` | DuckDB — 嵌入式数据分析引擎 | 2 | 4 | 3 | ELECTIVE |
-| L50 | `L50-pandas-complete` | Pandas 数据处理实战 | 3 | 4 | 2 | CORE |
+| L50 | `L50-pandas-complete` | Pandas 进阶数据处理技术 | 3 | 4 | 2 | CORE |
 | L51 | `L51-async-data-pipeline` | 异步数据管道 | 3 | 5 | 4 | CORE |
 | L52 | `L52-numpy-rag-poc` | NumPy RAG PoC - 向量检索概念验证 | 2 | 2 | 4 | CORE |
 | L53 | `L53-duckdb-olap` | DuckDB OLAP 实战与性能调优 | 1 | 1 | 2 | CORE |
@@ -195,9 +195,9 @@
 
 | 编号 | 目录名 | 课程标题 | 练习 | 答案 | 测试 | 状态 |
 |------|--------|----------|------|------|------|------|
-| L54 | `L54-agent-basics`| Agent 基础与工具调用 | 2 | 4 | 3 | ✅ |
-| L55 | `L55-mcp-protocol` | MCP 协议与标准化工具集成 | 1 | 2 | 2 | ✅ |
-| L56 | `L56-langchain` | LangChain 与应用编排 | 2 | 3 | 3 | ✅ |
+| L54 | `L54-agent-basics` | Agent 基础与工具调用 | 2 | 4 | 3 | ✅ |
+| L55 | `L55-mcp-protocol` | MCP 协议入门 | 1 | 2 | 2 | ✅ |
+| L56 | `L56-langchain` | 从数据到 AI — LangChain 基础与应用编排 | 2 | 3 | 3 | ✅ |
 | L57 | `L57-rag-vector` | RAG 向量数据库 | 5 | 6 | 2 | ✅ |
 | L58 | `L58-langgraph-adv` | LangGraph 工作流编排（基础） | 3 | 3 | 1 | ✅ |
 | L59 | `L59-agent-memory` | Agent 记忆与上下文管理 | 1 | 2 | 2 | ✅ |
@@ -264,7 +264,7 @@
 
 ---
 
-## 🕷️ Stage P: Python 爬虫专精（S01-S09）
+## 🕷️ Stage S: Python 爬虫专精（S01-S09）
 
 **定位**: 垂直领域专精课程，从前端基础到 JavaScript 逆向和 App 逆向
 
@@ -360,7 +360,7 @@ Stage 0 → Stage 1 → Stage 2 → Stage 3 → Stage 4 → Stage 5 → Stage 6 
 
 ### 路径3: Python 爬虫工程师
 ```
-Stage 0 → Stage 1 → Stage 2 → Stage 3 → Stage P → Stage K
+Stage 0 → Stage 1 → Stage 2 → Stage 3 → Stage S → Stage K
 ```
 预计学时: 230 小时
 
@@ -394,11 +394,11 @@ Stage 2 → Stage 3 → Stage 4 → Stage 5 → Stage 6
 | 缓存 / 性能 | L41, L42 |
 | 微服务 / 分布式 | L44, L45 |
 | NumPy / Pandas / DuckDB | L47-L52 |
-| LangChain / LangGraph | L54, L55 |
-| Agent / MCP | L56-L63 |
-| RAG / 向量数据库 | L52, L65 |
+| LangChain / LangGraph | L56, L58, L62 |
+| Agent / MCP | L54, L55 |
+| RAG / 向量数据库 | L57, L65 |
 
-### 垂直专精阶段（P/K/M/R 编号）
+### 垂直专精阶段（S/K/M/R/A 编号）
 
 | 技术 | 对应课程 |
 |------|----------|
@@ -408,7 +408,7 @@ Stage 2 → Stage 3 → Stage 4 → Stage 5 → Stage 6
 | Agent 成本管理 / 模型路由 | A04, A13, A14 |
 | Agent 容错 / 降级 / 缓存 | A15, A16 |
 | Agent 流水线 / 微调 | A17, A18 |
-| **Stage P: 爬虫专精** | |
+| **Stage S: 爬虫专精** | |
 | 爬虫 / 逆向工程 | S01-S09 |
 | **Stage K: DevOps 平台** | |
 | Kubernetes / Helm / GitOps | K02, K03, K04 |
@@ -430,29 +430,29 @@ Stage 2 → Stage 3 → Stage 4 → Stage 5 → Stage 6
 
 | Stage | 课程数 | 练习 | 答案 | 测试 | 完成度 |
 |-------|--------|------|------|------|--------|
-| Stage 0 | 9 | 40 | 55 | 44 | 100% |
-| Stage 1 | 7 | 26 | 37 | 35 | 100% |
+| Stage 0 | 10 | 42 | 54 | 39 | 100% |
+| Stage 1 | 9 | 26 | 37 | 35 | 100% |
 | Stage 2 | 9 | 45 | 65 | 60 | 100% |
 | Stage 3 | 10 | 20 | 39 | 27 | 100% |
 | Stage 4 | 11 | 18 | 27 | 36 | 100% |
 | Stage 5 | 7 | 18 | 20 | 25 | 100% |
 | Stage 6 | 12 | 19 | 30 | 29 | 100% |
-| **合计** | **65** | **186** | **273** | **256** | **100%** |
+| **合计** | **68** | **188** | **272** | **251** | **100%** |
 
-### 垂直专精阶段（A/P/K/M/R 编号）
+### 垂直专精阶段（A/S/K/M/R 编号）
 
 | Stage | 课程数 | 练习 | 答案 | 测试 | 完成度 |
 |-------|--------|------|------|------|--------|
 | Stage A | 20 | 34 | 34 | 34 | 🔶 完善中（A01-A05 完整） |
-| Stage P | 9 | 0 | 0 | 9 | 🔶 骨架 |
+| Stage S | 9 | 0 | 0 | 9 | 🔶 骨架 |
 | Stage K | 5 | 7 | 7 | 6 | ✅ 完整 |
 | Stage M | 8 | 8 | 8 | 8 | 🔶 骨架 |
 | Stage R | 10 | 10 | 10 | 10 | 🔶 骨架 |
 | **合计** | **52** | **59** | **59** | **67** | — |
 
 **整体完成度**:
-- ✅ 完整课程: 65 (Core) + 32 (P:9 + K:5 + M:8 + R:10) = 97 课
-- 🔶 完善中: 20 (Stage A)
+- ✅ 完整课程: 68 (Core) + 37 (K:5 + M:8 + R:10) = 105 课
+- 🔶 完善中: 21 (Stage A: 20 + Stage S: 1)
 - 🔶 骨架: 0
 
 ---
