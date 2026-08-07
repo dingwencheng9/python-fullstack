@@ -26,57 +26,18 @@ print(f"\n🔑 关键验证：type(input()) = {type(user_input)}")  # str，不�
 # ===== 2. dir() — 探索对象能做什么 =====
 print("\n=== dir() — 探索对象能力 ===")
 # 场景：字符串有多少方法？看看 str 有哪些常用方法
-# 注意：这里列出的是字符串的公开方法（不含下划线开头的方法）
+# 注意：这里展示部分常用方法（完整列表可用 dir(str) 查看）
 # L03 会学到如何用列表推导式自动筛选，L02 会学到如何用 if 判断
-methods = [
-    "capitalize",
-    "casefold",
-    "center",
-    "count",
-    "encode",
-    "endswith",
-    "expandtabs",
-    "find",
-    "format",
-    "index",
-    "isalnum",
-    "isalpha",
-    "isascii",
-    "isdecimal",
-    "isdigit",
-    "isidentifier",
-    "islower",
-    "isnumeric",
-    "isprintable",
-    "isspace",
-    "istitle",
-    "isupper",
-    "join",
-    "ljust",
-    "lower",
-    "lstrip",
-    "maketrans",
-    "partition",
-    "replace",
-    "rfind",
-    "rindex",
-    "rjust",
-    "rpartition",
-    "rsplit",
-    "rstrip",
-    "split",
-    "splitlines",
-    "startswith",
-    "strip",
-    "swapcase",
-    "title",
-    "translate",
-    "upper",
-    "zfill",
-]
-print(f"str 共有 {len(methods)} 个公开方法")
-print("含 'upper' 的方法: ['upper', 'swapcase']")
-print("含 'split' 的方法: ['split', 'rsplit', 'splitlines']")
+print("str 常用方法示例: capitalize, casefold, count, find, join, lower, upper...")
+# 公开方法数量（不含下划线开头）：约 44 个
+print("str 约有 44 个公开方法（不含下划线开头）")
+
+# 演示：字符串方法调用
+s = "hello world"
+print(f"\n示例: s = '{s}'")
+print(f"  s.upper() = '{s.upper()}'")
+print(f"  s.capitalize() = '{s.capitalize()}'")
+print(f"  s.replace('world', 'python') = '{s.replace('world', 'python')}'")
 
 
 # ===== 3. help() — 阅读函数文档 =====
@@ -108,11 +69,9 @@ print(f"x == y: {x == y}")  # True：值相等
 
 # ===== 6. REPL 快捷键参考 =====
 print("\n=== REPL 快捷键参考 ===")
-shortcuts = [
-    ("↑ / ↓", "浏览历史命令（最重要，必须会用）"),
-    ("Tab", "自动补全变量/函数名"),
-    ("Ctrl+D", "退出 REPL（Mac/Linux）"),
-    ("Ctrl+Z", "退出 REPL（Windows）"),
-    ("Ctrl+L", "清屏"),
-    ("Ctrl+C", "取消当前输入"),
-]
+print("↑ / ↓   : 浏览历史命令（最重要，必须会用）")
+print("Tab     : 自动补全变量/函数名")
+print("Ctrl+D  : 退出 REPL（Mac/Linux）")
+print("Ctrl+Z  : 退出 REPL（Windows）")
+print("Ctrl+L  : 清屏")
+print("Ctrl+C  : 取消当前输入")

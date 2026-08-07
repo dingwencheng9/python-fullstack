@@ -1,9 +1,9 @@
-# tests/ - L16 单元测试
+# tests/ - L18 单元测试
 
-本目录用于自动验证 L16 参考答案。
+本目录用于自动验证 L18 参考答案。
 
 ```bash
-cd stage1-python-intermediate/lessons/L16-regex
+cd stage1-python-intermediate/lessons/L18-regex
 uv run pytest tests -q
 ```
 

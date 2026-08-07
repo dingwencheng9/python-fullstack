@@ -1,0 +1,23 @@
+[
+  {
+    "id": "0001",
+    "name": "Alice Zhang",
+    "email": "alice@example.com",
+    "age": 28,
+    "score": 92.5
+  },
+  {
+    "id": "0002",
+    "name": "Bob Chen",
+    "email": "bob@example.com",
+    "age": 35,
+    "score": 85.0
+  },
+  {
+    "id": "0003",
+    "name": "Carol Wang",
+    "email": "carol@example.com",
+    "age": 22,
+    "score": 96.8
+  }
+]

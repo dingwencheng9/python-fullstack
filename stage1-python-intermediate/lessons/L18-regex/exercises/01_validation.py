@@ -1,4 +1,4 @@
-"""L16 练习 1：邮箱、手机号和 URL 校验。"""
+"""L18 练习 1：邮箱、手机号和 URL 校验。"""
 
 from __future__ import annotations
 
@@ -94,7 +94,7 @@ def validate_url(url: str) -> bool:
 
 if __name__ == "__main__":
     print("=" * 60)
-    print("📝 L16 正则表达式练习 - 数据验证")
+    print("📝 L18 正则表达式练习 - 数据验证")
     print("=" * 60)
     assert validate_email("user@example.com") is True
     assert validate_email("invalid.email") is False

@@ -471,7 +471,36 @@ result = 2 + ((3 * (4 ** 2)) / 8)
 
 ## Part 2: 控制流
 
-### 2.1 if/elif/else 条件语句
+#
+### 2.0 控制流概述
+
+**控制流**决定了程序执行的顺序和路径：
+
+```mermaid
+flowchart TD
+    A["开始"] --> B{"条件判断"}
+    B -->|"True"| C["执行代码块"]
+    B -->|"False"| D{"继续判断?"}
+    C --> E["继续下一语句"]
+    D -->|"是"| B
+    D -->|"否"| F["循环结束"]
+    E --> G["结束"]
+    F --> G
+
+    style A fill:#e3f2fd,stroke:#1565c0
+    style G fill:#e8f5e9,stroke:#2e7d32
+    style C fill:#fff8e1,stroke:#f57f17
+```
+
+**三种控制流结构**：
+
+| 结构 | 说明 | 关键词 |
+|------|------|--------|
+| **顺序执行** | 按代码顺序逐行执行 | 默认 |
+| **选择执行** | 根据条件选择执行路径 | `if`/`elif`/`else` |
+| **循环执行** | 重复执行代码块 | `for`/`while` |
+
+## 2.1 if/elif/else 条件语句
 
 #### 基本语法
 
@@ -1034,10 +1063,32 @@ match status_code:
         print(f"未知错误: {status_code}")
 ```
 
-# 测试
-result = handle_response(404)
-print(result)  # {'success': False, 'error': 'Not Found'}
-```
+#### match-case vs if-elif vs 函数模式（推荐做法）
+
+> ⚠️ **预习提示**：`def` 函数定义将在 L04 中学习。当前 match-case 示例仅演示语法。
+
+| 场景 | 推荐 | 原因 |
+|------|------|------|
+| 固定值匹配 | match-case | 更清晰、结构化 |
+| 范围条件 | if-elif | 更灵活 |
+| 复杂逻辑 | 函数封装 | 可复用、易测试 |
+| 多值 OR 匹配 | match-case | `case A \| B \| C` 更简洁 |
+
+**推荐模式（函数封装）**：
+
+> 📖 **L04 将学到**：如何将 match-case 封装为独立函数
+>
+> ```python
+> # L04 示例：
+> def handle_response(status_code: int, data: dict) -> dict:
+>     match status_code:
+>         case 200 | 201:
+>             return {"success": True, "data": data}
+>         case 404:
+>             return {"success": False, "error": "Not Found"}
+>         case _:
+>             return {"success": False, "error": f"Unknown: {status_code}"}
+> ```
 
 #### match-case 高级用法
 
@@ -1169,6 +1220,77 @@ else:
 哪种更清晰？
 
 ---
+
+
+
+## 💭 课堂思考
+
+### 思考 1: 为什么整除是向下取整而非截断？
+
+**问题**：`10 // 3 = 3`，但 `-10 // 3 = -4`（不是 -3）？
+
+**引导思考**：
+- 数学上，-3.33... 向下取整（向负无穷）应该是 -4
+- 截断（向零取整）才是 -3
+- 为什么 Python 选择向下取整？
+
+**延伸**：了解不同编程语言的选择：
+- Python、Ruby：向下取整
+- C、JavaScript：向零截断
+
+---
+
+### 思考 2: 短路求值的工程价值
+
+**问题**：短路求值只是"优化"吗？
+
+**引导思考**：
+- 安全性场景：`user and user.is_admin`
+- 性能场景：避免不必要的计算
+- 防御性编程：避免 NullPointerException
+
+**代码示例**：
+```python
+# 短路求值避免 IndexError
+data = get_data()  # 可能返回 None
+if data and data[0]:
+    process(data[0])
+```
+
+---
+
+### 思考 3: for-else 的语义理解
+
+**问题**：for-else 中的 else 什么时候执行？
+
+**引导思考**：
+- 循环被 break 跳过 else
+- 循环正常完成（未 break）执行 else
+- 循环体一次都没执行（空序列），else 仍然执行
+
+**实验验证**：
+```python
+for i in []:  # 空序列
+    print(i)
+else:
+    print("else 执行")  # 这里会执行吗？
+```
+
+---
+
+### 思考 4: match-case vs if-elif 的选择
+
+**问题**：match-case 相比 if-elif 有什么优势？
+
+**引导思考**：
+- 结构清晰度：固定值匹配
+- 模式能力：结构化模式匹配
+- 性能：编译器优化
+
+**适用场景**：
+- HTTP 状态码 → match-case
+- 复杂条件 → if-elif
+- 范围判断 → if-elif
 
 ## 🎓 核心知识点总结
 
@@ -1531,6 +1653,21 @@ for i in range(1, n + 1):
 - [ ] 灵活使用 range()
 - [ ] 使用 break 和 continue 控制循环
 - [ ] 编写嵌套循环和条件
+
+---
+
+## 📝 进阶预告
+
+完成本课程后，你已经掌握了运算符和控制流。在下一课 [L03: 数据结构](../L03-data-structures/lesson.md) 中，我们将学习：
+
+- 📋 **列表（List）**：有序可变容器、切片、列表推导式
+- 📦 **元组（Tuple）**：不可变序列、元组解包
+- 🔑 **字典（Dict）**：键值对映射、.get() 安全访问
+- 🔮 **集合（Set）**：无序不重复、交集/并集/差集
+- 🛠️ **collections 模块**：defaultdict、Counter、deque
+
+> 💡 **学习路径**：L02 → L03（数据结构）→ L04（函数与模块）→ ...
+
 
 ---
 

@@ -733,6 +733,49 @@ assert composed_function() == "composed"
 
 ---
 
+
+## 💡 常见陷阱
+
+### 陷阱 1: map/filter 返回迭代器
+
+```python
+# ❌ 误解：map 结果可以多次使用
+result = map(str, [1, 2, 3])
+print(list(result))  # ['1', '2', '3']
+print(list(result))  # [] 已耗尽
+
+# ✅ 需要时转换为列表
+result = list(map(str, [1, 2, 3]))
+```
+
+### 陷阱 2: 过度使用 lambda
+
+```python
+# ❌ lambda 过于复杂难以维护
+func = lambda x: (lambda a, b: a+b)(x, (lambda c, d: c*d)(x, 2))
+
+# ✅ 复杂逻辑使用 def
+def func(x):
+    y = x * 2
+    return x + y
+```
+
+```mermaid
+flowchart LR
+    subgraph FP["函数式编程"]
+        A[map] --> D[惰性求值]
+        B[filter] --> D
+        C[reduce] --> E[聚合]
+    end
+    
+    D --> F[返回迭代器]
+    E --> G[返回单个值]
+    
+    style A fill:#e1f5fe
+    style B fill:#e1f5fe
+    style C fill:#fff8e1
+```
+
 ## 🔗 下一步
 
 完成本课程后，继续学习：

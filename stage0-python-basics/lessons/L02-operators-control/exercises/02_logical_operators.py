@@ -2,140 +2,228 @@
 
 难度: ⭐☆☆ (入门)
 预计时间: 15 分钟
-知识点: and/or/not 运算符、短路求值、三元表达式
+知识点: and/or/not 运算符、短路求值、条件判断
+
+学习方式:
+本练习是"演示型练习"——代码已经完整实现，
+你需要运行它，观察输出，理解代码的工作原理。
 
 任务描述:
 练习安全的数据访问，综合运用：
 - 逻辑运算符（and, or, not）
 - 短路求值特性
-- 三元表达式
-
-提示:
-1. and 短路: 第一个为 False 时不计算第二个
-2. or 短路: 第一个为 True 时不计算第二个
-3. 三元表达式: value = a if condition else b
+- if/else 分支
 """
 
+# ============================================================
+# 演示：短路求值特性
+# ============================================================
+print("=== 短路求值演示 ===\n")
 
-def safe_get(data: dict | None, key: str, default: str = "") -> str:
-    """安全获取字典值。
+# and 短路：第一个为假，不计算第二个
+print("1. and 短路求值:")
+result = False and (1 / 0)  # 不会报错，因为第一个为 False
+print(f"   False and (1/0) = {result}")
 
-    Args:
-        data: 字典对象（可能为 None）
-        key: 键名
-        default: 默认值（当 data 为 None 或 key 不存在时返回）
+# or 短路：第一个为真，不计算第二个
+print("\n2. or 短路求值:")
+result = True or (1 / 0)  # 不会报错，因为第一个为 True
+print(f"   True or (1/0) = {result}")
 
-    Returns:
-        字典中的值或默认值
+# ============================================================
+# 演示：安全字典访问（不使用字典）
+# ============================================================
+print("\n=== 安全字典访问演示 ===\n")
 
-    Examples:
-        >>> safe_get({"name": "Alice"}, "name")
-        'Alice'
-        >>> safe_get(None, "name", "Unknown")
-        'Unknown'
-        >>> safe_get({}, "name", "Unknown")
-        'Unknown'
-    """
-    # 利用短路求值避免 None 或缺失键导致异常
-    return (data and data.get(key, default)) or default
+print("测试用例 1: name='Alice', age=30")
+data_name = 'Alice'
+data_age = 30
+key = 'name'
+default = ''
+# 手动模拟安全访问逻辑
+if data_name is None:
+    result = default
+elif key == 'name':
+    result = data_name
+elif key == 'age':
+    result = data_age
+else:
+    result = default
+print(f"   访问 key='{key}': '{result}'")
 
+print("\n测试用例 2: name='Bob', age 缺失")
+data_name = 'Bob'
+data_age = None
+key = 'age'
+default = 'N/A'
+# 手动模拟安全访问逻辑
+if data_name is None:
+    result = default
+elif key == 'name':
+    result = data_name
+elif key == 'age':
+    result = data_age if data_age is not None else default
+else:
+    result = default
+print(f"   访问 key='{key}': '{result}'")
 
-def validate_age(age: int | None) -> str:
-    """验证年龄并返回提示信息。
+print("\n测试用例 3: data=None, key='name'")
+data_is_none = True
+key = 'name'
+default = 'Unknown'
+if data_is_none:
+    result = default
+else:
+    result = f"存在 {key}"
+print(f"   访问 key='{key}': '{result}'")
 
-    Args:
-        age: 年龄（可能为 None）
+# ============================================================
+# 演示：年龄验证（不使用数据结构）
+# ============================================================
+print("\n=== 年龄验证演示 ===\n")
 
-    Returns:
-        验证结果提示
+print("测试用例 1: age=25")
+age = 25
+if age is None:
+    result = '年龄未提供'
+elif age > 150:
+    result = '年龄超出合理范围'
+elif age <= 0:
+    result = '年龄必须大于0'
+else:
+    result = '有效年龄: ' + str(age)
+print(f"   {result}")
 
-    Examples:
-        >>> validate_age(25)
-        '有效年龄: 25'
-        >>> validate_age(0)
-        '年龄必须大于0'
-        >>> validate_age(None)
-        '年龄未提供'
-        >>> validate_age(150)
-        '年龄超出合理范围'
-    """
-    if age is None:
-        return "年龄未提供"
-    if age <= 0:
-        return "年龄必须大于0"
-    if age > 120:
-        return "年龄超出合理范围"
-    return f"有效年龄: {age}"
+print("\n测试用例 2: age=0")
+age = 0
+if age is None:
+    result = '年龄未提供'
+elif age > 150:
+    result = '年龄超出合理范围'
+elif age <= 0:
+    result = '年龄必须大于0'
+else:
+    result = '有效年龄: ' + str(age)
+print(f"   {result}")
 
+print("\n测试用例 3: age=None")
+age = None
+if age is None:
+    result = '年龄未提供'
+elif age > 150:
+    result = '年龄超出合理范围'
+elif age <= 0:
+    result = '年龄必须大于0'
+else:
+    result = '有效年龄: ' + str(age)
+print(f"   {result}")
 
-def get_user_status(is_logged_in: bool, is_premium: bool, has_unsaved_changes: bool) -> str:
-    """判断用户状态。
+print("\n测试用例 4: age=150")
+age = 150
+if age is None:
+    result = '年龄未提供'
+elif age > 150:
+    result = '年龄超出合理范围'
+elif age <= 0:
+    result = '年龄必须大于0'
+else:
+    result = '有效年龄: ' + str(age)
+print(f"   {result}")
 
-    Args:
-        is_logged_in: 是否已登录
-        is_premium: 是否是付费用户
-        has_unsaved_changes: 是否有未保存的更改
+# ============================================================
+# 演示：用户状态判断（不使用元组）
+# ============================================================
+print("\n=== 用户状态判断演示 ===\n")
 
-    Returns:
-        用户状态描述
-
-    Examples:
-        >>> get_user_status(False, False, False)
-        '游客'
-        >>> get_user_status(True, False, False)
-        '普通用户'
-        >>> get_user_status(True, True, False)
-        'VIP 用户'
-        >>> get_user_status(True, False, True)
-        '普通用户（有未保存更改）'
-    """
-    if not is_logged_in:
-        return "游客"
-    if is_premium and has_unsaved_changes:
-        return "VIP 用户（有未保存更改）"
-    if is_premium:
-        return "VIP 用户"
+# 测试用例 1: 未登录
+is_logged_in = False
+is_premium = False
+has_unsaved_changes = False
+if not is_logged_in:
+    result = '游客'
+elif is_premium:
     if has_unsaved_changes:
-        return "普通用户（有未保存更改）"
-    return "普通用户"
+        result = 'VIP 用户（有未保存更改）'
+    else:
+        result = 'VIP 用户'
+elif has_unsaved_changes:
+    result = '普通用户（有未保存更改）'
+else:
+    result = '普通用户'
+print(f"测试 1: 未登录 → {result}")
 
+# 测试用例 2: 普通用户
+is_logged_in = True
+is_premium = False
+has_unsaved_changes = False
+if not is_logged_in:
+    result = '游客'
+elif is_premium:
+    if has_unsaved_changes:
+        result = 'VIP 用户（有未保存更改）'
+    else:
+        result = 'VIP 用户'
+elif has_unsaved_changes:
+    result = '普通用户（有未保存更改）'
+else:
+    result = '普通用户'
+print(f"测试 2: 登录普通用户 → {result}")
 
-# ==================== 测试代码 ====================
-if __name__ == "__main__":
-    print("=== 安全字典访问测试 ===")
-    test_cases = [
-        ({"name": "Alice", "age": 30}, "name", "", "Alice"),
-        ({"name": "Bob"}, "age", "N/A", "N/A"),
-        (None, "name", "Unknown", "Unknown"),
-        ({}, "name", "", ""),
-    ]
-    for data, key, default, expected in test_cases:
-        result = safe_get(data, key, default)
-        status = "✓" if result == expected else "✗"
-        print(f"{status} safe_get({data}, '{key}', '{default}') = '{result}'")
+# 测试用例 3: VIP 用户
+is_logged_in = True
+is_premium = True
+has_unsaved_changes = False
+if not is_logged_in:
+    result = '游客'
+elif is_premium:
+    if has_unsaved_changes:
+        result = 'VIP 用户（有未保存更改）'
+    else:
+        result = 'VIP 用户'
+elif has_unsaved_changes:
+    result = '普通用户（有未保存更改）'
+else:
+    result = '普通用户'
+print(f"测试 3: VIP 用户 → {result}")
 
-    print("\n=== 年龄验证测试 ===")
-    age_tests = [
-        (25, "有效年龄: 25"),
-        (0, "年龄必须大于0"),
-        (None, "年龄未提供"),
-        (150, "年龄超出合理范围"),
-        (18, "有效年龄: 18"),
-    ]
-    for age, expected in age_tests:
-        result = validate_age(age)
-        status = "✓" if result == expected else "✗"
-        print(f"{status} validate_age({age}) = '{result}'")
+# 测试用例 4: VIP 用户有未保存更改
+is_logged_in = True
+is_premium = True
+has_unsaved_changes = True
+if not is_logged_in:
+    result = '游客'
+elif is_premium:
+    if has_unsaved_changes:
+        result = 'VIP 用户（有未保存更改）'
+    else:
+        result = 'VIP 用户'
+elif has_unsaved_changes:
+    result = '普通用户（有未保存更改）'
+else:
+    result = '普通用户'
+print(f"测试 4: VIP 用户有未保存更改 → {result}")
 
-    print("\n=== 用户状态测试 ===")
-    status_tests = [
-        ((False, False, False), "游客"),
-        ((True, False, False), "普通用户"),
-        ((True, True, False), "VIP 用户"),
-        ((True, True, True), "VIP 用户（有未保存更改）"),
-        ((True, False, True), "普通用户（有未保存更改）"),
-    ]
-    for args, expected in status_tests:
-        result = get_user_status(*args)
-        status = "✓" if result == expected else "✗"
-        print(f"{status} {args} → '{result}'")
+# 测试用例 5: 普通用户有未保存更改
+is_logged_in = True
+is_premium = False
+has_unsaved_changes = True
+if not is_logged_in:
+    result = '游客'
+elif is_premium:
+    if has_unsaved_changes:
+        result = 'VIP 用户（有未保存更改）'
+    else:
+        result = 'VIP 用户'
+elif has_unsaved_changes:
+    result = '普通用户（有未保存更改）'
+else:
+    result = '普通用户'
+print(f"测试 5: 普通用户有未保存更改 → {result}")
+
+# ============================================================
+# 思考题
+# ============================================================
+print("\n=== 思考题 ===")
+print("1. 为什么 False and (1/0) 不会报错？")
+print("2. 为什么 None or 'default' 会返回 'default'？")
+print("3. 短路求值在什么场景下特别有用？")

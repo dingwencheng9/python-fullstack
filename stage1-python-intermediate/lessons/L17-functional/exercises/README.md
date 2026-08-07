@@ -1,9 +1,9 @@
-# exercises/ - L15 练习题
+# exercises/ - L17 练习题
 
 本目录包含函数式编程练习。每个练习文件都可直接运行，并通过内置断言完成基础自检。
 
 ```bash
-cd stage1-python-intermediate/lessons/L15-functional
+cd stage1-python-intermediate/lessons/L17-functional
 python exercises/01_functional_pipeline.py
 python exercises/02_data_transformation.py
 python exercises/03_compose_decorator.py

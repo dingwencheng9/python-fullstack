@@ -1,4 +1,4 @@
-"""L16 练习 1 参考答案：邮箱、手机号和 URL 校验。"""
+"""L18 练习 1 参考答案：邮箱、手机号和 URL 校验。"""
 
 from __future__ import annotations
 

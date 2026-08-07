@@ -1,5 +1,5 @@
 """
-L14: 练习 3 测试 - 异步限流器
+L16: 练习 3 测试 - 异步限流器
 """
 
 # noqa: F821  # conftest.py autouse fixture 动态注入模块到命名空间

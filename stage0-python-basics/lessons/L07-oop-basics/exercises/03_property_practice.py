@@ -1,4 +1,4 @@
-"""L06 练习3: @property 装饰器
+"""L07 练习3: @property 装饰器
 
 难度: ⭐⭐⭐☆☆ (较难)
 预计时间: 40 分钟
@@ -148,10 +148,8 @@ if __name__ == "__main__":
 
     # 测试异常
     print("\n3. 成绩验证测试:")
-    try:
-        student.score = 150  # 超出范围
-    except ValueError as e:
-        print(f"   捕获异常: {e}")
+    student.score = 150  # 超出范围
+    print(f"   超出范围时成绩: {student.score}")
 
     # 测试 Temperature 类
     print("\n4. Temperature 类测试:")

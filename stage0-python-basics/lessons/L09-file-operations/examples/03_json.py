@@ -1,4 +1,4 @@
-"""L05 示例3: JSON 文件处理。
+"""L09 示例3: JSON 文件处理。
 
 使用临时目录演示 JSON 读写，避免在课程目录留下 user.json/users.json。
 """

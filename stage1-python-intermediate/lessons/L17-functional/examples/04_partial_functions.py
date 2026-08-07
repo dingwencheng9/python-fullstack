@@ -1,4 +1,4 @@
-"""L15: 函数式编程 - 偏函数"""
+"""L17: 函数式编程 - 偏函数"""
 
 from functools import partial
 

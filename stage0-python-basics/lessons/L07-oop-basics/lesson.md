@@ -5,8 +5,8 @@
 > **预计时长**: 6 小时
 > **难度**: ⭐⭐⭐☆☆
 > **前置课程**: L06（异常处理）
-> **版本**: v2.2
-> **最后更新**: 2026-08-02
+> **版本**: v2.3
+> **最后更新**: 2026-08-05
 > **核心版本**: Python 3.13
 
 ---
@@ -42,6 +42,36 @@
 **面向对象**让代码更易维护、更符合人类对现实世界的建模方式。
 
 ---
+
+
+### OOP 四大支柱（可视化）
+
+面向对象编程的四大核心概念：
+
+```mermaid
+flowchart TD
+    subgraph OOP["面向对象编程 (OOP)"]
+        A["**封装 (Encapsulation)**"]
+        B["**继承 (Inheritance)**"]
+        C["**多态 (Polymorphism)**"]
+        D["**抽象 (Abstraction)**"]
+    end
+    
+    A -->|"隐藏实现细节"| E["私有属性<br/>公开接口"]
+    B -->|"代码复用"| F["父类 → 子类<br/>is-a 关系"]
+    C -->|"统一接口"| G["不同对象<br/>相同方法名"]
+    D -->|"简化复杂性"| H["只暴露必要<br/>接口"]
+    
+    E -.->|"组织代码"| A
+    F -.->|"构建类层次"| B
+    G -.->|"灵活设计"| C
+    H -.->|"清晰设计"| D
+    
+    style A fill:#e3f2fd,stroke:#1565c0
+    style B fill:#fff8e1,stroke:#f57f17
+    style C fill:#f3e5f5,stroke:#7b1fa2
+    style D fill:#e8f5e9,stroke:#2e7d32
+```
 
 ## Part 1: 类与对象基础
 
@@ -164,6 +194,40 @@ temp.celsius = 30    # 使用 setter
 > 💡 **进阶学习**：@property 的底层原理见 [L13 描述符](../../../stage1-python-intermediate/lessons/L13-descriptors/lesson.md)。
 
 ---
+
+
+
+### 继承层次结构（可视化）
+
+```mermaid
+classDiagram
+    class Animal {
+        +String name
+        +speak() String
+        +move() String
+    }
+    
+    class Dog {
+        +speak() String
+    }
+    
+    class Cat {
+        +speak() String
+    }
+    
+    class Bird {
+        +fly() String
+    }
+    
+    Animal <|-- Dog : 继承
+    Animal <|-- Cat : 继承
+    Animal <|-- Bird : 继承
+    
+    Dog : "汪汪叫"
+    Cat : "喵喵叫"
+    
+    class Animal: +name
+    class Animal: +speak()
 
 ## Part 3: 继承
 
@@ -365,7 +429,7 @@ class Car:
 | **super()** | 调用父类方法 |
 | **多重继承** | `class Child(Parent1, Parent2):` |
 
-> 📝 **进阶预告**：`__str__`、`__repr__`、`__eq__`、`__add__` 等**魔术方法**将在 **L07** 专门学习。
+> 📝 **进阶预告**：`__str__`、`__repr__`、`__eq__`、`__add__` 等**魔术方法**将在 **L08** 专门学习。
 
 ---
 
@@ -481,12 +545,12 @@ class Dog:
 
 > 💡 **提示**：SOLID 是面向对象设计的五大原则，帮助你写出更易维护的代码。
 
-| 原则 | 全称 | 核心理念 | L06 关联 |
+| 原则 | 全称 | 核心理念 | L07 关联 |
 |------|------|----------|----------|
 | **S** | 单一职责原则 | 一个类只做一件事 | ✅ `Dog` 只管理狗的数据 |
 | **O** | 开闭原则 | 对扩展开放，对修改关闭 | ✅ 用继承/组合扩展行为 |
 | **L** | 里氏替换原则 | 子类可以替换父类 | ✅ 子类保持父类接口 |
-| **I** | 接口隔离原则 | 多个小接口 > 一个大接口 | ⚠️ L06 暂不涉及 |
+| **I** | 接口隔离原则 | 多个小接口 > 一个大接口 | ⚠️ L07 暂不涉及 |
 | **D** | 依赖倒置原则 | 依赖抽象而非具体 | ⚠️ L12 装饰器中涉及 |
 
 **示例：单一职责原则（S）**
@@ -497,7 +561,9 @@ class User:
     def __init__(self, name: str):
         self.name = name
     def save_to_database(self): pass
+    pass  # TODO: 实现函数体
     def send_email(self): pass
+    pass  # TODO: 实现函数体
     def generate_report(self): pass
 
 # ✅ 符合 SRP：每个类只做一件事
@@ -548,861 +614,74 @@ def total_area(shapes: list[Shape]) -> float:
 
 ---
 
+## Part 5: 设计模式与SOLID原则（预览）
 
-### Part 5: 面向对象设计模式
-
-#### 5.1 设计模式简介
+> ⚠️ **进阶预告**：设计模式是 Stage 2 的核心内容。这里先建立概念认知，详细实现留待后续课程。
 
 设计模式是针对常见编程问题的**可复用解决方案**。Python 的 OOP 特性和动态特性使某些模式比其他语言更简洁。
 
 **三大类设计模式**：
 
-| 类别 | 描述 | 示例 |
-|------|------|------|
-| **创建型** | 对象创建机制 | 工厂、单例 |
-| **结构型** | 对象组合 | 装饰器、适配器 |
-| **行为型** | 对象交互 | 策略、观察者 |
+| 类别 | 描述 | 示例 | 深入学习 |
+|------|------|------|----------|
+| **创建型** | 对象创建机制 | 工厂、单例 | L21 |
+| **结构型** | 对象组合 | 装饰器、适配器 | L20 |
+| **行为型** | 对象交互 | 策略、观察者 | L20 |
 
-#### 5.2 工厂模式（Factory Pattern）
-
-**意图**：封装对象创建过程，子类决定创建哪种对象
-
+**工厂模式概念**：
 ```python
-from abc import ABC, abstractmethod
-from datetime import datetime
+# 工厂模式：根据条件创建不同对象
+class Dog:
+    def speak(self) -> str:
+        return "Woof!"
 
-# 产品接口
-class Notification(ABC):
-    @abstractmethod
-    def send(self, message: str) -> None:
-        """发送通知"""
-        ...
+class Cat:
+    def speak(self) -> str:
+        return "Meow!"
 
-# 具体产品
-class EmailNotification(Notification):
-    def send(self, message: str) -> None:
-        print(f"[Email] 发送邮件: {message}")
-
-
-class SMSNotification(Notification):
-    def send(self, message: str) -> None:
-        print(f"[SMS] 发送短信: {message}")
-
-
-class PushNotification(Notification):
-    def send(self, message: str) -> None:
-        print(f"[Push] 推送通知: {message}")
-
-
-# 工厂类
-class NotificationFactory:
-    """通知工厂"""
-
-    @staticmethod
-    def create_notification(channel: str) -> Notification:
-        """根据渠道创建通知"""
-        factories = {
-            "email": EmailNotification,
-            "sms": SMSNotification,
-            "push": PushNotification,
-        }
-
-        factory_class = factories.get(channel.lower())
-        if not factory_class:
-            raise ValueError(f"不支持的通知渠道: {channel}")
-
-        return factory_class()
-
-
-# 使用工厂
-def notify_user(user_id: int, channel: str, message: str):
-    """通知用户"""
-    notification = NotificationFactory.create_notification(channel)
-    notification.send(f"[用户 {user_id}] {message}")
-
-
-# 示例
-notify_user(123, "email", "您的订单已发货")
-notify_user(123, "sms", "您的订单已发货")
-notify_user(123, "push", "您的订单已发货")
-```
-
-**工厂方法模式**（子类决定创建细节）：
-
-```python
-class Logistics(ABC):
-    """物流基类"""
-
-    @abstractmethod
-    def create_transport(self) -> "Transport":
-        """工厂方法：创建运输工具"""
-        ...
-
-    def plan_delivery(self, distance: float) -> None:
-        """物流计划"""
-        transport = self.create_transport()
-        print(f"距离: {distance}km, 运费: {transport.calculate_cost(distance)}")
-
-
-class Transport(ABC):
-    @abstractmethod
-    def calculate_cost(self, distance: float) -> float:
-        ...
-
-
-class RoadLogistics(Logistics):
-    def create_transport(self) -> Transport:
-        return Truck()
-
-
-class SeaLogistics(Logistics):
-    def create_transport(self) -> Transport:
-        return Ship()
-
-
-class Truck(Transport):
-    def calculate_cost(self, distance: float) -> float:
-        return distance * 1.5  # 每公里 1.5 元
-
-
-class Ship(Transport):
-    def calculate_cost(self, distance: float) -> float:
-        return distance * 0.5  # 每公里 0.5 元
-
+def create_pet(pet_type: str) -> Dog | Cat:
+    """工厂函数：根据类型创建宠物"""
+    if pet_type == "dog":
+        return Dog()
+    elif pet_type == "cat":
+        return Cat()
+    raise ValueError(f"未知宠物类型: {pet_type}")
 
 # 使用
-logistics: Logistics = RoadLogistics()
-logistics.plan_delivery(100)  # 距离: 100km, 运费: 150.0
+pet = create_pet("dog")
+print(pet.speak())  # Woof!
 ```
 
-#### 5.3 单例模式（Singleton Pattern）
-
-**意图**：确保一个类只有一个实例，并提供全局访问点
-
+**策略模式概念**：
 ```python
-# 方式 1: 模块级单例（最 Pythonic）
-# singleton.py
-class _DatabaseConnection:
-    """数据库连接（模块级单例）"""
-    def __init__(self):
-        self.host = "localhost"
-        self.port = 5432
-
-    def query(self, sql: str):
-        print(f"执行 SQL: {sql}")
-
-
-# 在模块级别创建唯一实例
-_connection = _DatabaseConnection()
-
-def get_connection() -> _DatabaseConnection:
-    return _connection
-
-
-# 方式 2: 装饰器实现
-def singleton(cls):
-    """单例装饰器"""
-    instances: dict = {}
-
-    def get_instance(*args, **kwargs):
-        if cls not in instances:
-            instances[cls] = cls(*args, **kwargs)
-        return instances[cls]
-
-    return get_instance
-
-
-@singleton
-class Config:
-    def __init__(self):
-        self.settings = {}
-
-    def get(self, key: str, default=None):
-        return self.settings.get(key, default)
-
-
-# 方式 3: 元类实现
-class SingletonMeta(type):
-    """单例元类"""
-
-    _instances: dict = {}
-
-    def __call__(cls, *args, **kwargs):
-        if cls not in cls._instances:
-            cls._instances[cls] = super().__call__(*args, **kwargs)
-        return cls._instances[cls]
-
-
-class Logger(metaclass=SingletonMeta):
-    def __init__(self):
-        self.level = "INFO"
-
-    def log(self, message: str):
-        print(f"[{self.level}] {message}")
-
-
-# 使用示例
-config1 = Config()
-config2 = Config()
-print(config1 is config2)  # True
-
-logger1 = Logger()
-logger2 = Logger()
-print(logger1 is logger2)  # True
-```
-
-#### 5.4 策略模式（Strategy Pattern）
-
-**意图**：定义一系列算法，使它们可以互换
-
-```python
-from abc import ABC, abstractmethod
-from dataclasses import dataclass
-from typing import Protocol
-
-# 策略接口（方式 1: ABC）
-class DiscountStrategy(ABC):
-    @abstractmethod
-    def apply(self, price: float) -> float:
-        """应用折扣"""
-        ...
-
-
-class NoDiscount(DiscountStrategy):
+# 策略模式：可互换的算法
+class NormalDiscount:
     def apply(self, price: float) -> float:
         return price
 
-
-class PercentDiscount(DiscountStrategy):
-    def __init__(self, percent: float) -> None:
-        self.percent = percent
-
+class TenPercentDiscount:
     def apply(self, price: float) -> float:
-        return price * (1 - self.percent / 100)
+        return price * 0.9
 
-
-class FixedDiscount(DiscountStrategy):
-    def __init__(self, amount: float) -> None:
-        self.amount = amount
-
-    def apply(self, price: float) -> float:
-        return max(0, price - self.amount)
-
-
-# 上下文类
 class ShoppingCart:
-    def __init__(self, discount: DiscountStrategy | None = None) -> None:
-        self.items: list[dict] = []
-        self.discount = discount or NoDiscount()
+    def __init__(self, discount) -> None:
+        self.discount = discount  # 可以传入不同策略
 
-    def add_item(self, name: str, price: float, quantity: int = 1) -> None:
-        self.items.append({"name": name, "price": price, "quantity": quantity})
-
-    def total(self) -> float:
-        subtotal = sum(item["price"] * item["quantity"] for item in self.items)
+    def total(self, subtotal: float) -> float:
         return self.discount.apply(subtotal)
 
-    def set_discount(self, discount: DiscountStrategy) -> None:
-        self.discount = discount
-
-
-# 使用示例
-cart = ShoppingCart()
-cart.add_item("Python 书", 100, 2)
-cart.add_item("键盘", 200, 1)
-
-print(f"原价: {cart.total()}")  # 400
-
-cart.set_discount(PercentDiscount(10))
-print(f"9折: {cart.total()}")  # 360
-
-cart.set_discount(FixedDiscount(50))
-print(f"减50: {cart.total()}")  # 350
-```
-
-#### 5.5 观察者模式（Observer Pattern）
-
-**意图**：定义对象间的一对多依赖关系
-
-```python
-from abc import ABC, abstractmethod
-from typing import Callable
-
-# 观察者接口
-class Observer(ABC):
-    @abstractmethod
-    def update(self, message: str) -> None:
-        """收到通知时调用"""
-        ...
-
-
-class Subject:
-    """主题（被观察者）"""
-
-    def __init__(self) -> None:
-        self._observers: list[Observer] = []
-        self._state: str = ""
-
-    def attach(self, observer: Observer) -> None:
-        """添加观察者"""
-        if observer not in self._observers:
-            self._observers.append(observer)
-
-    def detach(self, observer: Observer) -> None:
-        """移除观察者"""
-        self._observers.remove(observer)
-
-    def notify(self) -> None:
-        """通知所有观察者"""
-        for observer in self._observers:
-            observer.update(self._state)
-
-    @property
-    def state(self) -> str:
-        return self._state
-
-    @state.setter
-    def state(self, value: str) -> None:
-        self._state = value
-        self.notify()  # 状态变化时自动通知
-
-
-# 具体观察者
-class NewsSubscriber(Observer):
-    def __init__(self, name: str) -> None:
-        self.name = name
-
-    def update(self, message: str) -> None:
-        print(f"[{self.name}] 收到通知: {message}")
-
-
-class EmailNotifier(Observer):
-    def update(self, message: str) -> None:
-        print(f"[邮件] 发送邮件: {message}")
-
-
-# 使用示例
-news = Subject()
-
-alice = NewsSubscriber("Alice")
-bob = NewsSubscriber("Bob")
-email = EmailNotifier()
-
-news.attach(alice)
-news.attach(bob)
-news.attach(email)
-
-news.state = "重大新闻：Python 4.0 发布！"
-# 输出:
-# [Alice] 收到通知: 重大新闻：Python 4.0 发布！
-# [Bob] 收到通知: 重大新闻：Python 4.0 发布！
-# [邮件] 发送邮件: 重大新闻：Python 4.0 发布！
-```
-
-#### 5.6 装饰器模式（Decorator Pattern）
-
-**意图**：动态给对象添加额外职责
-
-```python
-from abc import ABC, abstractmethod
-
-# 组件接口
-class Coffee(ABC):
-    @abstractmethod
-    def cost(self) -> float:
-        """计算成本"""
-        ...
-
-    @abstractmethod
-    def description(self) -> str:
-        """获取描述"""
-        ...
-
-
-# 具体组件
-class SimpleCoffee(Coffee):
-    def cost(self) -> float:
-        return 2.0
-
-    def description(self) -> str:
-        return "原味咖啡"
-
-
-# 装饰器基类
-class CoffeeDecorator(Coffee):
-    def __init__(self, coffee: Coffee) -> None:
-        self._coffee = coffee
-
-    def cost(self) -> float:
-        return self._coffee.cost()
-
-    def description(self) -> str:
-        return self._coffee.description()
-
-
-# 具体装饰器
-class MilkDecorator(CoffeeDecorator):
-    def cost(self) -> float:
-        return self._coffee.cost() + 0.5
-
-    def description(self) -> str:
-        return self._coffee.description() + ", 加奶"
-
-
-class SugarDecorator(CoffeeDecorator):
-    def cost(self) -> float:
-        return self._coffee.cost() + 0.2
-
-    def description(self) -> str:
-        return self._coffee.description() + ", 加糖"
-
-
-class WhipDecorator(CoffeeDecorator):
-    def cost(self) -> float:
-        return self._coffee.cost() + 1.0
-
-    def description(self) -> str:
-        return self._coffee.description() + ", 加奶油"
-
-
-# 使用示例
-coffee: Coffee = SimpleCoffee()
-print(f"{coffee.description()}: ${coffee.cost()}")
-# 原味咖啡: $2.0
-
-coffee = MilkDecorator(coffee)
-print(f"{coffee.description()}: ${coffee.cost()}")
-# 原味咖啡, 加奶: $2.5
-
-coffee = SugarDecorator(coffee)
-print(f"{coffee.description()}: ${coffee.cost()}")
-# 原味咖啡, 加奶, 加糖: $2.7
-
-coffee = WhipDecorator(coffee)
-print(f"{coffee.description()}: ${coffee.cost()}")
-# 原味咖啡, 加奶, 加糖, 加奶油: $3.7
-```
-
-#### 5.7 组合模式（Composite Pattern）
-
-**意图**：将对象组合成树形结构，表示"部分-整体"层次
-
-```python
-from abc import ABC, abstractmethod
-
-class FileSystemComponent(ABC):
-    """文件系统组件基类"""
-
-    def __init__(self, name: str) -> None:
-        self.name = name
-
-    @abstractmethod
-    def get_size(self) -> int:
-        """获取大小"""
-        ...
-
-    @abstractmethod
-    def print(self, indent: int = 0) -> None:
-        """打印结构"""
-        ...
-
-
-class File(FileSystemComponent):
-    """文件"""
-
-    def __init__(self, name: str, size: int) -> None:
-        super().__init__(name)
-        self._size = size
-
-    def get_size(self) -> int:
-        return self._size
-
-    def print(self, indent: int = 0) -> None:
-        print("  " * indent + f"📄 {self.name} ({self._size}KB)")
-
-
-class Directory(FileSystemComponent):
-    """目录"""
-
-    def __init__(self, name: str) -> None:
-        super().__init__(name)
-        self._children: list[FileSystemComponent] = []
-
-    def add(self, component: FileSystemComponent) -> None:
-        self._children.append(component)
-
-    def remove(self, component: FileSystemComponent) -> None:
-        self._children.remove(component)
-
-    def get_size(self) -> int:
-        return sum(child.get_size() for child in self._children)
-
-    def print(self, indent: int = 0) -> None:
-        print("  " * indent + f"📁 {self.name}/ ({self.get_size()}KB)")
-        for child in self._children:
-            child.print(indent + 1)
-
-
-# 使用示例
-root = Directory("project")
-src = Directory("src")
-docs = Directory("docs")
-
-src.add(File("main.py", 50))
-src.add(File("utils.py", 30))
-src.add(File("config.py", 10))
-
-docs.add(File("README.md", 20))
-docs.add(File("API.md", 100))
-
-root.add(src)
-root.add(docs)
-root.add(File("requirements.txt", 5))
-
-root.print()
-# 📁 project/ (215KB)
-#   📁 src/ (90KB)
-#     📄 main.py (50KB)
-#     📄 utils.py (30KB)
-#     📄 config.py (10KB)
-#   📁 docs/ (120KB)
-#     📄 README.md (20KB)
-#     📄 API.md (100KB)
-#   📄 requirements.txt (5KB)
-```
-
-### Part 6: SOLID 原则详解
-
-#### 6.1 单一职责原则（SRP）
-
-```python
-# ❌ 违反 SRP：一个类有多个职责
-class User:
-    def __init__(self, name: str, email: str):
-        self.name = name
-        self.email = email
-
-    def save_to_database(self):
-        """保存到数据库"""
-        print(f"保存用户 {self.name} 到数据库")
-
-    def send_email(self, subject: str, body: str):
-        """发送邮件"""
-        print(f"发送邮件给 {self.email}")
-
-    def generate_report(self):
-        """生成报告"""
-        print(f"生成用户报告")
-
-
-# ✅ 符合 SRP：每个类只有一个职责
-class User:
-    def __init__(self, name: str, email: str):
-        self.name = name
-        self.email = email
-
-
-class UserRepository:
-    def save(self, user: User):
-        print(f"保存用户 {user.name} 到数据库")
-
-    def find_by_email(self, email: str) -> User | None:
-        print(f"查找用户 {email}")
-        return None
-
-
-class EmailService:
-    def send(self, to: str, subject: str, body: str):
-        print(f"发送邮件给 {to}")
-
-
-class ReportGenerator:
-    def generate(self, user: User) -> str:
-        return f"报告: {user.name}"
-```
-
-#### 6.2 开闭原则（OCP）
-
-```python
-# ❌ 违反 OCP：添加新形状需要修改函数
-def calculate_area(shape_type: str, *args) -> float:
-    if shape_type == "circle":
-        return 3.14 * args[0] ** 2
-    elif shape_type == "square":
-        return args[0] ** 2
-    elif shape_type == "triangle":
-        return 0.5 * args[0] * args[1]
-    raise ValueError(f"Unknown shape: {shape_type}")
-
-
-# ✅ 符合 OCP：对扩展开放，对修改关闭
-from abc import ABC, abstractmethod
-from math import pi
-
-class Shape(ABC):
-    @abstractmethod
-    def area(self) -> float:
-        ...
-
-
-class Circle(Shape):
-    def __init__(self, radius: float):
-        self.radius = radius
-
-    def area(self) -> float:
-        return pi * self.radius ** 2
-
-
-class Square(Shape):
-    def __init__(self, side: float):
-        self.side = side
-
-    def area(self) -> float:
-        return self.side ** 2
-
-
-class Triangle(Shape):
-    def __init__(self, base: float, height: float):
-        self.base = base
-        self.height = height
-
-    def area(self) -> float:
-        return 0.5 * self.base * self.height
-
-
-# 新增形状只需添加新类，不需要修改 calculate_total_area
-def calculate_total_area(shapes: list[Shape]) -> float:
-    return sum(shape.area() for shape in shapes)
-```
-
-#### 6.3 里氏替换原则（LSP）
-
-```python
-# ❌ 违反 LSP：子类改变了父类的行为
-class Rectangle:
-    def __init__(self, width: float, height: float):
-        self._width = width
-        self._height = height
-
-    @property
-    def width(self) -> float:
-        return self._width
-
-    @width.setter
-    def width(self, value: float):
-        self._width = value
-
-    @property
-    def height(self) -> float:
-        return self._height
-
-    @height.setter
-    def height(self, value: float):
-        self._height = value
-
-    def area(self) -> float:
-        return self._width * self._height
-
-
-class Square(Rectangle):
-    """正方形违反了 Liskov 替换原则"""
-    def __init__(self, side: float):
-        super().__init__(side, side)
-
-    @Rectangle.width.setter
-    def width(self, value: float):
-        # 修改宽度时也修改高度，违反了预期
-        self._width = value
-        self._height = value
-
-
-def print_area(shape: Rectangle):
-    """期望任何 Rectangle 都能正常工作"""
-    shape.width = 5
-    shape.height = 4
-    print(f"面积: {shape.area()}")  # 期望 20
-
-square = Square(5)
-print_area(square)  # 输出 25，而不是 20！
-
-
-# ✅ 符合 LSP：使用更抽象的基类或正确的继承
-class Shape(ABC):
-    @abstractmethod
-    def area(self) -> float:
-        ...
-
-
-class Quadrilateral(Shape):
-    """四边形基类"""
-    @property
-    @abstractmethod
-    def width(self) -> float: ...
-
-    @property
-    @abstractmethod
-    def height(self) -> float: ...
-
-
-class Rectangle(Quadrilateral):
-    def __init__(self, width: float, height: float):
-        self._width = width
-        self._height = height
-
-    @property
-    def width(self) -> float:
-        return self._width
-
-    @property
-    def height(self) -> float:
-        return self._height
-
-
-class Square(Quadrilateral):
-    """正方形不再继承 Rectangle"""
-    def __init__(self, side: float):
-        self._side = side
-
-    @property
-    def width(self) -> float:
-        return self._side
-
-    @property
-    def height(self) -> float:
-        return self._side
-
-    def area(self) -> float:
-        return self._side ** 2
-```
-
-#### 6.4 接口隔离原则（ISP）
-
-```python
-# ❌ 违反 ISP：胖接口
-class Machine(ABC):
-    @abstractmethod
-    def print(self, document):
-        ...
-
-    @abstractmethod
-    def scan(self, document):
-        ...
-
-    @abstractmethod
-    def fax(self, document):
-        ...
-
-
-class OldPrinter(Machine):
-    def print(self, document):
-        print(f"打印: {document}")
-
-    def scan(self, document):
-        raise NotImplementedError("旧打印机不能扫描")
-
-    def fax(self, document):
-        raise NotImplementedError("旧打印机不能传真")
-
-
-# ✅ 符合 ISP：小而专注的接口
-class Printer(ABC):
-    @abstractmethod
-    def print(self, document):
-        ...
-
-
-class Scanner(ABC):
-    @abstractmethod
-    def scan(self, document):
-        ...
-
-
-class Fax(ABC):
-    @abstractmethod
-    def fax(self, document):
-        ...
-
-
-class OldPrinter(Printer):
-    def print(self, document):
-        print(f"打印: {document}")
-
-
-class MultiFunctionPrinter(Printer, Scanner, Fax):
-    def print(self, document):
-        print(f"打印: {document}")
-
-    def scan(self, document):
-        print(f"扫描: {document}")
-
-    def fax(self, document):
-        print(f"传真: {document}")
-```
-
-#### 6.5 依赖倒置原则（DIP）
-
-```python
-# ❌ 违反 DIP：高层模块依赖低层模块
-class MySQLDatabase:
-    def connect(self):
-        print("连接 MySQL")
-
-    def query(self, sql: str):
-        print(f"执行: {sql}")
-
-
-class UserService:
-    def __init__(self):
-        self.db = MySQLDatabase()  # 直接依赖具体实现
-
-    def get_user(self, user_id: int):
-        self.db.connect()
-        self.db.query(f"SELECT * FROM users WHERE id={user_id}")
-
-
-# ✅ 符合 DIP：依赖抽象
-class Database(Protocol):
-    """数据库抽象接口"""
-    def connect(self) -> None: ...
-    def query(self, sql: str) -> None: ...
-
-
-class MySQLDatabase:
-    def connect(self):
-        print("连接 MySQL")
-
-    def query(self, sql: str):
-        print(f"执行: {sql}")
-
-
-class PostgreSQLDatabase:
-    def connect(self):
-        print("连接 PostgreSQL")
-
-    def query(self, sql: str):
-        print(f"查询: {sql}")
-
-
-class UserService:
-    def __init__(self, db: Database):  # 依赖抽象
-        self.db = db
-
-    def get_user(self, user_id: int):
-        self.db.connect()
-        self.db.query(f"SELECT * FROM users WHERE id={user_id}")
-
-
 # 使用
-mysql_db = MySQLDatabase()
-user_service = UserService(mysql_db)
-
-postgres_db = PostgreSQLDatabase()
-user_service2 = UserService(postgres_db)  # 可以轻松替换
+cart1 = ShoppingCart(NormalDiscount())
+cart2 = ShoppingCart(TenPercentDiscount())
+print(cart1.total(100))  # 100
+print(cart2.total(100))  # 90
 ```
 
-### Part 7: 常见面试题与解答
+---
 
-#### 7.1 类属性 vs 实例属性
+## Part 6: 常见面试题与解答
+
+### 6.1 类属性 vs 实例属性
 
 ```python
 class Test:

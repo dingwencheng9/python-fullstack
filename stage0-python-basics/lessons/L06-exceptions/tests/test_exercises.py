@@ -34,12 +34,6 @@ def multiple_exceptions_module():
     return _load_exercise_module("_test_multiple", EXERCISES_DIR / "02_multiple_exceptions.py")
 
 
-@pytest.fixture(scope="module")
-def custom_exceptions_module():
-    """加载 exercises/03_custom_exceptions.py"""
-    return _load_exercise_module("_test_custom", EXERCISES_DIR / "03_custom_exceptions.py")
-
-
 # ============================================================
 # 01_basic_handling.py 测试
 # ============================================================
@@ -141,74 +135,106 @@ class TestSafeGetItem:
 # ============================================================
 
 
-class TestCustomExceptions:
-    """测试自定义异常类"""
+@pytest.fixture(scope="module")
+def custom_exceptions_module():
+    """加载 exercises/03_custom_exceptions.py"""
+    return _load_exercise_module("_test_custom", EXERCISES_DIR / "03_custom_exceptions.py")
 
-    def test_invalid_age_error(self, custom_exceptions_module) -> None:
-        """测试 InvalidAgeError 异常"""
-        cls = getattr(custom_exceptions_module, "InvalidAgeError", None)
-        assert cls is not None, "请定义 InvalidAgeError 异常类"
 
-        error = cls(200)
-        assert isinstance(error, ValueError)
-        assert "200" in str(error)
+class TestInvalidAgeError:
+    """测试 InvalidAgeError 异常类"""
 
-    def test_invalid_email_error(self, custom_exceptions_module) -> None:
-        """测试 InvalidEmailError 异常"""
-        cls = getattr(custom_exceptions_module, "InvalidEmailError", None)
-        assert cls is not None, "请定义 InvalidEmailError 异常类"
-
-        error = cls("invalid")
-        assert isinstance(error, ValueError)
-        assert "invalid" in str(error)
-
-    def test_validate_age_valid(self, custom_exceptions_module) -> None:
-        """测试有效年龄验证"""
+    def test_valid_age(self, custom_exceptions_module) -> None:
+        """测试有效年龄"""
         func = getattr(custom_exceptions_module, "validate_age", None)
         assert func is not None, "请定义 validate_age 函数"
         assert func(25) == 25
+        assert func(1) == 1
+        assert func(150) == 150
 
-    def test_validate_age_invalid(self, custom_exceptions_module) -> None:
-        """测试无效年龄验证"""
-        cls = getattr(custom_exceptions_module, "InvalidAgeError", None)
+    def test_invalid_age_negative(self, custom_exceptions_module) -> None:
+        """测试负数年龄"""
         func = getattr(custom_exceptions_module, "validate_age", None)
-        assert cls is not None and func is not None
-
-        with pytest.raises(cls):
+        exc_class = getattr(custom_exceptions_module, "InvalidAgeError", None)
+        assert func is not None, "请定义 validate_age 函数"
+        assert exc_class is not None, "请定义 InvalidAgeError 类"
+        with pytest.raises(exc_class) as exc_info:
             func(-5)
+        assert exc_info.value.age == -5
 
-    def test_validate_email_valid(self, custom_exceptions_module) -> None:
-        """测试有效邮箱验证"""
+    def test_invalid_age_zero(self, custom_exceptions_module) -> None:
+        """测试零岁"""
+        func = getattr(custom_exceptions_module, "validate_age", None)
+        exc_class = getattr(custom_exceptions_module, "InvalidAgeError", None)
+        with pytest.raises(exc_class):
+            func(0)
+
+    def test_invalid_age_too_old(self, custom_exceptions_module) -> None:
+        """测试超出上限"""
+        func = getattr(custom_exceptions_module, "validate_age", None)
+        exc_class = getattr(custom_exceptions_module, "InvalidAgeError", None)
+        with pytest.raises(exc_class):
+            func(200)
+
+
+class TestInvalidEmailError:
+    """测试 InvalidEmailError 异常类"""
+
+    def test_valid_email(self, custom_exceptions_module) -> None:
+        """测试有效邮箱"""
         func = getattr(custom_exceptions_module, "validate_email", None)
         assert func is not None, "请定义 validate_email 函数"
-        assert func("test@example.com") == "test@example.com"
+        assert func("user@example.com") == "user@example.com"
 
-    def test_validate_email_invalid(self, custom_exceptions_module) -> None:
-        """测试无效邮箱验证"""
-        cls = getattr(custom_exceptions_module, "InvalidEmailError", None)
+    def test_invalid_email_no_at(self, custom_exceptions_module) -> None:
+        """测试无效邮箱：无 @"""
         func = getattr(custom_exceptions_module, "validate_email", None)
-        assert cls is not None and func is not None
+        exc_class = getattr(custom_exceptions_module, "InvalidEmailError", None)
+        with pytest.raises(exc_class):
+            func("invalid-email")
 
-        with pytest.raises(cls):
-            func("invalid")
+    def test_invalid_email_empty(self, custom_exceptions_module) -> None:
+        """测试空邮箱"""
+        func = getattr(custom_exceptions_module, "validate_email", None)
+        exc_class = getattr(custom_exceptions_module, "InvalidEmailError", None)
+        with pytest.raises(exc_class):
+            func("")
 
-    def test_register_user_success(self, custom_exceptions_module) -> None:
-        """测试成功注册"""
-        func = getattr(custom_exceptions_module, "register_user", None)
-        assert func is not None, "请定义 register_user 函数"
 
+class TestValidateUser:
+    """测试 validate_user 函数"""
+
+    def test_valid_user(self, custom_exceptions_module) -> None:
+        """测试有效用户"""
+        func = getattr(custom_exceptions_module, "validate_user", None)
+        assert func is not None, "请定义 validate_user 函数"
         result = func("alice", 25, "alice@example.com")
         assert result["username"] == "alice"
         assert result["age"] == "25"
         assert result["email"] == "alice@example.com"
 
-    def test_register_user_multiple_errors(self, custom_exceptions_module) -> None:
-        """测试多个验证错误"""
+    def test_username_normalized(self, custom_exceptions_module) -> None:
+        """测试用户名规范化"""
+        func = getattr(custom_exceptions_module, "validate_user", None)
+        result = func("  bob  ", 30, "bob@example.com")
+        assert result["username"] == "bob"
+
+
+class TestRegisterUser:
+    """测试 register_user 函数（收集多个错误）"""
+
+    def test_valid_user(self, custom_exceptions_module) -> None:
+        """测试有效用户"""
         func = getattr(custom_exceptions_module, "register_user", None)
         assert func is not None, "请定义 register_user 函数"
+        result = func("alice", 25, "alice@example.com")
+        assert result["username"] == "alice"
 
+    def test_collects_multiple_errors(self, custom_exceptions_module) -> None:
+        """测试收集多个错误"""
+        func = getattr(custom_exceptions_module, "register_user", None)
         with pytest.raises(ValueError) as exc_info:
-            func("", -5, "invalid")
-
-        error_message = str(exc_info.value)
-        assert "用户名不能为空" in error_message or "empty" in error_message.lower()
+            func("", -5, "not-an-email")
+        # 应该包含多个错误信息
+        error_msg = str(exc_info.value)
+        assert "用户名" in error_msg or "username" in error_msg.lower()

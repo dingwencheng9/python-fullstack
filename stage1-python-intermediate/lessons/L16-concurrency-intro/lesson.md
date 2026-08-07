@@ -1235,6 +1235,59 @@ async def process_files(filenames: list[str]) -> list[str]:
 
 ---
 
+
+## 💡 常见陷阱
+
+### 陷阱 1: GIL 导致多线程无效
+
+```python
+# ❌ CPU 密集型任务用多线程无效
+import threading
+
+def cpu_task(n):
+    return sum(i*i for i in range(n))
+
+threads = [threading.Thread(target=cpu_task, args=(10**6,)) for _ in range(4)]
+# 多线程不会加速，因为 GIL
+
+# ✅ CPU 密集型：使用 multiprocessing
+# ✅ I/O 密集型：使用 threading 或 asyncio
+```
+
+### 陷阱 2: 死锁
+
+```python
+# ❌ 多个锁的不当获取顺序导致死锁
+import threading
+
+lock_a = threading.Lock()
+lock_b = threading.Lock()
+
+def task1():
+    lock_a.acquire()
+    lock_b.acquire()  # 可能永远等待
+    # ...
+
+# ✅ 使用锁排序或 Lock.timeout
+```
+
+```mermaid
+flowchart TB
+    subgraph Concurrency["并发模型"]
+        A[threading<br/>线程]
+        B[multiprocessing<br/>进程]
+        C[asyncio<br/>协程]
+    end
+    
+    A --> D[I/O 密集型]
+    B --> E[CPU 密集型]
+    C --> F[高并发 I/O]
+    
+    style A fill:#fff8e1
+    style B fill:#ffcdd2
+    style C fill:#c8e6c9
+```
+
 ## 🔗 下一步
 
 完成本课程后，继续学习：

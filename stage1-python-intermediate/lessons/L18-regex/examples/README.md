@@ -1,9 +1,9 @@
-# examples/ - L16 示例代码
+# examples/ - L18 示例代码
 
 这些示例用于演示正则表达式基础语法、分组捕获、环视断言和 verbose 模式。每个文件都可独立运行。
 
 ```bash
-cd stage1-python-intermediate/lessons/L16-regex
+cd stage1-python-intermediate/lessons/L18-regex
 python examples/01_basic_patterns.py
 ```
 

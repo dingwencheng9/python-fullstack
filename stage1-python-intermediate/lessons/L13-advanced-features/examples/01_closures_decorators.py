@@ -1,4 +1,4 @@
-"""L12: 进阶特性 - 闭包与装饰器"""
+"""L13: 进阶特性 - 闭包与装饰器"""
 
 from functools import wraps
 

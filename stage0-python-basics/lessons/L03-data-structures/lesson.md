@@ -75,6 +75,72 @@ for user in users:
 | **字典 (Dict)** | ✅ (Python 3.7+) | ✅ | ❌ (键) | 配置、用户信息、计数器 |
 | **集合 (Set)** | ❌ | ✅ | ❌ | 去重、成员检测、集合运算 |
 
+
+### 数据结构选择指南（可视化）
+
+选择正确的数据结构能让代码效率提升 10 倍甚至 100 倍：
+
+```mermaid
+flowchart TD
+    A{"需要有序?"}
+    A -->|"是"| B{"需要可修改?"}
+    A -->|"否"| C{"需要去重?"}
+    
+    B -->|"是"| D["**List 列表**"]
+    B -->|"否"| E["**Tuple 元组**"]
+    
+    C -->|"是"| F["**Set 集合**"]
+    C -->|"否"| G{"需要键值对?"}
+    
+    G -->|"是"| H["**Dict 字典**"]
+    G -->|"否"| I["考虑使用 list"]
+    
+    D -->|"使用场景"| J["购物车、任务列表
+需要增删改操作"]
+    E -->|"使用场景"| K["坐标、固定配置
+函数多返回值"]
+    F -->|"使用场景"| L["标签、去重
+成员检测"]
+    H -->|"使用场景"| M["用户信息、配置
+计数器、缓存"]
+    
+    J -.-> D
+    K -.-> E
+    L -.-> F
+    M -.-> H
+
+    style D fill:#e3f2fd,stroke:#1565c0
+    style E fill:#fff8e1,stroke:#f57f17
+    style F fill:#f3e5f5,stroke:#7b1fa2
+    style H fill:#e8f5e9,stroke:#2e7d32
+
+    classDef info fill:#fafafa,stroke:#666
+    class J,K,L,M info
+```
+
+**时间复杂度对比**：
+
+```mermaid
+graph LR
+    subgraph 操作复杂度
+        O1["O(1)<br/>常数时间"] -->|"查找/插入"| OlogN["O(log n)<br/>对数时间"]
+        OlogN -->|"搜索/遍历"| ON["O(n)<br/>线性时间"]
+        ON -->|"最坏情况"| ON2["O(n²)<br/>平方时间"]
+    end
+    
+    subgraph 容器性能
+        L1["List: 查找O(n)<br/>插入O(1)末尾"]
+        L2["Dict: 查找O(1)<br/>插入O(1)"]
+        L3["Set: 查找O(1)<br/>插入O(1)"]
+    end
+
+    style O1 fill:#e8f5e9,stroke:#2e7d32
+    style OlogN fill:#fff8e1,stroke:#f57f17
+    style ON fill:#e3f2fd,stroke:#1565c0
+    style ON2 fill:#ffebee,stroke:#c62828
+```
+
+
 ## 📋 列表（List）
 
 ### 什么是列表？
@@ -473,7 +539,7 @@ from collections import defaultdict
 
 # 示例：统计单词出现次数
 text = "apple banana apple cherry banana apple"
-word_counts: defaultdict[str, int] = defaultdict(int)
+word_counts = defaultdict(int)
 
 for word in text.split():
     word_counts[word] += 1  # 不存在的键自动初始化为 0
@@ -501,7 +567,7 @@ for word in ["apple", "banana", "apple"]:
 
 ```python
 # 按分类分组
-people: defaultdict[str, list[str]] = defaultdict(list)
+people = defaultdict(list)
 people["engineer"].append("Alice")
 people["designer"].append("Bob")
 # {'engineer': ['Alice'], 'designer': ['Bob']}
@@ -593,29 +659,32 @@ print(dq)  # deque([2, 3, 4], maxlen=3)
 
 ```python
 # 1. 滑动窗口（计算最近 N 个值的平均数）
-from collections import deque
+# L04 将学到如何用函数封装这段逻辑
+# 当前仅演示数据结构使用，不涉及函数定义
+data = [1.0, 2.0, 3.0, 4.0, 5.0]
+window = 3
+# 使用切片模拟窗口
+for i in range(len(data)):
+    start = max(0, i - window + 1)
+    window_data = data[start:i+1]
+    print(f"窗口 {start}:{i+1} 平均值: {sum(window_data)/len(window_data)}")
 
-def sliding_average(data: list[float], window: int) -> list[float]:
-    dq = deque(maxlen=window)
-    result = []
-    for value in data:
-        dq.append(value)
-        result.append(sum(dq) / len(dq))
-    return result
-
-# 2. 广度优先搜索
-def bfs(graph: dict, start: str) -> list[str]:
-    visited = {start}
-    queue = deque([start])
-    result = []
-    while queue:
-        node = queue.popleft()
-        result.append(node)
-        for neighbor in graph[node]:
-            if neighbor not in visited:
-                visited.add(neighbor)
-                queue.append(neighbor)
-    return result
+# 2. 广度优先搜索（BFS）
+# L04 将学到如何用函数封装这段逻辑
+# 当前仅演示数据结构使用，不涉及函数定义
+graph = {"A": ["B", "C"], "B": ["A", "D"], "C": ["A"], "D": ["B"]}
+# 使用队列遍历
+visited = {"A"}
+queue = ["A"]
+traversal = []
+while queue:
+    node = queue.pop(0)  # 模拟队列出队
+    traversal.append(node)
+    for neighbor in graph.get(node, []):
+        if neighbor not in visited:
+            visited.add(neighbor)
+            queue.append(neighbor)
+print(f"BFS 遍历结果: {traversal}")
 ```
 
 > 💡 **何时选哪个**：
@@ -761,6 +830,9 @@ for x in range(10):
 squares = [x**2 for x in range(10)]
 ```
 ### 最佳实践 3: 不要使用可变对象作为默认参数
+
+> ⚠️ **预习提示**：`def` 函数定义将在 L04 中学习。
+> 本节仅演示数据结构使用，不涉及函数定义。
 
 ```python
 # ❌ 错误：可变默认参数 — target=[] 在函数定义时创建，调用间共享
@@ -946,7 +1018,7 @@ a, b = b, a
 print(a, b)  # 20 10
 
 # 函数返回值的解包 — 元组可以直接解包
-# L04 将学到如何用 def 定义函数返回元组
+# L04 将学到如何用函数返回元组，当前仅演示元组解包用法
 stats = (100, 200, 300)  # 模拟函数返回值
 min_val, *rest, max_val = stats
 print(min_val, max_val)  # 100 300
@@ -1035,6 +1107,81 @@ union = set_example | {3, 4, 5}
 ```
 ---
 
+
+
+## 💭 课堂思考
+
+### 思考 1: 可变 vs 不可变的选择
+
+**问题**：什么时候应该用列表（可变），什么时候应该用元组（不可变）？
+
+**引导思考**：
+- 数据的性质：本质上是固定的吗？
+- 性能考量：元组更轻量
+- 安全性：不可变数据更安全
+- 函数返回：为什么返回元组更安全？
+
+**决策树**：
+- 数据会变化吗？→ 是 → 列表
+- 需要作为字典键吗？→ 是 → 元组
+- 数据本质是固定的吗？→ 是 → 元组
+- 其他情况 → 列表
+
+---
+
+### 思考 2: 集合为什么无序？
+
+**问题**：集合 `set` 为什么不像列表一样保持顺序？
+
+**引导思考**：
+- 内部实现：哈希表
+- 查找性能：O(1) vs O(n)
+- 空间换时间的设计哲学
+
+**实验**：
+```python
+s = {3, 1, 4, 1, 5, 9}
+print(s)  # 输出顺序是？
+# 多次运行，结果一致吗？
+```
+
+---
+
+### 思考 3: 深拷贝 vs 浅拷贝的实际影响
+
+**问题**：什么时候浅拷贝会出问题？
+
+**引导思考**：
+- 嵌套结构：列表中的列表
+- 引用共享：修改一处影响多处
+- 防御策略：什么时候需要深拷贝？
+
+**场景分析**：
+```python
+# 浅拷贝的问题
+original = [[1, 2], [3, 4]]
+copy = original.copy()
+copy[0][0] = 99
+print(original)  # original[0][0] 也变成 99？
+```
+
+---
+
+### 思考 4: 数据结构选择的工程直觉
+
+**问题**：如何快速选择正确的数据结构？
+
+**引导思考**：
+- 需要顺序 + 可修改 → 列表
+- 需要快速查找 → 字典或集合
+- 需要去重 → 集合
+- 数据本身固定 → 元组
+
+**性能直觉**：
+- 查找：dict/set O(1) > list O(n)
+- 插入：list 尾部 O(1)，中间 O(n)
+- 内存：tuple < list < dict
+
 ## 🎓 核心知识点总结
 
 ### 核心知识点
@@ -1103,6 +1250,29 @@ union = set_example | {3, 4, 5}
 | 删除 | O(n) | N/A | O(1) | O(1) |
 | 内存 | 中 | 小 | 大 | 中 |
 
+#### 复杂度速查
+
+| 符号 | 名称 | 含义 | 实际体验 |
+|------|------|------|---------|
+| **O(1)** | 常数时间 | 操作时间与数据量无关 | 无论查1条还是100万条，都一样快 |
+| **O(n)** | 线性时间 | 操作时间与数据量成正比 | 数据量翻倍，时间也翻倍 |
+| **O(log n)** | 对数时间 | 数据量翻倍，时间只增加固定量 | 查找效率极高 |
+| **O(n²)** | 平方时间 | 数据量翻倍，时间翻4倍 | 大数据时要避免 |
+
+```python
+# O(1) 示例：字典的键查找（无论字典有多大）
+user = {"id": 1, "name": "Alice"}
+name = user["name"]  # 瞬间完成
+
+# O(n) 示例：列表的线性搜索
+names = ["Alice", "Bob", "Charlie"]
+found = "Bob" in names  # 最坏情况要检查所有元素
+
+# 为什么 dict 比 list 快？
+# dict 内部使用哈希表：通过键计算存储位置，一步到位
+# list 只能从前往后逐个比较
+```
+
 ### 实用技巧
 
 **1. 列表去重保持顺序**：
@@ -1155,6 +1325,21 @@ merged = dict1 | dict2  # 后者覆盖前者
 - [ ] 避免常见的数据结构陷阱
 - [ ] 使用列表推导式和字典推导式
 - [ ] 理解各数据结构的时间复杂度
+
+---
+
+## 📝 进阶预告
+
+完成本课程后，你已经掌握了 Python 的四大核心数据结构。在下一课 [L04: 函数与模块](../L04-functions-modules/lesson.md) 中，我们将学习：
+
+- 📝 **函数定义**：def、参数传递、返回值
+- 🔄 **参数类型**：位置参数、默认参数、*args、**kwargs
+- 🌍 **作用域**：局部、全局、nonlocal
+- 📦 **模块系统**：import、from...import、__name__
+- 🏗️ **包管理**：__init__.py、相对导入
+
+> 💡 **学习路径**：L03 → L04（函数与模块）→ L05（调试）→ ...
+
 
 ---
 

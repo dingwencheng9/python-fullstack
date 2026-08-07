@@ -122,14 +122,9 @@ class TestTracebackPractice:
 
         # 函数应该存在且可调用
         # 实际保存逻辑由学员实现
-        import tempfile
-        from pathlib import Path
-
-        with tempfile.TemporaryDirectory() as tmpdir:
-            log_path = Path(tmpdir) / "test_error.log"
-            # 如果函数需要路径参数，让学员自己修改
-            # 这里只验证函数可调用
-            assert callable(func)
+        # 如果函数需要路径参数，让学员自己修改
+        # 这里只验证函数可调用
+        assert callable(func)
 
     def test_analyze_error_exists(self, traceback_module) -> None:
         """测试 analyze_error 函数存在"""

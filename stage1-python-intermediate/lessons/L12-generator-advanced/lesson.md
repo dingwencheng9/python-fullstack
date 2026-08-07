@@ -440,6 +440,99 @@ python examples/03_async_generator.py
 
 ---
 
+## 💭 课堂思考
+
+### 思考 1: 生成器 vs 列表
+
+**问题**：为什么在处理大数据时，生成器比列表更高效？
+
+**引导思考**：
+- 内存占用差异
+- 惰性求值 vs 即时求值
+- 适用场景对比
+
+**对比示例**：
+
+```python
+# 列表：一次性加载全部到内存
+def squares_list(n):
+    return [x**2 for x in range(n)]
+
+# 生成器：按需产生值
+def squares_gen(n):
+    for x in range(n):
+        yield x**2
+```
+
+---
+
+### 思考 2: yield from 的应用场景
+
+**问题**：在什么情况下应该使用 `yield from` 而不是简单的 `for` 循环？
+
+**引导思考**：
+- 委托的语义
+- 异常传播
+- 返回值的处理
+
+---
+
+## ✅ 完成标准
+
+完成本课程后，你应该能够：
+
+- [ ] 理解 `yield from` 的委托机制
+- [ ] 使用 `send()` 实现生成器的双向通信
+- [ ] 编写异步生成器函数
+- [ ] 构建复杂的数据处理管道
+- [ ] 选择合适的生成器模式解决实际问题
+
+---
+
+
+## 💡 常见陷阱
+
+### 陷阱 1: yield from 忘记返回值传播
+
+```python
+# ❌ 误解：yield from 不传播返回值
+def outer():
+    result = yield from inner()
+    return result  # 这里 result 是 inner 的返回值
+
+# ✅ 正确：yield from 会把子生成器的 return 值传递给外层
+```
+
+### 陷阱 2: send() 首次调用必须传 None
+
+```python
+# ❌ 错误：首次调用 send() 不能传非 None 值
+# gen = count_generator()
+# gen.send(10)  # TypeError: can't send non-None value
+
+# ✅ 正确：首次必须 send(None)
+gen = count_generator()
+gen.send(None)  # 启动生成器
+gen.send(5)     # 现在可以发送值了
+```
+
+```mermaid
+flowchart TB
+    subgraph Generator["生成器通信"]
+        A[yield from] --> B[委托给子生成器]
+        C[send] --> D[双向通信]
+        E[async yield] --> F[异步生成器]
+    end
+    
+    B --> G[返回值传播]
+    D --> H[外部控制]
+    F --> I[await 支持]
+    
+    style A fill:#e1f5fe
+    style C fill:#fff3e0
+    style E fill:#f3e5f5
+```
+
 ## 🔗 下一步
 
 完成本课程后，继续学习：

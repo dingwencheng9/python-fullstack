@@ -25,5 +25,7 @@ python 00_demo.py
 | `03_name_main.py` | `__name__` 与 `if __name__ == "__main__"` 入口点模式 |
 | `04_all_exports.py` | `__all__` 如何控制 `from module import *` 的导出范围 |
 | `05_stdlib.py` | `math`、`random`、`datetime`、`json`、`os`、`pathlib` 等常用标准库 |
+| `06_type_annotations.py` | 函数签名类型注解、局部变量注解、`None` 类型 |
+| `07_lambda.py` | lambda 表达式基础、`sorted`/`map`/`filter` 配合使用 |
 | `my_module.py` | 示例模块：配合 `04_all_exports.py` 演示公开 API 与私有命名约定 |
 | `my_package/` | 示例包：包含计算器、验证器和子包工具模块 |

@@ -549,6 +549,97 @@ python examples/03_class_decorators.py
 
 ---
 
+## 💭 课堂思考
+
+### 思考 1: 装饰器的应用场景
+
+**问题**：装饰器在实际项目中有哪些典型应用？
+
+**引导思考**：
+- 性能测量
+- 日志记录
+- 缓存
+- 权限验证
+
+---
+
+### 思考 2: 装饰器 vs 高阶函数
+
+**问题**：装饰器本质上是什么？为什么它比直接修改函数更优雅？
+
+**引导思考**：
+- 装饰器模式的核心思想
+- 开闭原则
+- 组合优于继承
+
+---
+
+## ✅ 完成标准
+
+完成本课程后，你应该能够：
+
+- [ ] 理解带参装饰器的三层嵌套结构
+- [ ] 使用 `functools.wraps` 保留元信息
+- [ ] 编写装饰器链
+- [ ] 使用类装饰器
+- [ ] 避免常见装饰器错误
+
+---
+
+
+## 💡 常见陷阱
+
+### 陷阱 1: 忘记 functools.wraps
+
+```python
+# ❌ 丢失函数元信息
+def bad_decorator(func):
+    def wrapper(*args, **kwargs):
+        return func(*args, **kwargs)
+    return wrapper
+
+@bad_decorator
+def greet(): pass
+
+print(greet.__name__)  # "wrapper" 而非 "greet"
+
+# ✅ 正确：使用 functools.wraps
+from functools import wraps
+
+def good_decorator(func):
+    @wraps(func)
+    def wrapper(*args, **kwargs):
+        return func(*args, **kwargs)
+    return wrapper
+```
+
+### 陷阱 2: 装饰器顺序错误
+
+```python
+@decorator_a  # 先执行 A
+@decorator_b  # 后执行 B
+def my_func(): pass
+
+# 执行顺序：my_func → decorator_b → decorator_a
+# 牢记：离函数定义近的装饰器先执行
+```
+
+```mermaid
+flowchart TB
+    subgraph Decorator["装饰器结构"]
+        A[带参装饰器] --> B[三层嵌套]
+        C[装饰器链] --> D[从上到下装饰]
+        E[类装饰器] --> F[__call__ 方法]
+    end
+    
+    B --> G[参数 → 函数 → wrapper]
+    D --> H[先内后外执行]
+    
+    style A fill:#e3f2fd
+    style C fill:#fff8e1
+    style E fill:#f3e5f5
+```
+
 ## 🔗 下一步
 
 完成本课程后，继续学习：

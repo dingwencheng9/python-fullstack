@@ -18,7 +18,9 @@
 3. ✅ 实现自定义迭代器
 4. ✅ 使用 itertools 模块处理复杂迭代场景
 5. ✅ 构建数据处理管道
-6. ✅ 理解生成器的高级技巧（yield from、双向通信）
+6. ✅ 比较生成器与列表的内存效率差异
+
+> 📖 **L12 预告**：`yield from` 委托和 `send()` 双向通信将在 L12 详细学习。
 
 ---
 
@@ -317,62 +319,21 @@ for comb in itertools.combinations([1, 2, 3], 2):
 
 ---
 
-### Part 7: 高级技巧
+### Part 7: 生成器 vs 协程（预习）
 
-#### 7.1 yield from 委托
-
-```python
-def read_lines(filename: str):
-    """读取文件行"""
-    with open(filename) as f:
-        for line in f:
-            yield line.strip()
-
-def read_multiple_files(filenames: list[str]):
-    """读取多个文件"""
-    for filename in filenames:
-        # yield from 委托给另一个生成器
-        yield from read_lines(filename)
-
-# 等价于
-def read_multiple_files(filenames: list[str]):
-    for filename in filenames:
-        for line in read_lines(filename):
-            yield line
-```
-
-#### 7.2 生成器的双向通信
+> 📖 **L12 将学到**：`yield from` 和 `send()` 是协程的基础，将在 L12 详细学习。
 
 ```python
-def echo_generator():
-    """接收并回显数据"""
-    while True:
-        value = yield  # 接收数据
-        print(f"Received: {value}")
+# L12 预习：yield from 委托
+# def read_multiple_files(filenames):
+#     for filename in filenames:
+#         yield from read_lines(filename)  # L12 才学
 
-gen = echo_generator()
-next(gen)  # 启动生成器
-gen.send("Hello")  # 发送数据
-gen.send("World")
-```
-
-#### 7.3 生成器状态管理
-
-```python
-def running_average():
-    """计算移动平均值"""
-    total = 0
-    count = 0
-    while True:
-        value = yield total / count if count > 0 else 0
-        total += value
-        count += 1
-
-avg = running_average()
-next(avg)  # 启动
-print(avg.send(10))  # 10.0
-print(avg.send(20))  # 15.0
-print(avg.send(30))  # 20.0
+# L12 预习：send() 双向通信
+# def echo_generator():
+#     while True:
+#         value = yield
+#         print(f"Received: {value}")
 ```
 
 ---
@@ -468,13 +429,20 @@ async def fetch_batch(page: int, page_size: int) -> list[dict]:
 
 
 async def paginate_query(total: int, page_size: int = 100):
-    """分页生成器：高效处理大量数据"""
+    """分页生成器：高效处理大量数据
+    
+    L12 预习：yield from batch 等价于:
+    for item in batch:
+        yield item
+    """
     page = 0
     while True:
         batch = await fetch_batch(page, page_size)
         if not batch:
             break
-        yield from batch  # 逐个产出记录
+        # L12 将学到: yield from batch  # 逐个产出记录
+        for item in batch:
+            yield item
         page += 1
 
 
@@ -770,8 +738,10 @@ def count_to_3():
 
 def process_three_times():
     for _ in range(3):
-        # 每次创建新的生成器
-        yield from count_to_3()
+        # L12 预习：yield from 等价于展平嵌套循环
+        # yield from count_to_3()
+        for i in count_to_3():
+            yield i
 
 print(list(process_three_times()))  # [1, 2, 3, 1, 2, 3, 1, 2, 3]
 
@@ -979,11 +949,11 @@ python exercises/03_itertools_exercises.py
 
 ### 实用技巧
 
-- 💡 使用 `yield from` 委托给另一个生成器
 - 💡 组合多个小生成器构建数据管道
 - 💡 使用 `itertools.islice()` 限制生成器输出
 - 💡 使用 `itertools.tee()` 创建生成器的多个副本
 - 💡 用生成器替代列表推导式处理大文件
+- 💡 L12 将学到：`yield from` 委托简化嵌套循环
 
 ### 典型应用场景
 
@@ -1034,6 +1004,46 @@ python exercises/03_itertools_exercises.py
 - [ ] 本课测试通过：`uv run pytest stage1-python-intermediate/lessons/L11-generators/tests -q`
 
 ---
+
+
+## 💡 常见陷阱
+
+### 陷阱 1: 生成器只能遍历一次
+
+```python
+# ❌ 误解：生成器可以重复使用
+gen = (x**2 for x in range(5))
+print(list(gen))  # [0, 1, 4, 9, 16]
+print(list(gen))  # [] 再次遍历得到空结果
+
+# ✅ 正确做法：每次需要时创建新生成器
+```
+
+### 陷阱 2: 在生成器中修改外部状态
+
+```python
+# ❌ 副作用导致难以调试
+counter = 0
+def bad_gen():
+    global counter
+    while counter < 5:
+        counter += 1
+        yield counter
+
+# ✅ 正确做法：使用参数传递状态
+```
+
+```mermaid
+flowchart LR
+    A[可迭代对象] --> B[迭代器]
+    B --> C{has next?}
+    C -->|Yes| D[yield item]
+    D --> B
+    C -->|No| E[StopIteration]
+    
+    style B fill:#fff9c4
+    style D fill:#c8e6c9
+```
 
 ## 🔗 下一步
 

@@ -1,9 +1,9 @@
-# examples/ - L15 示例代码
+# examples/ - L17 示例代码
 
 这些示例用于演示 lambda、高阶函数、函数组合、偏函数、柯里化、生成器管道和 `itertools`。每个文件都可独立运行。
 
 ```bash
-cd stage1-python-intermediate/lessons/L15-functional
+cd stage1-python-intermediate/lessons/L17-functional
 python examples/01_lambda_basics.py
 ```
 

@@ -1,9 +1,9 @@
-# examples/ - L14 示例代码
+# examples/ - L16 示例代码
 
 这些示例用于演示 `asyncio` 协程基础，包括 async/await、并发执行、任务创建和错误处理。每个文件都可独立运行。
 
 ```bash
-cd stage1-python-intermediate/lessons/L14-concurrency-intro
+cd stage1-python-intermediate/lessons/L16-concurrency-intro
 python examples/01_async_basics.py
 ```
 

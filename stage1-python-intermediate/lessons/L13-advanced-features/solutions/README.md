@@ -1,4 +1,4 @@
-# solutions/ - L12 参考答案
+# solutions/ - L13 参考答案
 
 > ⚠️ 建议先独立完成 `exercises/`，再查看本目录。参考答案兼顾教学可读性与 pytest 覆盖的边界行为。
 
@@ -21,5 +21,5 @@
 ## 验证
 
 ```bash
-uv run pytest stage1-python-intermediate/lessons/L12-advanced-features/tests -q
+uv run pytest stage1-python-intermediate/lessons/L13-advanced-features/tests -q
 ```

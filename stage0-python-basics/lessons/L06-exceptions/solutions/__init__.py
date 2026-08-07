@@ -1,4 +1,4 @@
-"""L08 Exceptions 参考答案包。"""
+"""L06 Exceptions 参考答案包。"""
 
 from . import basic_handling
 from . import custom_exceptions

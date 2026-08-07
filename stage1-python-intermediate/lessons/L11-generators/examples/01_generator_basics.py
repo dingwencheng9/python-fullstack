@@ -61,11 +61,13 @@ print(f"生成器: {squares_gen}")  # <generator object>
 gen = (x**2 for x in range(1000000))
 print(f"生成器大小: {gen.__sizeof__()} bytes")  # 很小
 
-# === Part 4: yield from ===
+# === Part 4: 嵌套循环展开 ===
+
+# 传统写法：显式嵌套循环
 
 
 def flatten(nested: list[list[int]]) -> list[int]:
-    """扁平化嵌套列表"""
+    """扁平化嵌套列表（列表版）"""
     result = []
     for sublist in nested:
         for item in sublist:
@@ -74,9 +76,10 @@ def flatten(nested: list[list[int]]) -> list[int]:
 
 
 def flatten_gen(nested: list[list[int]]):
-    """生成器版扁平化"""
+    """扁平化嵌套列表（生成器版 - 使用显式嵌套循环）"""
     for sublist in nested:
-        yield from sublist
+        for item in sublist:
+            yield item
 
 
 nested = [[1, 2], [3, 4, 5], [6]]
@@ -100,23 +103,25 @@ print(next(gen))  # 1
 print(next(gen))  # 3 (state=1, then state*=2=2, next yields 3)
 print(next(gen))  # 5 (state=2, then state*=2=4, next yields 5)
 
-# === Part 6: send() 方法 ===
+# === Part 6: 生成器状态交互 ===
+
+# 展示生成器的基本交互模式
 
 
-def coro():
-    """协程示例"""
+def interactive_gen():
+    """模拟双向交互的生成器"""
     total = 0
     while True:
-        value = yield total
-        if value is not None:
-            total += value
+        # 每次 yield 当前累加值
+        yield total
+        # 状态更新
+        total += 1
 
 
-c = coro()
-print(next(c))  # 启动协程，返回 0
-print(c.send(10))  # 发送 10，返回 10
-print(c.send(20))  # 发送 20，返回 30
-print(c.send(5))  # 发送 5，返回 35
+gen = interactive_gen()
+print(next(gen))  # 0
+print(next(gen))  # 1
+print(next(gen))  # 2
 
 # === Part 7: throw() 和 close() ===
 

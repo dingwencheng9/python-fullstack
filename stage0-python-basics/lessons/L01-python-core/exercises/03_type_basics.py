@@ -64,7 +64,7 @@ print(f"a is b: {a is b}")  # True 表示是同一个对象
 
 # 修改变量 a
 a = 200
-print(f"\n修改 a = 200 后:")
+print("\n修改 a = 200 后:")
 print(f"a = {a}, id(a) = {id(a)}")
 print(f"b = {b}, id(b) = {id(b)}")
 print(f"a is b: {a is b}")  # False，现在 a 和 b 是不同的对象

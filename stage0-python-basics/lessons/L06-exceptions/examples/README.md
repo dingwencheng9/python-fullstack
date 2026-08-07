@@ -25,7 +25,7 @@ for f in examples/*.py; do python3 "$f"; done
 | `02_multiple_except.py` | 多个 `except` 子句、按异常类型分流 |
 | `03_else_finally.py` | `else` 成功路径、`finally` 清理路径 |
 | `04_raise_exception.py` | 使用 `raise` 主动抛出内置异常 |
-| `05_custom_exceptions.py` | 自定义异常类表达业务规则失败 |
+| `05_custom_exceptions.py` | 自定义异常类、异常继承 |
 | `06_exception_chaining.py` | `raise ... from ...`、异常链、traceback |
 
 ## 学习建议

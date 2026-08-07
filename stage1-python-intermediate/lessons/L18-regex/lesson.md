@@ -4,7 +4,7 @@
 > **所属阶段**: Stage 1 - Python 进阶
 > **预计时长**: 4 小时
 > **难度**: ⭐⭐⭐☆☆（中级）
-> **前置课程**: L10 类型系统、L11 迭代器与生成器
+> **前置课程**: L03 数据结构、L10 类型系统
 > **学习目标**: 掌握正则表达式语法、re 模块 API、字符类、量词、分组捕获、环视断言
 
 ---
@@ -691,6 +691,53 @@ def extract_prices(text: str) -> list[tuple[str, float]]:
 - [ ] 熟练使用 re 模块的核心方法
 
 ---
+
+
+## 💡 常见陷阱
+
+### 陷阱 1: 正则表达式过度贪婪
+
+```python
+# ❌ 贪婪匹配导致意外结果
+import re
+text = "<div>hello</div>world</div>"
+result = re.search("<div>.*</div>", text)
+print(result.group())  # "<div>hello</div>world</div>"
+
+# ✅ 使用非贪婪匹配
+result = re.search("<div>.*?</div>", text)
+print(result.group())  # "<div>hello</div>"
+```
+
+### 陷阱 2: 字符类中的转义
+
+```python
+# ❌ 在字符类中不需要转义
+re.search("[.]", "a.b")  # 匹配 "."
+
+# ❌ 但有些需要转义
+re.search("[\]]", "a]b")  # 右括号需要转义
+```
+
+```mermaid
+flowchart TB
+    subgraph Regex["正则表达式"]
+        A[字符类<br/>[abc]]
+        B[量词<br/>*, +, ?]
+        C[锚点<br/>^, $, \b]
+        D[分组<br/>(), (?:)]
+    end
+    
+    A --> E[匹配任意字符]
+    B --> F[控制重复]
+    C --> G[位置限制]
+    D --> H[捕获组]
+    
+    style A fill:#e8f5e9
+    style B fill:#fff8e1
+    style C fill:#ffecb3
+    style D fill:#f3e5f5
+```
 
 ## 🔗 下一步
 

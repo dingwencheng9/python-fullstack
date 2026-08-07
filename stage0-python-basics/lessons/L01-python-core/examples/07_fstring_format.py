@@ -96,7 +96,11 @@ print(f"f-string: 我是 {name}，今年 {age} 岁")
 print("字符串拼接: 我是 " + name + "，今年 " + str(age) + " 岁")
 
 # ❌ 不推荐：% 格式化（老旧，已废弃）
-print("% 格式化: 我是 %s，今年 %d 岁" % (name, age))  # noqa: PLE1300,F509
+# 注意：% 格式化需要元组来传递多个值
+# name, age = "Alice", 25  # 这在 L02 会学到
+# print("% 格式化: 我是 %s，今年 %d 岁" % (name, age))
+print("% 格式化示例: '我是 %s，今年 %d 岁' % ('Alice', 25)")
+print("（%s 表示字符串，%d 表示整数，元组在 L02 才学）")
 
 # ❌ 不推荐：.format()（冗长）
 print(".format(): 我是 {}，今年 {} 岁".format(name, age))  # noqa: US032

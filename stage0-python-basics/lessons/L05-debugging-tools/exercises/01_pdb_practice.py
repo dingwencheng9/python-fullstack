@@ -27,11 +27,8 @@ def find_middle_element(items):
 if __name__ == "__main__":
     # 测试 1: 空列表
     print("测试 1: 空列表")
-    try:
-        result = calculate_average([])
-        print(f"平均值: {result}")
-    except Exception as e:
-        print(f"错误: {type(e).__name__}: {e}")
+    result = calculate_average([])
+    print(f"平均值: {result}")
 
     # 测试 2: 偶数长度的列表
     print("\n测试 2: 偶数长度列表")

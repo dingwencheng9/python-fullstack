@@ -675,6 +675,57 @@ python exercises/02_context_managers.py
 
 ---
 
+
+## 💡 常见陷阱
+
+### 陷阱 1: 可变默认参数
+
+```python
+# ❌ 危险：默认参数在函数定义时创建
+def bad_append(item, items=[]):
+    items.append(item)
+    return items
+
+print(bad_append(1))  # [1]
+print(bad_append(2))  # [1, 2] 累积了！
+
+# ✅ 正确：使用 None
+def good_append(item, items=None):
+    if items is None:
+        items = []
+    items.append(item)
+    return items
+```
+
+### 陷阱 2: 闭包变量捕获
+
+```python
+# ❌ 闭包晚期绑定
+funcs = [lambda x: x*i for i in range(3)]
+print(funcs[0](1))  # 2 而非 0
+
+# ✅ 正确：使用默认参数捕获
+funcs = [lambda x, i=i: x*i for i in range(3)]
+print(funcs[0](1))  # 0
+```
+
+```mermaid
+flowchart TB
+    subgraph Advanced["高级特性"]
+        A[上下文管理器<br/>with 语句]
+        B[生成器<br/>yield]
+        C[闭包<br/>自由变量]
+    end
+    
+    A --> D[__enter__ / __exit__]
+    B --> E[yield / next]
+    C --> F[nonlocal 声明]
+    
+    style A fill:#e8f5e9
+    style B fill:#fff8e1
+    style C fill:#fce4ec
+```
+
 ## 🔗 下一步
 
 完成本课程后，继续学习：

@@ -43,6 +43,10 @@ class Fraction:
             return False
         return self.numerator == other.numerator and self.denominator == other.denominator
 
+    def __hash__(self) -> int:
+        """使分数可哈希，用于字典键或集合元素"""
+        return hash((self.numerator, self.denominator))
+
     def __add__(self, other: "Fraction") -> "Fraction":
         numerator = self.numerator * other.denominator + other.numerator * self.denominator
         denominator = self.denominator * other.denominator

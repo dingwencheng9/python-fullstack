@@ -75,23 +75,31 @@ print(f"科学计数: {big_number:.2e}")
 
 print("\n--- 对齐与填充 ---")
 
-names = ["Alice", "Bob", "Charlie"]
-scores = [95, 87, 92]
+# 使用独立变量代替列表（列表在 L03 才学）
+name1 = "Alice"
+name2 = "Bob"
+name3 = "Charlie"
+score1 = 95
+score2 = 87
+score3 = 92
 
 # 左对齐 (<)
 print("左对齐:")
-for name, score in zip(names, scores):
-    print(f"  {name:<10} | {score}")
+print(f"  {name1:<10} | {score1}")
+print(f"  {name2:<10} | {score2}")
+print(f"  {name3:<10} | {score3}")
 
 # 右对齐 (>)
 print("\n右对齐:")
-for name, score in zip(names, scores):
-    print(f"  {name:>10} | {score}")
+print(f"  {name1:>10} | {score1}")
+print(f"  {name2:>10} | {score2}")
+print(f"  {name3:>10} | {score3}")
 
 # 居中对齐 (^)
 print("\n居中对齐:")
-for name, score in zip(names, scores):
-    print(f"  {name:^10} | {score}")
+print(f"  {name1:^10} | {score1}")
+print(f"  {name2:^10} | {score2}")
+print(f"  {name3:^10} | {score3}")
 
 # 自定义填充字符
 print("\n自定义填充:")

@@ -2,106 +2,79 @@
 
 > **课程编号**: L05
 > **所属阶段**: Stage 0 - Python 编程基础
+> **预计时长**: 4 小时
+> **难度**: ⭐⭐☆☆☆ (入门进阶)
 > **前置课程**: L04 函数与模块
-> **建议学时**: 4 小时
+> **版本**: v1.3
+> **最后更新**: 2026-08-06
+> **核心版本**: Python 3.13
 
 ---
 
-## 概述
+## 🎯 学习目标
 
-本课是 Stage 0 的补充内容，旨在帮助学习者建立良好的调试习惯。在掌握函数和模块的基础上，学习使用专业的调试工具来排查问题，而不是仅依赖 `print()` 语句。
+完成本课程后，你将能够：
 
-### 为什么需要调试工具？
+1. **pdb 调试器**：使用 pdb.set_trace() 在代码中插入断点
+2. **breakpoint()**：使用 Python 3.7+ 内置断点函数
+3. **traceback 模块**：读取和分析异常追踪信息
+4. **IDE 调试**：配置 VS Code/PyCharm 进行可视化调试
+5. **uv 工具链**：使用 uv 创建和管理 Python 项目
 
-`print()` 调试的局限性：
+---
+
+## 📖 课程导读
+
+本课程将带你掌握 Python 的调试工具，让你能快速定位和修复代码中的错误。
+
+**为什么要学习调试？**
+
+代码出现 bug 是不可避免的，关键在于如何高效地找到问题所在。调试工具能让你：
+- 暂停程序执行，观察变量状态
+- 单步执行，理解代码执行流程
+- 追踪异常，理解错误传播路径
+
+**调试 vs print()：**
+
+很多初学者习惯用 `print()` 调试，但这种方法效率低下：
 - 需要反复添加/删除 print 语句
-- 难以查看复杂数据结构的内部状态
-- 无法在特定条件下暂停执行
-- 对于大型项目效率低下
+- 无法观察复杂数据结构的全貌
+- 无法在特定条件下暂停
 
-专业调试工具的优势：
-- 可以设置断点，精确控制执行暂停位置
-- 可以单步执行，观察每一步的变量变化
-- 可以查看调用栈，理解程序执行流程
-- 可以修改变量值，测试不同场景
+学会使用调试器，能让你效率提升 10 倍！
 
 ---
 
-## 1. pdb 基础
+## Part 1: pdb 调试器
 
-### 1.1 什么是 pdb
+### 1.1 调试流程（可视化）
 
-`pdb` 是 Python 标准库提供的交互式调试器（Python Debugger）。它是 Python 内置的调试工具，无需额外安装。
-
-### 1.2 使用 pdb.set_trace()
-
-最简单的方式是在代码中插入断点：
-
-```python
-import pdb
-
-def calculate_factorial(n):
-    if n < 0:
-        raise ValueError("负数没有阶乘")
-    if n == 0 or n == 1:
-        return 1
+```mermaid
+flowchart TD
+    A["发现 Bug"] --> B{"能复现?"}
+    B -->|"否"| C["收集更多信息<br/>添加日志"]
+    C --> B
     
-    pdb.set_trace()  # 程序在这里暂停
+    B -->|"是"| D["设置断点"]
+    D --> E["运行到断点"]
+    E --> F["检查变量值"]
+    F --> G{"值正确?"}
     
-    result = 1
-    for i in range(2, n + 1):
-        result *= i
-    return result
-
-print(calculate_factorial(5))
+    G -->|"是"| H["继续执行"]
+    G -->|"否"| I["定位问题代码"]
+    H --> J{"还是错?"}
+    J -->|"是"| I
+    J -->|"否"| K["Bug 修复"]
+    
+    I --> D
+    
+    style A fill:#ffebee,stroke:#c62828
+    style K fill:#e8f5e9,stroke:#2e7d32
 ```
 
-运行效果：
+### 1.2 pdb 基础
 
-```
-> /path/to/code.py(8)calculate_factorial()
--> result = 1
-(Pdb) n          # 单步执行 next
-> /path/to/code.py(9)calculate_factorial()
--> for i in range(2, n + 1):
-(Pdb) p result   # 打印变量
-1
-(Pdb) p n
-5
-(Pdb) c          # 继续执行 continue
-120
-```
-
-### 1.3 pdb 常用命令
-
-| 命令 | 简写 | 说明 |
-|------|------|------|
-| `next` | `n` | 执行下一行，不进入函数 |
-| `step` | `s` | 执行下一行，进入函数 |
-| `continue` | `c` | 继续执行到下一个断点 |
-| `break` | `b` | 设置断点 |
-| `print` | `p` | 打印变量值 |
-| `list` | `l` | 查看当前代码上下文 |
-| `where` | `w` | 查看调用栈 |
-| `up` | `u` | 切换到上层栈帧 |
-| `down` | `d` | 切换到下层栈帧 |
-| `quit` | `q` | 退出调试器 |
-
-### 1.4 使用命令行方式启动 pdb
-
-除了 `set_trace()`，还可以在命令行启动 pdb：
-
-```bash
-# 在程序入口处启动
-python -m pdb my_script.py
-
-# 或者在异常发生后启动 post-mortem 调试
-python -m pdb -c "postmortem" my_script.py
-```
-
----
-
-## 2. breakpoint() 内置函数
+## Part 2: breakpoint() 内置函数
 
 ### 2.1 Python 3.7+ 的 breakpoint()
 
@@ -129,7 +102,7 @@ export PYTHONBREAKPOINT=ipdb.set_trace
 export PYTHONBREAKPOINT=
 ```
 
-### 2.3 在代码中检查断点状态
+### 2.3 检查断点状态
 
 ```python
 import sys
@@ -142,7 +115,7 @@ def debug_print(*args):
 
 ---
 
-## 3. traceback 分析
+## Part 3: traceback 分析
 
 ### 3.1 理解异常追踪信息
 
@@ -225,25 +198,37 @@ import logging
 
 logging.basicConfig(level=logging.ERROR)
 
-def log_exception(func):
-    """装饰器：记录函数异常"""
-    def wrapper(*args, **kwargs):
-        try:
-            return func(*args, **kwargs)
-        except Exception:
-            logging.error(f"异常在 {func.__name__}:\n{traceback.format_exc()}")
-            raise
-    return wrapper
 
-@log_exception
+def log_and_raise(func_name: str, error: Exception) -> None:
+    """记录异常并重新抛出"""
+    logging.error(f"异常在 {func_name}:\n{traceback.format_exc()}")
+    raise error
+
+
 def risky_operation():
-    # 可能失败的操作
-    pass
+    """可能失败的操作"""
+    try:
+        # 模拟可能失败的操作
+        data = {"key": "value"}
+        _ = data["nonexistent"]
+    except KeyError as e:
+        # 记录异常并重新抛出
+        log_and_raise("risky_operation", e)
+
+
+# 使用 traceback.format_exc() 获取调用栈
+def get_traceback_string() -> str:
+    """获取当前异常的调用栈字符串"""
+    try:
+        int("not_a_number")
+    except ValueError:
+        return traceback.format_exc()
+    return ""
 ```
 
 ---
 
-## 4. IDE 调试器
+## Part 4: IDE 调试器
 
 ### 4.1 VS Code 调试配置
 
@@ -286,7 +271,7 @@ PyCharm 提供了更强大的调试功能：
 
 ---
 
-## 5. uv 工具链
+## Part 5: uv 工具链
 
 ### 5.1 uv 简介
 
@@ -310,7 +295,7 @@ uv run python main.py
 uv run pytest
 ```
 
-### 5.3 使用 uv 管理虚拟环境
+### 5.3 管理虚拟环境
 
 ```bash
 # 创建虚拟环境
@@ -334,7 +319,7 @@ uv sync
 
 ---
 
-## 6. 调试最佳实践
+## Part 6: 调试最佳实践
 
 ### 6.1 何时使用调试器 vs print()
 
@@ -392,7 +377,7 @@ sys.excepthook = excepthook
 
 ---
 
-## 7. 常见调试场景
+## Part 7: 常见调试场景
 
 ### 7.1 变量值不符合预期
 
@@ -433,31 +418,213 @@ except Exception as e:
 
 ---
 
-## 8. 课后练习
+## Part 8: 课后练习
 
-### 练习 1: pdb 基础
+#### 练习 1: pdb 基础
 
 编写一个函数计算斐波那契数列，使用 pdb 单步调试观察变量变化。
 
-### 练习 2: breakpoint() 配置
+#### 练习 2: breakpoint() 配置
 
 创建一个脚本，使用 `breakpoint()`，尝试配置不同的调试器（pdb/ipdb）。
 
-### 练习 3: traceback 分析
+#### 练习 3: traceback 分析
 
 编写代码捕获异常，使用 `traceback` 模块将异常信息保存到日志文件。
 
-### 练习 4: IDE 调试
+#### 练习 4: IDE 调试
 
 使用 VS Code 或 PyCharm 调试一个包含多个函数的 Python 文件，练习设置断点、单步执行、查看变量。
 
-### 练习 5: uv 项目
+#### 练习 5: uv 项目
 
 使用 `uv` 创建一个新项目，添加依赖，运行测试。
 
 ---
 
-## 9. 知识点总结
+
+
+## 💭 课堂思考
+
+### 思考 1: print() 调试 vs 调试器
+
+**问题**：什么时候应该使用 `print()`，什么时候应该用调试器？
+
+**引导思考**：
+- 简单变量查看 vs 复杂执行流程分析
+- 一次性脚本 vs 长期维护项目
+- 生产环境调试的特殊考虑
+
+**建议原则**：
+- `print()`：快速验证、一次性调试
+- 调试器：复杂逻辑、长期项目
+
+---
+
+### 思考 2: 为什么需要 traceback？
+
+**问题**：看到异常信息时，你的第一个动作是什么？
+
+**引导思考**：
+- traceback 中的"最 recent call last"是什么意思？
+- 如何从 traceback 中定位问题根源？
+- 什么时候 traceback 不够用？
+
+---
+
+### 思考 3: uv vs pip 的选择
+
+**问题**：既然 pip 也能完成任务，为什么学习 uv？
+
+**引导思考**：
+- 开发效率：等待时间对学习体验的影响
+- 一致性：lock 文件的作用
+- 未来趋势：uv 是否会成为主流？
+
+---
+
+
+
+## 💡 常见调试陷阱
+
+### 陷阱 1: print() 调试的滥用
+
+```python
+# ❌ 错误：过度依赖 print() 调试
+def calculate(x):
+    print(f"输入: {x}")      # 大量 print
+    result = x * 2
+    print(f"中间结果: {result}")  # 难以追踪
+    return result
+
+# ✅ 正确：使用断点调试器
+def calculate(x):
+    result = x * 2  # 在这里设置断点
+    return result
+
+# 或使用条件断点
+for i in range(100):
+    if i == 42:  # 在 i == 42 时自动触发
+        breakpoint()
+```
+
+### 陷阱 2: 忽略堆栈追踪信息
+
+```python
+# ❌ 错误：看到错误就慌
+# Traceback (most recent call last):
+#   File "app.py", line 5, in <module>
+#     result = 1 / 0
+# ZeroDivisionError: division by zero
+
+# ✅ 正确：按顺序读懂堆栈
+# 1. 先看最后一行 → 什么错误：ZeroDivisionError
+# 2. 再看位置 → 第 5 行
+# 3. 最后看调用链 → 从下往上理解执行路径
+```
+
+### 陷阱 3: pdb 中忘记 continue
+
+```python
+# ❌ 错误：在 pdb 中单步执行太久
+(Pdb) n   # 一次
+(Pdb) n   # 两次
+(Pdb) n   # 三次
+# ... 手动执行了 100 步
+
+# ✅ 正确：使用合适的断点间距
+(Pdb) b 50   # 在第 50 行设置断点
+(Pdb) c      # 继续执行到断点
+```
+
+### 陷阱 4: 调试时修改代码不重启
+
+```python
+# ❌ 错误：修改代码后继续调试
+# 在 pdb 中修改了代码，但没有重新运行
+(Pdb) p variable
+# 结果：还是旧值
+
+# ✅ 正确：重启程序
+# 修改代码 → 退出 pdb (q) → 重新运行程序
+```
+
+### 陷阱 5: 不理解局部变量 vs 全局变量
+
+```python
+# ❌ 调试时发现变量值不对
+(Pdb) p my_var
+# 'my_var' is not defined
+
+# ✅ 正确：理解作用域
+(Pdb) p globals()['my_var']  # 查看全局变量
+(Pdb) p locals()              # 查看局部变量
+```
+
+---
+
+## 🚀 实战案例
+
+### 案例：调试一个计算平均值的函数
+
+假设有以下代码：
+
+```python
+def calculate_average(numbers):
+    """计算平均值"""
+    total = 0
+    for i in range(len(numbers)):
+        total += numbers[i]
+    return total / len(numbers)
+
+# 测试
+print(calculate_average([1, 2, 3, 4, 5]))  # 预期: 3.0
+print(calculate_average([]))                 # 预期: ??? (空列表会怎样？)
+```
+
+**问题发现**：
+```python
+print(calculate_average([]))
+# ZeroDivisionError: division by zero
+```
+
+**调试步骤**：
+
+1. **添加断点**：
+```python
+def calculate_average(numbers):
+    total = 0
+    breakpoint()  # ← 添加断点
+    for i in range(len(numbers)):
+        total += numbers[i]
+    return total / len(numbers)
+```
+
+2. **运行并调试**：
+```bash
+$ python debug_average.py
+> /Users/demo/debug_average.py(5)<module>()
+-> print(calculate_average([]))
+(Pdb) s  # 进入函数
+(Pdb) n  # 单步执行到循环
+(Pdb) p len(numbers)  # 检查列表长度
+0
+```
+
+3. **修复代码**：
+```python
+def calculate_average(numbers):
+    if not numbers:  # ← 添加空列表检查
+        return 0
+    total = 0
+    for i in range(len(numbers)):
+        total += numbers[i]
+    return total / len(numbers)
+```
+
+---
+
+## 🎓 核心知识点总结
 
 | 知识点 | 级别 | 说明 |
 |--------|------|------|
@@ -472,7 +639,55 @@ except Exception as e:
 
 ---
 
-## 10. 参考资源
+## ✅ 自检清单
+
+完成本课程后，你应该能够：
+
+- [ ] 使用 `pdb.set_trace()` 在代码中插入断点
+- [ ] 使用 `breakpoint()` 调用内置调试器
+- [ ] 理解 pdb 常用命令（n/s/c/p/l）
+- [ ] 读取和分析 traceback 追踪信息
+- [ ] 使用 `traceback.print_exc()` 和 `traceback.format_exc()`
+- [ ] 配置 VS Code 或 PyCharm 进行断点调试
+- [ ] 理解 `PYTHONBREAKPOINT` 环境变量的作用
+- [ ] 使用 `uv init` 创建新项目
+- [ ] 使用 `uv add` 管理项目依赖
+- [ ] 在调试器和 print() 之间做出合理选择
+
+---
+
+
+
+## 📝 进阶预告
+
+完成本课程后，你已经掌握了调试技能。在下一课 [L06: 异常处理](../L06-exceptions/lesson.md) 中，我们将学习：
+
+- ⚠️ **异常概念**：什么是异常、为什么要处理
+- 🛡️ **try-except**：捕获和处理异常
+- 🔊 **raise 语句**：抛出异常、自定义异常
+- 🔗 **异常链**：异常传播、上下文保留
+- 🧹 **资源清理**：finally、with 语句
+
+> 💡 **学习路径**：L05 → L06（异常）→ L07（面向对象）→ ...
+
+
+---
+
+## 🔗 下一步
+
+完成本课程后，继续学习：
+
+- [L06: 异常处理](../L06-exceptions/lesson.md)
+
+在下一课中，我们将学习：
+- try-except 捕获异常
+- raise 抛出异常
+- 自定义异常类
+
+
+---
+
+## 📚 延伸阅读
 
 - [Python pdb 文档](https://docs.python.org/3/library/pdb.html)
 - [Python traceback 文档](https://docs.python.org/3/library/traceback.html)

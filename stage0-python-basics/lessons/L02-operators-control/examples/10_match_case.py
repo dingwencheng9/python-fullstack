@@ -5,6 +5,8 @@
 - 多值 OR 匹配
 - 带守卫的条件模式（Guards）
 
+【注意】本文件需要 Python 3.10+ 才能运行。在旧版本中会报 SyntaxError。
+
 > 📖 **L03 将学到**：本节的列表和字典模式匹配（解包）需要先掌握 list 和 dict 的基础知识。
 """
 
@@ -72,15 +74,15 @@ age = 25
 match age:
     case x if x < 0:
         print(f"{age} 岁 → 无效年龄")
-    case x if x < 3:
+    case x if 0 <= x < 3:
         print(f"{age} 岁 → 婴儿")
-    case x if x < 12:
+    case x if 3 <= x < 12:
         print(f"{age} 岁 → 儿童")
-    case x if x < 18:
+    case x if 12 <= x < 18:
         print(f"{age} 岁 → 青少年")
-    case x if x < 65:
+    case x if 18 <= x < 65:
         print(f"{age} 岁 → 成年人")
-    case _:
+    case x if x >= 65:
         print(f"{age} 岁 → 老年人")
 
 
@@ -96,7 +98,7 @@ color = "red"
 match color:
     case "red":
         print("🔴 红色")
-    case "green" | "green":
+    case "green":
         print("🟢 绿色")
     case "blue":
         print("🔵 蓝色")

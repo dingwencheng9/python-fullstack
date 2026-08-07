@@ -1,4 +1,4 @@
-"""L16 示例 1：字符类、量词与锚点。"""
+"""L18 示例 1：字符类、量词与锚点。"""
 
 from __future__ import annotations
 

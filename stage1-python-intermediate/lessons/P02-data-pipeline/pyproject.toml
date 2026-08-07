@@ -1,0 +1,27 @@
+# P02 数据处理管道 - 仅工具配置
+# 不含 [project]，不是可安装包
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+python_files = ["test_*.py"]
+python_functions = ["test_*"]
+asyncio_mode = "auto"
+markers = [
+    "slow: 慢速测试",
+]
+
+[tool.ruff]
+target-version = "py313"
+line-length = 100
+
+[tool.ruff.lint.per-file-ignores]
+# 练习和解决方案使用教学对比代码
+"exercises/*.py" = ["E501", "E402", "E731", "F401"]
+"solutions/*.py" = ["E501", "E402", "E731", "F401"]
+"examples/*.py" = ["E501", "E402", "E731", "F401"]
+
+[tool.mypy]
+python_version = "3.13"
+strict = false
+warn_return_any = true
+warn_unused_ignores = true

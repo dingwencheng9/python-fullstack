@@ -83,7 +83,7 @@
 
 ---
 
-## 🚀 Stage 1: Python 进阶（L10-L18）
+## 🚀 Stage 1: Python 进阶（L10-L18, P02）
 
 **定位**: 进阶语法与工程思维，为生产代码奠基
 
@@ -98,6 +98,7 @@
 | L16 | `L16-concurrency-intro` | 并发编程入门 | — | — | — | ELECTIVE |
 | L17 | `L17-functional` | 函数式编程 | — | — | — | ELECTIVE |
 | L18 | `L18-regex` | 正则表达式 | — | — | — | ELECTIVE |
+| **P02** | `P02-data-pipeline` | 数据处理管道系统（收官项目） | 4 | 4 | 4 | CORE |
 
 **前置要求**: Stage 0 完成
 **建议学时**: 45 小时

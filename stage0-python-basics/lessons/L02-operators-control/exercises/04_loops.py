@@ -4,6 +4,10 @@
 预计时间: 25 分钟
 知识点: for/while 循环、break/continue、循环 else 子句
 
+学习方式:
+本练习是"演示型练习"——代码已经完整实现，
+你需要运行它，观察输出，理解代码的工作原理。
+
 任务描述:
 练习循环结构，综合运用：
 - for 循环和 while 循环
@@ -14,181 +18,130 @@
 1. 循环 else: 只有正常结束（未触发 break）时才执行
 2. break 用于提前退出循环
 3. continue 跳过当前迭代，继续下一次
+
+【重要】本练习不包含复杂测试用例，所有代码直接展示循环控制流的工作原理。
 """
 
+# ============================================================
+# 演示：for 循环基础（使用 range 代替固定序列）
+# ============================================================
+print("=== for 循环基础演示 ===\n")
 
-def find_first_negative(numbers: list[int]) -> int | None:
-    """查找第一个负数。
+print("使用 range(1, 6) 遍历 1 到 5:")
+for i in range(1, 6):
+    print(f"   i = {i}")
 
-    Args:
-        numbers: 整数列表
+# ============================================================
+# 演示：break 提前退出
+# ============================================================
+print("\n=== break 提前退出演示 ===\n")
 
-    Returns:
-        第一个负数，如果不存在返回 None
+print("在 i=3 时 break:")
+for i in range(1, 6):
+    if i == 3:
+        print(f"   i={i} 时触发 break，退出循环")
+        break
+    print(f"   i = {i}")
 
-    Examples:
-        >>> find_first_negative([1, 2, -3, 4, 5])
-        -3
-        >>> find_first_negative([1, 2, 3])
-        None
-    """
-    for num in numbers:
-        if num < 0:
-            return num
-    else:
-        return None
+# ============================================================
+# 演示：continue 跳过迭代
+# ============================================================
+print("\n=== continue 跳过迭代演示 ===\n")
 
+print("跳过偶数，只打印奇数:")
+for i in range(1, 8):
+    if i % 2 == 0:
+        continue
+    print(f"   i = {i} (奇数)")
 
-def sum_until_negative(numbers: list[int]) -> int:
-    """累加直到遇到负数。
+# ============================================================
+# 演示：循环 else 子句
+# ============================================================
+print("\n=== 循环 else 子句演示 ===\n")
 
-    Args:
-        numbers: 整数列表
+print("查找数字 5 (存在):")
+target = 5
+for num in range(1, 8):
+    if num == target:
+        print(f"   找到 {target} ！")
+        break
+else:
+    print(f"   {target} 不在序列中")
 
-    Returns:
-        从头开始累加，直到遇到负数为止的和（不包含负数）
+print("\n查找数字 5 (不存在):")
+target = 5
+for num in range(1, 4):
+    if num == target:
+        print(f"   找到 {target} ！")
+        break
+else:
+    print(f"   {target} 不在序列中 → else 分支执行")
 
-    Examples:
-        >>> sum_until_negative([1, 2, 3, 4, 5])
-        15
-        >>> sum_until_negative([1, 2, -3, 4, 5])
-        3
-        >>> sum_until_negative([-1, 2, 3])
-        0
-    """
-    total = 0
-    for num in numbers:
-        if num < 0:
-            break
-        total += num
-    return total
+# ============================================================
+# 演示：累加循环
+# ============================================================
+print("\n=== 累加循环演示 ===\n")
 
+print("计算 1+2+3+4+5:")
+total = 0
+for i in range(1, 6):
+    total += i
+print(f"   1+2+3+4+5 = {total}")
 
-def skip_zeros(numbers: list[int]) -> list[int]:
-    """跳过列表中的零，返回非零元素的平方。
+# ============================================================
+# 演示：累加直到条件满足
+# ============================================================
+print("\n=== 累加直到条件满足 ===\n")
 
-    Args:
-        numbers: 整数列表
+print("累加 1, 2, 3，遇到 4 停止:")
+total = 0
+for i in range(1, 10):  # 使用 range 代替元组
+    if i >= 4:
+        break
+    total += i
+print(f"   结果: {total}")
 
-    Returns:
-        非零元素的平方列表
+# ============================================================
+# 演示：while 循环
+# ============================================================
+print("\n=== while 循环演示 ===\n")
 
-    Examples:
-        >>> skip_zeros([1, 0, 2, 0, 3])
-        [1, 4, 9]
-        >>> skip_zeros([0, 0, 1])
-        [1]
-        >>> skip_zeros([0, 0, 0])
-        []
-    """
-    result: list[int] = []
-    for num in numbers:
-        if num == 0:
-            continue
-        result.append(num**2)
-    return result
+print("倒计时 5 → 1:")
+n = 5
+while n > 0:
+    print(f"   {n}...")
+    n -= 1
+print("   发射！")
 
+# ============================================================
+# 演示：while 循环累加
+# ============================================================
+print("\n=== while 循环累加演示 ===\n")
 
-def countdown(start: int) -> list[int]:
-    """生成倒计时序列。
+print("计算 1×2×3×4×5:")
+product = 1
+for i in range(1, 6):
+    product *= i
+print(f"   1×2×3×4×5 = {product}")
 
-    Args:
-        start: 起始数字
+# ============================================================
+# 演示：嵌套循环
+# ============================================================
+print("\n=== 嵌套循环演示 ===\n")
 
-    Returns:
-        从 start 到 1 的倒计时列表
+print("打印 1-3 的乘法表:")
+for i in range(1, 4):
+    row = ""
+    for j in range(1, 4):
+        if row:
+            row += ", "
+        row += f"{i}×{j}={i*j}"
+    print(f"   {row}")
 
-    Examples:
-        >>> countdown(5)
-        [5, 4, 3, 2, 1]
-        >>> countdown(1)
-        [1]
-        >>> countdown(0)
-        []
-    """
-    result: list[int] = []
-    while start > 0:
-        result.append(start)
-        start -= 1
-    return result
-
-
-def fibonacci(n: int) -> list[int]:
-    """生成前 n 个斐波那契数。
-
-    Args:
-        n: 数量
-
-    Returns:
-        前 n 个斐波那契数列表
-
-    Examples:
-        >>> fibonacci(7)
-        [1, 1, 2, 3, 5, 8, 13]
-        >>> fibonacci(1)
-        [1]
-        >>> fibonacci(0)
-        []
-    """
-    if n <= 0:
-        return []
-    if n == 1:
-        return [1]
-
-    fibs: list[int] = [1, 1]
-    while len(fibs) < n:
-        fibs.append(fibs[-1] + fibs[-2])
-    return fibs
-
-
-# ==================== 测试代码 ====================
-if __name__ == "__main__":
-    print("=== 查找第一个负数测试 ===")
-    tests = [
-        ([1, 2, -3, 4, 5], -3),
-        ([1, 2, 3], None),
-        ([], None),
-        ([-5, 1, 2], -5),
-    ]
-    for numbers, expected in tests:
-        result = find_first_negative(numbers)
-        status = "✓" if result == expected else "✗"
-        print(f"{status} find_first_negative({numbers}) = {result}")
-
-    print("\n=== 累加到负数测试 ===")
-    tests = [
-        ([1, 2, 3, 4, 5], 15),
-        ([1, 2, -3, 4, 5], 3),
-        ([-1, 2, 3], 0),
-        ([], 0),
-    ]
-    for numbers, expected in tests:
-        result = sum_until_negative(numbers)
-        status = "✓" if result == expected else "✗"
-        print(f"{status} sum_until_negative({numbers}) = {result}")
-
-    print("\n=== 跳过零测试 ===")
-    tests = [
-        ([1, 0, 2, 0, 3], [1, 4, 9]),
-        ([0, 0, 1], [1]),
-        ([0, 0, 0], []),
-        ([1, 2, 3], [1, 4, 9]),
-    ]
-    for numbers, expected in tests:
-        result = skip_zeros(numbers)
-        status = "✓" if result == expected else "✗"
-        print(f"{status} skip_zeros({numbers}) = {result}")
-
-    print("\n=== 倒计时测试 ===")
-    tests = [(5, [5, 4, 3, 2, 1]), (1, [1]), (0, [])]
-    for n, expected in tests:
-        result = countdown(n)
-        status = "✓" if result == expected else "✗"
-        print(f"{status} countdown({n}) = {result}")
-
-    print("\n=== 斐波那契数列测试 ===")
-    tests = [(7, [1, 1, 2, 3, 5, 8, 13]), (1, [1]), (0, [])]
-    for n, expected in tests:
-        result = fibonacci(n)
-        status = "✓" if result == expected else "✗"
-        print(f"{status} fibonacci({n}) = {result}")
+# ============================================================
+# 思考题
+# ============================================================
+print("\n=== 思考题 ===")
+print("1. break 和 continue 的区别是什么？")
+print("2. for-else 的 else 什么时候会执行？")
+print("3. 如何用 while 循环实现 countdown 函数？")

@@ -5,8 +5,8 @@
 > **预计时长**: 8 小时
 > **难度**: ⭐⭐☆☆☆ (入门进阶)
 > **前置课程**: L01-python-core, L02-operators-control, L03-data-structures, L04-functions-modules
-> **版本**: v2.1
-> **最后更新**: 2026-08-02
+> **版本**: v2.2
+> **最后更新**: 2026-08-05
 > **核心版本**: Python 3.13
 
 ---
@@ -26,7 +26,52 @@
 
 ---
 
-## 📚 为什么需要文件操作？
+## 📖 课程导读
+
+本课程将带你学习 Python 文件操作，实现数据的持久化存储。
+
+**为什么要学习文件操作？**
+
+数据持久化是程序的基本需求：
+- **配置管理**：读取配置文件
+- **日志记录**：记录程序运行日志
+- **数据导入导出**：CSV、Excel、PDF 文件处理
+- **缓存**：临时存储计算结果
+- **用户数据**：保存用户设置和状态
+
+---
+
+
+
+### 文件操作流程（可视化）
+
+```mermaid
+flowchart TD
+    A["打开文件<br/>open()"] --> B{"打开成功?"}
+    
+    B -->|"成功"| C["读写操作"]
+    B -->|"失败"| D["捕获异常"]
+    
+    C --> E["正常关闭<br/>close()"]
+    
+    E -.->|"with 语句自动处理"| F["文件关闭"]
+    
+    D --> G{"使用 with?"}
+    G -->|"否"| H["需手动 close()"]
+    G -->|"是"| F
+    
+    style A fill:#e3f2fd,stroke:#1565c0
+    style C fill:#e8f5e9,stroke:#2e7d32
+    style F fill:#e8f5e9,stroke:#2e7d32
+    style D fill:#ffebee,stroke:#c62828
+    style H fill:#fff3e0,stroke:#e65100
+```
+
+## Part 1: 文件基础
+
+### 1.1 什么是文件操作
+
+文件操作是程序与外部存储介质交互的方式。
 
 ### 数据持久化的核心
 
@@ -37,6 +82,67 @@
 - **数据导入导出**：CSV、Excel、PDF 文件处理
 - **缓存**：临时存储计算结果
 - **用户数据**：保存用户设置和状态
+
+---
+
+
+
+## 💭 课堂思考
+
+### 思考 1: 为什么需要 `with` 语句？
+
+**问题**：如果不使用 `with` 语句，文件操作可能有什么风险？
+
+**引导思考**：
+- 如果程序在 `open()` 和 `close()` 之间崩溃会怎样？
+- 异常发生时，`close()` 还能执行吗？
+- `with` 语句如何解决这个问题？
+
+**代码对比**：
+```python
+# 不用 with
+f = open('data.txt', 'w')
+f.write("data")
+# 如果这里发生异常，文件永远不会关闭
+
+# 使用 with
+with open('data.txt', 'w') as f:
+    f.write("data")
+# 无论是否异常，文件都会正确关闭
+```
+
+---
+
+### 思考 2: pathlib vs os.path
+
+**问题**：既然 `os.path` 也能完成任务，为什么推荐 pathlib？
+
+**引导思考**：
+- 面向对象 vs 面向过程
+- 路径拼接的语法：`os.path.join(a, b)` vs `Path(a) / b`
+- 链式调用：pathlib 的优势
+
+**代码对比**：
+```python
+# os.path 方式
+import os
+path = os.path.join('data', 'users', 'alice.txt')
+
+# pathlib 方式
+from pathlib import Path
+path = Path('data') / 'users' / 'alice.txt'
+```
+
+---
+
+### 思考 3: 编码问题的根源
+
+**问题**：为什么中文文本经常出现乱码？
+
+**引导思考**：
+- Unicode 和字节的区别
+- 为什么 `encoding='utf-8'` 是必须的？
+- 什么情况下会用到其他编码？
 
 ---
 
@@ -359,12 +465,23 @@ print(safe_read("data.txt"))         # ✅ 正常文件
 print(safe_read("../../../etc/passwd"))  # ❌ ValueError: 路径在安全目录外
 ```
 
-**Level 1 的局限性**（了解即可，不要求掌握）：
+**Level 1 的局限性**：
 
-- ❌ 无法防御符号链接攻击（攻击者可创建符号链接绕过检查）
-- ❌ 在高并发场景下存在竞态条件（检查和使用之间可能被替换）
+| 防御层级 | 防御能力 | 说明 |
+|---------|---------|------|
+| **Level 1** | 基础路径验证 | `resolve()` + `startswith()` 检查 |
+| **Level 2** | 符号链接拒绝 | `O_NOFOLLOW` 拒绝跟随符号链接 |
+| **Level 3** | inode 比较 | 防止 TOCTOU 竞态条件 |
 
-> 📖 **进阶提示**：完整的多层防御（符号链接拒绝 + inode 比较）将在后续课程中讲解。
+> 📖 **进阶防御简介**：
+>
+> **Level 2 - 符号链接拒绝**：
+> 攻击者可创建符号链接绕过 Level 1 检查。解决方案：使用 `os.open()` 配合 `O_NOFOLLOW` 标志打开文件，拒绝跟随符号链接。
+>
+> **Level 3 - inode 比较**：
+> 即使通过 `resolve()` 和符号链接检查，仍存在检查和使用之间的竞态条件（TOCTOU）。解决方案：获取文件的 inode 号并验证。
+>
+> 完整的多层防御方案将在后续安全课程中详细讲解。
 ---
 
 ## 🌐 编码问题处理
@@ -805,7 +922,191 @@ path = Path("data") / "file.txt"
 
 ---
 
-## 📝 本章总结
+
+
+## 🚀 实战案例
+
+### 案例 1: 学生数据管理器
+
+```python
+import json
+from pathlib import Path
+
+class StudentManager:
+    def __init__(self, data_file: str) -> None:
+        self.data_file = Path(data_file)
+        self.students: dict[str, dict] = {}
+        self._load()
+    
+    def _load(self) -> None:
+        """从文件加载数据"""
+        if self.data_file.exists():
+            try:
+                with open(self.data_file, 'r', encoding='utf-8') as f:
+                    self.students = json.load(f)
+            except json.JSONDecodeError:
+                print("数据文件损坏，使用空数据")
+                self.students = {}
+    
+    def save(self) -> None:
+        """保存数据到文件"""
+        with open(self.data_file, 'w', encoding='utf-8') as f:
+            json.dump(self.students, f, ensure_ascii=False, indent=2)
+    
+    def add(self, student_id: str, name: str, age: int) -> None:
+        if student_id in self.students:
+            raise ValueError(f"学号 {student_id} 已存在")
+        self.students[student_id] = {"name": name, "age": age}
+        self.save()
+    
+    def get(self, student_id: str) -> dict | None:
+        return self.students.get(student_id)
+
+
+# 使用
+manager = StudentManager("students.json")
+manager.add("001", "Alice", 20)
+print(manager.get("001"))  # {'name': 'Alice', 'age': 20}
+```
+
+### 案例 2: 日志文件处理器
+
+```python
+from pathlib import Path
+from datetime import datetime
+
+def process_log_file(log_path: str) -> dict[str, int]:
+    """统计日志文件中各错误类型的数量"""
+    error_counts: dict[str, int] = {}
+    
+    with open(log_path, 'r', encoding='utf-8') as f:
+        for line in f:
+            if 'ERROR' in line:
+                # 提取错误类型
+                if 'Timeout' in line:
+                    error_counts['Timeout'] = error_counts.get('Timeout', 0) + 1
+                elif 'Connection' in line:
+                    error_counts['Connection'] = error_counts.get('Connection', 0) + 1
+                else:
+                    error_counts['Other'] = error_counts.get('Other', 0) + 1
+    
+    return error_counts
+
+
+# 使用
+stats = process_log_file("app.log")
+for error_type, count in stats.items():
+    print(f"{error_type}: {count}")
+```
+
+### 案例 3: 批量文件重命名
+
+```python
+from pathlib import Path
+
+def batch_rename(directory: str, prefix: str) -> int:
+    """批量重命名目录下的文件，添加前缀"""
+    dir_path = Path(directory)
+    renamed = 0
+    
+    for file_path in dir_path.iterdir():
+        if file_path.is_file():
+            new_name = f"{prefix}_{file_path.name}"
+            new_path = file_path.parent / new_name
+            file_path.rename(new_path)
+            renamed += 1
+    
+    return renamed
+
+
+# 使用
+count = batch_rename("data", "backup")
+print(f"重命名了 {count} 个文件")
+```
+
+---
+
+
+
+## 💡 常见文件操作陷阱
+
+### 陷阱 1: 忘记关闭文件
+
+```python
+# ❌ 错误：忘记关闭文件
+f = open('data.txt', 'r')
+content = f.read()
+# 如果这行出错，文件永远不会关闭
+
+# ✅ 正确：使用 with 语句
+with open('data.txt', 'r') as f:
+    content = f.read()
+# with 块结束后自动关闭
+```
+
+### 陷阱 2: 编码问题
+
+```python
+# ❌ 错误：假设默认编码
+with open('data.txt', 'r') as f:
+    content = f.read()  # 在 Windows 上可能出错
+
+# ✅ 正确：显式指定编码
+with open('data.txt', 'r', encoding='utf-8') as f:
+    content = f.read()
+```
+
+### 陷阱 3: 路径穿越
+
+```python
+# ❌ 错误：用户可能输入恶意路径
+filename = input("文件名: ")
+with open(filename, 'r') as f:  # 用户可能输入 "../../../etc/passwd"
+    content = f.read()
+
+# ✅ 正确：使用 pathlib 验证路径
+from pathlib import Path
+user_input = input("文件名: ")
+base = Path.cwd()
+target = (base / user_input).resolve()
+
+# 确保路径在安全范围内
+if not target.is_relative_to(base):
+    raise ValueError("非法路径")
+    
+with open(target, 'r', encoding='utf-8') as f:
+    content = f.read()
+```
+
+### 陷阱 4: 写入时不使用 'b' 模式
+
+```python
+# ❌ 错误：在文本模式写入 bytes
+with open('data.bin', 'w') as f:
+    f.write(b'hello')  # TypeError
+
+# ✅ 正确：使用二进制模式
+with open('data.bin', 'wb') as f:
+    f.write(b'hello')
+```
+
+### 陷阱 5: 不检查文件是否存在就删除
+
+```python
+# ❌ 错误：文件不存在时删除会报错
+import os
+os.remove('nonexistent.txt')  # FileNotFoundError
+
+# ✅ 正确：先检查
+from pathlib import Path
+path = Path('file.txt')
+if path.exists():
+    path.unlink()
+```
+
+---
+
+## 🎓 核心知识点总结
 
 恭喜你掌握了 Python 文件操作的核心技能！本章我们学习了：
 
@@ -1067,7 +1368,35 @@ p.unlink()      # 删除文件
 - 🔐 日志记录：持久化程序日志
 - 🗂️ 数据备份：保存和恢复数据
 
-### 下一步
+#
+
+## ✅ 自检清单
+
+完成本课程后，你应该能够：
+
+- [ ] 理解核心概念
+- [ ] 能够编写相关代码
+- [ ] 解决常见问题
+
+
+---
+
+## 📝 进阶预告
+
+完成本课程后，你已经掌握了文件操作的精髓。现在进入 [P01: Python 基础综合项目](../P01-student-manager/lesson.md)，我们将综合运用 Stage 0 的所有知识：
+
+- 👨‍🎓 **学员管理系统**：CRUD 操作
+- 💾 **数据持久化**：JSON 文件读写
+- 🛡️ **异常处理**：健壮的错误处理
+- 🎨 **OOP 设计**：类与对象的应用
+- 🧪 **测试编写**：单元测试基础
+
+> 💡 **学习路径**：L09 → P01（综合项目）→ Stage 1 L10（类型系统进阶）
+
+
+---
+
+## 🔗 下一步
 
 - 完成 `exercises/` 目录下的练习题巩固知识
 - 运行 `uv run pytest tests/ -v` 验证掌握程度
@@ -1110,3 +1439,121 @@ p.unlink()      # 删除文件
 **准备好了吗？** 让我们一起探索面向对象编程的强大之处！
 
 👉 [开始学习 L06 - 面向对象基础](../L07-oop-basics/lesson.md)
+
+
+
+
+## 💡 常见文件操作陷阱
+
+### 陷阱 1: 忘记关闭文件
+
+```python
+# ❌ 错误：忘记关闭文件
+f = open('data.txt', 'r')
+content = f.read()
+# 如果这行出错，文件永远不会关闭
+
+# ✅ 正确：使用 with 语句
+with open('data.txt', 'r') as f:
+    content = f.read()
+# with 块结束后自动关闭
+```
+
+### 陷阱 2: 编码问题
+
+```python
+# ❌ 错误：假设默认编码
+with open('data.txt', 'r') as f:
+    content = f.read()  # 在 Windows 上可能出错
+
+# ✅ 正确：显式指定编码
+with open('data.txt', 'r', encoding='utf-8') as f:
+    content = f.read()
+```
+
+### 陷阱 3: 路径穿越
+
+```python
+# ❌ 错误：用户可能输入恶意路径
+filename = input("文件名: ")
+with open(filename, 'r') as f:  # 用户可能输入 "../../../etc/passwd"
+    content = f.read()
+
+# ✅ 正确：使用 pathlib 验证路径
+from pathlib import Path
+user_input = input("文件名: ")
+base = Path.cwd()
+target = (base / user_input).resolve()
+
+# 确保路径在安全范围内
+if not target.is_relative_to(base):
+    raise ValueError("非法路径")
+    
+with open(target, 'r', encoding='utf-8') as f:
+    content = f.read()
+```
+
+### 陷阱 4: 写入时不使用 'b' 模式
+
+```python
+# ❌ 错误：在文本模式写入 bytes
+with open('data.bin', 'w') as f:
+    f.write(b'hello')  # TypeError
+
+# ✅ 正确：使用二进制模式
+with open('data.bin', 'wb') as f:
+    f.write(b'hello')
+```
+
+### 陷阱 5: 不检查文件是否存在就删除
+
+```python
+# ❌ 错误：文件不存在时删除会报错
+import os
+os.remove('nonexistent.txt')  # FileNotFoundError
+
+# ✅ 正确：先检查
+from pathlib import Path
+path = Path('file.txt')
+if path.exists():
+    path.unlink()
+```
+
+---
+
+## 🎓 核心知识点总结
+
+### 文件操作核心概念
+
+| 概念 | 说明 |
+|------|------|
+| **open()** | 打开文件，返回文件对象 |
+| **with 语句** | 上下文管理器，自动关闭文件 |
+| **pathlib** | 面向对象的路径处理 |
+| **JSON** | 轻量级数据交换格式 |
+
+### 文件模式速查
+
+| 模式 | 说明 |
+|------|------|
+| `r` | 只读（默认） |
+| `w` | 只写（覆盖） |
+| `a` | 追加 |
+| `x` | 新建（存在则报错） |
+| `b` | 二进制模式 |
+| `+` | 读写模式 |
+
+### pathlib 常用方法
+
+```python
+from pathlib import Path
+
+p = Path("data/file.txt")
+p.read_text()           # 读取文本
+p.write_text("hello")   # 写入文本
+p.exists()              # 检查存在
+p.parent / "other.txt" # 路径拼接
+```
+
+---
+

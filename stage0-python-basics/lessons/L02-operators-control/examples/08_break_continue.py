@@ -4,51 +4,52 @@
 - 使用 break 提前结束循环
 - 使用 continue 跳过本轮循环
 - 理解二者在搜索、过滤和输入校验中的常见用法
+
+【知识点边界】本文件仅使用 L01 + L02 的知识点：
+- print, input, if/elif/else, for, while
+- break, continue, range
 """
 
 print("=" * 50)
 print("1. break: 找到目标后提前退出")
 print("=" * 50)
 
-numbers = [3, 7, 11, 14, 19, 22]
-first_even = None
+# 使用字符串演示（字符串是 L01 的知识点）
+text = "Py3.8"  # 查找第一个数字
+found_digit = False
 
-for number in numbers:
-    if number % 2 == 0:
-        first_even = number
+for char in text:
+    if char.isdigit():
+        found_digit = True
+        print(f"第一个数字: '{char}'")
         break
 
-print(f"第一个偶数: {first_even}")
+if not found_digit:
+    print("没有找到数字")
 
 print("\n" + "=" * 50)
 print("2. continue: 跳过不需要的数据")
 print("=" * 50)
 
-values = [10, 0, 5, 0, 2]
-reciprocals = []
-
-for value in values:
-    if value == 0:
+# 使用 range() 演示：跳过某些数字
+print("打印 1-5，但跳过 3:")
+for i in range(1, 6):
+    if i == 3:
         continue
-    reciprocals.append(1 / value)
-
-print(f"跳过 0 后的倒数: {reciprocals}")
+    print(f"  {i}")
 
 print("\n" + "=" * 50)
 print("3. break + continue 组合")
 print("=" * 50)
 
-records = ["", "alice", "bob", "STOP", "carol"]
-valid_names = []
-
-for record in records:
-    if not record:
-        continue  # 跳过空字符串
-    if record == "STOP":
-        break  # 遇到停止标记后结束循环
-    valid_names.append(record.title())
-
-print(f"有效姓名: {valid_names}")
+# 使用字符串演示：处理到某个字符为止
+text = "Hello_World"
+print("处理有效字符（遇到下划线停止）:")
+for char in text:
+    if char == "_":
+        print("  遇到下划线，退出循环")
+        break
+    print(f"  处理: {char}")
 
 print("\n" + "=" * 50)
 print("4. while 中的 break")
@@ -60,8 +61,10 @@ while True:
     if count == 3:
         print("count 到达 3，退出循环")
         break
+    print(f"  count = {count}")
 
 print("\n💡 经验法则")
 print("- break: 已经得到答案，不需要继续循环")
 print("- continue: 当前数据不合格，跳过本轮处理")
+
 print("\n🎉 break/continue 示例完成！")

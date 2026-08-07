@@ -1,4 +1,4 @@
-"""L15: 函数式编程 - 函数组合"""
+"""L17: 函数式编程 - 函数组合"""
 
 from functools import wraps, partial, reduce
 

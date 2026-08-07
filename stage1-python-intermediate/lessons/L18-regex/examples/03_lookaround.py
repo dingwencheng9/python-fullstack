@@ -1,4 +1,4 @@
-"""L16 示例 3：前瞻、后顾与否定环视。"""
+"""L18 示例 3：前瞻、后顾与否定环视。"""
 
 from __future__ import annotations
 

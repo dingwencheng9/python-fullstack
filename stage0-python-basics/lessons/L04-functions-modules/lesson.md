@@ -5,8 +5,8 @@
 > **预计时长**: 8 小时
 > **难度**: ⭐⭐☆☆☆ (入门进阶)
 > **前置课程**: L03-data-structures
-> **版本**: v2.1
-> **最后更新**: 2026-06-30
+> **版本**: v2.2
+> **最后更新**: 2026-08-05
 > **核心版本**: Python 3.13
 
 ---
@@ -42,6 +42,47 @@
 - ✅ 常见陷阱：可变默认参数、循环导入
 
 ---
+
+
+### 函数调用流程（可视化）
+
+理解函数的调用过程是掌握函数的关键：
+
+```mermaid
+flowchart TD
+    subgraph 定义["函数定义"]
+        A["def greet(name: str) -> str:"]
+        B["body = f'Hello, {name}!'"]
+        C["return body"]
+    end
+    
+    subgraph 调用["函数调用"]
+        D["greet('Alice')"]
+    end
+    
+    subgraph 执行["函数执行"]
+        E["参数绑定: name = 'Alice'"]
+        F["执行函数体"]
+        G["返回结果: 'Hello, Alice!'"]
+    end
+    
+    subgraph 作用域["作用域层级"]
+        H["全局作用域"]
+        I["局部作用域"]
+        J["闭包作用域"]
+    end
+    
+    D -->|"传入参数"| E
+    E --> F --> G
+    F -.->|"访问变量"| I
+    I -.->|"向上查找"| H
+    J -.->|"nonlocal"| I
+
+    style A fill:#e3f2fd,stroke:#1565c0
+    style D fill:#fff8e1,stroke:#f57f17
+    style E fill:#f3e5f5,stroke:#7b1fa2
+    style G fill:#e8f5e9,stroke:#2e7d32
+```
 
 ## Part 1: 函数基础
 
@@ -390,43 +431,60 @@ print(counter())  # 输出: 2
 print(counter())  # 输出: 3
 ```
 
----
+### 1.6 lambda 表达式（匿名函数）
 
-### 1.3.7 海象运算符 `:=` — 赋值表达式（PEP 572）
-
-海象运算符（walrus operator）`:=` 在**表达式内部赋值**，避免重复计算：
+`lambda` 是创建小型匿名函数的简洁方式，适合需要简短函数的场景：
 
 ```python
-# ❌ 传统写法：重复计算
-scores = [85, 92, 78, 88]
-if len(scores) > 0:
-    avg = sum(scores) / len(scores)
-    print(f"平均分: {avg}")
+# 完整函数定义
+def square(x: int) -> int:
+    return x * x
 
-# ✅ 海象运算符：在条件中赋值并使用
-if (avg := sum(scores) / len(scores)) > 80:
-    print(f"平均分: {avg}")  # avg 已可用
+# 等价的 lambda 表达式
+square = lambda x: x * x
 
-# 典型场景：正则匹配
-import re
-text = "Email: alice@example.com"
-
-# ❌ 两次调用 match
-match = re.search(r'\w+@\w+\.\w+', text)
-if match:
-    print(f"邮箱: {match.group()}")
-
-# ✅ 一次调用，用 := 在条件中捕获
-if (m := re.search(r'\w+@\w+\.\w+', text)):
-    print(f"邮箱: {m.group()}")
-
-# 循环中的典型用法：边读边处理
-data = [4, 9, 1, 25, 16]
-while (n := data.pop()) > 0:
-    print(f"处理: {n}，平方={n*n}")
+print(square(5))  # 输出: 25
 ```
 
-> ⚠️ **注意**：`:=` 是**赋值表达式**，不是赋值语句。它可以在 `if`/`while`/`for` 头部等表达式上下文中使用，但不应滥用——如果可读性变差，请用传统写法。
+#### lambda 的典型用途
+
+```python
+# 配合内置函数使用
+numbers = [3, 1, 4, 1, 5, 9, 2, 6]
+
+# 排序（指定 key）
+sorted_nums = sorted(numbers)
+print(sorted_nums)  # [1, 1, 2, 3, 4, 5, 6, 9]
+
+# 按绝对值排序
+mixed = [-5, 3, -1, 2, -4]
+sorted_mixed = sorted(mixed, key=lambda x: abs(x))
+print(sorted_mixed)  # [1, 2, 3, -4, -5]
+```
+
+> 📖 **函数式编程入门**：`map()` 和 `filter()` 是函数式编程的经典高阶函数，将在 **Stage 1 L11 迭代器与生成器** 中详细学习。当前仅作为 lambda 的典型应用场景展示：
+>
+> ```python
+> # map：转换每个元素（返回迭代器，需要 list() 转为列表）
+> doubled = list(map(lambda x: x * 2, numbers))
+> print(doubled)  # [6, 2, 8, 2, 10, 18, 4, 12]
+>
+> # filter：筛选元素（返回迭代器，需要 list() 转为列表）
+> evens = list(filter(lambda x: x % 2 == 0, numbers))
+> print(evens)  # [4, 2, 6]
+> ```
+
+#### lambda 限制
+
+```python
+# ❌ lambda 不能包含复杂语句
+# lambda x: if x > 0: return x  # 语法错误
+
+# ✅ lambda 只能是单个表达式
+lambda x: x if x > 0 else -x  # 正确：条件表达式
+```
+
+> **何时使用 lambda**：当需要一个简短函数且不想单独定义时使用。对于复杂逻辑，还是用 `def` 更清晰。
 
 ---
 
@@ -795,9 +853,137 @@ print(parsed["name"])  # "Alice"
 
 ---
 
+
+
+## 💭 课堂思考
+
+### 思考 1: 函数为什么需要参数？
+
+**问题**：为什么不能直接用全局变量，而要传参数？
+
+**引导思考**：
+- 可测试性：函数不依赖外部状态
+- 可复用性：同一函数处理不同数据
+- 可读性：参数即接口契约
+
+**对比**：
+```python
+# 不好：依赖全局变量
+total = 0
+def add_to_total(x):
+    global total
+    total += x
+
+# 好：参数传递
+def add(a, b):
+    return a + b
+```
+
+---
+
+### 思考 2: 返回值 vs 修改全局状态
+
+**问题**：函数应该返回值还是修改外部状态？
+
+**引导思考**：
+- 函数式风格：避免副作用
+- 命令式风格：直接修改
+- Python 习惯：优先返回值
+
+**设计原则**：
+- "命令式"函数（改变状态）：动词命名，如 `append()`
+- "查询式"函数（返回值）：名词或形容词，如 `find()`
+
+---
+
+### 思考 3: 模块化设计的价值
+
+**问题**：为什么要把代码拆成多个模块/函数？
+
+**引导思考**：
+- 单一职责：每个模块只做一件事
+- 可测试性：小函数容易测试
+- 可维护性：修改一处不影响其他
+- 可复用性：模块可被其他项目使用
+
+**什么时候拆**：
+- 超过 20 行 → 考虑拆分
+- 多个功能混合 → 拆分成多个函数
+- 重复代码 → 抽取为函数
+
+---
+
+### 思考 4: 递归 vs 循环的选择
+
+**问题**：能用循环解决的问题，为什么要学递归？
+
+**引导思考**：
+- 自然递归的问题：树结构、文件系统
+- 代码简洁：递归往往更直观
+- 性能权衡：递归调用栈开销
+
+**经典案例**：
+```python
+# 循环版本
+def fibonacci_loop(n):
+    a, b = 0, 1
+    for _ in range(n):
+        a, b = b, a + b
+    return a
+
+# 递归版本
+def fibonacci_rec(n):
+    if n <= 1:
+        return n
+    return fibonacci_rec(n-1) + fibonacci_rec(n-2)
+```
+
+**思考**：哪个更好？为什么？
+
 ## 🎓 核心知识点总结
 
-### Part 1: 函数基础
+#
+### 函数调用流程（可视化）
+
+理解函数的调用过程是掌握函数的关键：
+
+```mermaid
+flowchart TD
+    subgraph 定义["函数定义"]
+        A["def greet(name: str) -> str:"]
+        B["body = f'Hello, {name}!'"]
+        C["return body"]
+    end
+    
+    subgraph 调用["函数调用"]
+        D["greet('Alice')"]
+    end
+    
+    subgraph 执行["函数执行"]
+        E["参数绑定: name = 'Alice'"]
+        F["执行函数体"]
+        G["返回结果: 'Hello, Alice!'"]
+    end
+    
+    subgraph 作用域["作用域层级"]
+        H["全局作用域"]
+        I["局部作用域"]
+        J["闭包作用域"]
+    end
+    
+    D -->|"传入参数"| E
+    E --> F --> G
+    F -.->|"访问变量"| I
+    I -.->|"向上查找"| H
+    J -.->|"nonlocal"| I
+
+    style A fill:#e3f2fd,stroke:#1565c0
+    style D fill:#fff8e1,stroke:#f57f17
+    style E fill:#f3e5f5,stroke:#7b1fa2
+    style G fill:#e8f5e9,stroke:#2e7d32
+```
+
+## Part 1: 函数基础
 
 1. **函数定义**：使用 `def` 关键字，参数和返回值可加类型注解
 2. **位置参数**：按顺序传递，`def add(a, b):`
@@ -807,6 +993,7 @@ print(parsed["name"])  # "Alice"
 6. **仅关键字参数**：`*` 后面的参数必须用关键字传递
 7. **返回值**：`return` 语句，无返回值默认返回 `None`
 8. **LEGB 作用域**：Local → Enclosing → Global → Built-in
+9. **lambda 表达式**：`lambda x: x * x`，用于简短匿名函数
 
 ### Part 2: 模块与包
 
@@ -1067,8 +1254,8 @@ def log_error(message: str) -> None:
 
 ### 进阶主题预告
 
-- **L05**: 文件操作 - 使用函数处理文件
-- **L06**: 面向对象基础 - 类的定义与方法
+- **L05**: 调试工具 - pdb、breakpoint、traceback
+- **L06**: 异常处理 - try/except、自定义异常
 - **L11**: 迭代器与生成器 - 惰性求值、yield 表达式（后续课程）
 - **L12**: 装饰器 - 函数的元编程（后续课程）
 
@@ -1166,6 +1353,7 @@ if __name__ == "__main__":
 - [ ] 理解函数返回值的多种情况（单个、多个、None）
 - [ ] 解释 LEGB 作用域查找顺序
 - [ ] 使用 `global` 和 `nonlocal` 修改外层变量
+- [ ] 理解 lambda 表达式的用途和限制
 - [ ] 创建自己的模块（.py 文件）
 - [ ] 创建包含 `__init__.py` 的包
 - [ ] 使用各种 import 语句导入模块
@@ -1173,6 +1361,21 @@ if __name__ == "__main__":
 - [ ] 区分相对导入和绝对导入
 - [ ] 避免可变默认参数陷阱
 - [ ] 避免循环导入问题
+
+---
+
+## 📝 进阶预告
+
+完成本课程后，你已经掌握了函数和模块的精髓。在下一课 [L05: 调试工具与开发环境](../L05-debugging-tools/lesson.md) 中，我们将学习：
+
+- 🐛 **pdb 调试**：断点设置、变量检查、堆栈追踪
+- 💻 **REPL 进阶**：快速实验、API 探索
+- 🛠️ **IDE 使用**：VS Code / PyCharm 调试技巧
+- 📊 **日志记录**：logging 模块、调试级别
+- ⚡ **性能分析**：timeit、cProfile 基础
+
+> 💡 **学习路径**：L04 → L05（调试）→ L06（异常）→ ...
+
 
 ---
 

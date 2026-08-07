@@ -1,9 +1,9 @@
-# exercises/ - L12 练习题
+# exercises/ - L13 练习题
 
 练习用于把高级特性转成可运行代码。当前练习脚本都带有 `__main__` 自检，可直接运行获取快速反馈。
 
 ```bash
-cd stage1-python-intermediate/lessons/L12-advanced-features
+cd stage1-python-intermediate/lessons/L13-advanced-features
 python exercises/01_decorators.py
 ```
 

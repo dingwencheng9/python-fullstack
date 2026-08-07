@@ -4,26 +4,62 @@
 > **所属阶段**: Stage 0 - Python 编程基础
 > **预计时长**: 3 小时
 > **难度**: ⭐⭐⭐☆☆
-> **前置课程**: L08（魔术方法）
-> **版本**: v2.2
-> **最后更新**: 2026-08-02
+> **前置课程**: L05 调试工具
+> **版本**: v2.3
+> **最后更新**: 2026-08-05
 
 ---
 
-## 目录
+## 🎯 学习目标
 
-1. [什么是异常](#1-什么是异常)
-2. [try-except 基础](#2-try-except-基础)
-3. [多个 except 子句](#3-多个-except-子句)
-4. [else 和 finally 子句](#4-else-和-finally-子句)
-5. [raise 语句](#5-raise-语句)
-6. [自定义异常类](#6-自定义异常类)
-7. [异常链与 traceback](#7-异常链与-traceback)
-8. [异常处理最佳实践](#8-异常处理最佳实践)
+完成本课程后，你将能够：
+
+1. **异常理解**：理解 Python 异常的概念和类型层次
+2. **try-except 捕获**：使用 try-except 语句捕获和处理异常
+3. **异常传播**：理解异常的传播机制和 raise 语句
+4. **自定义异常**：创建和应用自定义异常类
+5. **异常链**：使用异常链传递上下文信息
 
 ---
 
-## 1. 什么是异常
+## 📖 课程导读
+
+异常处理是编写健壮程序的关键。本课程将帮助你：
+
+- 理解 Python 异常的工作机制
+- 掌握异常捕获和处理的最佳实践
+- 学习如何创建自定义异常
+- 了解异常链和 traceback 的使用
+
+---
+
+
+### 异常传播流程（可视化）
+
+```mermaid
+flowchart TD
+    A["触发异常"] --> B{"当前函数有<br/>try-except?"}
+    B -->|"是"| C{"except 匹配?"}
+    C -->|"是"| D["处理异常"]
+    C -->|"否"| E["异常传播到<br/>调用者"]
+    B -->|"否"| E
+    
+    D --> F["继续执行"]
+    E --> G["调用者有<br/>try-except?"}
+    G -->|"是"| H{"匹配?"}
+    G -->|"否"| I["继续传播..."]
+    H -->|"是"| J["处理异常"]
+    H -->|"否"| I
+    
+    I --> K["传播到<br/>顶层"]
+    K --> L["程序终止<br/>打印堆栈"]
+    
+    style A fill:#ffebee,stroke:#c62828
+    style L fill:#ffebee,stroke:#c62828
+    style F fill:#e8f5e9,stroke:#2e7d32
+```
+
+## Part 1: 异常基础
 
 ### 1.1 异常的概念
 
@@ -83,14 +119,13 @@ number = int("abc")  # ValueError
 try:
     result = 10 / 0
 except ZeroDivisionError as e:
-    print(f"异常类型: {type(e).__name__}")  # ZeroDivisionError
-    print(f"错误信息: {e}")  # division by zero
-    print(f"异常对象: {e}")
+        print(f"异常类型: {type(e).__name__}")  # ZeroDivisionError
+        print(f"错误信息: {e}")  # division by zero
 ```
 
 ---
 
-## 2. try-except 基础
+## Part 2: try-except 基础
 
 ### 2.1 基本语法
 
@@ -109,7 +144,7 @@ except SomeError:
 try:
     result = int(user_input)
 except ValueError as e:
-    print(f"无效的数字: {e}")
+        print(f"无效的数字: {e}")  # 缺少前导空格
 ```
 
 ### 2.3 示例：安全除法
@@ -148,7 +183,7 @@ print(safe_parse_int("abc"))   # None
 
 ---
 
-## 3. 多个 except 子句
+## Part 3: 多个 except 子句
 
 ### 3.1 处理多种异常类型
 
@@ -212,9 +247,7 @@ except ValueError:  # 永远不会执行到
 try:
     result = risky_operation()
 except Exception as e:
-    print(f"发生错误: {e}")
-
-# 方法 2: 使用裸 except（不推荐）
+        print(f"发生错误: {e}")  # 方法 2: 使用裸 except（不推荐）
 try:
     result = risky_operation()
 except:  # ❌ 捕获所有异常，包括 SystemExit
@@ -225,7 +258,7 @@ except:  # ❌ 捕获所有异常，包括 SystemExit
 
 ---
 
-## 4. else 和 finally 子句
+## Part 4: else 和 finally 子句
 
 ### 4.1 else 子句
 
@@ -319,7 +352,7 @@ finally:
 
 ---
 
-## 5. raise 语句
+## Part 5: raise 语句
 
 ### 5.1 抛出异常
 
@@ -368,8 +401,7 @@ def level2():
 try:
     level1()
 except ValueError as e:
-    print(f"捕获到异常: {e}")
-    # 输出: 捕获到异常: 来自 level2 的错误
+        print(f"捕获到异常: {e}")  # 输出: 捕获到异常: 来自 level2 的错误
 ```
 
 ### 5.4 抛出自定义错误信息
@@ -385,7 +417,7 @@ def divide(a: float, b: float) -> float:
 
 ---
 
-## 6. 自定义异常类
+## Part 6: 自定义异常类
 
 ### 6.1 创建自定义异常
 
@@ -492,7 +524,7 @@ def register_user(username: str, age: int, email: str) -> dict[str, str]:
 
 ---
 
-## 7. 异常链与 traceback
+## Part 7: 异常链与 traceback
 
 ### 7.1 异常传播
 
@@ -511,8 +543,7 @@ def inner():
 try:
     outer()
 except RuntimeError as e:
-    print(f"捕获异常: {e}")
-    # traceback 会自动打印
+        print(f"捕获异常: {e}")  # traceback 会自动打印
 ```
 
 ### 7.2 显式异常链（from）
@@ -585,9 +616,7 @@ try:
 except Exception as e:
     # 获取 traceback 字符串
     tb_str = traceback.format_exc()
-    print(f"异常 traceback:\n{tb_str}")
-
-    # 访问异常链
+        print(f"异常 traceback:\n{tb_str}")  # 访问异常链
     if e.__cause__:
         print(f"原始异常: {e.__cause__}")
     if e.__context__:
@@ -596,7 +625,7 @@ except Exception as e:
 
 ---
 
-## 8. 异常处理最佳实践
+## Part 8: 异常处理最佳实践
 
 ### 8.1 避免裸 except
 
@@ -786,7 +815,394 @@ Exception (Python 标准)
 
 ---
 
-## 扩展阅读
+
+
+
+## 💭 课堂思考
+
+### 思考 1: 为什么需要异常处理？
+
+**问题**：既然程序出错会崩溃，为什么不直接在代码中检查所有边界条件？
+
+**引导思考**：
+- 防御性编程 vs 异常处理
+- EAFP 原则（LBYL 原则）
+- 异常传播机制的价值
+
+**代码对比**：
+```python
+# LBYL (Look Before You Leap)
+if os.path.exists('file.txt'):
+    with open('file.txt') as f:
+        content = f.read()
+
+# EAFP (Easier to Ask for Forgiveness than Permission)
+try:
+    with open('file.txt') as f:
+        content = f.read()
+except FileNotFoundError:
+    content = ""
+```
+
+---
+
+### 思考 2: 捕获异常 vs 防御性检查
+
+**问题**：什么时候应该用 try-except，什么时候应该用 if 检查？
+
+**引导思考**：
+- 预期错误 vs 意外错误
+- 性能考量：检查 vs 捕获
+- 代码可读性
+
+**决策原则**：
+- 正常流程的一部分 → if 检查
+- 异常情况（不应该发生）→ 异常处理
+- 外部输入（不可控）→ 两者结合
+
+---
+
+### 思考 3: 异常链的价值
+
+**问题**：为什么要保留原始异常，而不是直接抛出一个新异常？
+
+**引导思考**：
+- 调试信息完整性
+- 异常溯源
+- 调试成本
+
+**代码示例**：
+```python
+# 不好的做法：丢失原始信息
+def parse_config():
+    try:
+        return json.loads(data)
+    except Exception as e:
+        raise ConfigError("配置解析失败")  # 原始错误丢失
+
+# 好的做法：异常链
+def parse_config():
+    try:
+        return json.loads(data)
+    except json.JSONDecodeError as e:
+        raise ConfigError("配置解析失败") from e  # 保留原始错误
+```
+
+
+
+## 🚀 实战案例
+
+### 案例 1: 安全的数据解析器
+
+```python
+import json
+
+def safe_parse_json(json_string: str) -> dict | None:
+    """安全解析 JSON 字符串，失败时返回 None"""
+    try:
+        return json.loads(json_string)
+    except json.JSONDecodeError as e:
+        print(f"JSON 解析失败: {e}")
+        return None
+
+
+# 测试
+data1 = safe_parse_json('{"name": "Alice", "age": 25}')
+data2 = safe_parse_json('invalid json')
+print(f"data1: {data1}")  # {'name': 'Alice', 'age': 25}
+print(f"data2: {data2}")  # None
+```
+
+### 案例 2: 带重试机制的下载器
+
+```python
+import time
+
+def download_with_retry(url: str, max_retries: int = 3) -> str | None:
+    """带重试机制的下载函数"""
+    for attempt in range(max_retries):
+        try:
+            # 模拟下载（实际使用 requests）
+            if attempt == 2:
+                return f"Downloaded: {url}"
+            else:
+                raise ConnectionError("Network timeout")
+        except ConnectionError as e:
+            print(f"尝试 {attempt + 1} 失败: {e}")
+            if attempt < max_retries - 1:
+                time.sleep(1)  # 等待后重试
+    print(f"达到最大重试次数 {max_retries}")
+    return None
+
+
+# 测试
+result = download_with_retry("https://example.com/data")
+print(result)
+```
+
+### 案例 3: 配置验证器
+
+```python
+class ConfigError(Exception):
+    """配置错误基类"""
+    pass
+
+
+class MissingKeyError(ConfigError):
+    """缺少必需键"""
+    def __init__(self, key: str) -> None:
+        self.key = key
+        super().__init__(f"缺少必需的配置键: {key}")
+
+
+class InvalidValueError(ConfigError):
+    """值无效"""
+    def __init__(self, key: str, value: any, expected: str) -> None:
+        self.key = key
+        self.value = value
+        super().__init__(
+            f"配置键 '{key}' 的值无效\n"
+            f"  期望: {expected}\n"
+            f"  实际: {value!r}"
+        )
+
+
+def validate_config(config: dict) -> None:
+    """验证配置完整性"""
+    required_keys = ["host", "port", "database"]
+    
+    # 检查必需键
+    for key in required_keys:
+        if key not in config:
+            raise MissingKeyError(key)
+    
+    # 验证值
+    if not isinstance(config.get("port"), int):
+        raise InvalidValueError("port", config.get("port"), "int")
+    
+    if config["port"] < 1 or config["port"] > 65535:
+        raise InvalidValueError("port", config["port"], "1-65535 之间的整数")
+
+
+# 测试
+try:
+    validate_config({"host": "localhost", "port": 5432, "database": "mydb"})
+    print("配置验证通过")
+except ConfigError as e:
+    print(f"配置错误: {e}")
+```
+
+---
+
+
+
+## 💡 常见异常处理陷阱
+
+### 陷阱 1: 裸 except 子句
+
+```python
+# ❌ 错误：捕获所有异常
+try:
+    result = risky_operation()
+except:
+    print("出错了")
+
+# ✅ 正确：捕获特定异常
+try:
+    result = risky_operation()
+except ValueError as e:
+    print(f"值错误: {e}")
+except ConnectionError as e:
+    print(f"连接错误: {e}")
+```
+
+### 陷阱 2: 吞掉异常
+
+```python
+# ❌ 错误：捕获但不处理
+try:
+    result = risky_operation()
+except Exception:
+    pass  # 异常被忽略了！
+
+# ✅ 正确：记录或重新抛出
+try:
+    result = risky_operation()
+except Exception as e:
+    logging.error(f"操作失败: {e}")
+    raise  # 重新抛出
+```
+
+### 陷阱 3: 在 finally 中返回
+
+```python
+# ❌ 错误：finally 中的 return 会覆盖异常
+def bad_example():
+    try:
+        return risky_operation()
+    finally:
+        return "cleanup"  # 异常被吞掉了！
+
+# ✅ 正确：避免在 finally 中返回
+def good_example():
+    result = None
+    error = None
+    try:
+        result = risky_operation()
+    except Exception as e:
+        error = e
+    finally:
+        cleanup()
+    return result
+```
+
+### 陷阱 4: 使用异常控制流程
+
+```python
+# ❌ 错误：用异常代替正常流程
+try:
+    value = int(text)
+except ValueError:
+    value = 0  # 期望文本不是数字
+
+# ✅ 正确：先检查再操作
+if text.isdigit():
+    value = int(text)
+else:
+    value = 0
+```
+
+### 陷阱 5: 忽略异常链
+
+```python
+# ❌ 错误：丢失原始异常信息
+try:
+    risky_operation()
+except RuntimeError:
+    raise ValueError("操作失败")  # 原始异常信息丢失
+
+# ✅ 正确：保留异常链
+try:
+    risky_operation()
+except RuntimeError as e:
+    raise ValueError("操作失败") from e  # 保留异常链
+```
+
+---
+
+## 🎓 核心知识点总结
+
+### 异常处理核心概念
+
+| 概念 | 说明 |
+|------|------|
+| **try-except** | 捕获和处理异常 |
+| **raise** | 抛出异常 |
+| **else** | 仅在无异常时执行 |
+| **finally** | 无论是否有异常都执行 |
+| **自定义异常** | 继承 Exception 创建业务异常 |
+| **异常链** | `raise ... from ...` 保留原始错误 |
+
+### 常见异常类型
+
+| 异常 | 触发场景 |
+|------|----------|
+| `ZeroDivisionError` | 除数为零 |
+| `IndexError` | 索引越界 |
+| `KeyError` | 字典键不存在 |
+| `ValueError` | 值不合法 |
+| `TypeError` | 类型不匹配 |
+| `FileNotFoundError` | 文件不存在 |
+| `JSONDecodeError` | JSON 解析失败 |
+
+### 异常处理速查
+
+```python
+# 基本捕获
+try:
+    risky_code()
+except SpecificError:
+    handle()
+
+# 捕获并获取信息
+try:
+    risky_code()
+except SpecificError as e:
+    print(f"错误: {e}")
+
+# 多个异常
+try:
+    risky_code()
+except (Error1, Error2) as e:
+    handle()
+
+# 完整结构
+try:
+    code()
+except SpecificError:
+    handle_specific()
+except Exception as e:
+    handle_general(e)
+else:
+    # 仅在无异常时执行
+    success()
+finally:
+    # 无论是否有异常都执行
+    cleanup()
+
+# 抛出异常
+raise ValueError("错误信息")
+
+# 异常链
+raise NewError("上下文") from original_error
+```
+
+### 关键要点
+
+- ✅ 明确捕获具体异常类型，避免裸 except
+- ✅ 使用 finally 或 with 确保资源释放
+- ✅ 重新抛出时保留原始异常（异常链）
+- ✅ 异常信息要用户友好，包含足够上下文
+- ❌ 不要用异常代替正常控制流
+- ❌ 不要捕获所有异常后什么都不做
+
+### 最佳实践检查清单
+
+| 检查项 | 状态 |
+|--------|------|
+| 捕获具体异常而非 Exception | ☐ |
+| 使用 with 或 finally 释放资源 | ☐ |
+| 保留原始异常的异常链 | ☐ |
+| 提供用户友好的错误信息 | ☐ |
+| 记录日志以便调试 | ☐ |
+| 不在正常控制流中使用异常 | ☐ |
+
+---
+
+### 异常类层次结构
+
+```
+BaseException
+├── SystemExit
+├── KeyboardInterrupt
+└── Exception
+    ├── ArithmeticError
+    │   ├── FloatingPointError
+    │   ├── OverflowError
+    │   └── ZeroDivisionError
+    ├── LookupError
+    │   ├── IndexError
+    │   └── KeyError
+    ├── ValueError
+    ├── TypeError
+    ├── AttributeError
+    ├── RuntimeError
+    └── ... (更多异常类型)
+```
+
+---
+
+## 📚 延伸阅读
 
 - [Python 官方文档 - 异常](https://docs.python.org/3/library/exceptions.html)
 - [Python 官方文档 - try 语句](https://docs.python.org/3/reference/compound_stmts.html#try)
@@ -795,7 +1211,42 @@ Exception (Python 标准)
 
 ---
 
-## 下一步
+
+
+## ✅ 自检清单
+
+完成本课程后，你应该能够：
+
+- [ ] 理解 Python 异常的概念和类型层次
+- [ ] 使用 try-except 捕获和处理异常
+- [ ] 使用 else 和 finally 子句控制执行流程
+- [ ] 使用 raise 语句抛出异常
+- [ ] 创建和使用自定义异常类
+- [ ] 使用异常链传递上下文信息
+- [ ] 避免常见的异常处理反模式
+- [ ] 根据 HTTP 状态码选择合适的 HTTPException
+- [ ] 能够编写相关代码
+- [ ] 解决常见问题
+
+
+---
+
+## 📝 进阶预告
+
+完成本课程后，你已经掌握了异常处理的精髓。在下一课 [L07: 面向对象基础](../L07-oop-basics/lesson.md) 中，我们将学习：
+
+- 🏛️ **类与对象**：类的定义、__init__ 构造方法、self 参数
+- 🔒 **封装**：私有属性、@property 装饰器
+- 👨‍👩‍👧 **继承**：单继承、方法重写、super() 调用
+- 🔄 **多态**：接口统一、鸭子类型
+- 🎭 **魔术方法**：__str__、__repr__、__eq__（L08 深入）
+
+> 💡 **学习路径**：L06 → L07（面向对象）→ L08（魔术方法）→ ...
+
+
+---
+
+## 🔗 下一步
 
 完成本课程后，继续学习：
 
@@ -815,7 +1266,7 @@ Exception (Python 标准)
    - 数据持久化（JSON 文件存储）
 
 2. **技术栈**
-   - **数据建模**：使用 @dataclass 定义学员类
+   - **数据建模**：使用 class 定义学员类
    - **业务逻辑**：管理器类封装所有操作
    - **文件操作**：JSON 读写、异常处理
    - **用户交互**：命令行界面（CLI）

@@ -4,6 +4,11 @@
 - 掌握普通赋值和增强赋值
 - 理解变量重新绑定与就地更新的区别
 - 使用海象运算符 := 简化条件中的赋值
+
+【知识点边界】本文件仅使用 L01 + L02 的知识点：
+- print, input, if/elif/else, for, while
+- 变量赋值、增强赋值（+=, -=, ...）
+- 海象运算符 :=（Python 3.8+）
 """
 
 print("=" * 50)
@@ -54,16 +59,21 @@ count %= 3
 print(f"count %= 3  -> {count}")
 
 print("\n" + "=" * 50)
-print("4. 可变对象的增强赋值")
+print("4. 字符串的增强赋值")
 print("=" * 50)
 
-items = ["Python"]
-alias = items
-items += ["FastAPI"]
+# 字符串拼接演示（字符串是不可变的，增强赋值会创建新对象）
+greeting = "Hello"
+print(f"初始: greeting = '{greeting}'")
 
-print(f"items = {items}")
-print(f"alias = {alias}")
-print("列表是可变对象，items += [...] 会原地扩展列表")
+greeting += ", Python"
+print(f"greeting += ', Python' -> '{greeting}'")
+
+greeting += "!"
+print(f"greeting += '!' -> '{greeting}'")
+
+print("\n注意: 字符串的 += 会创建新字符串对象")
+print("（L03 会学到 list 等可变对象的 += 行为不同）")
 
 print("\n" + "=" * 50)
 print("5. 海象运算符 :=")
@@ -75,9 +85,12 @@ if (length := len(text)) > 5:
 else:
     print(f"{text} 长度为 {length}，不超过 5")
 
-# 常见用途：在条件判断中复用计算结果
-numbers = [3, 5, 8, 13]
-if (total := sum(numbers)) > 20:
-    print(f"总和 {total} 大于 20")
+# 常见用途：在循环中复用计算结果
+print("\n使用海象运算符统计字符串:")
+text = "hello"
+if (total := len(text)) > 5:
+    print(f"'{text}' 长度为 {total}，超过 5")
+else:
+    print(f"'{text}' 长度为 {total}，不超过 5")
 
 print("\n🎉 赋值运算符示例完成！")

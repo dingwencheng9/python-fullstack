@@ -1,9 +1,9 @@
-# tests/ - L12 单元测试
+# tests/ - L13 单元测试
 
 本目录测试 `solutions/` 中参考答案的关键行为，共 16 个用例。
 
 ```bash
-uv run pytest stage1-python-intermediate/lessons/L12-advanced-features/tests -q
+uv run pytest stage1-python-intermediate/lessons/L13-advanced-features/tests -q
 ```
 
 ## 测试覆盖

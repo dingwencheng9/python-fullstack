@@ -2,191 +2,343 @@
 
 难度: ⭐⭐☆ (中等)
 预计时间: 25 分钟
-知识点: match-case 模式匹配、序列解构、条件匹配
+知识点: match-case 模式匹配、值匹配、条件匹配
+
+学习方式:
+本练习是"演示型练习"——代码已经完整实现，
+你需要运行它，观察输出，理解代码的工作原理。
 
 任务描述:
 练习 Python 3.10+ 的 match-case 语句，综合运用：
 - 简单值匹配
-- 序列模式匹配
 - 带条件的匹配（if 子句）
 - 通配符与变量绑定
-
-提示:
-1. match-case 可以匹配值、类型、序列结构
-2. 使用 case _ 作为默认分支
-3. 序列匹配可以解构: case ["git", "push", origin, branch]
 """
 
+# ============================================================
+# 演示：HTTP 状态码匹配
+# ============================================================
+print("=== HTTP 状态码匹配演示 ===\n")
 
-def describe_http_status(code: int) -> str:
-    """描述 HTTP 状态码。
+print("测试用例 1: code=200")
+code = 200
+match code:
+    case 200:
+        result = 'OK - 请求成功'
+    case 201:
+        result = 'Created - 资源创建成功'
+    case 204:
+        result = 'No Content - 无内容'
+    case 301:
+        result = 'Moved Permanently - 永久重定向'
+    case 302:
+        result = 'Found - 临时重定向'
+    case 400:
+        result = 'Bad Request - 请求错误'
+    case 401:
+        result = 'Unauthorized - 未授权'
+    case 403:
+        result = 'Forbidden - 禁止访问'
+    case 404:
+        result = 'Not Found - 资源不存在'
+    case 500:
+        result = 'Internal Server Error - 服务器错误'
+    case 502:
+        result = 'Bad Gateway - 网关错误'
+    case 503:
+        result = 'Service Unavailable - 服务不可用'
+    case _:
+        result = f'Unknown status code: {code}'
+print(f"   200 → '{result}'")
 
-    Args:
-        code: HTTP 状态码
+print("\n测试用例 2: code=201")
+code = 201
+match code:
+    case 200:
+        result = 'OK - 请求成功'
+    case 201:
+        result = 'Created - 资源创建成功'
+    case 204:
+        result = 'No Content - 无内容'
+    case 301:
+        result = 'Moved Permanently - 永久重定向'
+    case 302:
+        result = 'Found - 临时重定向'
+    case 400:
+        result = 'Bad Request - 请求错误'
+    case 401:
+        result = 'Unauthorized - 未授权'
+    case 403:
+        result = 'Forbidden - 禁止访问'
+    case 404:
+        result = 'Not Found - 资源不存在'
+    case 500:
+        result = 'Internal Server Error - 服务器错误'
+    case 502:
+        result = 'Bad Gateway - 网关错误'
+    case 503:
+        result = 'Service Unavailable - 服务不可用'
+    case _:
+        result = f'Unknown status code: {code}'
+print(f"   201 → '{result}'")
 
-    Returns:
-        状态码描述
+print("\n测试用例 3: code=404")
+code = 404
+match code:
+    case 200:
+        result = 'OK - 请求成功'
+    case 201:
+        result = 'Created - 资源创建成功'
+    case 204:
+        result = 'No Content - 无内容'
+    case 301:
+        result = 'Moved Permanently - 永久重定向'
+    case 302:
+        result = 'Found - 临时重定向'
+    case 400:
+        result = 'Bad Request - 请求错误'
+    case 401:
+        result = 'Unauthorized - 未授权'
+    case 403:
+        result = 'Forbidden - 禁止访问'
+    case 404:
+        result = 'Not Found - 资源不存在'
+    case 500:
+        result = 'Internal Server Error - 服务器错误'
+    case 502:
+        result = 'Bad Gateway - 网关错误'
+    case 503:
+        result = 'Service Unavailable - 服务不可用'
+    case _:
+        result = f'Unknown status code: {code}'
+print(f"   404 → '{result}'")
 
-    Examples:
-        >>> describe_http_status(200)
-        'OK - 请求成功'
-        >>> describe_http_status(404)
-        'Not Found - 资源不存在'
-        >>> describe_http_status(500)
-        'Internal Server Error - 服务器错误'
-        >>> describe_http_status(418)
-        'Unknown status code: 418'
-    """
-    match code:
-        case 200:
-            return "OK - 请求成功"
-        case 201:
-            return "Created - 请求创建成功"
-        case 301:
-            return "Moved Permanently - 永久重定向"
-        case 400:
-            return "Bad Request - 请求错误"
-        case 401:
-            return "Unauthorized - 未授权"
-        case 403:
-            return "Forbidden - 禁止访问"
-        case 404:
-            return "Not Found - 资源不存在"
-        case 500:
-            return "Internal Server Error - 服务器错误"
-        case 502:
-            return "Bad Gateway - 网关错误"
-        case 503:
-            return "Service Unavailable - 服务不可用"
-        case _:
-            return f"Unknown status code: {code}"
+print("\n测试用例 4: code=500")
+code = 500
+match code:
+    case 200:
+        result = 'OK - 请求成功'
+    case 201:
+        result = 'Created - 资源创建成功'
+    case 204:
+        result = 'No Content - 无内容'
+    case 301:
+        result = 'Moved Permanently - 永久重定向'
+    case 302:
+        result = 'Found - 临时重定向'
+    case 400:
+        result = 'Bad Request - 请求错误'
+    case 401:
+        result = 'Unauthorized - 未授权'
+    case 403:
+        result = 'Forbidden - 禁止访问'
+    case 404:
+        result = 'Not Found - 资源不存在'
+    case 500:
+        result = 'Internal Server Error - 服务器错误'
+    case 502:
+        result = 'Bad Gateway - 网关错误'
+    case 503:
+        result = 'Service Unavailable - 服务不可用'
+    case _:
+        result = f'Unknown status code: {code}'
+print(f"   500 → '{result}'")
 
+print("\n测试用例 5: code=418")
+code = 418
+match code:
+    case 200:
+        result = 'OK - 请求成功'
+    case 201:
+        result = 'Created - 资源创建成功'
+    case 204:
+        result = 'No Content - 无内容'
+    case 301:
+        result = 'Moved Permanently - 永久重定向'
+    case 302:
+        result = 'Found - 临时重定向'
+    case 400:
+        result = 'Bad Request - 请求错误'
+    case 401:
+        result = 'Unauthorized - 未授权'
+    case 403:
+        result = 'Forbidden - 禁止访问'
+    case 404:
+        result = 'Not Found - 资源不存在'
+    case 500:
+        result = 'Internal Server Error - 服务器错误'
+    case 502:
+        result = 'Bad Gateway - 网关错误'
+    case 503:
+        result = 'Service Unavailable - 服务不可用'
+    case _:
+        result = f'Unknown status code: {code}'
+print(f"   418 → '{result}'")
 
-def parse_command(command: str) -> str:
-    """解析命令行命令。
+# ============================================================
+# 演示：命令解析（使用 match-case）
+# ============================================================
+print("\n=== 命令解析演示 ===\n")
 
-    Args:
-        command: 命令字符串（如 "git commit -m 'fix bug'"）
+print("测试用例 1: 'git status'")
+command = 'git status'
+match command:
+    case 'git status':
+        result = 'git 子命令: status'
+    case s if s.startswith('git checkout '):
+        result = 'git 子命令: checkout'
+    case s if s.startswith('git push '):
+        result = 'git push 命令'
+    case s if s.startswith('npm '):
+        result = 'npm 命令'
+    case _:
+        result = f'Unknown command: {command}'
+print(f"   '{command}' → '{result}'")
 
-    Returns:
-        命令描述
+print("\n测试用例 2: 'git checkout main'")
+command = 'git checkout main'
+match command:
+    case 'git status':
+        result = 'git 子命令: status'
+    case s if s.startswith('git checkout '):
+        result = 'git 子命令: checkout'
+    case s if s.startswith('git push '):
+        result = 'git push 命令'
+    case s if s.startswith('npm '):
+        result = 'npm 命令'
+    case _:
+        result = f'Unknown command: {command}'
+print(f"   '{command}' → '{result}'")
 
-    Examples:
-        >>> parse_command("git status")
-        'git 子命令: status'
-        >>> parse_command("git checkout main")
-        'git 子命令: checkout, 参数: main'
-        >>> parse_command("git push origin main")
-        'git push 到 origin/main'
-        >>> parse_command("npm install")
-        'npm 命令: install'
-        >>> parse_command("unknown cmd")
-        'Unknown command: unknown cmd'
-    """
-    parts = command.split()
-    match parts:
-        case ["git", "status"]:
-            return "git 子命令: status"
-        case ["git", "checkout", branch]:
-            return f"git 子命令: checkout, 参数: {branch}"
-        case ["git", "push", "origin", branch]:
-            return f"git push 到 origin/{branch}"
-        case ["npm", cmd]:
-            return f"npm 命令: {cmd}"
-        case _:
-            return f"Unknown command: {command}"
+print("\n测试用例 3: 'git push origin main'")
+command = 'git push origin main'
+match command:
+    case 'git status':
+        result = 'git 子命令: status'
+    case s if s.startswith('git checkout '):
+        result = 'git 子命令: checkout'
+    case s if s.startswith('git push '):
+        result = 'git push 命令'
+    case s if s.startswith('npm '):
+        result = 'npm 命令'
+    case _:
+        result = f'Unknown command: {command}'
+print(f"   '{command}' → '{result}'")
 
+print("\n测试用例 4: 'npm install'")
+command = 'npm install'
+match command:
+    case 'git status':
+        result = 'git 子命令: status'
+    case s if s.startswith('git checkout '):
+        result = 'git 子命令: checkout'
+    case s if s.startswith('git push '):
+        result = 'git push 命令'
+    case s if s.startswith('npm '):
+        result = 'npm 命令'
+    case _:
+        result = f'Unknown command: {command}'
+print(f"   '{command}' → '{result}'")
 
-def classify_point(x: int, y: int) -> str:
-    """分类二维坐标点。
+print("\n测试用例 5: 'unknown cmd'")
+command = 'unknown cmd'
+match command:
+    case 'git status':
+        result = 'git 子命令: status'
+    case s if s.startswith('git checkout '):
+        result = 'git 子命令: checkout'
+    case s if s.startswith('git push '):
+        result = 'git push 命令'
+    case s if s.startswith('npm '):
+        result = 'npm 命令'
+    case _:
+        result = f'Unknown command: {command}'
+print(f"   '{command}' → '{result}'")
 
-    Args:
-        x: x 坐标
-        y: y 坐标
+# ============================================================
+# 演示：坐标分类（使用 match-case）
+# ============================================================
+print("\n=== 坐标分类演示 ===\n")
 
-    Returns:
-        点的位置描述
+print("测试用例 1: x=0, y=0 → 原点")
+x, y = 0, 0
+match (x, y):
+    case (0, 0):
+        result = '原点'
+    case (px, 0) if px > 0:
+        result = 'x轴正半轴'
+    case (nx, 0) if nx < 0:
+        result = 'x轴负半轴'
+    case (0, py) if py > 0:
+        result = 'y轴正半轴'
+    case (0, ny) if ny < 0:
+        result = 'y轴负半轴'
+    case (px, py) if px > 0 and py > 0:
+        result = '第一象限'
+    case (nx, py) if nx < 0 and py > 0:
+        result = '第二象限'
+    case (nx, ny) if nx < 0 and ny < 0:
+        result = '第三象限'
+    case (px, ny) if px > 0 and ny < 0:
+        result = '第四象限'
+    case _:
+        result = '未知位置'
+print(f"   (0, 0) → '{result}'")
 
-    Examples:
-        >>> classify_point(0, 0)
-        '原点'
-        >>> classify_point(5, 0)
-        'x轴正半轴'
-        >>> classify_point(0, -3)
-        'y轴负半轴'
-        >>> classify_point(3, 4)
-        '第一象限'
-        >>> classify_point(-2, 5)
-        '第二象限'
-        >>> classify_point(-3, -1)
-        '第三象限'
-        >>> classify_point(2, -4)
-        '第四象限'
-    """
-    match (x, y):
-        case (0, 0):
-            return "原点"
-        case (x, 0) if x > 0:
-            return "x轴正半轴"
-        case (x, 0) if x < 0:
-            return "x轴负半轴"
-        case (0, y) if y > 0:
-            return "y轴正半轴"
-        case (0, y) if y < 0:
-            return "y轴负半轴"
-        case (x, y) if x > 0 and y > 0:
-            return "第一象限"
-        case (x, y) if x < 0 and y > 0:
-            return "第二象限"
-        case (x, y) if x < 0 and y < 0:
-            return "第三象限"
-        case (x, y) if x > 0 and y < 0:
-            return "第四象限"
-        case _:
-            return "未知位置"
+print("\n测试用例 2: x=5, y=0 → x轴正半轴")
+x, y = 5, 0
+match (x, y):
+    case (0, 0):
+        result = '原点'
+    case (px, 0) if px > 0:
+        result = 'x轴正半轴'
+    case (nx, 0) if nx < 0:
+        result = 'x轴负半轴'
+    case (0, py) if py > 0:
+        result = 'y轴正半轴'
+    case (0, ny) if ny < 0:
+        result = 'y轴负半轴'
+    case (px, py) if px > 0 and py > 0:
+        result = '第一象限'
+    case (nx, py) if nx < 0 and py > 0:
+        result = '第二象限'
+    case (nx, ny) if nx < 0 and ny < 0:
+        result = '第三象限'
+    case (px, ny) if px > 0 and ny < 0:
+        result = '第四象限'
+    case _:
+        result = '未知位置'
+print(f"   (5, 0) → '{result}'")
 
+print("\n测试用例 3: x=3, y=4 → 第一象限")
+x, y = 3, 4
+match (x, y):
+    case (0, 0):
+        result = '原点'
+    case (px, 0) if px > 0:
+        result = 'x轴正半轴'
+    case (nx, 0) if nx < 0:
+        result = 'x轴负半轴'
+    case (0, py) if py > 0:
+        result = 'y轴正半轴'
+    case (0, ny) if ny < 0:
+        result = 'y轴负半轴'
+    case (px, py) if px > 0 and py > 0:
+        result = '第一象限'
+    case (nx, py) if nx < 0 and py > 0:
+        result = '第二象限'
+    case (nx, ny) if nx < 0 and ny < 0:
+        result = '第三象限'
+    case (px, ny) if px > 0 and ny < 0:
+        result = '第四象限'
+    case _:
+        result = '未知位置'
+print(f"   (3, 4) → '{result}'")
 
-# ==================== 测试代码 ====================
-if __name__ == "__main__":
-    print("=== HTTP 状态码测试 ===")
-    tests = [
-        (200, "OK - 请求成功"),
-        (201, "Created - 资源创建成功"),
-        (404, "Not Found - 资源不存在"),
-        (500, "Internal Server Error - 服务器错误"),
-        (418, "Unknown status code: 418"),
-    ]
-    for code, expected in tests:
-        result = describe_http_status(code)
-        status = "✓" if result == expected else "✗"
-        print(f"{status} describe_http_status({code}) = '{result}'")
-
-    print("\n=== 命令解析测试 ===")
-    tests = [
-        ("git status", "git 子命令: status"),
-        ("git checkout main", "git 子命令: checkout, 参数: main"),
-        ("git push origin main", "git push 到 origin/main"),
-        ("npm install", "npm 命令: install"),
-        ("unknown cmd", "Unknown command: unknown cmd"),
-    ]
-    for cmd, expected in tests:
-        result = parse_command(cmd)
-        status = "✓" if result == expected else "✗"
-        print(f"{status} parse_command('{cmd}') = '{result}'")
-
-    print("\n=== 坐标分类测试 ===")
-    tests = [
-        ((0, 0), "原点"),
-        ((5, 0), "x轴正半轴"),
-        ((-3, 0), "x轴负半轴"),
-        ((0, 5), "y轴正半轴"),
-        ((0, -3), "y轴负半轴"),
-        ((3, 4), "第一象限"),
-        ((-2, 5), "第二象限"),
-        ((-3, -1), "第三象限"),
-        ((2, -4), "第四象限"),
-    ]
-    for (x, y), expected in tests:
-        result = classify_point(x, y)
-        status = "✓" if result == expected else "✗"
-        print(f"{status} classify_point({x}, {y}) = '{result}'")
+# ============================================================
+# 思考题
+# ============================================================
+print("\n=== 思考题 ===")
+print("1. match-case 和 if-elif-else 的区别是什么？")
+print("2. case _ 的作用是什么？")
+print("3. 带守卫的条件匹配（if）什么时候会执行？")

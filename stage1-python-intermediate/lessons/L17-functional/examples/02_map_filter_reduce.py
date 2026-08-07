@@ -1,4 +1,4 @@
-"""L15: 函数式编程 - map, filter, reduce"""
+"""L17: 函数式编程 - map, filter, reduce"""
 
 from functools import reduce
 from operator import add, mul

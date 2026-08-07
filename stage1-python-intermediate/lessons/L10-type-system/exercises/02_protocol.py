@@ -26,7 +26,11 @@ def total_size(items: list[Sized]) -> int:
 
 
 def find_max[T: Comparable](items: list[T]) -> T | None:
-    """找最大值"""
+    """找最大值
+
+    注意: 此处使用了 PEP 695 类型参数语法 (Python 3.12+)
+    详见: https://docs.python.org/3/whatsnew/3.12.html#pep-695-type-parameter-syntax
+    """
     if not items:
         return None
     max_val = items[0]

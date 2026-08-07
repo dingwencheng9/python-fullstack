@@ -1,9 +1,9 @@
-# tests/ - L14 单元测试
+# tests/ - L16 单元测试
 
-本目录用于自动验证 L14 参考答案。
+本目录用于自动验证 L16 参考答案。
 
 ```bash
-cd stage1-python-intermediate/lessons/L14-concurrency-intro
+cd stage1-python-intermediate/lessons/L16-concurrency-intro
 uv run pytest tests -q
 ```
 

@@ -1,9 +1,9 @@
-# tests/ - L15 单元测试
+# tests/ - L17 单元测试
 
-本目录用于自动验证 L15 参考答案。
+本目录用于自动验证 L17 参考答案。
 
 ```bash
-cd stage1-python-intermediate/lessons/L15-functional
+cd stage1-python-intermediate/lessons/L17-functional
 uv run pytest tests -q
 ```
 

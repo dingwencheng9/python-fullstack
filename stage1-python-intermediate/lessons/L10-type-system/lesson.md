@@ -1172,6 +1172,56 @@ def reverse_all(items: Reversible) -> Reversible:
 
 ---
 
+
+## 💡 常见陷阱
+
+### 陷阱 1: 类型注解不强制执行
+
+```python
+# ❌ 误解：类型注解会阻止错误类型
+x: int = "hello"  # 不会报错！类型注解只是提示
+
+# ✅ 正确做法：使用 mypy 静态检查
+# $ mypy your_code.py
+```
+
+### 陷阱 2: Union vs Optional
+
+```python
+# ❌ 混淆 Union 和 Optional
+x: Union[int, None] = None  # 合法但冗余
+x: Optional[int] = None     # 推荐写法
+
+# ⚠️ Optional[X] 等价于 Union[X, None]
+```
+
+### 陷阱 3: Any 类型滥用
+
+```python
+# ❌ 滥用 Any：丧失类型检查优势
+def process(data: Any) -> Any:
+    return data
+
+# ✅ 尽量使用具体类型或 Protocol
+```
+
+```mermaid
+flowchart TB
+    subgraph Types["类型系统"]
+        A[基础类型<br/>int, str, float, bool]
+        B[复合类型<br/>list, dict, tuple, set]
+        C[泛型<br/>list[T], dict[K,V]]
+        D[Protocol<br/>结构化子类型]
+    end
+    
+    A --> C
+    B --> C
+    C --> D
+    
+    style A fill:#e3f2fd
+    style D fill:#c8e6c9
+```
+
 ## 🔗 下一步
 
 完成本课程后，继续学习：

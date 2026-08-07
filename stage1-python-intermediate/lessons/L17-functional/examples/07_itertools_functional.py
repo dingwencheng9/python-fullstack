@@ -1,4 +1,4 @@
-"""L15: 函数式编程 - itertools 高级用法"""
+"""L17: 函数式编程 - itertools 高级用法"""
 
 import itertools
 

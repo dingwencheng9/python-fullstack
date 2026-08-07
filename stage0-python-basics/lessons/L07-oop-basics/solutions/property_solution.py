@@ -1,4 +1,4 @@
-"""L06 练习3参考答案: @property 装饰器"""
+"""L07 练习3参考答案: @property 装饰器"""
 
 
 class Student:

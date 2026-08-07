@@ -1,4 +1,4 @@
-"""L05 日志解析器 - 测试用例
+"""L09 日志解析器 - 测试用例
 
 测试 solutions/01_solution.py 中的 parse_log 和 find_errors 函数。
 """

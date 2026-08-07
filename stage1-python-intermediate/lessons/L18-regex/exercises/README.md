@@ -1,9 +1,9 @@
-# exercises/ - L16 练习题
+# exercises/ - L18 练习题
 
 本目录包含正则表达式验证与提取练习。每个文件都可直接运行，并通过内置断言完成基础自检。
 
 ```bash
-cd stage1-python-intermediate/lessons/L16-regex
+cd stage1-python-intermediate/lessons/L18-regex
 python exercises/01_validation.py
 python exercises/02_extraction.py
 ```

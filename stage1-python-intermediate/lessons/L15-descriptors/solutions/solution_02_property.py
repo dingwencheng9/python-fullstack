@@ -1,5 +1,5 @@
 """
-L13: 描述符 - 练习2: Property 描述符与类级访问 - 参考答案
+L15: 描述符 - 练习2: Property 描述符与类级访问 - 参考答案
 """
 
 from __future__ import annotations

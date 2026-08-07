@@ -1470,6 +1470,59 @@ service.data  # 第二次访问直接返回缓存
 
 ---
 
+
+## 💡 常见陷阱
+
+### 陷阱 1: 描述符的实例顺序
+
+```python
+# ⚠️ 数据描述符优先于实例 __dict__
+class RevealAccess:
+    def __get__(self, obj, objtype=None):
+        return "accessed"
+    def __set__(self, obj, value):
+        obj.__dict__["x"] = value  # 写入实例 __dict__
+
+class MyClass:
+    x = RevealAccess()
+
+obj = MyClass()
+obj.x = 10
+print(obj.__dict__["x"])  # 10，描述符 __set__ 被调用
+```
+
+### 陷阱 2: 描述符与类属性同名
+
+```python
+# ⚠️ 实例属性会遮蔽描述符
+class Descriptor:
+    def __get__(self, obj, objtype=None):
+        return "from descriptor"
+
+class MyClass:
+    value = Descriptor()
+
+obj = MyClass()
+obj.value = 100  # 创建实例属性，遮蔽描述符
+print(obj.value)  # 100 而非 "from descriptor"
+```
+
+```mermaid
+flowchart TB
+    subgraph Descriptor["描述符协议"]
+        A[数据描述符<br/>__get__ + __set__]
+        B[非数据描述符<br/>只有 __get__]
+        C[property<br/>内置描述符]
+    end
+    
+    A --> D[优先于实例 __dict__]
+    B --> E[实例 __dict__ 优先]
+    
+    style A fill:#e8f5e9
+    style B fill:#fff8e1
+    style C fill:#e1f5fe
+```
+
 ## 🔗 下一步
 
 完成本课程后，继续学习：

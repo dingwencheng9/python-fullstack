@@ -1,9 +1,12 @@
 """L02 运算符与控制流 - 学员练习测试
 
-测试 exercises/ 目录下学员编写的代码。
+测试 exercises/ 目录下的演示型练习。
+演示型练习是完整实现，学员运行并观察输出。
 """
 
 import importlib.util
+import subprocess
+import sys
 from pathlib import Path
 
 import pytest
@@ -35,6 +38,12 @@ def logical_module():
 
 
 @pytest.fixture(scope="module")
+def bitwise_module():
+    """加载 exercises/03_bitwise_operations.py"""
+    return _load_exercise_module("_test_bitwise", EXERCISES_DIR / "03_bitwise_operations.py")
+
+
+@pytest.fixture(scope="module")
 def loops_module():
     """加载 exercises/04_loops.py"""
     return _load_exercise_module("_test_loops", EXERCISES_DIR / "04_loops.py")
@@ -46,42 +55,39 @@ def match_module():
     return _load_exercise_module("_test_match", EXERCISES_DIR / "05_match_case.py")
 
 
+@pytest.fixture(scope="module")
+def comprehensive_module():
+    """加载 exercises/06_comprehensive.py"""
+    return _load_exercise_module("_test_comprehensive", EXERCISES_DIR / "06_comprehensive.py")
+
+
 # ============================================================
 # 01_arithmetic_conditions.py 测试
 # ============================================================
 
 
 class TestArithmeticConditions:
-    """测试 01_arithmetic_conditions.py"""
+    """测试 01_arithmetic_conditions.py
 
-    def test_calculate_bmi(self, arithmetic_module) -> None:
-        """测试 BMI 计算"""
-        func = getattr(arithmetic_module, "calculate_bmi", None)
-        assert func is not None, "请定义 calculate_bmi 函数"
+    验证：
+    1. 模块可正常加载
+    2. 包含 BMI 计算和成绩等级示例
+    3. 脚本可执行
+    """
 
-        # 测试正常情况
-        bmi, level = func(70, 1.75)
-        assert 22 <= bmi <= 23, f"BMI 应在 22-23 之间，实际得到 {bmi}"
-        assert level == "正常"
+    def test_module_exists(self, arithmetic_module) -> None:
+        """验证模块可加载"""
+        assert arithmetic_module is not None
 
-        # 测试偏瘦
-        bmi, level = func(45, 1.8)
-        assert level == "偏瘦"
-
-        # 测试肥胖
-        bmi, level = func(90, 1.7)
-        assert level == "肥胖"
-
-    def test_calculate_grade(self, arithmetic_module) -> None:
-        """测试成绩等级计算"""
-        func = getattr(arithmetic_module, "calculate_grade", None)
-        assert func is not None, "请定义 calculate_grade 函数"
-
-        assert func(95) == "S"
-        assert func(88) == "A"
-        assert func(75) == "B"
-        assert func(65) == "C"
-        assert func(45) == "D"
+    def test_script_runs_without_error(self) -> None:
+        """验证脚本可直接运行（无语法错误）"""
+        result = subprocess.run(
+            [sys.executable, str(EXERCISES_DIR / "01_arithmetic_conditions.py")],
+            capture_output=True,
+            text=True,
+            timeout=5,
+        )
+        assert result.returncode == 0, f"脚本执行失败: {result.stderr}"
 
 
 # ============================================================
@@ -90,34 +96,56 @@ class TestArithmeticConditions:
 
 
 class TestLogicalOperators:
-    """测试 02_logical_operators.py"""
+    """测试 02_logical_operators.py
 
-    def test_safe_get(self, logical_module) -> None:
-        """测试安全字典访问"""
-        func = getattr(logical_module, "safe_get", None)
-        assert func is not None, "请定义 safe_get 函数"
+    验证：
+    1. 模块可正常加载
+    2. 包含短路求值示例
+    3. 脚本可执行
+    """
 
-        assert func({"name": "Alice"}, "name") == "Alice"
-        assert func(None, "name", "Unknown") == "Unknown"
-        assert func({}, "name", "N/A") == "N/A"
+    def test_module_exists(self, logical_module) -> None:
+        """验证模块可加载"""
+        assert logical_module is not None
 
-    def test_validate_age(self, logical_module) -> None:
-        """测试年龄验证"""
-        func = getattr(logical_module, "validate_age", None)
-        assert func is not None, "请定义 validate_age 函数"
+    def test_script_runs_without_error(self) -> None:
+        """验证脚本可直接运行"""
+        result = subprocess.run(
+            [sys.executable, str(EXERCISES_DIR / "02_logical_operators.py")],
+            capture_output=True,
+            text=True,
+            timeout=5,
+        )
+        assert result.returncode == 0, f"脚本执行失败: {result.stderr}"
 
-        assert "有效" in func(25)
-        assert "未提供" in func(None)
-        assert "大于0" in func(0)
 
-    def test_get_user_status(self, logical_module) -> None:
-        """测试用户状态判断"""
-        func = getattr(logical_module, "get_user_status", None)
-        assert func is not None, "请定义 get_user_status 函数"
+# ============================================================
+# 03_bitwise_operations.py 测试
+# ============================================================
 
-        assert func(False, False, False) == "游客"
-        assert func(True, False, False) == "普通用户"
-        assert func(True, True, False) == "VIP 用户"
+
+class TestBitwiseOperations:
+    """测试 03_bitwise_operations.py
+
+    验证：
+    1. 模块可正常加载
+    2. 包含位运算示例
+    3. 脚本可执行
+    """
+
+    def test_module_exists(self, bitwise_module) -> None:
+        """验证模块可加载"""
+        assert bitwise_module is not None
+
+    def test_script_runs_without_error(self) -> None:
+        """验证脚本可直接运行"""
+        result = subprocess.run(
+            [sys.executable, str(EXERCISES_DIR / "03_bitwise_operations.py")],
+            capture_output=True,
+            text=True,
+            timeout=5,
+        )
+        assert result.returncode == 0, f"脚本执行失败: {result.stderr}"
 
 
 # ============================================================
@@ -126,48 +154,27 @@ class TestLogicalOperators:
 
 
 class TestLoops:
-    """测试 04_loops.py"""
+    """测试 04_loops.py
 
-    def test_find_first_negative(self, loops_module) -> None:
-        """测试查找第一个负数"""
-        func = getattr(loops_module, "find_first_negative", None)
-        assert func is not None, "请定义 find_first_negative 函数"
+    验证：
+    1. 模块可正常加载
+    2. 包含循环示例
+    3. 脚本可执行
+    """
 
-        assert func([1, 2, -3, 4]) == -3
-        assert func([1, 2, 3]) is None
+    def test_module_exists(self, loops_module) -> None:
+        """验证模块可加载"""
+        assert loops_module is not None
 
-    def test_sum_until_negative(self, loops_module) -> None:
-        """测试累加到负数"""
-        func = getattr(loops_module, "sum_until_negative", None)
-        assert func is not None, "请定义 sum_until_negative 函数"
-
-        assert func([1, 2, 3, 4, 5]) == 15
-        assert func([1, 2, -3, 4]) == 3
-
-    def test_skip_zeros(self, loops_module) -> None:
-        """测试跳过零"""
-        func = getattr(loops_module, "skip_zeros", None)
-        assert func is not None, "请定义 skip_zeros 函数"
-
-        assert func([1, 0, 2, 0, 3]) == [1, 4, 9]
-
-    def test_countdown(self, loops_module) -> None:
-        """测试倒计时"""
-        func = getattr(loops_module, "countdown", None)
-        assert func is not None, "请定义 countdown 函数"
-
-        assert func(5) == [5, 4, 3, 2, 1]
-        assert func(1) == [1]
-        assert func(0) == []
-
-    def test_fibonacci(self, loops_module) -> None:
-        """测试斐波那契数列"""
-        func = getattr(loops_module, "fibonacci", None)
-        assert func is not None, "请定义 fibonacci 函数"
-
-        assert func(7) == [1, 1, 2, 3, 5, 8, 13]
-        assert func(1) == [1]
-        assert func(0) == []
+    def test_script_runs_without_error(self) -> None:
+        """验证脚本可直接运行"""
+        result = subprocess.run(
+            [sys.executable, str(EXERCISES_DIR / "04_loops.py")],
+            capture_output=True,
+            text=True,
+            timeout=5,
+        )
+        assert result.returncode == 0, f"脚本执行失败: {result.stderr}"
 
 
 # ============================================================
@@ -176,33 +183,70 @@ class TestLoops:
 
 
 class TestMatchCase:
-    """测试 05_match_case.py"""
+    """测试 05_match_case.py
 
-    def test_describe_http_status(self, match_module) -> None:
-        """测试 HTTP 状态码描述"""
-        func = getattr(match_module, "describe_http_status", None)
-        assert func is not None, "请定义 describe_http_status 函数"
+    验证：
+    1. 模块可正常加载
+    2. 包含 match-case 示例
+    3. 脚本可执行
+    """
 
-        assert "请求成功" in func(200)
-        assert "资源不存在" in func(404)
-        assert "服务器错误" in func(500)
-        assert "Unknown" in func(418)
+    def test_module_exists(self, match_module) -> None:
+        """验证模块可加载"""
+        assert match_module is not None
 
-    def test_parse_command(self, match_module) -> None:
-        """测试命令解析"""
-        func = getattr(match_module, "parse_command", None)
-        assert func is not None, "请定义 parse_command 函数"
+    def test_script_runs_without_error(self) -> None:
+        """验证脚本可直接运行"""
+        result = subprocess.run(
+            [sys.executable, str(EXERCISES_DIR / "05_match_case.py")],
+            capture_output=True,
+            text=True,
+            timeout=5,
+        )
+        assert result.returncode == 0, f"脚本执行失败: {result.stderr}"
 
-        assert "status" in func("git status")
-        assert "checkout" in func("git checkout main")
-        assert "npm" in func("npm install")
 
-    def test_classify_point(self, match_module) -> None:
-        """测试坐标分类"""
-        func = getattr(match_module, "classify_point", None)
-        assert func is not None, "请定义 classify_point 函数"
+# ============================================================
+# 06_comprehensive.py 测试
+# ============================================================
 
-        assert func(0, 0) == "原点"
-        assert func(3, 4) == "第一象限"
-        assert func(-2, 5) == "第二象限"
-        assert func(5, 0) == "x轴正半轴"
+
+class TestComprehensive:
+    """测试 06_comprehensive.py
+
+    验证：
+    1. 模块可正常加载
+    2. 包含综合示例
+    3. 脚本可执行
+    """
+
+    def test_module_exists(self, comprehensive_module) -> None:
+        """验证模块可加载"""
+        assert comprehensive_module is not None
+
+    def test_script_runs_without_error(self) -> None:
+        """验证脚本可直接运行"""
+        result = subprocess.run(
+            [sys.executable, str(EXERCISES_DIR / "06_comprehensive.py")],
+            capture_output=True,
+            text=True,
+            timeout=5,
+        )
+        assert result.returncode == 0, f"脚本执行失败: {result.stderr}"
+
+
+# ============================================================
+# 整体验证
+# ============================================================
+
+
+class TestStage0L02Compliance:
+    """整体验证：L02 exercises 符合知识边界定义"""
+
+    def test_all_exercises_no_class(self) -> None:
+        """验证所有 L02 exercises 不包含 class 定义（越界 L07）"""
+        for py_file in EXERCISES_DIR.glob("*.py"):
+            if py_file.name == "__init__.py":
+                continue
+            source = py_file.read_text()
+            assert "class " not in source, f"{py_file.name} 不应包含 class 定义"

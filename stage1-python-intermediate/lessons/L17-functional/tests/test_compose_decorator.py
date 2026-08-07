@@ -1,7 +1,7 @@
 """
 
 # noqa: F821  # conftest.py autouse fixture 动态注入模块到命名空间
-L15: 函数式编程 - 组合装饰器测试
+L17: 函数式编程 - 组合装饰器测试
 """
 
 

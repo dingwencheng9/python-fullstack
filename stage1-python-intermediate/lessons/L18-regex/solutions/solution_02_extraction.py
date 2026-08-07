@@ -1,4 +1,4 @@
-"""L16 练习 2 参考答案：日期、价格和 HTML 标签提取。"""
+"""L18 练习 2 参考答案：日期、价格和 HTML 标签提取。"""
 
 from __future__ import annotations
 

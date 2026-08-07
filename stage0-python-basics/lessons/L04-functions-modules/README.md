@@ -38,8 +38,8 @@ cd stage0-python-basics/lessons/L04-functions-modules
 
 ```bash
 uv run python examples/00_demo.py
-uv run python examples/02_package_imports.py
-uv run python examples/04_all_exports.py
+uv run python examples/06_type_annotations.py
+uv run python examples/07_lambda.py
 ```
 
 运行测试：

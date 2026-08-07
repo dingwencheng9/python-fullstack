@@ -5,8 +5,8 @@
 > **预计时长**: 4 小时
 > **难度**: ⭐⭐⭐⭐☆
 > **前置课程**: L07（面向对象基础）
-> **版本**: v2.2
-> **最后更新**: 2026-08-02
+> **版本**: v2.3
+> **最后更新**: 2026-08-05
 > **核心版本**: Python 3.13
 
 ---
@@ -417,20 +417,10 @@ print(p.x, p.y, p.z)  # 1 2 3
 |------|------|------|
 | 大量简单对象 | ✅ 使用 | 显著节省内存 |
 | 需要动态添加属性 | ❌ 不用 | 限制太多 |
-| 数据类（dataclass） | ⚠️ 看情况 | dataclass 可配合 slots=True |
+| 数据类（dataclass） | ⚠️ 进阶内容 | Stage 2 深入学习 |
 | 游戏引擎粒子系统 | ✅ 使用 | 数百万粒子时必用 |
 
-```python
-# dataclass + slots（Python 3.10+）
-from dataclasses import dataclass
-
-@dataclass(slots=True)
-class Particle:
-    x: float
-    y: float
-    z: float
-    velocity: tuple[float, float, float]
-```
+> ⚠️ **进阶预告**：`dataclass` 是 Python 3.7+ 的语法糖，可以自动生成 `__init__`、`__repr__` 等方法。配合 `slots=True` 可获得 `__slots__` 的内存优化效果。详见 **Stage 2** 课程。
 
 ---
 
@@ -668,9 +658,123 @@ def __setattr__(self, name: str, value: str) -> None:
 
 ---
 
+
+
+## 💭 课堂思考
+
+### 思考 1: __str__ vs __repr__ 的区别
+
+**问题**：为什么需要两个方法来表示对象？只用 __str__ 不够吗？
+
+**引导思考**：
+- 开发调试 vs 用户展示
+- 交互式环境中的显示
+- 调试信息的完整性
+
+**实验**：
+```python
+class User:
+    def __init__(self, name):
+        self.name = name
+    
+    def __str__(self):
+        return self.name
+    
+    def __repr__(self):
+        return f"User(name={self.name!r})"
+
+u = User("Alice")
+print(f"str: {str(u)}")
+print(f"repr: {repr(u)}")
+```
+
+---
+
+### 思考 2: 运算符重载的边界
+
+**问题**：运算符重载能让代码更简洁，但什么时候会变成"炫技"？
+
+**引导思考**：
+- 语义一致性：+ 应该表示什么？
+- 可读性：自定义运算符含义
+- Python 的禅：显式优于隐式
+
+**反例**：
+```python
+class Number:
+    def __add__(self, other):
+        # 语义不一致：+ 变成了减法！
+        return self.value - other.value
+```
+
+---
+
+### 思考 3: 为什么迭代器协议需要两个方法？
+
+**问题**：__iter__ 和 __next__ 的分工是什么？
+
+**引导思考**：
+- 一次性 vs 可重复迭代
+- 迭代器 vs 可迭代对象
+- 为什么列表可以直接用于 for 循环？
+
+**理解**：
+- `__iter__`：返回迭代器（自己或新对象）
+- `__next__`：返回下一个元素
+- 可迭代对象：有 `__iter__` 方法
+- 迭代器：同时有 `__iter__` 和 `__next__`
+
 ## 🎓 核心知识点总结
 
-### 魔术方法分类
+### 魔术方法分类（可视化）
+
+```mermaid
+flowchart TD
+    subgraph 初始化["初始化与创建"]
+        A["__new__"]
+        A1["__init__"]
+    end
+    
+    subgraph 表示["字符串表示"]
+        B["__repr__"]
+        B1["__str__"]
+    end
+    
+    subgraph 比较["比较操作"]
+        C["__eq__"]
+        C1["__lt__"]
+        C2["__hash__"]
+    end
+    
+    subgraph 算术["算术运算"]
+        D["__add__"]
+        D1["__sub__"]
+        D2["__mul__"]
+    end
+    
+    subgraph 容器["容器协议"]
+        E["__getitem__"]
+        E1["__len__"]
+        E2["__contains__"]
+    end
+    
+    subgraph 调用["可调用对象"]
+        F["__call__"]
+    end
+    
+    subgraph 属性["属性访问"]
+        G["__getattr__"]
+        G1["__setattr__"]
+    end
+    
+    style 初始化 fill:#e3f2fd,stroke:#1565c0
+    style 表示 fill:#fff8e1,stroke:#f57f17
+    style 比较 fill:#f3e5f5,stroke:#7b1fa2
+    style 算术 fill:#e8f5e9,stroke:#2e7d32
+    style 容器 fill:#fff3e0,stroke:#e65100
+    style 调用 fill:#fce4ec,stroke:#c2185b
+    style 属性 fill:#e0f7fa,stroke:#00838f
+```
 
 | 类别 | 方法 | 触发场景 |
 |------|------|---------|
@@ -812,7 +916,7 @@ class Point:
 
 ```python
 # 推荐：不可变对象 — 不提供内部修改接口
-# 详见 L09 综合项目中的 @dataclass 章节
+# ⚠️ 进阶预告：dataclass 可简化不可变对象实现（Stage 2）
 
 # ❌ 可变对象（容易产生意外修改）
 # class Vector:
@@ -917,6 +1021,21 @@ print(repr(m1 + m2))  # Money(4, 25)
 - [ ] 实现 `__call__` 使对象可调用
 - [ ] 理解 `__getattr__` 和 `__setattr__` 的使用场景
 - [ ] 避免常见陷阱（哈希一致性、反序运算符）
+
+---
+
+## 📝 进阶预告
+
+完成本课程后，你已经掌握了 Python 魔术方法的精髓。在下一课 [L09: 文件操作](../L09-file-operations/lesson.md) 中，我们将学习：
+
+- 📁 **文件读写**：open、with 语句、编码处理
+- 📂 **pathlib**：面向对象的路径操作
+- 📄 **JSON 处理**：json.loads/dumps、数据持久化
+- 📊 **CSV 处理**：csv.reader/DictReader
+- 🔒 **安全操作**：路径穿越防护、原子写入
+
+> 💡 **学习路径**：L08 → L09（文件操作）→ P01（综合项目）
+
 
 ---
 

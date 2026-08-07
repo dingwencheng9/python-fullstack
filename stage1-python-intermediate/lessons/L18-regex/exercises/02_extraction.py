@@ -1,4 +1,4 @@
-"""L16 练习 2：日期、价格和 HTML 标签提取。"""
+"""L18 练习 2：日期、价格和 HTML 标签提取。"""
 
 from __future__ import annotations
 
@@ -89,7 +89,7 @@ def extract_html_tags(text: str) -> list[str]:
 
 if __name__ == "__main__":
     print("=" * 60)
-    print("📝 L16 正则表达式练习 - 数据提取")
+    print("📝 L18 正则表达式练习 - 数据提取")
     print("=" * 60)
     assert extract_dates("会议在 2024-01-15 和 2024-01-16") == [
         "2024-01-15",

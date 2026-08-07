@@ -2,7 +2,7 @@
 
 难度: ⭐⭐☆ (中等)
 预计时间: 25 分钟
-知识点: 函数定义、递归、参数传递、异常处理
+知识点: 函数定义、递归、参数传递
 
 任务描述:
 完成以下函数实现，包括阶乘、斐波那契数列等经典算法。
@@ -10,11 +10,11 @@
 提示:
 1. 递归函数要有终止条件
 2. 注意参数验证（如负数检查）
-3. 使用 raise ValueError 抛出异常
+3. 错误时返回 None 或打印提示信息
 """
 
 
-def factorial(n: int) -> int:
+def factorial(n):
     """计算阶乘
 
     Args:
@@ -33,7 +33,7 @@ def factorial(n: int) -> int:
     return n * factorial(n - 1)
 
 
-def fibonacci(n: int) -> int:
+def fibonacci(n):
     """计算斐波那契数列第 n 项
 
     Args:
@@ -54,7 +54,7 @@ def fibonacci(n: int) -> int:
     return fibonacci(n - 1) + fibonacci(n - 2)
 
 
-def find_max(numbers: list[int]) -> int | None:
+def find_max(numbers):
     """查找列表中的最大值
 
     Args:
@@ -68,7 +68,7 @@ def find_max(numbers: list[int]) -> int | None:
     return max(numbers)
 
 
-def filter_even(numbers: list[int]) -> list[int]:
+def filter_even(numbers):
     """过滤出列表中的偶数
 
     Args:
@@ -77,14 +77,22 @@ def filter_even(numbers: list[int]) -> list[int]:
     Returns:
         只包含偶数的新列表
     """
-    return [n for n in numbers if n % 2 == 0]
+    result = []
+    for n in numbers:
+        if n % 2 == 0:
+            result.append(n)
+    return result
 
 
 if __name__ == "__main__":
     # 测试函数
     print("=== 函数练习测试 ===")
     print(f"5! = {factorial(5)}")
-    print(f"前 10 个斐波那契数: {[fibonacci(i) for i in range(10)]}")
+    # 使用循环生成斐波那契数列
+    fib_nums = []
+    for i in range(10):
+        fib_nums.append(fibonacci(i))
+    print(f"前 10 个斐波那契数: {fib_nums}")
     print(f"最大值: {find_max([3, 1, 4, 1, 5, 9, 2, 6])}")
     print(f"空列表最大值: {find_max([])}")
     print(f"过滤偶数: {filter_even([1, 2, 3, 4, 5, 6, 7, 8, 9, 10])}")

@@ -1,9 +1,9 @@
-# examples/ - L12 示例代码
+# examples/ - L13 示例代码
 
 这些示例用于演示闭包、装饰器和上下文管理器的典型用法。每个文件都可独立运行。
 
 ```bash
-cd stage1-python-intermediate/lessons/L12-advanced-features
+cd stage1-python-intermediate/lessons/L13-advanced-features
 python examples/01_closures_decorators.py
 ```
 

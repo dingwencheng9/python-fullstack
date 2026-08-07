@@ -3,11 +3,21 @@
 练习使用 traceback 模块分析异常信息。
 """
 
+import traceback
+
 
 def save_error_log(error_message, traceback_str):
-    """将错误信息保存到日志文件"""
-    # TODO: 实现这个函数，将错误信息追加到 error.log
-    pass
+    """将错误信息保存到日志文件
+
+    Args:
+        error_message: 错误消息（不含 traceback）
+        traceback_str: 完整的 traceback 字符串
+    """
+    with open("error.log", "a", encoding="utf-8") as f:
+        f.write(f"错误: {error_message}\n")
+        f.write("-" * 50 + "\n")
+        f.write(traceback_str)
+        f.write("=" * 50 + "\n\n")
 
 
 def analyze_error():
@@ -17,12 +27,21 @@ def analyze_error():
 
     # 这段代码会抛出异常，请分析 traceback
     data = {"name": "Alice", "age": 30}
+
+    # 尝试访问不存在的键
+    # 使用异常处理捕获异常，并使用 traceback 分析
     try:
-        # 尝试访问不存在的键
-        _ = data["city"]
+        result = data["city"]
     except KeyError as e:
-        print(f"捕获到 KeyError: {e}")
-        # TODO: 使用 traceback 模块打印完整的调用栈
+        error_msg = f"KeyError: {e}"
+        # 使用 traceback.format_exc() 获取完整的 traceback 字符串
+        tb_str = traceback.format_exc()
+        print(f"\n捕获到异常: {error_msg}")
+        print("\nTraceback 详情:")
+        print(tb_str)
+        # 将错误信息保存到日志
+        save_error_log(error_msg, tb_str)
+        print("错误信息已保存到 error.log")
 
 
 def process_user_data(raw_data):
@@ -30,12 +49,11 @@ def process_user_data(raw_data):
     # 模拟处理逻辑
     required_fields = ["name", "email"]
 
-    # TODO: 检查必要字段是否存在
+    # 检查必要字段是否存在
     # 如果缺失，抛出有意义的异常
     for field in required_fields:
         if field not in raw_data:
-            # 抛出异常，让调用者知道缺少哪个字段
-            pass
+            raise KeyError(f"缺少必要字段: {field}")
 
 
 if __name__ == "__main__":
@@ -50,14 +68,8 @@ if __name__ == "__main__":
     user1 = {"name": "Bob", "email": "bob@example.com", "city": "Beijing"}
     user2 = {"name": "Carol"}  # 缺少 email
 
-    try:
-        process_user_data(user1)
-        print("user1 处理成功")
-    except Exception as e:
-        print(f"user1 处理失败: {e}")
+    process_user_data(user1)
+    print("user1 处理成功")
 
-    try:
-        process_user_data(user2)
-        print("user2 处理成功")
-    except Exception as e:
-        print(f"user2 处理失败: {e}")
+    process_user_data(user2)
+    print("user2 处理成功")

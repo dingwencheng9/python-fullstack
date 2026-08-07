@@ -1,9 +1,9 @@
-# exercises/ - L14 练习题
+# exercises/ - L16 练习题
 
 本目录包含 `asyncio` 协程基础练习。每个练习文件都可直接运行，并通过内置断言完成基础自检。
 
 ```bash
-cd stage1-python-intermediate/lessons/L14-concurrency-intro
+cd stage1-python-intermediate/lessons/L16-concurrency-intro
 python exercises/01_async_basics.py
 ```
 

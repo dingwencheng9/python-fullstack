@@ -20,7 +20,9 @@ def squares(n: int):
 def chain(*iterables):
     """链式迭代多个可迭代对象。"""
     for iterable in iterables:
-        yield from iterable
+        # L12 预告: yield from 可以简化此循环
+        for item in iterable:
+            yield item
 
 
 def chunked(iterable, size: int):
@@ -43,7 +45,10 @@ def flatten(nested: list) -> list:
     def _flatten(items):
         for item in items:
             if isinstance(item, list):
-                yield from _flatten(item)
+                # L12 预告: yield from 可以简化递归扁平化
+                # 当前使用显式嵌套循环
+                for sub_item in _flatten(item):
+                    yield sub_item
             else:
                 yield item
 

@@ -1,4 +1,4 @@
-"""L15: 函数式编程 - 柯里化"""
+"""L17: 函数式编程 - 柯里化"""
 
 from functools import wraps
 
