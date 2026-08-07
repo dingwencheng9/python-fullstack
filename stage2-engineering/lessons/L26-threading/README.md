@@ -175,4 +175,4 @@ python -m pytest stage2-engineering/lessons/L26-threading/tests/ -o addopts="" -
 
 ## 🔗 下一步
 
-[L27: 工程化综合项目](../L27-engineering-project/README.md)
+[P03: 工程化综合项目](../P03-engineering-project/README.md)

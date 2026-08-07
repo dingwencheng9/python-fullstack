@@ -12,6 +12,34 @@
 
 ## 📚 前置知识
 
+```mermaid
+flowchart TB
+    subgraph Setup["测试设置"]
+        A[创建测试文件] --> B[定义测试函数]
+        B --> C[使用 assert]
+    end
+    
+    subgraph Fixtures["Fixture 生命周期"]
+        D[setup] --> E[运行测试]
+        E --> F[teardown]
+        F --> G{更多测试?}
+        G -->|是| D
+        G -->|否| H[结束]
+    end
+    
+    subgraph Patterns["测试模式"]
+        I[单元测试] --> J[集成测试]
+        J --> K[E2E 测试]
+    end
+    
+    C --> D
+    F --> I
+    
+    style Setup fill:#e3f2fd
+    style Fixtures fill:#c8e6c9
+    style Patterns fill:#fff3e0
+```
+
 **学习本课程前，你应该掌握：**
 
 - **L06**: 函数
@@ -41,7 +69,40 @@
 
 ## 第一章：为什么需要测试
 
-### 1.1 没有测试的后果
+#
+
+### 测试模式对比
+
+#### 方式 1: 传统 assert
+
+```python
+def test_add():
+    result = add(2, 3)
+    assert result == 5
+```
+
+#### 方式 2: pytest assert 改进
+
+```python
+def test_add():
+    # pytest 自动显示表达式
+    assert add(2, 3) == 5
+    # 失败时显示: AssertionError: assert 6 == 5
+```
+
+#### 方式 3: 参数化测试
+
+```python
+@pytest.mark.parametrize("a,b,expected", [
+    (1, 2, 3),
+    (0, 0, 0),
+    (-1, 1, 0),
+])
+def test_add_parametrized(a, b, expected):
+    assert add(a, b) == expected
+```
+
+## 1.1 没有测试的后果
 
 ```python
 # 改了一个函数，不知道会影响哪里
@@ -872,6 +933,16 @@ jobs:
 - **项目应用**：在实际项目中配置完整的测试与 CI/CD 流程
 
 ---
+
+
+### 学习检查清单
+
+完成本课程后，确认你已经：
+
+- [ ] 理解了本课程的核心概念
+- [ ] 掌握了主要工具和API的使用
+- [ ] 能够独立完成课程练习
+- [ ] 可选：通过本课测试 `uv run pytest tests -q`
 
 ## 🔗 下一步
 

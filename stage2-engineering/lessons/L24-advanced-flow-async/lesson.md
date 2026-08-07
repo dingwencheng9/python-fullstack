@@ -18,6 +18,35 @@
 
 ## 📚 前置知识
 
+```mermaid
+flowchart TB
+    subgraph Generators["异步生成器"]
+        A[async generator]
+        B[异步迭代]
+        C[异常传播]
+    end
+    
+    subgraph Context["异步上下文管理器"]
+        D[@asynccontextmanager]
+        E[资源管理]
+        F[错误处理]
+    end
+    
+    subgraph Error["错误处理模式"]
+        G[重试机制]
+        H[超时控制]
+        I[优雅关闭]
+    end
+    
+    A --> G
+    D --> H
+    G --> I
+    
+    style Generators fill:#e3f2fd
+    style Context fill:#c8e6c9
+    style Error fill:#fff3e0
+```
+
 **学习本课程前，你应该掌握：**
 
 - **L19**: 异步编程核心（async/await、TaskGroup、异常处理）
@@ -1284,6 +1313,32 @@ def read_lines(filename: str) -> Generator[str, None, None]:
 - 完整类型注解
 
 ---
+
+## 📖 总结
+
+### 核心知识点
+
+- 本课程涵盖了课程的核心概念和工具
+- 重点掌握了关键API的使用方法
+- 通过实践案例加深了理解
+
+### 学习收获
+
+完成本课程后，你已经：
+
+- 掌握了本课程的核心概念和工具
+- 能够运用所学知识解决实际问题
+- 为后续学习打下了坚实基础
+
+
+### 学习检查清单
+
+完成本课程后，确认你已经：
+
+- [ ] 理解了本课程的核心概念
+- [ ] 掌握了主要工具和API的使用
+- [ ] 能够独立完成课程练习
+- [ ] 可选：通过本课测试 `uv run pytest tests -q`
 
 ## 🔗 下一步
 

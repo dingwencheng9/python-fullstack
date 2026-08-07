@@ -13,6 +13,35 @@
 
 ## 📚 前置知识
 
+```mermaid
+flowchart TB
+    subgraph Python313["Python 3.13 特性"]
+        A[改进 REPL]
+        B[并行 GC]
+        C[类型标注改进]
+    end
+    
+    subgraph Python314["Python 3.14 特性"]
+        D[PEP 649 延迟注解]
+        E[PEP 750 t-string]
+        F[PEP 779 free-threading 官方支持]
+    end
+    
+    subgraph Impact["影响"]
+        G[性能提升]
+        H[开发体验]
+        I[并发能力]
+    end
+    
+    A --> G
+    D --> H
+    F --> I
+    
+    style Python313 fill:#e3f2fd
+    style Python314 fill:#c8e6c9
+    style Impact fill:#fff3e0
+```
+
 **学习本课程前，你应该掌握：**
 
 - **L04**: 函数与模块
@@ -939,6 +968,32 @@ output = safe_html(t"<div>评论：{user_comment}</div>")
 - [Python Official Release](https://www.python.org/downloads/release/python-3134/)
 
 ---
+
+## 📖 总结
+
+### 核心知识点
+
+- 本课程涵盖了课程的核心概念和工具
+- 重点掌握了关键API的使用方法
+- 通过实践案例加深了理解
+
+### 学习收获
+
+完成本课程后，你已经：
+
+- 掌握了本课程的核心概念和工具
+- 能够运用所学知识解决实际问题
+- 为后续学习打下了坚实基础
+
+
+### 学习检查清单
+
+完成本课程后，确认你已经：
+
+- [ ] 理解了本课程的核心概念
+- [ ] 掌握了主要工具和API的使用
+- [ ] 能够独立完成课程练习
+- [ ] 可选：通过本课测试 `uv run pytest tests -q`
 
 ## 🔗 下一步
 

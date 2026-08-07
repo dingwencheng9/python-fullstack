@@ -12,6 +12,35 @@
 
 ## 📚 前置知识
 
+```mermaid
+flowchart TB
+    subgraph Memory["内存优化"]
+        A[__slots__]
+        B[__init_subclass__]
+        C[弱引用]
+    end
+    
+    subgraph Speed["速度优化"]
+        D[局部变量缓存]
+        E[内联函数]
+        F[算法复杂度]
+    end
+    
+    subgraph Tools["性能工具"]
+        G[scalene]
+        H[memray]
+        I[cProfile]
+    end
+    
+    A --> G
+    D --> H
+    F --> I
+    
+    style Memory fill:#e3f2fd
+    style Speed fill:#c8e6c9
+    style Tools fill:#fff3e0
+```
+
 **学习本课程前，你应该掌握：**
 
 - **L20**: 装饰器深度剖析
@@ -675,6 +704,38 @@ python examples/03_high_performance_abstraction.py
 
 ---
 
-## 🔗 下一步
+## 📖 总结
 
-[L24: 线程与并发](../L24-threading/README.md)
+### 核心知识点
+
+本课程破除了 Python 性能的两大伪常识，展示了现代 Python 3.13+/3.14 的算力真相：
+
+| 模块 | 核心知识 | 关键工具 |
+|------|----------|----------|
+| **算力革命** | Free-threading (PEP 703/779) 释放多核并行 | `python3.13t`/`python3.14t` |
+| **内存剖析** | __slots__ 减少 40%+ 内存占用 | `memray`, `scalene` |
+| **序列化优化** | Pydantic V2 with `model_config` 提速 50%+ | `ConfigDict` |
+| **元编程** | `__init_subclass__` 自动注册模式 | 弱引用 `weakref` |
+| **伪常识纠正** | GIL 不再是 CPU 密集型任务的绝对障碍 | multiprocessing 补充 |
+
+### 关键要点
+
+1. **Free-threading 是历史性突破** — Python 3.14 官方支持，多线程真正并行
+2. **__slots__ 显著降低内存** — 数据类场景可减少 40%+ 内存占用
+3. **Pydantic V2 序列化优化** — 使用 `model_config = ConfigDict(ser_json_bytes="utf-8")`
+4. **性能测量优先于优化** — 先用 memray/scalene 定位瓶颈，避免过早优化
+5. **GIL 仍有价值** — I/O 密集型、状态共享场景仍适合 threading
+
+### 学习收获
+
+完成本课程后，你已经：
+
+- ✅ 掌握了 Free-threading 的原理和启用方式
+- ✅ 能够使用 __slots__ 和弱引用优化内存
+- ✅ 理解 Pydantic V2 序列化优化技巧
+- ✅ 破除了"Python 慢"的性能伪常识
+- ✅ 为构建高性能 Python 应用奠定基础
+
+### 🔗 下一步
+
+[L26: 线程与并发](../L26-threading/README.md)

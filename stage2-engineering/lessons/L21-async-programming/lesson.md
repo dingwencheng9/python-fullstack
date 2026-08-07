@@ -29,6 +29,67 @@ asyncio.run(main())
 
 ---
 
+
+```mermaid
+flowchart TB
+    subgraph Core["asyncio 核心概念"]
+        A[Event Loop] --> B[Coroutine]
+        B --> C[Task]
+        C --> D[Future]
+    end
+    
+    subgraph Primitives["并发原语"]
+        E[Queue] --> F[生产者/消费者]
+        G[Event] --> H[事件通知]
+        I[Lock] --> J[互斥访问]
+        K[Condition] --> L[条件等待]
+    end
+    
+    subgraph Advanced["高级特性"]
+        M[TaskGroup] --> N[结构化并发]
+        O[Semaphore] --> P[并发限制]
+        Q[timeout] --> R[超时控制]
+    end
+    
+    style Core fill:#e3f2fd
+    style Primitives fill:#c8e6c9
+    style Advanced fill:#fff3e0
+```
+
+
+
+### 1.4 为什么需要 asyncio.Lock
+
+**问题场景**: 在多协程环境中，多个协程可能同时访问共享资源。
+
+**为什么需要锁**: 如果没有锁，两个协程可能同时修改同一个变量，导致数据竞争。
+
+```python
+# 没有锁的问题
+counter = 0
+async def increment():
+    global counter
+    temp = counter  # 读取
+    await asyncio.sleep(0)  # 让出控制
+    counter = temp + 1  # 写入
+    # 可能两个协程都读到 0，都写入 1
+
+# 使用锁的解决方案
+lock = asyncio.Lock()
+async def safe_increment():
+    global counter
+    async with lock:
+        temp = counter
+        await asyncio.sleep(0)
+        counter = temp + 1
+    # 锁保证同时只有一个协程在修改
+```
+
+**什么时候用锁**:
+- 修改共享变量时
+- 访问外部资源时（如文件、网络）
+- 需要保证原子性的操作时
+
 ## 模块 1: 同步原语进阶 (1.5h)
 
 ### 1.1 asyncio.Queue — 生产者/消费者模式
@@ -777,6 +838,87 @@ asyncio.run(main())
 | 超时管理 | `asyncio.timeout` / `timeout_at` |
 
 ---
+
+
+### 学习检查清单
+
+完成本课程后，确认你已经：
+
+- [ ] 理解了本课程的核心概念
+- [ ] 掌握了主要工具和API的使用
+- [ ] 能够独立完成课程练习
+- [ ] 可选：通过本课测试 `uv run pytest tests -q`
+
+
+
+### ⚠️ 常见陷阱
+
+#### 陷阱 1: 在锁外执行异步操作
+
+```python
+# ❌ 错误：在锁内执行耗时操作，导致其他协程长时间等待
+async with lock:
+    await fetch_data()  # 阻塞整个锁
+    await process_data()  # 继续阻塞
+
+# ✅ 正确：只锁住关键区域
+data = await fetch_data()  # 在锁外获取数据
+await process_data()
+async with lock:
+    shared_result = data  # 只在锁内更新共享状态
+```
+
+#### 陷阱 2: 忘记释放锁
+
+```python
+# ❌ 错误：异常导致锁永远不释放
+lock = asyncio.Lock()
+await lock.acquire()
+try:
+    await risky_operation()  # 如果这里抛异常，锁永远不会释放
+finally:
+    pass  # 忘记释放！
+
+# ✅ 正确：使用 async with 自动管理
+async with lock:
+    await risky_operation()  # 自动释放锁
+```
+
+
+
+---
+
+## 📖 课程总结
+
+### 核心知识点
+
+本课程深入学习了 asyncio 的高级同步原语：
+
+| 原语 | 用途 | 关键方法 |
+|------|------|----------|
+| `asyncio.Queue` | 生产者/消费者模式 | `put()`, `get()`, `task_done()`, `join()` |
+| `asyncio.Event` | 一次性事件通知 | `set()`, `wait()`, `is_set()` |
+| `asyncio.Condition` | 条件等待 | `wait()`, `notify()`, `notify_all()` |
+| `asyncio.Lock` | 互斥访问 | `acquire()`, `release()`, `async with` |
+| `asyncio.Semaphore` | 并发数量限制 | `acquire()`, `release()` |
+
+### 关键要点
+
+1. **Queue 是最常用的** - 适合大多数协程间通信场景
+2. **Event 用于一次性信号** - 一旦 set，不能 reset
+3. **Condition 适合复杂等待** - 等待特定条件满足
+4. **Lock 要简短持有** - 只锁关键区域，避免长时间阻塞
+5. **Semaphore 限制并发** - 控制资源访问数量
+
+### 学习收获
+
+完成本课程后，你已经：
+
+- ✅ 掌握了 asyncio 的高级同步原语
+- ✅ 能够构建复杂的异步通信模式
+- ✅ 理解了常见陷阱并能避免
+- ✅ 为构建生产级异步应用打下基础
+
 
 ## 下一步
 

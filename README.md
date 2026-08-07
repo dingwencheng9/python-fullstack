@@ -90,9 +90,9 @@
 | Stage | 名称 | 课程范围 | 课程数 | 状态 |
 |-------|------|----------|--------|------|
 | 0 | Python 基础 | L01-L09, P01 | 10 | ✅ 完整 |
-| 1 | Python 进阶 | L10-L18 | 9 | ✅ 完整 |
-| 2 | 现代工程 | L19-L27 | 9 | ✅ 完整 |
-| 3 | Web 开发基础 | L26-L35 | 10 | ✅ 完整 |
+| 1 | Python 进阶 | L10-L18, P02 | 10 | ✅ 完整 |
+| 2 | 现代工程 | L19-L26, P03 | 9 | ✅ 完整 |
+| 3 | Web 开发基础 | L27-L35, P04 | 10 | ✅ 完整 |
 | 4 | Web 开发进阶 | L36-L46 | 11 | ✅ 完整 |
 | 5 | 数据工程 | L47-L53 | 7 | ✅ 完整 |
 | 6 | AI Agent 开发 | L54-L65 | 12 | ✅ 完整 |
@@ -202,7 +202,7 @@ uv run pytest tests/ -v
 | L17 | 函数式编程 | map/filter/reduce、lambda |
 | L18 | 正则表达式 | re 模块、模式匹配 |
 
-### Stage 2: 现代工程（L19-L27）
+### Stage 2: 现代工程（L19-L26, P03）
 
 工程化内功与异步核心。
 
@@ -216,24 +216,24 @@ uv run pytest tests/ -v
 | L24 | 高阶流控与异步协同 | 信号量、事件、条件 |
 | L25 | 极限抽象与性能优化 | __slots__、猴子补丁 |
 | L26 | 线程与并发 | Thread、Lock、Queue |
-| L27 | 工程化综合项目 | 测试 + CI/CD |
+| P03 | 工程化综合项目（收官） | 测试 + CI/CD |
 
-### Stage 3: Web 开发基础（L26-L35）
+### Stage 3: Web 开发基础（L27-L35, P04）
 
 HTTP + FastAPI + 数据库，构建 CRUD 应用。
 
 | 编号 | 课程标题 | 核心内容 |
 |------|----------|----------|
-| L26 | HTTP 协议与抓包 | 请求/响应、状态码、Headers |
-| L27 | FastAPI 可观测性 *(+GraphQL扩展)* | OpenAPI、Pydantic、日志、契约驱动 |
-| L28 | 数据库基础与 SQL | SELECT、INSERT、JOIN |
-| L29 | 异步数据持久化 *(+MongoDB扩展)* | asyncpg、事务、连接池、Motor NoSQL |
-| L30 | SQL 进阶 | 索引、查询优化、子查询 |
-| L31 | Docker 容器化 | 镜像构建、网络、卷 |
-| L32 | SSE 服务器推送 | Server-Sent Events |
-| L33 | WebSocket 实时通信 | 双向通信、心跳 |
-| L34 | HTMX + FastAPI | 渐进增强、无刷新交互 |
-| L35 | Web 基础综合项目 | CRUD + 认证 |
+| L27 | HTTP 协议与抓包 | 请求/响应、状态码、Headers |
+| L28 | FastAPI 可观测性 *(+GraphQL扩展)* | OpenAPI、Pydantic、日志、契约驱动 |
+| L29 | 数据库基础与 SQL | SELECT、INSERT、JOIN |
+| L30 | 异步数据持久化 *(+MongoDB扩展)* | asyncpg、事务、连接池、Motor NoSQL |
+| L31 | SQL 进阶 | 索引、查询优化、子查询 |
+| L32 | Docker 容器化 | 镜像构建、网络、卷 |
+| L33 | SSE 服务器推送 | Server-Sent Events |
+| L34 | WebSocket 实时通信 | 双向通信、心跳 |
+| L35 | HTMX + FastAPI | 渐进增强、无刷新交互 |
+| P04 | Web 基础综合项目（收官） | CRUD + 认证 |
 
 ### Stage 4: Web 开发进阶（L36-L46）
 

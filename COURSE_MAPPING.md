@@ -105,7 +105,7 @@
 
 ---
 
-## ⚙️ Stage 2: 现代工程（L19-L27）
+## ⚙️ Stage 2: 现代工程（L19-L26, P03）
 
 **定位**: 工程化内功与异步核心，Pytest + 工具链 + 异步
 
@@ -119,32 +119,32 @@
 | L24 | `L24-advanced-flow-async` | 高阶流控与异步协同 | 2 | 5 | 5 |
 | L25 | `L25-extreme-abstraction-performance` | 极限抽象与性能优化 | 2 | 4 | 7 |
 | L26 | `L26-threading` | 线程与并发 | 3 | 5 | 3 |
-| L27 | `L27-engineering-project` | 工程化综合项目 | 2 | 3 | 7 |
+| **P03** | `P03-engineering-project` | 工程化综合项目（收官项目） | 2 | 3 | 7 |
 
 **前置要求**: Stage 1 完成
-**建议学时**: 50 小时
+**建议学时**: 55 小时（含收官项目）
 
 ---
 
-## 🌐 Stage 3: Web 开发基础（L26-L35）
+## 🌐 Stage 3: Web 开发基础（L27-L35, P04）
 
 **定位**: HTTP + FastAPI + 数据库，构建 CRUD 应用
 
 | 编号 | 目录名 | 课程标题 | 练习 | 答案 | 测试 |
 |------|--------|----------|------|------|------|
-| L26 | `L26-http` | HTTP 协议与抓包基础 | 3 | 5 | 3 |
-| L27 | `L27-fastapi-basics` | FastAPI 可观测性与契约驱动 | 2 | 6 | 3 |
-| L28 | `L28-sql-basics` | 数据库基础与 SQL 入门 | 1 | 3 | 3 |
-| L29 | `L29-database-engineering` | 异步数据持久化与事务原子性 | 2 | 5 | 4 |
-| L30 | `L30-sql-advanced` | SQL 进阶 - 高级特性与性能优化 | 1 | 3 | 3 |
-| L31 | `L31-docker` | Docker 容器化基础 | 2 | 4 | 3 |
-| L32 | `L32-sse` | SSE 服务器推送事件 | 3 | 5 | 4 |
-| L33 | `L33-websocket` | WebSocket 实时通信 | 2 | 4 | 3 |
-| L34 | `L34-htmx` | HTMX + FastAPI 全栈开发 | 1 | 3 | 3 |
-| L35 | `L35-web-project` | Web 基础综合项目 | 3 | 5 | 3 |
+| L27 | `L27-http` | HTTP 协议与抓包基础 | 3 | 5 | 3 |
+| L28 | `L28-fastapi-basics` | FastAPI 可观测性与契约驱动 | 2 | 6 | 3 |
+| L29 | `L29-sql-basics` | 数据库基础与 SQL 入门 | 1 | 3 | 3 |
+| L30 | `L30-database-engineering` | 异步数据持久化与事务原子性 | 2 | 5 | 4 |
+| L31 | `L31-sql-advanced` | SQL 进阶 - 高级特性与性能优化 | 1 | 3 | 3 |
+| L32 | `L32-docker` | Docker 容器化基础 | 2 | 4 | 3 |
+| L33 | `L33-sse` | SSE 服务器推送事件 | 3 | 5 | 4 |
+| L34 | `L34-websocket` | WebSocket 实时通信 | 2 | 4 | 3 |
+| L35 | `L35-htmx` | HTMX + FastAPI 全栈开发 | 1 | 3 | 3 |
+| **P04** | `P04-web-project` | Web 基础综合项目（收官项目） | 3 | 5 | 3 |
 
 **前置要求**: Stage 2 完成
-**建议学时**: 45 小时
+**建议学时**: 50 小时（含收官项目）
 
 ---
 

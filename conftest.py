@@ -73,7 +73,7 @@ def _discover_lessons() -> dict[Path, tuple[Path, Literal["solutions"] | Literal
         if not lessons_dir.is_dir():
             continue
         for lesson_dir in sorted(lessons_dir.iterdir()):
-            if not lesson_dir.is_dir() or not lesson_dir.name.startswith("L"):
+            if not lesson_dir.is_dir() or not (lesson_dir.name.startswith("L") or lesson_dir.name.startswith("P")):
                 continue
             tests_dir = lesson_dir / "tests"
             solutions_dir = lesson_dir / "solutions"
@@ -103,7 +103,7 @@ def _get_lesson_dir(file_path: str) -> Path | None:
         if tests_index < 2:
             return None
         lesson_dir = Path(*parts[:tests_index])
-        if lesson_dir.name.startswith("L"):
+        if lesson_dir.name.startswith("L") or lesson_dir.name.startswith("P"):
             return lesson_dir.resolve()
         return None
     except Exception:

@@ -18,6 +18,32 @@
 
 ## 📚 前置知识
 
+```mermaid
+flowchart LR
+    subgraph Dev["开发阶段"]
+        A[编写代码] --> B[git commit]
+        B --> C[pre-commit hooks]
+    end
+    
+    subgraph Check["检查阶段"]
+        C --> D[ruff lint]
+        D --> E[mypy type check]
+        E --> F[pytest tests]
+    end
+    
+    subgraph CI["CI/CD"]
+        F --> G[GitHub Actions]
+        G --> H{通过?}
+        H -->|是| I[合并 main]
+        H -->|否| J[修复问题]
+        J --> B
+    end
+    
+    style Dev fill:#e3f2fd
+    style Check fill:#c8e6c9
+    style CI fill:#fff3e0
+```
+
 **学习本课程前，你应该掌握：**
 
 - **L07**: 模块与包
@@ -27,6 +53,34 @@
 **如果你还没有学习以上课程，建议先完成前置课程。**
 
 ---
+
+
+
+### 为什么需要 uv
+
+**传统方式的问题**:
+```bash
+# 慢：每次创建新环境
+python -m venv .venv
+source .venv/bin/activate
+pip install pytest ruff mypy
+
+# 乱：多个 Python 版本
+/usr/bin/python3.11
+/usr/local/bin/python3.12
+~/.pyenv/versions/3.13
+```
+
+**uv 的优势**:
+```bash
+# 快：比 pip 快 10-100 倍
+uv sync
+
+# 统一：一个工具管理所有
+uv run pytest
+uv add httpx
+uv tool install ruff
+```
 
 ## 📚 课程内容
 
@@ -781,6 +835,67 @@ uv add --dev pytest ruff mypy
 > 📚 **GitHub Actions 完整配置**：参见 [L19 Pytest完整实战](../L19-pytest-complete/lesson.md) 第二部分（CI/CD 自动化集成）
 
 ---
+
+
+
+### 补充代码示例
+
+#### ruff 配置示例
+
+```python
+# pyproject.toml
+[tool.ruff]
+line-length = 100
+target-version = "py313"
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "I", "N", "UP", "ASYNC"]
+ignore = ["E501"]
+
+[tool.ruff.lint.isort]
+known-first-party = ["src"]
+```
+
+#### mypy 配置示例
+
+```python
+# pyproject.toml
+[tool.mypy]
+python_version = "3.13"
+strict = true
+warn_return_any = true
+```
+
+#### pre-commit 配置示例
+
+```yaml
+# .pre-commit-config.yaml
+repos:
+  - repo: https://github.com/astral-sh/ruff-pre-commit
+    hooks:
+      - id: ruff
+      - id: ruff-format
+  - repo: https://github.com/pre-commit/mirrors-mypy
+    hooks:
+      - id: mypy
+```
+
+
+## 📖 总结
+
+### 核心知识点
+
+- 本课程涵盖了课程的核心概念和工具
+- 重点掌握了关键API的使用方法
+- 通过实践案例加深了理解
+
+### 学习收获
+
+完成本课程后，你已经：
+
+- 掌握了本课程的核心概念和工具
+- 能够运用所学知识解决实际问题
+- 为后续学习打下了坚实基础
 
 ## 🔗 下一步
 

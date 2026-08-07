@@ -12,6 +12,36 @@
 
 ## 📚 前置知识
 
+```mermaid
+flowchart TB
+    A[原始函数] --> B[装饰器函数]
+    B --> C[返回包装函数]
+    C --> D[增强后的函数]
+    
+    subgraph Levels["装饰器层次"]
+        E[基础装饰器<br/>一层嵌套]
+        F[带参装饰器<br/>两层嵌套]
+        G[装饰器工厂<br/>三层嵌套]
+    end
+    
+    subgraph Types["装饰器类型"]
+        H[函数装饰器]
+        I[类装饰器]
+        J[@property]
+    end
+    
+    C --> E
+    C --> F
+    C --> G
+    E --> H
+    F --> H
+    G --> I
+    G --> J
+    
+    style Levels fill:#e3f2fd
+    style Types fill:#c8e6c9
+```
+
 **学习本课程前，你应该掌握：**
 
 - **L13 Python 高级特性（入门）** - 闭包、装饰器基础、上下文管理器

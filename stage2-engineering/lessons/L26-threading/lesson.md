@@ -12,6 +12,36 @@
 
 ## 📚 前置知识
 
+```mermaid
+flowchart TB
+    subgraph Primitives["线程原语"]
+        A[Thread]
+        B[Lock]
+        C[RLock]
+        D[Semaphore]
+    end
+    
+    subgraph Problems["线程问题"]
+        E[竞态条件]
+        F[死锁]
+        G[GIL 限制]
+    end
+    
+    subgraph Solutions["解决方案"]
+        H[使用 Queue]
+        I[顺序获取锁]
+        J[free-threading]
+    end
+    
+    E --> H
+    F --> I
+    G --> J
+    
+    style Primitives fill:#e3f2fd
+    style Problems fill:#fff3e0
+    style Solutions fill:#c8e6c9
+```
+
 **学习本课程前，你应该掌握：**
 
 - L19-L23: 异步编程、装饰器、Python 3.13、性能优化
@@ -29,6 +59,18 @@
 > **前置要求**: 函数、类、异常、上下文管理器、pytest 基础。
 
 ---
+
+
+
+### 为什么需要线程
+
+**CPU 密集型 vs IO 密集型**:
+
+- **CPU 密集型**: 大量计算（加密、压缩、图像处理）
+  - 多进程更合适（绕过 GIL）
+  
+- **IO 密集型**: 等待网络、文件、数据库
+  - 多线程/异步更合适（IO 时让出 GIL）
 
 ## 第三章：线程基础
 
@@ -638,6 +680,32 @@ python -m pytest stage2-engineering/lessons/L24-threading/tests/ -o addopts="" -
 这份清单并不要求每个教学示例都做到生产级，但它能帮助你把课堂代码迁移到真实项目时少踩坑。
 
 ---
+
+## 📖 总结
+
+### 核心知识点
+
+- 本课程涵盖了课程的核心概念和工具
+- 重点掌握了关键API的使用方法
+- 通过实践案例加深了理解
+
+### 学习收获
+
+完成本课程后，你已经：
+
+- 掌握了本课程的核心概念和工具
+- 能够运用所学知识解决实际问题
+- 为后续学习打下了坚实基础
+
+
+### 学习检查清单
+
+完成本课程后，确认你已经：
+
+- [ ] 理解了本课程的核心概念
+- [ ] 掌握了主要工具和API的使用
+- [ ] 能够独立完成课程练习
+- [ ] 可选：通过本课测试 `uv run pytest tests -q`
 
 ## 🔗 下一步
 
