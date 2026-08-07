@@ -1,30 +1,54 @@
-# L49:  DuckDB — 嵌入式数据分析引擎
+# L49: DuckDB — 嵌入式数据分析引擎
 
-> **课程时长**: 2-3 小时
-> **难度**: ⭐⭐⭐⭐☆（数据工程）
-> **所属阶段**: Stage 5 - 数据工程  
 > **课程编号**: L49
 > **所属阶段**: Stage 5 - 数据工程
 > **预计时长**: 2-3 小时
-> **难度**: ⭐⭐⭐⭐☆（数据工程）
-> **前置课程**: L49
+> **难度**: ⭐⭐⭐☆☆（中级）
+> **前置课程**: L47, L48
 > **版本**: v1.0
 > **最后更新**: 2026-07-23
 > **核心版本**: Python 3.13
 
+---
 
-## 📚 前置知识
+```mermaid
+flowchart TB
+    subgraph Why["为什么需要 DuckDB"]
+        A[Pandas 痛点] --> D[内存上限]
+        A --> E[单线程]
+        A --> F[数据搬运成本]
+        B[传统流程] --> G[CSV → Pandas → 分析]
+    end
 
-**学习本课程前，你应该掌握：**
+    subgraph Solution["DuckDB 解决方案"]
+        C[DuckDB] --> H[列式存储]
+        C --> I[向量化执行]
+        C --> J[直接查询文件]
+        H --> K[零拷贝读取 Parquet]
+        I --> L[SIMD 加速]
+    end
 
-- **L48**: Pandas 完整实战
-- **L49**: 数据可视化
+    subgraph UseCases["适用场景"]
+        M[OLAP 分析<br/>联机分析处理] --> N[数 GB-TB 数据]
+        O[嵌入式分析<br/>无需服务器] --> P[本地 Python 集成]
+        Q[数据湖查询<br/>S3/本地文件] --> R[Parquet/CSV/JSON]
+    end
 
-**如果你还没有学习以上课程，建议先完成前置课程。**
+    subgraph Compare["对比其他数据库"]
+        S[PostgreSQL<br/>OLTP 事务] --> T[不适合分析]
+        U[Snowflake<br/>云数据仓库] --> V[需要云服务]
+        W[DuckDB<br/>嵌入式 OLAP] --> X[本地最优]
+    end
+
+    style Why fill:#ffcdd2
+    style Solution fill:#c8e6c9
+    style UseCases fill:#e3f2fd
+    style Compare fill:#fff3e0
+```
 
 ---
 
-> 前置课程: L49 Pandas 完整实战 / L49 数据可视化 | 预计时长: 6h | 难度: ⭐⭐⭐
+## 📚 前置知识
 
 DuckDB 是一个嵌入式 OLAP 数据库，专为数据分析场景设计。它不需要单独的服务器进程，可以直接在 Python 进程中运行。
 
@@ -1105,6 +1129,32 @@ print(result_polars)
 **练习答案**: 参见 `solutions/` 目录
 
 **下一课**: [L49 数据可视化](../L48-visualization/lesson.md)
+
+
+
+
+---
+
+## 📝 本章总结
+
+### 核心知识点
+
+| 模块 | 核心内容 | 关键实现 |
+|------|----------|----------|
+| **本课程** | DuckDB 嵌入式分析 | 详细讲解 |
+
+### 关键要点
+
+1. 理解本课程的核心概念
+2. 掌握主要工具和 API 的使用
+3. 能够独立完成课程练习
+
+### 学习收获
+
+完成本课程后，你已经：
+- ✅ 掌握了本课程的核心概念
+- ✅ 能够运用所学知识解决实际问题
+- ✅ 为后续学习打下坚实基础
 
 
 ## 🔗 下一步

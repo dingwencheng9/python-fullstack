@@ -12,6 +12,37 @@
 
 ---
 
+```mermaid
+flowchart TB
+    subgraph Storage["存储架构"]
+        A[列式存储<br/>Columnar] --> B[按列压缩]
+        B --> C[只读需要的列]
+        D[行式存储<br/>Row-based] --> E[OLTP 事务]
+    end
+
+    subgraph Query["查询优化"]
+        F[向量化执行] --> G[SIMD 加速]
+        H[成本优化器] --> I[最优执行计划]
+    end
+
+    subgraph Performance["性能调优"]
+        J[分区裁剪] --> K[只读相关分区]
+        L[索引加速] --> M[bloom filter]
+    end
+
+    subgraph Integration["集成"]
+        N[Pandas ↔ DuckDB] --> O[SQL 查询]
+        P[DuckDB → 可视化] --> Q[结果导出]
+    end
+
+    style Storage fill:#e3f2fd
+    style Query fill:#c8e6c9
+    style Performance fill:#fff3e0
+    style Integration fill:#f3e5f5
+```
+
+---
+
 ## 📌 学习目标
 
 完成本课程后，你将能够：

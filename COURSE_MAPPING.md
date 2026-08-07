@@ -185,9 +185,10 @@
 | L51 | `L51-async-data-pipeline` | 异步数据管道 | 3 | 5 | 4 | CORE |
 | L52 | `L52-numpy-rag-poc` | NumPy RAG PoC - 向量检索概念验证 | 2 | 2 | 4 | CORE |
 | L53 | `L53-duckdb-olap` | DuckDB OLAP 实战与性能调优 | 1 | 1 | 2 | CORE |
+| **P06** | `P06-data-rag` | 数据分析与 RAG 智能报告平台（收官项目） | 2 | — | 1 | CORE |
 
 **前置要求**: Stage 4 完成
-**建议学时**: 40 小时
+**建议学时**: 50 小时（含收官项目）
 
 ---
 

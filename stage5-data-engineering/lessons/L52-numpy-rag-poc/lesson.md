@@ -24,6 +24,40 @@
 
 ---
 
+```mermaid
+flowchart TB
+    subgraph Traditional["传统搜索"]
+        A[关键词匹配] --> B[精确匹配]
+        B --> C[无法理解语义]
+    end
+
+    subgraph Vector["向量检索"]
+        D[文本 Embedding] --> E[高维向量]
+        E --> F[余弦相似度]
+        F --> G[语义理解]
+    end
+
+    subgraph RAG["RAG 流程"]
+        H[用户查询] --> I[Embedding]
+        I --> J[向量检索]
+        J --> K[相关文档]
+        K --> L[LLM 生成]
+        L --> M[最终答案]
+    end
+
+    subgraph Implementation["NumPy 实现"]
+        N[docsim.array<br/>批量向量] --> O[cosine_similarity<br/>相似度计算]
+        O --> P[Top-K 检索]
+    end
+
+    style Traditional fill:#ffcdd2
+    style Vector fill:#c8e6c9
+    style RAG fill:#e3f2fd
+    style Implementation fill:#fff3e0
+```
+
+---
+
 ## 第一章：向量检索概述
 
 ### 1.1 为什么需要向量检索？
@@ -961,6 +995,32 @@ def ragas_evaluate(
 
 
 ---
+
+
+
+---
+
+## 📝 本章总结
+
+### 核心知识点
+
+| 模块 | 核心内容 | 关键实现 |
+|------|----------|----------|
+| **本课程** | NumPy RAG 向量检索 | 详细讲解 |
+
+### 关键要点
+
+1. 理解本课程的核心概念
+2. 掌握主要工具和 API 的使用
+3. 能够独立完成课程练习
+
+### 学习收获
+
+完成本课程后，你已经：
+- ✅ 掌握了本课程的核心概念
+- ✅ 能够运用所学知识解决实际问题
+- ✅ 为后续学习打下坚实基础
+
 
 ## 下一步
 

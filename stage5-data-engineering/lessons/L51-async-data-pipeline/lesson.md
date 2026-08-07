@@ -1,34 +1,58 @@
-# L51:  异步数据管道
+# L51: 异步数据管道
 
-> **课程时长**: 4-5 小时
-> **难度**: ⭐⭐⭐⭐☆（高级应用）
-> **所属阶段**: Stage 5 - 数据工程  
 > **课程编号**: L51
 > **所属阶段**: Stage 5 - 数据工程
 > **预计时长**: 4-5 小时
-> **难度**: ⭐⭐⭐⭐☆（高级应用）
-> **前置课程**: L51
+> **难度**: ⭐⭐⭐⭐☆（高级）
+> **前置课程**: L21, L47
 > **版本**: v1.0
 > **最后更新**: 2026-07-23
 > **核心版本**: Python 3.13
 
+---
+
+```mermaid
+flowchart TB
+    subgraph ETL["ETL 管道"]
+        A[Extract 提取] --> B[Transform 转换]
+        B --> C[Load 加载]
+        C --> D[目标存储]
+    end
+
+    subgraph Async["异步处理"]
+        E[asyncio.gather] --> F[并发抓取]
+        F --> G[批量处理]
+        G --> H[流式写入]
+    end
+
+    subgraph Sources["数据源"]
+        I[API 端点] --> J[异步 HTTP 客户端]
+        J --> K[httpx AsyncClient]
+        L[数据库] --> M[AsyncSession]
+        M --> N[SQLAlchemy 2.0]
+    end
+
+    subgraph Backpressure["背压控制"]
+        O[Semaphore] --> P[限流]
+        P --> Q[Batching<br/>批量控制]
+        Q --> R[队列缓冲]
+    end
+
+    subgraph Monitoring["可观测性"]
+        S[OpenTelemetry] --> T[链路追踪]
+        T --> U[性能指标]
+        U --> V[日志聚合]
+    end
+
+    style ETL fill:#e3f2fd
+    style Async fill:#c8e6c9
+    style Sources fill:#fff3e0
+    style Backpressure fill:#f3e5f5
+```
+
+---
 
 ## 📚 前置知识
-
-**学习本课程前，你应该掌握：**
-
-- **L21**: 日志与配置
-- **L48**: Pandas 完整实战
-
-**如果你还没有学习以上课程，建议先完成前置课程。**
-
----
-
----
-
----
-
-## 📚 课程内容
 
 ### 模块 1: 异步管道基础 (2h)
 
@@ -932,7 +956,33 @@ class PipelineEngine:
 - ✅ 实现完善的错误处理机制
 - ✅ 监控和优化管道性能
 
-### 下一步
+#
+
+---
+
+## 📝 本章总结
+
+### 核心知识点
+
+| 模块 | 核心内容 | 关键实现 |
+|------|----------|----------|
+| **本课程** | 异步数据管道 | 详细讲解 |
+
+### 关键要点
+
+1. 理解本课程的核心概念
+2. 掌握主要工具和 API 的使用
+3. 能够独立完成课程练习
+
+### 学习收获
+
+完成本课程后，你已经：
+- ✅ 掌握了本课程的核心概念
+- ✅ 能够运用所学知识解决实际问题
+- ✅ 为后续学习打下坚实基础
+
+
+## 下一步
 
 - [ ] 完成所有练习题（3 个）
 - [ ] 运行测试套件：`pytest tests/ -v`

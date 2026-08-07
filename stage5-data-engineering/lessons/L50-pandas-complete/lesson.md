@@ -12,6 +12,40 @@
 
 ---
 
+```mermaid
+flowchart TB
+    subgraph GroupBy["高级分组聚合"]
+        A[groupby] --> B[agg<br/>多函数聚合]
+        A --> C[transform<br/>返回同形状]
+        A --> D[filter<br/>条件筛选]
+    end
+
+    subgraph Join["连接操作"]
+        E[merge<br/>键值连接] --> F[join<br/>索引连接]
+        F --> G[concat<br/>轴向拼接]
+        G --> H[combine_first<br/>缺失填充]
+    end
+
+    subgraph TimeSeries["时间序列"]
+        I[重采样<br/>resample] --> J[滚动窗口<br/>rolling]
+        J --> K[累计计算<br/>expanding]
+        K --> L[时区处理<br/>tz_localize]
+    end
+
+    subgraph Performance["大数据优化"]
+        M[分块处理<br/>chunksize] --> N[内存映射<br/>mmap]
+        N --> O[数据类型优化]
+        O --> P[向量化加速]
+    end
+
+    style GroupBy fill:#e3f2fd
+    style Join fill:#c8e6c9
+    style TimeSeries fill:#fff3e0
+    style Performance fill:#f3e5f5
+```
+
+---
+
 ## 📌 学习目标
 
 完成本课程后，你将能够：
