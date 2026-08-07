@@ -25,6 +25,39 @@
 
 ---
 
+```mermaid
+flowchart TB
+    subgraph CAP["CAP 定理"]
+        A[C 一致性<br/>Consistency] --> D[无法同时满足]
+        B[A 可用性<br/>Availability] --> D
+        C[P 分区容错<br/>Partition Tolerance] --> D
+    end
+
+    subgraph Challenges["分布式挑战"]
+        E[网络不可靠<br/>延迟/丢包] --> H[FLP 不可能定理]
+        F[节点会故障] --> H
+        G[时钟不同步] --> H
+    end
+
+    subgraph Patterns["分布式模式"]
+        I[2PC 两阶段提交] --> J[Saga<br/>长事务]
+        K[分布式锁<br/>Redlock] --> L[服务发现<br/>Consul]
+        M[Raft 共识] --> N[一致性哈希]
+    end
+
+    subgraph Tracing["可观测性"]
+        O[OpenTelemetry<br/>链路追踪] --> P[Metrics<br/>指标监控]
+        P --> Q[Logging<br/>日志聚合]
+        Q --> R[分布式追踪]
+    end
+
+    style CAP fill:#e3f2fd
+    style Challenges fill:#ffcdd2
+    style Patterns fill:#c8e6c9
+```
+
+---
+
 ## 📚 课程导读
 
 ### 为什么要学习分布式系统？

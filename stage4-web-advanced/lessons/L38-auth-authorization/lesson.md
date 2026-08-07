@@ -26,6 +26,43 @@
 
 ---
 
+```mermaid
+flowchart TB
+    subgraph Auth["认证 Authentication"]
+        A[用户名/密码] --> B[bcrypt 哈希验证]
+        A --> C[OAuth2 授权码流程]
+        B --> D[JWT Token 签发]
+        C --> D
+        D --> E[Access Token<br/>短期]
+        D --> F[Refresh Token<br/>长期]
+    end
+
+    subgraph Perm["授权 Authorization"]
+        G[User] --> H[Role<br/>角色]
+        H --> I[Permission<br/>权限]
+        I --> J[RBAC<br/>角色权限检查]
+        J --> K[资源访问控制]
+    end
+
+    subgraph Flow["完整认证流程"]
+        L[登录请求] --> M[验证凭证]
+        M --> N{验证结果}
+        N -->|成功| O[返回 Token]
+        N -->|失败| P[返回 401]
+        O --> Q[携带 Token 访问]
+        Q --> R[验证 Token]
+        R --> S{权限检查}
+        S -->|通过| T[返回资源]
+        S -->|拒绝| U[返回 403]
+    end
+
+    style Auth fill:#e3f2fd
+    style Perm fill:#c8e6c9
+    style Flow fill:#fff3e0
+```
+
+---
+
 ## 📚 课程导读
 
 ### 为什么要学习认证授权？

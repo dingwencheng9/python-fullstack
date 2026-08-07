@@ -148,7 +148,7 @@
 
 ---
 
-## 🔒 Stage 4: Web 开发进阶（L36-L46）
+## 🔒 Stage 4: Web 开发进阶（L36-L46, P05）
 
 **定位**: 安全、性能、微服务、分布式系统
 
@@ -165,9 +165,10 @@
 | L44 | `L44-microservices-basics` | 微服务架构基础 | 2 | 2 | 2 | ELECTIVE |
 | L45 | `L45-distributed-systems` | 分布式系统实战 | 1 | 3 | 4 | CORE |
 | L46 | `L46-websocket-advanced` | WebSocket 高级应用 | 1 | 3 | 4 | CORE |
+| **P05** | `P05-realtime-collaboration` | 实时协作 SaaS 平台（收官项目） | 2 | — | 1 | CORE |
 
 **前置要求**: Stage 3 完成
-**建议学时**: 50 小时
+**建议学时**: 60 小时（含收官项目）
 
 ---
 

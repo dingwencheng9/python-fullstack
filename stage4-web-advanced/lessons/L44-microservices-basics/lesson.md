@@ -25,6 +25,37 @@
 
 ---
 
+```mermaid
+flowchart TB
+    subgraph Monolith["单体架构"]
+        A[用户服务] --> B[共享数据库]
+        C[订单服务] --> B
+        D[支付服务] --> B
+    end
+
+    subgraph Microservices["微服务架构"]
+        E[用户服务<br/>独立 DB] --> F[API Gateway]
+        G[订单服务<br/>独立 DB] --> F
+        H[支付服务<br/>独立 DB] --> F
+        I[通知服务] -.->|异步| G
+        J[服务发现<br/>Consul/Etcd] --> E
+        J --> G
+        J --> H
+    end
+
+    subgraph Patterns["微服务模式"]
+        K[Circuit Breaker<br/>熔断器] --> L[Service Mesh<br/>服务网格]
+        M[API Gateway<br/>统一入口] --> L
+        N[Distributed Config<br/>配置中心] --> O[灰度发布]
+    end
+
+    style Monolith fill:#ffcdd2
+    style Microservices fill:#c8e6c9
+    style Patterns fill:#e3f2fd
+```
+
+---
+
 ## Part 1: 微服务 vs 单体架构
 
 ### 1.1 架构对比

@@ -25,6 +25,36 @@
 
 ---
 
+```mermaid
+flowchart TB
+    subgraph Levels["缓存层级"]
+        A[L1 本地缓存<br/>100μs - 1ms] --> B[L2 Redis<br/>1-5ms]
+        B --> C[L3 数据库<br/>5-50ms]
+    end
+
+    subgraph Strategies["缓存策略"]
+        D[Cache-Aside<br/>旁路缓存] --> E[读多写少]
+        F[Write-Through<br/>写穿透] --> G[数据一致性强]
+        H[Write-Behind<br/>写回] --> I[高性能写入]
+    end
+
+    subgraph Problems["缓存问题"]
+        J[缓存穿透<br/>布隆过滤器] --> K[空值缓存]
+        L[缓存击穿<br/>互斥锁/永不过期] --> M[热点 key 保护]
+        N[缓存雪崩<br/>TTL 随机化] --> O[二级缓存]
+    end
+
+    subgraph Consistency["一致性"]
+        P[强一致性<br/>Cache-Aside + Write] --> Q[最终一致性<br/>TTL 过期]
+    end
+
+    style Levels fill:#e3f2fd
+    style Strategies fill:#c8e6c9
+    style Problems fill:#fff3e0
+```
+
+---
+
 ## Part 1: 多级缓存架构
 
 ### 1.1 缓存层级

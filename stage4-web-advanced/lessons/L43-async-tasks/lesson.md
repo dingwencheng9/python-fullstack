@@ -25,6 +25,42 @@
 
 ---
 
+```mermaid
+flowchart TB
+    subgraph Sync["同步执行问题"]
+        A[用户请求] --> B[处理 10s]
+        B --> C[返回响应]
+        A --> D[超时风险]
+        B --> E[资源占用]
+    end
+
+    subgraph Async["异步任务架构"]
+        F[API 接收请求] --> G[立即返回 202]
+        G --> H[任务入队<br/>Redis/RabbitMQ]
+        H --> I[Worker 消费]
+        I --> J[任务执行]
+        J --> K[结果存储]
+    end
+
+    subgraph Celery["Celery 组件"]
+        L[Celery App<br/>任务定义] --> M[Broker<br/>消息队列]
+        M --> N[Worker<br/>任务执行]
+        N --> O[Backend<br/>结果存储]
+    end
+
+    subgraph Features["任务特性"]
+        P[重试机制<br/>retry] --> Q[超时控制<br/>time_limit]
+        R[定时任务<br/>celery beat] --> S[任务链<br/>chain]
+        T[任务组<br/>group] --> U[工作流编排<br/>chord]
+    end
+
+    style Sync fill:#ffcdd2
+    style Async fill:#c8e6c9
+    style Celery fill:#e3f2fd
+```
+
+---
+
 ## Part 1: 为什么需要任务队列
 
 ### 1.1 同步 vs 异步执行

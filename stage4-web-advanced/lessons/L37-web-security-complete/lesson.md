@@ -36,6 +36,37 @@
 
 ---
 
+```mermaid
+flowchart TB
+    subgraph Threat["OWASP Top 10 威胁"]
+        A[XSS 跨站脚本] --> D[用户输入未转义]
+        B[CSRF 跨站请求伪造] --> E[Token 验证缺失]
+        C[SQL 注入] --> F[参数拼接 SQL]
+        G[身份验证绕过] --> H[弱密码/Token 泄露]
+        I[敏感数据泄露] --> J[未加密存储/传输]
+    end
+
+    subgraph Defense["防御机制"]
+        K[输入验证<br/>白名单过滤] --> L[输出编码<br/>HTML转义]
+        M[CSRF Token] --> N[SameSite Cookie]
+        O[参数化查询] --> P[ORM 避免拼接]
+        Q[JWT + RBAC] --> R[权限分层控制]
+        S[速率限制<br/>Rate Limiting] --> T[账户锁定]
+    end
+
+    subgraph Tools["安全工具"]
+        U[Bandit<br/>静态分析] --> V[SAST]
+        W[SQLMap<br/>SQL注入检测] --> X[DAST]
+        Y[OWASP ZAP<br/>渗透测试] --> X
+    end
+
+    style Threat fill:#ffcdd2
+    style Defense fill:#c8e6c9
+    style Tools fill:#e3f2fd
+```
+
+---
+
 ## 📋 目录
 
 - [第一章：传统中间件的设计缺陷](#第一章传统中间件的设计缺陷)
@@ -1085,6 +1116,45 @@ curl -I https://example.com
 # 使用 Security Headers 检测
 # https://securityheaders.com/?q=https://example.com
 ```
+
+---
+
+## 📝 本章总结
+
+### 核心知识点
+
+| 模块 | 核心内容 | 关键实现 |
+|------|----------|----------|
+| **中间件 vs 依赖注入** | 依赖注入更适合安全控制 | `Depends(RequireRole(...))` |
+| **RBAC 权限模型** | 用户→角色→权限三层 | `Permission` Enum + 装饰器 |
+| **Rate Limiting** | 滑动窗口算法 | Redis + 计数器 |
+| **安全头** | 生产环境必备 | `SecurityHeadersMiddleware` |
+
+### 关键要点
+
+1. **依赖注入 > 中间件** — 更细粒度、更易测试
+2. **RBAC 最小权限原则** — 只授予必要权限
+3. **Rate Limiting 保护 API** — 防止暴力破解和 DDoS
+4. **安全头是最后防线** — 多层防御策略
+5. **CSRF Token 必不可少** — 使用 `python-jose` 签发安全 Token
+
+### 常见陷阱
+
+- ❌ 在中间件中处理认证（难以测试和定制）
+- ❌ 忘记 CSRF Token（表单提交风险）
+- ❌ Rate Limiting 不考虑分布式（单机限制无效）
+- ❌ 敏感数据写日志（隐私泄露）
+
+### 学习收获
+
+完成本课程后，你已经：
+- ✅ 掌握依赖注入安全网关设计
+- ✅ 实现完整的 RBAC 权限系统
+- ✅ 配置 Rate Limiting 防暴力破解
+- ✅ 添加安全头构建多层防御
+- ✅ 为生产级安全应用奠定基础
+
+
 
 **课程完成**！你已掌握防御性安全网关的生产级实战技能。🎉
 

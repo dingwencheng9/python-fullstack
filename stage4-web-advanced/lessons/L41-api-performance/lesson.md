@@ -25,6 +25,37 @@
 
 ---
 
+```mermaid
+flowchart TB
+    subgraph Measure["性能测量"]
+        A[Profiling<br/>cProfile/scalene] --> B[热点函数定位]
+        C[APM<br/>OpenTelemetry] --> D[链路追踪]
+        E[慢查询日志<br/>PostgreSQL] --> F[N+1 查询定位]
+    end
+
+    subgraph Optimize["优化手段"]
+        G[数据库优化<br/>索引/查询优化] --> H[缓存层<br/>Redis/Memcached]
+        I[连接池调优<br/>pool_size] --> J[异步化<br/>async/await]
+        K[响应压缩<br/>gzip/brotli] --> L[分页/字段过滤]
+    end
+
+    subgraph Metrics["性能指标"]
+        M[响应时间<br/>P50/P95/P99] --> N[吞吐量<br/>QPS/TPS]
+        N --> O[资源利用率<br/>CPU/内存/连接]
+    end
+
+    subgraph Target["优化目标"]
+        P[API 响应<br/><200ms] --> Q[数据库查询<br/><50ms]
+        Q --> R[缓存命中<br/>>90%]
+    end
+
+    style Measure fill:#e3f2fd
+    style Optimize fill:#c8e6c9
+    style Target fill:#fff3e0
+```
+
+---
+
 ## Part 1: 性能分析方法
 
 ### 1.1 为什么性能很重要

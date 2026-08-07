@@ -25,6 +25,43 @@
 
 ---
 
+```mermaid
+flowchart TB
+    subgraph Sync["同步请求问题"]
+        A[用户请求] --> B[API 处理 30s]
+        B --> C[返回结果]
+        A --> D[超时风险]
+        B --> E[高峰期打爆]
+    end
+
+    subgraph Queue["消息队列架构"]
+        F[Producer<br/>生产者] --> G[Message Queue<br/>消息队列]
+        G --> H[Consumer<br/>消费者 1]
+        G --> I[Consumer<br/>消费者 2]
+        G --> J[Consumer<br/>消费者 N]
+    end
+
+    subgraph Pattern["消息模式"]
+        K[Task Queue<br/>任务队列] --> L[Celery<br/>Python 异步任务]
+        M[Pub/Sub<br/>发布订阅] --> N[RabbitMQ/Redis]
+        O[Event Sourcing<br/>事件溯源] --> P[Kafka<br/>高吞吐]
+    end
+
+    subgraph Flow["消息处理流程"]
+        Q[消息入队] --> R{Acknowledgment<br/>确认}
+        R -->|成功| S[从队列删除]
+        R -->|失败| T[重试队列]
+        T --> U[N 次重试]
+        U -->|仍失败| V[死信队列<br/>DLQ]
+    end
+
+    style Sync fill:#ffcdd2
+    style Queue fill:#c8e6c9
+    style Pattern fill:#e3f2fd
+```
+
+---
+
 ## Part 1: 为什么需要消息队列
 
 ### 1.1 同步请求的问题

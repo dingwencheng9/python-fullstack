@@ -25,6 +25,41 @@
 
 ---
 
+```mermaid
+flowchart TB
+    subgraph Pyramid["测试金字塔"]
+        A[E2E 测试<br/>5-10%] --> B[集成测试<br/>20-30%]
+        B --> C[单元测试<br/>60-70%]
+    end
+
+    subgraph E2E["E2E 测试流程"]
+        D[启动测试环境] --> E[登录认证]
+        E --> F[执行测试用例]
+        F --> G{断言检查}
+        G -->|通过| H[截图/报告]
+        G -->|失败| I[重试机制]
+        I --> J[失败截图]
+    end
+
+    subgraph Tools["测试工具"]
+        K[Playwright<br/>跨浏览器] --> L[Chromium/Firefox/Safari]
+        M[Pytest<br/>测试框架] --> N[pytest-playwright]
+        O[CI/CD] --> P[GitHub Actions]
+    end
+
+    subgraph BestPractices["最佳实践"]
+        Q[Page Object<br/>页面对象模式] --> R[测试隔离]
+        S[Fixture<br/>测试数据] --> R
+        T[失败重试<br/>flaky 保护] --> R
+    end
+
+    style Pyramid fill:#e3f2fd
+    style E2E fill:#c8e6c9
+    style Tools fill:#fff3e0
+```
+
+---
+
 ## Part 1: E2E 测试策略
 
 ### 1.1 测试金字塔

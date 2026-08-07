@@ -12,6 +12,37 @@
 
 ---
 
+```mermaid
+flowchart TB
+    subgraph Protocol["WebSocket 协议"]
+        A[HTTP Upgrade<br/>握手请求] --> B[101 Switching<br/>协议切换]
+        B --> C[全双工通信<br/>TCP 长连接]
+    end
+
+    subgraph Features["WebSocket 特性"]
+        D[双向通信<br/>服务端推送] --> E[实时性高<br/>低延迟]
+        F[持久连接<br/>减少握手开销] --> E
+        G[心跳检测<br/>保活机制] --> H[断线重连<br/>自动恢复]
+    end
+
+    subgraph Patterns["应用模式"]
+        I[聊天室<br/>Broadcast] --> J[频道订阅<br/>Channel/Topic]
+        K[实时协作<br/>OT/CRDT] --> L[游戏<br/>低延迟]
+        M[SSE 补充<br/>L33] --> N[选择依据<br/>单向 vs 双向]
+    end
+
+    subgraph Scale["高并发架构"]
+        O[连接管理器<br/>ConnectionManager] --> P[Redis PubSub<br/>跨进程通信]
+        Q[WebSocket Gateway<br/>Nginx/uWSGI] --> R[水平扩展<br/>多实例]
+    end
+
+    style Protocol fill:#e3f2fd
+    style Features fill:#c8e6c9
+    style Patterns fill:#fff3e0
+```
+
+---
+
 ## 1. WebSocket 进阶概念
 
 ### 1.1 连接管理
@@ -1312,6 +1343,46 @@ class WhiteboardWebSocket:
 
 
 ---
+
+---
+
+## 📝 本章总结
+
+### 核心知识点
+
+| 模块 | 核心内容 | 关键实现 |
+|------|----------|----------|
+| **连接管理** | ConnectionManager | WebSocket 生命周期 |
+| **心跳检测** | ping/pong 机制 | 保活断线检测 |
+| **消息协议** | JSON Schema 验证 | 类型化消息路由 |
+| **Redis PubSub** | 跨进程广播 | 分布式架构 |
+| **Nginx 代理** | WebSocket 升级 | wss:// 支持 |
+
+### 关键要点
+
+1. **心跳是必须的** — 及时发现断线，避免僵尸连接
+2. **消息协议要类型化** — 方便调试和扩展
+3. **Redis PubSub 解耦** — 支持多实例水平扩展
+4. **Nginx 配置关键** — `proxy_read_timeout` 要足够长
+5. **限流保护** — 防止恶意占用连接资源
+
+### 常见陷阱
+
+- ❌ 不实现心跳检测（无法发现断线）
+- ❌ 消息无类型（调试困难）
+- ❌ 单机架构（无法扩展）
+- ❌ Nginx 超时太短（连接被意外断开）
+
+### 学习收获
+
+完成本课程后，你已经：
+- ✅ 掌握 WebSocket 连接生命周期管理
+- ✅ 实现心跳检测和断线重连
+- ✅ 设计类型化消息协议和路由
+- ✅ 集成 Redis PubSub 实现分布式广播
+- ✅ 配置生产级 WebSocket 部署
+
+
 
 ## 完成标准
 

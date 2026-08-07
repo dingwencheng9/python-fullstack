@@ -22,6 +22,41 @@
 
 ---
 
+```mermaid
+flowchart TB
+    subgraph Problem["背压问题"]
+        A[流量升高] --> B[无限创建 Task]
+        B --> C[无限堆积 Queue]
+        C --> D[内存升高]
+        D --> E[响应变慢]
+        E --> F[调用方超时]
+        F --> G[重试放大流量]
+        G --> H[级联故障]
+    end
+
+    subgraph Solutions["背压机制"]
+        I[并发限制<br/>Semaphore] --> J[保护资源]
+        K[速率限制<br/>Token Bucket] --> J
+        L[有界队列<br/>Queue(maxsize)] --> J
+        M[超时控制<br/>asyncio.timeout] --> J
+        N[重试策略<br/>指数退避] --> J
+        O[熔断器<br/>CircuitBreaker] --> J
+        P[服务降级<br/>Fallback] --> J
+    end
+
+    subgraph Result["保护效果"]
+        Q[系统稳定] --> R[可预测延迟]
+        R --> S[资源可控]
+        S --> T[故障隔离]
+    end
+
+    style Problem fill:#ffcdd2
+    style Solutions fill:#c8e6c9
+    style Result fill:#e3f2fd
+```
+
+---
+
 ## 模块 1: 为什么异步系统必须有背压
 
 ### 1.1 背压的定义
