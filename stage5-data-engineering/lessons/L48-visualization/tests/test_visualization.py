@@ -13,6 +13,7 @@ L48 数据可视化 - 基准测试
 
 from __future__ import annotations
 
+import matplotlib  # 确保 matplotlib 已安装
 import pytest
 import numpy as np
 import pandas as pd
