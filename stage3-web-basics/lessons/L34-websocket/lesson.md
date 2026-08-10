@@ -816,4 +816,4 @@ async def broadcast_concurrent(connections: set[WebSocket], message: str):
 
 ### 下一步
 
-继续学习 [L34: HTMX 全栈开发](../L34-htmx/README.md)，探索另一种 Web 交互方式。
+继续学习 [L35: HTMX 全栈开发](../L35-htmx/README.md)，探索另一种 Web 交互方式。

@@ -1470,4 +1470,4 @@ async def test_sse_with_filters():
 
 ### 下一步
 
-继续学习 [L33: WebSocket 实时通信](../L33-websocket/README.md)，对比 SSE 和 WebSocket 的使用场景。
+继续学习 [L34: WebSocket 实时通信](../L34-websocket/README.md)，对比 SSE 和 WebSocket 的使用场景。

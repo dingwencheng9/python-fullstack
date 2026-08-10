@@ -1071,7 +1071,7 @@ print(f"收到响应: {response.decode()}")
 
 ### 下一步
 
-继续学习 [L27: FastAPI 可观测性与契约驱动](../L27-fastapi-basics/README.md)，理解 Web 框架如何封装 socket 细节。
+继续学习 [L27: FastAPI 可观测性与契约驱动](../L28-fastapi-basics/README.md)，理解 Web 框架如何封装 socket 细节。
 
 ---
 
@@ -1237,7 +1237,7 @@ async def get_profile(response: Response):
 
 ### 下一步
 
-继续学习 [L27: FastAPI 可观测性与契约驱动](../L27-fastapi-basics/README.md)，把 HTTP 协议知识落到 Web API 框架实践中。
+继续学习 [L27: FastAPI 可观测性与契约驱动](../L28-fastapi-basics/README.md)，把 HTTP 协议知识落到 Web API 框架实践中。
 
 ---
 
@@ -1247,7 +1247,7 @@ async def get_profile(response: Response):
 
 ### E.1 REST API vs JSON-RPC
 
-**REST API**（L27 所讲）：基于 HTTP 动词（GET/POST/PUT/DELETE），资源导向：
+**REST API**（L27 HTTP 协议所讲）：基于 HTTP 动词（GET/POST/PUT/DELETE），资源导向：
 
 ```http
 GET  /api/users/42      → 获取用户

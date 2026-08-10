@@ -857,4 +857,4 @@ docker logs myapp 2>&1 | grep -i error
 
 ---
 
-**下一步**: 继续学习 [L32: SSE 服务器推送事件](../L32-sse/lesson.md)
+**下一步**: 继续学习 [L33: SSE 服务器推送事件](../L33-sse/lesson.md)

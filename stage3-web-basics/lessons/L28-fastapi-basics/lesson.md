@@ -961,4 +961,4 @@ mutation {
 ## 🔗 下一步
 
 
-[L28: 数据库基础与 SQL](../L28-sql-basics/)
+[L28: 数据库基础与 SQL](../L29-sql-basics/)
