@@ -15,6 +15,10 @@ from __future__ import annotations
 
 import matplotlib  # 确保 matplotlib 已安装
 import matplotlib.pyplot as plt
+
+# 使用非交互式后端避免显示问题
+matplotlib.use("Agg")
+
 import pytest
 import numpy as np
 import pandas as pd
