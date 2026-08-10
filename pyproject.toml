@@ -135,6 +135,13 @@ ai = [
     "mcp>=1.1.0,<2.0",            # MCP SDK (Model Context Protocol)
 ]
 
+# 阶段3: 数据可视化（L48 课程依赖）
+viz = [
+    "matplotlib>=3.9.0,<4.0",      # 数据可视化
+    "seaborn>=0.13.0,<1.0",       # 统计图表
+    "plotly>=5.24.0,<6.0",        # 交互式图表
+]
+
 # 阶段4: 微服务与部署
 deploy = [
     "docker>=7.0.0,<8.0",
@@ -153,7 +160,7 @@ docs = [
 
 # 完整开发环境
 all = [
-    "python-fullstack-v4.1[dev,web,ai,deploy,docs]",
+    "python-fullstack-v4.1[dev,web,ai,deploy,docs,viz]",
 ]
 
 # ============================================================================

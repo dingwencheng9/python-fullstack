@@ -1,4 +1,4 @@
-"""L52 示例：checkpoint + 幂等写入。"""
+"""L51 示例：checkpoint + 幂等写入。"""
 
 from __future__ import annotations
 

@@ -1,4 +1,4 @@
-"""L52 示例：数据质量、schema drift 与指标。"""
+"""L51 示例：数据质量、schema drift 与指标。"""
 
 from __future__ import annotations
 

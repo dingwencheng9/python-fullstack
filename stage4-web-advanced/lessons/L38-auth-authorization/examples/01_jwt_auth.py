@@ -4,7 +4,7 @@ from fastapi import FastAPI, HTTPException, Depends
 from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
 from pydantic import BaseModel
 import jwt
-from datetime import UTC
+from datetime import UTC, datetime, timedelta
 import secrets
 
 app = FastAPI()
@@ -27,7 +27,7 @@ class User(BaseModel):
 
 def create_token(user: User) -> str:
     """创建 JWT Token"""
-    expire = datetime.datetime.now(UTC) + datetime.timedelta(minutes=ACCESS_TOKEN_EXPIRE_MINUTES)
+    expire = datetime.now(UTC) + timedelta(minutes=ACCESS_TOKEN_EXPIRE_MINUTES)
     payload = {"sub": user.username, "roles": user.roles, "exp": expire}
     return jwt.encode(payload, SECRET_KEY, algorithm=ALGORITHM)
 

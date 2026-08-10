@@ -3311,6 +3311,19 @@ wheels = [
 ]
 
 [[package]]
+name = "plotly"
+version = "5.24.1"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "packaging" },
+    { name = "tenacity" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/79/4f/428f6d959818d7425a94c190a6b26fbc58035cbef40bf249be0b62a9aedd/plotly-5.24.1.tar.gz", hash = "sha256:dbc8ac8339d248a4bcc36e08a5659bacfe1b079390b8953533f4eb22169b4bae", size = 9479398, upload-time = "2024-09-12T15:36:31.068Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/e5/ae/580600f441f6fc05218bd6c9d5794f4aef072a7d9093b291f1c50a9db8bc/plotly-5.24.1-py3-none-any.whl", hash = "sha256:f67073a1e637eb0dc3e46324d9d51e2fe76e9727c892dde64ddf1e1b51f29089", size = 19054220, upload-time = "2024-09-12T15:36:24.08Z" },
+]
+
+[[package]]
 name = "pluggy"
 version = "1.6.0"
 source = { registry = "https://pypi.org/simple" }
@@ -3936,6 +3949,7 @@ all = [
     { name = "ipython" },
     { name = "jieba" },
     { name = "kubernetes" },
+    { name = "matplotlib" },
     { name = "mcp" },
     { name = "mkdocs" },
     { name = "mkdocs-git-revision-date-localized-plugin" },
@@ -3946,6 +3960,7 @@ all = [
     { name = "openai" },
     { name = "pandas" },
     { name = "passlib" },
+    { name = "plotly" },
     { name = "pre-commit" },
     { name = "pydantic" },
     { name = "pydantic-settings" },
@@ -3959,6 +3974,7 @@ all = [
     { name = "python-multipart" },
     { name = "qdrant-client" },
     { name = "ruff" },
+    { name = "seaborn" },
     { name = "sqlalchemy", extra = ["asyncio"] },
     { name = "strawberry-graphql", extra = ["fastapi"] },
     { name = "tiktoken" },
@@ -3987,6 +4003,11 @@ docs = [
     { name = "mkdocs-material" },
     { name = "pygments" },
     { name = "pymdown-extensions" },
+]
+viz = [
+    { name = "matplotlib" },
+    { name = "plotly" },
+    { name = "seaborn" },
 ]
 web = [
     { name = "alembic" },
@@ -4034,6 +4055,7 @@ requires-dist = [
     { name = "langchain-core", specifier = ">=1.4.8" },
     { name = "langgraph", specifier = ">=1.2.6" },
     { name = "lxml", specifier = ">=5.0,<7.0" },
+    { name = "matplotlib", marker = "extra == 'viz'", specifier = ">=3.9.0,<4.0" },
     { name = "mcp", marker = "extra == 'ai'", specifier = ">=1.1.0,<2.0" },
     { name = "mkdocs", marker = "extra == 'docs'", specifier = ">=1.6.0,<2.0" },
     { name = "mkdocs-git-revision-date-localized-plugin", marker = "extra == 'docs'", specifier = ">=1.2.0,<2.0" },
@@ -4049,6 +4071,7 @@ requires-dist = [
     { name = "pandas", specifier = ">=2.2,<3.0" },
     { name = "pandas", marker = "extra == 'ai'", specifier = ">=2.2.0,<3.0" },
     { name = "passlib", marker = "extra == 'web'", specifier = ">=1.7.4,<2.0" },
+    { name = "plotly", marker = "extra == 'viz'", specifier = ">=5.24.0,<6.0" },
     { name = "pre-commit", marker = "extra == 'dev'", specifier = ">=4.0.0" },
     { name = "pydantic", specifier = ">=2.0,<3.0" },
     { name = "pydantic", marker = "extra == 'web'", specifier = ">=2.10.0,<3.0" },
@@ -4060,7 +4083,7 @@ requires-dist = [
     { name = "pytest-asyncio", marker = "extra == 'dev'", specifier = ">=1.4.0" },
     { name = "pytest-cov", marker = "extra == 'dev'", specifier = ">=6.0.0" },
     { name = "pytest-mock", marker = "extra == 'dev'", specifier = ">=3.14.0" },
-    { name = "python-fullstack-v4-1", extras = ["dev", "web", "ai", "deploy", "docs"], marker = "extra == 'all'" },
+    { name = "python-fullstack-v4-1", extras = ["dev", "web", "ai", "deploy", "docs", "viz"], marker = "extra == 'all'" },
     { name = "python-jose", extras = ["cryptography"], marker = "extra == 'web'", specifier = ">=3.3.0,<4.0" },
     { name = "python-multipart", marker = "extra == 'web'", specifier = ">=0.0.9,<1.0" },
     { name = "pyyaml", specifier = ">=6.0,<7.0" },
@@ -4068,6 +4091,7 @@ requires-dist = [
     { name = "requests", specifier = ">=2.32,<3.0" },
     { name = "rich", specifier = ">=13.9.0,<14.0" },
     { name = "ruff", marker = "extra == 'dev'", specifier = ">=0.8.0,<2.0" },
+    { name = "seaborn", marker = "extra == 'viz'", specifier = ">=0.13.0,<1.0" },
     { name = "sqlalchemy", extras = ["asyncio"], marker = "extra == 'web'", specifier = ">=2.0.0,<3.0" },
     { name = "strawberry-graphql", extras = ["fastapi"], marker = "extra == 'web'", specifier = ">=0.240.0,<1.0" },
     { name = "tiktoken", marker = "extra == 'ai'", specifier = ">=0.8.0" },
@@ -4077,7 +4101,7 @@ requires-dist = [
     { name = "uvicorn", extras = ["standard"], marker = "extra == 'web'", specifier = ">=0.32.0,<1.0" },
     { name = "zai-sdk", specifier = ">=0.2.3,<1.0" },
 ]
-provides-extras = ["dev", "web", "ai", "deploy", "docs", "all"]
+provides-extras = ["dev", "web", "ai", "viz", "deploy", "docs", "all"]
 
 [package.metadata.requires-dev]
 dev = [

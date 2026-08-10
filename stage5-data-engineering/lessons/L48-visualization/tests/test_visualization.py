@@ -1,25 +1,28 @@
 """
-
-from __future__ import annotations
-
-L49 数据可视化 基准测试
+L48 数据可视化 - 基准测试
 
 测试维度:
 1. 模块导入健康测试
 2. 核心可视化逻辑测试
 3. 异常边界测试
+
+依赖处理:
+- matplotlib/seaborn/plotly 通过 conftest.py 全局导入
+- 如需跳过某个测试，使用 pytest.mark.skipif
 """
 
+from __future__ import annotations
+
 import pytest
-
-pytest.importorskip("numpy", reason="需要 numpy/matplotlib 数据栈（uv sync --extra ai）")
-pytest.importorskip("matplotlib", reason="matplotlib 未安装；可单装：uv pip install matplotlib")
-
 import numpy as np
 import pandas as pd
 
 # 统一固定随机源，避免测试间相互污染
 _RNG = np.random.default_rng(42)
+
+# ============================================================================
+# 测试维度 1: 模块导入健康测试
+# ============================================================================
 
 # ============================================================================
 # 测试维度 1: 模块导入健康测试

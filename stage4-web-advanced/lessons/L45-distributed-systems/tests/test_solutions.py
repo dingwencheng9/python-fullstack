@@ -1,4 +1,4 @@
-"""L47 分布式系统实战 - 测试"""
+"""L45 分布式系统实战 - 测试"""
 
 from __future__ import annotations
 

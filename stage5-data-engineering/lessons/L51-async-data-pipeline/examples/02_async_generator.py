@@ -1,4 +1,4 @@
-"""L52 示例: 异步生成器管道。"""
+"""L51 示例: 异步生成器管道。"""
 
 from __future__ import annotations
 
