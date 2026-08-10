@@ -14,6 +14,7 @@ L48 数据可视化 - 基准测试
 from __future__ import annotations
 
 import matplotlib  # 确保 matplotlib 已安装
+import matplotlib.pyplot as plt
 import pytest
 import numpy as np
 import pandas as pd
@@ -496,8 +497,11 @@ class TestDataDashboardFunctionality:
 
     def test_dashboard_creation_returns_axes(self) -> None:
         """create_overview_dashboard 应创建 2×2 子图。"""
-        dashboard = self.DataDashboard()
-        dashboard.create_overview_dashboard(self.data)
+        import warnings
+        with warnings.catch_warnings():
+            warnings.simplefilter("ignore")  # 忽略中文字体警告
+            dashboard = self.DataDashboard()
+            dashboard.create_overview_dashboard(self.data)
 
         assert dashboard.fig is not None
         axes = dashboard.fig.axes
@@ -507,8 +511,11 @@ class TestDataDashboardFunctionality:
 
     def test_correlation_heatmap_creates_figure(self) -> None:
         """create_correlation_heatmap 应创建包含热力图的 Figure。"""
-        dashboard = self.DataDashboard()
-        dashboard.create_correlation_heatmap(self.data)
+        import warnings
+        with warnings.catch_warnings():
+            warnings.simplefilter("ignore")  # 忽略中文字体警告
+            dashboard = self.DataDashboard()
+            dashboard.create_correlation_heatmap(self.data)
 
         assert len(plt.get_fignums()) >= 1
 
