@@ -16,12 +16,14 @@ class TestCeleryTasks:
 
     def test_task_creation(self):
         """Test that tasks are properly defined."""
-        assert process_with_retry.name == "process_with_retry"
+        # 任务名称可能包含模块前缀
+        assert "process_with_retry" in process_with_retry.name
         assert process_with_retry.max_retries == 3
 
     def test_notification_task(self):
         """Test notification task."""
-        assert send_notification.name == "send_notification"
+        # 任务名称可能包含模块前缀
+        assert "send_notification" in send_notification.name
 
     def test_chain_creation(self):
         """Test creating a task chain."""

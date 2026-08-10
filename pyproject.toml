@@ -122,12 +122,14 @@ web = [
     "python-multipart>=0.0.9,<1.0",
     "asyncpg>=0.31.0,<1.0",            # ↑ 0.30.0
     "strawberry-graphql[fastapi]>=0.240.0,<1.0",  # GraphQL
+    "playwright>=1.40.0,<2.0",        # E2E 测试
 ]
 
 # 阶段3: AI与数据
 ai = [
     "pandas>=2.2.0,<3.0",
     "numpy>=2.0.0,<3.0",          # 2.0+ 全面 Python 3.13/3.14 支持
+    "pyarrow>=15.0.0,<26.0",       # PyArrow 后端支持
     "openai>=1.54.0,<2.0",        # 云端LLM
     "ollama>=0.3.0",              # 本地LLM (云本双轨)
     "qdrant-client>=1.11.0,<2.0", # 向量数据库
@@ -146,6 +148,8 @@ viz = [
 deploy = [
     "docker>=7.0.0,<8.0",
     "kubernetes>=30.0.0,<31.0",
+    "celery>=5.3.0,<6.0",          # 异步任务队列
+    "redis>=5.0.0,<6.0",           # Celery broker（可选）
 ]
 
 # 文档构建依赖
