@@ -68,6 +68,9 @@ docs/archived/
 │   ├── 2026-07-28-13-fullstack quality-audit-design.md
 │   └── 2026-08-01-stage0-2-knowledge-audit-*.md (4个)
 │
+├── stage0-5-audit-2026-08-11/  # 2026-08-11 Stage 0-5 全面审查（教学性+学习效果）
+│   └── STAGE0-5_COMPREHENSIVE_AUDIT_2026-08-11.md   # 综合报告
+│
 └── stage0-5-audit-2026-08-10/  # 2026-08-10 Stage 0-5 全面审查
     ├── STAGE0-5_COMPREHENSIVE_AUDIT_REPORT_2026-08-10.md   # 综合报告
     └── STAGE5_AUDIT_L51_L53_P06_REPORT_2026-08-10.md       # Stage 5 详细报告

@@ -466,7 +466,7 @@ plt.show()
 
 ## 🎯 最佳实践总结
 
-## 第七章：大规模数据可视化性能
+## 第五章：大规模数据可视化性能
 
 ### 7.1 Datashader 极致性能
 
@@ -951,7 +951,7 @@ plt.title('中文标题')
 
 **下一课**: [L48 DuckDB 分析引擎](../L49-duckdb/lesson.md)
 
-## 第十章：性能调优实战
+## 第六章：性能调优实战
 
 ### 10.1 CPU 密集优化
 
@@ -988,7 +988,7 @@ df.to_csv('output.csv')
 df.to_parquet('output.parquet', compression='snappy')
 ```
 
-## 第十一章：生产环境部署
+## 第七章：生产环境部署
 
 ### 11.1 配置管理
 
@@ -1037,7 +1037,7 @@ with processing_time.time():
     records_processed.inc(len(result))
 ```
 
-## 第十二章：调试与故障排查
+## 第八章：调试与故障排查
 
 ### 12.1 常见陷阱
 
@@ -1079,7 +1079,7 @@ for i in range(state['last_index'], len(data)):
             pickle.dump(state, f)
 ```
 
-## 第十三章：高级技巧
+## 第九章：高级技巧
 
 ### 13.1 并行处理
 
@@ -1121,7 +1121,7 @@ class LazyData:
         return self._data
 ```
 
-## 第十四章：案例研究
+## 第十章：案例研究
 
 ### 14.1 案例 1：电商数据处理
 
@@ -1166,7 +1166,7 @@ features = df.select([
 ])
 ```
 
-## 第十五章：高级可视化
+## 第十一章：高级可视化
 
 ### 15.1 动态图表
 

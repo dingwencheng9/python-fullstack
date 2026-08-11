@@ -523,7 +523,7 @@ result = query.collect()  # 多线程并行执行
 
 ## 第六章：性能基准测试
 
-### 5.1 标准测试框架
+### 6.1 标准测试框架
 
 ```python
 import time
@@ -553,7 +553,7 @@ benchmark(lambda: df.apply(lambda row: row["A"] + row["B"], axis=1), "Apply addi
 
 ---
 
-### 5.2 实战案例：订单数据分析
+### 6.2 实战案例：订单数据分析
 
 ```python
 # 模拟 100 万订单
@@ -589,9 +589,9 @@ print(f"VIP 用户数: {len(vip_users)}")
 
 ## 🎯 最佳实践总结
 
-## 第八章：Pandas 2.0 Copy-on-Write 机制
+## 第七章：Pandas 2.0 Copy-on-Write 机制
 
-### 8.1 CoW 内存行为分析
+### 7.1 CoW 内存行为分析
 
 ```python
 # ❌ 错误：未启用 CoW，链式赋值静默失败
@@ -619,7 +619,7 @@ df_subset['B'] = 1  # 自动 CoW，原 df 不受影响
 df[df['age'] > 30]['salary'] = df[df['age'] > 30]['salary'] * 1.1  # 静默失败
 
 
-### 8.2 链式赋值警告消除
+### 7.2 链式赋值警告消除
 
 ```python
 # ❌ 错误：链式赋值
@@ -630,9 +630,9 @@ df[df['A'] > 0]['B'] = 1
 df.loc[df['A'] > 0, 'B'] = 1
 ```
 
-## 第九章：Polars 高性能替代方案
+## 第八章：Polars 高性能替代方案
 
-### 9.1 Pandas vs Polars 性能对比
+### 8.1 Pandas vs Polars 性能对比
 
 # ❌ 错误：Pandas 处理大数据集（慢 10x）
 
@@ -657,7 +657,7 @@ df_polars = pl.read_csv('large_file.csv')
 result = df_polars.groupby('category').agg(pl.col('value').sum())
 ```
 
-### 9.2 惰性求值优化
+### 8.2 惰性求值优化
 
 ```python
 # ❌ 错误：低效实现
@@ -835,9 +835,9 @@ df = pd.DataFrame({
 
 **下一课**: [L47 数据可视化](../L48-visualization/lesson.md)
 
-## 第十章：性能调优实战
+## 第九章：性能调优实战
 
-### 10.1 CPU 密集优化
+### 9.1 CPU 密集优化
 
 ```python
 import numpy as np
@@ -851,7 +851,7 @@ for i in range(1000000):
 result = np.arange(1000000) * 2 + 1
 ```
 
-### 10.2 内存优化策略
+### 9.2 内存优化策略
 
 ```python
 # ❌ 错误：加载全部数据
@@ -862,7 +862,7 @@ for chunk in pd.read_csv('large.csv', chunksize=10000):
     process(chunk)
 ```
 
-### 10.3 I/O 优化
+### 9.3 I/O 优化
 
 ```python
 # ❌ 错误：CSV 格式
@@ -872,9 +872,9 @@ df.to_csv('output.csv')
 df.to_parquet('output.parquet', compression='snappy')
 ```
 
-## 第十一章：生产环境部署
+## 第十章：生产环境部署
 
-### 11.1 配置管理
+### 10.1 配置管理
 
 ```python
 from pydantic import BaseSettings
@@ -893,7 +893,7 @@ class Settings(BaseSettings):
 settings = Settings()
 ```
 
-### 11.2 日志记录
+### 10.2 日志记录
 
 ```python
 import logging
@@ -911,7 +911,7 @@ logger.info("处理开始", extra={'records': len(df)})
 logger.error("处理失败", extra={'error': str(e)})
 ```
 
-### 11.3 监控指标
+### 10.3 监控指标
 
 ```python
 from prometheus_client import Counter, Histogram
@@ -927,9 +927,9 @@ with processing_time.time():
     records_processed.inc(len(result))
 ```
 
-## 第十二章：调试与故障排查
+## 第十一章：调试与故障排查
 
-### 12.1 常见陷阱
+### 11.1 常见陷阱
 
 ```python
 # ❌ 陷阱 1：隐式类型转换
@@ -939,7 +939,7 @@ df['id'] = df['id'].astype(str)  # 可能很慢
 df = pd.read_csv('data.csv', dtype={'id': str})
 ```
 
-### 12.2 调试工具
+### 11.2 调试工具
 
 ```python
 # ✅ 使用 %prun 分析性能
@@ -951,7 +951,7 @@ df = pd.read_csv('data.csv', dtype={'id': str})
 %memit df = pd.read_csv('large.csv')
 ```
 
-### 12.3 故障恢复
+### 11.3 故障恢复
 
 ```python
 import pickle
@@ -973,9 +973,9 @@ for i in range(state['last_index'], len(data)):
             pickle.dump(state, f)
 ```
 
-## 第十五章：极致性能优化
+## 第十二章：极致性能优化
 
-### 15.1 Numba 加速
+### 13.1 Numba 加速
 
 ```python
 from numba import jit
@@ -988,7 +988,7 @@ def fast_compute(arr):
     return result
 ```
 
-### 15.2 Cython 优化
+### 13.2 Cython 优化
 
 ```python
 # ❌ 错误：低效的实现

@@ -1846,4 +1846,4 @@ print(multiply.args_schema)  # Pydantic 模型（自动从函数签名生成）
 
 ## 🔗 下一步
 
-[L21: Python 3.13 体验](../L21-python-new-features/README.md)
+[L23: Python 新特性与版本迁移](../L23-python-new-features/README.md)
