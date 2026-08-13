@@ -54,6 +54,117 @@ _REPO_ROOT: Path | None = None
 _LESSON_MAP: dict[Path, tuple[Path, Literal["solutions"] | Literal["examples"]]] | None = None
 
 
+def load_exercise_module(name: str, file_path: Path) -> ModuleType:
+    """按物理路径加载模块，不污染 sys.path。
+
+    这是所有课程测试共用的模块加载函数。
+    在根 conftest.py 中定义，确保所有课程的测试都能访问。
+    """
+    spec = importlib.util.spec_from_file_location(name, file_path)
+    if spec is None or spec.loader is None:
+        raise ImportError(f"无法为 {file_path} 构造模块 spec")
+    module = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(module)
+    return module
+
+
+def _get_exercises_dir(lesson_dir: Path) -> Path | None:
+    """从 lesson 目录获取 exercises 子目录路径。
+
+    Stage 0 课程使用 exercises/ 作为练习目录。
+    """
+    exercises_dir = lesson_dir / "exercises"
+    if exercises_dir.is_dir():
+        return exercises_dir
+    return None
+
+
+# ============================================================================
+# Stage 0 Exercises 专用 Fixture 工厂
+# ============================================================================
+
+# L01 exercises 模块映射
+_L01_EXERCISES = {
+    "hello": "01_hello_practice.py",
+    "io": "02_io_practice.py",
+    "types": "03_type_basics.py",
+    "conversion": "04_type_conversion.py",
+    "fstring": "05_fstring_practice.py",
+}
+
+# L02 exercises 模块映射
+_L02_EXERCISES = {
+    "arithmetic": "01_arithmetic_conditions.py",
+    "logical": "02_logical_operators.py",
+    "bitwise": "03_bitwise_operations.py",
+    "loops": "04_loops.py",
+    "match": "05_match_case.py",
+    "comprehensive": "06_comprehensive.py",
+}
+
+# L04 exercises 模块映射
+_L04_EXERCISES = {
+    "functions": "01_functions.py",
+    "modules": "02_modules.py",
+}
+
+# L05 exercises 模块映射
+_L05_EXERCISES = {
+    "pdb": "01_pdb_practice.py",
+    "traceback": "02_traceback_practice.py",
+}
+
+# L06 exercises 模块映射
+_L06_EXERCISES = {
+    "basic_handling": "01_basic_handling.py",
+    "multiple_exceptions": "02_multiple_exceptions.py",
+    "custom_exceptions": "03_custom_exceptions.py",
+}
+
+# L07 exercises 模块映射
+_L07_EXERCISES = {
+    "oop_basics": "01_oop_basics.py",
+    "inheritance": "02_inheritance_practice.py",
+    "property": "03_property_practice.py",
+}
+
+# L08 exercises 模块映射
+_L08_EXERCISES = {
+    "fraction": "01_fraction.py",
+    "set_class": "02_set_class.py",
+    "callable": "03_callable.py",
+}
+
+# L09 exercises 模块映射
+_L09_EXERCISES = {
+    "log_parser": "01_log_parser.py",
+    "csv_writer": "02_csv_writer.py",
+    "file_search": "03_file_search.py",
+}
+
+
+def _discover_lesson_exercises(lesson_dir: Path) -> dict[str, str]:
+    """发现 lesson 下 exercises/ 目录中的所有 .py 文件。
+
+    返回 {module_name: filename} 映射。
+    """
+    exercises_dir = _get_exercises_dir(lesson_dir)
+    if exercises_dir is None:
+        return {}
+
+    modules = {}
+    for py_file in exercises_dir.glob("*.py"):
+        if py_file.name.startswith("_") or py_file.name == "__init__.py":
+            continue
+        # 去掉 .py 后缀和数字前缀（如 01_hello → hello）
+        stem = py_file.stem
+        cleaned = re.sub(r"^\d+_", "", stem)
+        modules[cleaned] = py_file.name
+        modules[stem] = py_file.name  # 也保留原始名称
+
+    return modules
+
+
 def _find_repo_root() -> Path:
     """动态向上查找仓库根目录。
 
@@ -429,6 +540,89 @@ def _lesson_fixture_injector(  # noqa: PLR0912, PLR0915
                 if val is not None:
                     request.module.__dict__[sub] = val
 
+    # ================================================================
+    # Stage 0 exercises 加载（exercises/ 目录是 Stage 0 特有的练习模式）
+    # ================================================================
+    elif "L01-python-core" in lesson_name:
+        exercises_dir = _get_exercises_dir(lesson_dir)
+        if exercises_dir:
+            for key, filename in _L01_EXERCISES.items():
+                try:
+                    mod = load_exercise_module(f"_test_{key}", exercises_dir / filename)
+                    request.module.__dict__[f"{key}_module"] = mod
+                except Exception as e:
+                    logger.debug(f"加载 {filename} 失败: {e}")
+
+    elif "L02-operators-control" in lesson_name:
+        exercises_dir = _get_exercises_dir(lesson_dir)
+        if exercises_dir:
+            for key, filename in _L02_EXERCISES.items():
+                try:
+                    mod = load_exercise_module(f"_test_{key}", exercises_dir / filename)
+                    request.module.__dict__[f"{key}_module"] = mod
+                except Exception as e:
+                    logger.debug(f"加载 {filename} 失败: {e}")
+
+    elif "L04-functions-modules" in lesson_name:
+        exercises_dir = _get_exercises_dir(lesson_dir)
+        if exercises_dir:
+            for key, filename in _L04_EXERCISES.items():
+                try:
+                    mod = load_exercise_module(f"_test_{key}", exercises_dir / filename)
+                    request.module.__dict__[f"{key}_module"] = mod
+                except Exception as e:
+                    logger.debug(f"加载 {filename} 失败: {e}")
+
+    elif "L05-debugging-tools" in lesson_name:
+        exercises_dir = _get_exercises_dir(lesson_dir)
+        if exercises_dir:
+            for key, filename in _L05_EXERCISES.items():
+                try:
+                    mod = load_exercise_module(f"_test_{key}", exercises_dir / filename)
+                    request.module.__dict__[f"{key}_module"] = mod
+                except Exception as e:
+                    logger.debug(f"加载 {filename} 失败: {e}")
+
+    elif "L06-exceptions" in lesson_name:
+        exercises_dir = _get_exercises_dir(lesson_dir)
+        if exercises_dir:
+            for key, filename in _L06_EXERCISES.items():
+                try:
+                    mod = load_exercise_module(f"_test_{key}", exercises_dir / filename)
+                    request.module.__dict__[f"{key}_module"] = mod
+                except Exception as e:
+                    logger.debug(f"加载 {filename} 失败: {e}")
+
+    elif "L07-oop-basics" in lesson_name:
+        exercises_dir = _get_exercises_dir(lesson_dir)
+        if exercises_dir:
+            for key, filename in _L07_EXERCISES.items():
+                try:
+                    mod = load_exercise_module(f"_test_{key}", exercises_dir / filename)
+                    request.module.__dict__[f"{key}_module"] = mod
+                except Exception as e:
+                    logger.debug(f"加载 {filename} 失败: {e}")
+
+    elif "L08-magic-methods" in lesson_name:
+        exercises_dir = _get_exercises_dir(lesson_dir)
+        if exercises_dir:
+            for key, filename in _L08_EXERCISES.items():
+                try:
+                    mod = load_exercise_module(f"_test_{key}", exercises_dir / filename)
+                    request.module.__dict__[f"{key}_module"] = mod
+                except Exception as e:
+                    logger.debug(f"加载 {filename} 失败: {e}")
+
+    elif "L09-file-operations" in lesson_name:
+        exercises_dir = _get_exercises_dir(lesson_dir)
+        if exercises_dir:
+            for key, filename in _L09_EXERCISES.items():
+                try:
+                    mod = load_exercise_module(f"_test_{key}", exercises_dir / filename)
+                    request.module.__dict__[f"{key}_module"] = mod
+                except Exception as e:
+                    logger.debug(f"加载 {filename} 失败: {e}")
+
     elif "P01" in lesson_name:
         # P01 独立分支：lesson_name 含 "L01"，必须放在 L10 之前
         _inject_solutions_attrs(lesson_dir, {
@@ -683,3 +877,81 @@ def examples(request: pytest.FixtureRequest) -> _ExamplesWrapper | _L61ExamplesW
     if "examples" in sys.modules:
         return sys.modules["examples"]
     raise RuntimeError("examples 模块未加载，请检查 conftest.py 配置")
+
+
+# ============================================================================
+# Stage 0 Exercises Fixtures（集中定义，替代各课程测试文件内的本地 fixtures）
+# ============================================================================
+# 这些 fixtures 在根 conftest.py 中定义，确保跨课程运行时 pytest 能正确解析。
+
+def _make_exercise_fixture(lesson_pattern: str, module_key: str, filename: str):
+    """工厂函数：为指定 exercise 文件创建 fixture。
+
+    Args:
+        lesson_pattern: lesson 目录名匹配模式（如 "L01-python-core"）
+        module_key: fixture 名称中的模块键（如 "hello" → hello_module）
+        filename: exercises/ 目录下的文件名
+    """
+    fixture_name = f"{module_key}_module"
+
+    @pytest.fixture(scope="module")
+    def exercise_fixture(request: pytest.FixtureRequest) -> ModuleType:
+        """加载 exercises/{filename}"""
+        fspath = getattr(request.module, "__file__", None) or ""
+        lesson_dir = _get_lesson_dir(fspath)
+        if lesson_dir is None or lesson_pattern not in lesson_dir.name:
+            raise pytest.skip(f"不在 {lesson_pattern} 课程中，跳过此 fixture")
+        exercises_dir = _get_exercises_dir(lesson_dir)
+        if exercises_dir is None:
+            raise pytest.skip("找不到 exercises/ 目录")
+        file_path = exercises_dir / filename
+        if not file_path.exists():
+            raise pytest.fail(f"练习文件不存在: {file_path}")
+        return load_exercise_module(f"_test_{module_key}", file_path)
+
+    exercise_fixture.__name__ = fixture_name
+    return exercise_fixture
+
+
+# L01 Exercises Fixtures
+hello_module = _make_exercise_fixture("L01-python-core", "hello", "01_hello_practice.py")
+io_module = _make_exercise_fixture("L01-python-core", "io", "02_io_practice.py")
+types_module = _make_exercise_fixture("L01-python-core", "types", "03_type_basics.py")
+conversion_module = _make_exercise_fixture("L01-python-core", "conversion", "04_type_conversion.py")
+fstring_module = _make_exercise_fixture("L01-python-core", "fstring", "05_fstring_practice.py")
+
+# L02 Exercises Fixtures
+arithmetic_module = _make_exercise_fixture("L02-operators-control", "arithmetic", "01_arithmetic_conditions.py")
+logical_module = _make_exercise_fixture("L02-operators-control", "logical", "02_logical_operators.py")
+bitwise_module = _make_exercise_fixture("L02-operators-control", "bitwise", "03_bitwise_operations.py")
+loops_module = _make_exercise_fixture("L02-operators-control", "loops", "04_loops.py")
+match_module = _make_exercise_fixture("L02-operators-control", "match", "05_match_case.py")
+comprehensive_module = _make_exercise_fixture("L02-operators-control", "comprehensive", "06_comprehensive.py")
+
+# L04 Exercises Fixtures
+functions_module = _make_exercise_fixture("L04-functions-modules", "functions", "01_functions.py")
+modules_module = _make_exercise_fixture("L04-functions-modules", "modules", "02_modules.py")
+
+# L05 Exercises Fixtures
+pdb_module = _make_exercise_fixture("L05-debugging-tools", "pdb", "01_pdb_practice.py")
+traceback_module = _make_exercise_fixture("L05-debugging-tools", "traceback", "02_traceback_practice.py")
+
+# L06 Exercises Fixtures (额外)
+basic_handling_module = _make_exercise_fixture("L06-exceptions", "basic_handling", "01_basic_handling.py")
+multiple_exceptions_module = _make_exercise_fixture("L06-exceptions", "multiple_exceptions", "02_multiple_exceptions.py")
+custom_exceptions_module = _make_exercise_fixture("L06-exceptions", "custom_exceptions", "03_custom_exceptions.py")
+
+# L07 Exercises Fixtures
+oop_basics_module = _make_exercise_fixture("L07-oop-basics", "oop_basics", "01_oop_basics.py")
+inheritance_module = _make_exercise_fixture("L07-oop-basics", "inheritance", "02_inheritance_practice.py")
+property_module = _make_exercise_fixture("L07-oop-basics", "property", "03_property_practice.py")
+
+# L08 Exercises Fixtures
+fraction_module = _make_exercise_fixture("L08-magic-methods", "fraction", "01_fraction.py")
+set_class_module = _make_exercise_fixture("L08-magic-methods", "set_class", "02_set_class.py")
+callable_module = _make_exercise_fixture("L08-magic-methods", "callable", "03_callable.py")
+
+# L09 Exercises Fixtures
+log_parser_module = _make_exercise_fixture("L09-file-operations", "log_parser", "01_log_parser.py")
+csv_writer_module = _make_exercise_fixture("L09-file-operations", "csv_writer", "02_csv_writer.py")
+file_search_module = _make_exercise_fixture("L09-file-operations", "file_search", "03_file_search.py")
