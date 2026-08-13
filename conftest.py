@@ -5,6 +5,18 @@
 
 from __future__ import annotations
 
+# 兼容性别名：在导入任何课程代码之前设置
+import sys as _sys
+
+# python-jose 使用 'from jose import jwt'，但课程代码使用 'import jwt'
+# 添加 jwt 别名以兼容两种导入方式
+try:
+    from jose import jwt as _jwt
+    if "jwt" not in _sys.modules:
+        _sys.modules["jwt"] = _jwt
+except ImportError:
+    pass
+
 from collections.abc import Generator  # noqa: TC003  # 运行时用于 fixture 返回类型注解
 import importlib.util
 import logging
@@ -38,6 +50,9 @@ _LOADED_MODULES: dict[str, ModuleType] = {}
 # 仓库根目录（动态向上查找，确保无论 pytest rootdir 在哪都正确）
 _REPO_ROOT: Path | None = None
 
+# Lesson 映射缓存（延迟初始化）
+_LESSON_MAP: dict[Path, tuple[Path, Literal["solutions"] | Literal["examples"]]] | None = None
+
 
 def _find_repo_root() -> Path:
     """动态向上查找仓库根目录。
@@ -60,9 +75,14 @@ def _find_repo_root() -> Path:
 def _discover_lessons() -> dict[Path, tuple[Path, Literal["solutions"] | Literal["examples"]]]:
     """发现所有包含 tests/ 和 solutions/ 或 examples/ 的 lesson 目录。
 
-    使用动态查找的仓库根确保无论 pytest rootdir 在哪里都能正确工作。
+    使用延迟初始化避免在 pytest 启动时扫描所有目录。
     """
-    global _REPO_ROOT  # noqa: PLW0603
+    global _REPO_ROOT, _LESSON_MAP  # noqa: PLW0603
+
+    # 延迟初始化：只在首次调用时扫描
+    if _LESSON_MAP is not None:
+        return _LESSON_MAP
+
     _REPO_ROOT = _find_repo_root()
 
     lessons: dict[Path, tuple[Path, Literal["solutions"] | Literal["examples"]]] = {}
@@ -84,13 +104,16 @@ def _discover_lessons() -> dict[Path, tuple[Path, Literal["solutions"] | Literal
                 elif examples_dir.is_dir():
                     lessons[lesson_dir] = (examples_dir, "examples")
 
-    return lessons
+    _LESSON_MAP = lessons
+    logger.info(f"发现 {len(_LESSON_MAP)} 个课程测试目录 (repo_root={_REPO_ROOT})")
+    return _LESSON_MAP
 
 
-LESSON_MAP: dict[Path, tuple[Path, Literal["solutions"] | Literal["examples"]]] = (
-    _discover_lessons()
-)
-logger.info(f"发现 {len(LESSON_MAP)} 个课程测试目录 (repo_root={_REPO_ROOT})")
+def _get_lesson_map() -> dict[Path, tuple[Path, Literal["solutions"] | Literal["examples"]]]:
+    """获取 lesson 映射（延迟初始化）。"""
+    if _LESSON_MAP is None:
+        _discover_lessons()
+    return _LESSON_MAP or {}
 
 
 def _get_lesson_dir(file_path: str) -> Path | None:
@@ -273,10 +296,10 @@ def pytest_pycollect_makemodule(module_path: Path, parent: object) -> None:
         return
 
     lesson_dir_abs = lesson_dir.resolve()
-    if lesson_dir_abs not in LESSON_MAP:
+    if lesson_dir_abs not in _get_lesson_map():
         return
 
-    target_dir, primary_type = LESSON_MAP[lesson_dir_abs]
+    target_dir, primary_type = _get_lesson_map()[lesson_dir_abs]
 
     # 加载 LESSON_MAP 中的主要模块类型
     try:
@@ -375,8 +398,8 @@ def _lesson_fixture_injector(  # noqa: PLR0912, PLR0915
     lesson_dir_abs = lesson_dir.resolve()
     orig_module: ModuleType | None = None
     active_module_type: str | None = None
-    if lesson_dir_abs in LESSON_MAP:
-        _target_dir, module_type = LESSON_MAP[lesson_dir_abs]
+    if lesson_dir_abs in _get_lesson_map():
+        _target_dir, module_type = _get_lesson_map()[lesson_dir_abs]
         cache_key = f"{lesson_dir_abs}::{module_type}"
         # 如果缓存为空（移除了预加载），按需加载
         if cache_key not in _LOADED_MODULES:
@@ -597,6 +620,32 @@ class _ExamplesWrapper:
         self.production_backpressure = pb
 
 
+class _L61ExamplesWrapper:
+    """包装 L61 examples 子模块，模拟 examples 包的属性访问。"""
+
+    __slots__ = (
+        "basic_agent_node_01",
+        "human_in_the_loop_03",
+        "multi_agent_demo",
+        "supervisor_router_02",
+    )
+
+    def __init__(
+        self,
+        basic_agent: object,
+        human_loop: object,
+        multi_agent: object,
+        supervisor: object,
+    ) -> None:
+        self.basic_agent_node_01 = basic_agent
+        self.human_in_the_loop_03 = human_loop
+        self.multi_agent_demo = multi_agent
+        self.supervisor_router_02 = supervisor
+
+    def __getattr__(self, name: str) -> object:
+        raise AttributeError(f"module 'examples' has no attribute '{name}'")
+
+
 @pytest.fixture(scope="module")
 def solutions() -> ModuleType:
     """返回当前 lesson 的 solutions 包。"""
@@ -606,19 +655,31 @@ def solutions() -> ModuleType:
 
 
 @pytest.fixture(scope="module")
-def examples(request: pytest.FixtureRequest) -> _ExamplesWrapper | ModuleType:
+def examples(request: pytest.FixtureRequest) -> _ExamplesWrapper | _L61ExamplesWrapper | ModuleType:
     """返回当前 lesson 的 examples 包。
 
     - L36: 返回 _ExamplesWrapper（包含 backpressure_basics, production_backpressure）
+    - L61: 返回 _L61ExamplesWrapper（包含多 Agent 相关模块）
     - 其他 lesson: 返回 sys.modules["examples"]
     """
     fspath = getattr(request.module, "__file__", None) or ""
     lesson_dir = _get_lesson_dir(fspath)
-    if lesson_dir and "L36" in lesson_dir.name:
-        examples_dir = lesson_dir / "examples"
-        bb = _load_examples_submodule("01_backpressure_basics", examples_dir)
-        pb = _load_examples_submodule("02_production_backpressure", examples_dir)
-        return _ExamplesWrapper(bb, pb)
+
+    if lesson_dir:
+        if "L36" in lesson_dir.name:
+            examples_dir = lesson_dir / "examples"
+            bb = _load_examples_submodule("01_backpressure_basics", examples_dir)
+            pb = _load_examples_submodule("02_production_backpressure", examples_dir)
+            return _ExamplesWrapper(bb, pb)
+
+        if "L61" in lesson_dir.name:
+            examples_dir = lesson_dir / "examples"
+            basic = _load_examples_submodule("basic_agent_node_01", examples_dir)
+            human_loop = _load_examples_submodule("human_in_the_loop_03", examples_dir)
+            multi_agent = _load_examples_submodule("multi_agent_demo", examples_dir)
+            supervisor = _load_examples_submodule("supervisor_router_02", examples_dir)
+            return _L61ExamplesWrapper(basic, human_loop, multi_agent, supervisor)
+
     if "examples" in sys.modules:
         return sys.modules["examples"]
     raise RuntimeError("examples 模块未加载，请检查 conftest.py 配置")

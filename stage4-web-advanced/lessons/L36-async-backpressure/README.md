@@ -50,7 +50,7 @@ L36-async-backpressure/
 ## 🚀 快速开始
 
 ```bash
-cd stage4-web-advanced/lessoL36-async-backpressure
+cd stage4-web-advanced/lessons/L36-async-backpressure
 uv run --extra dev pytest tests -q
 ```
 
@@ -63,7 +63,7 @@ uv run python examples/02_token_bucket.py
 
 ## 🧪 验收标准
 
-- `uv run --extra dev pytest stage4-web-advanced/lessoL36-async-backpressure/tests -q` 通过
+- `uv run --extra dev pytest stage4-web-advanced/lessons/L36-async-backpressure/tests -q` 通过
 - 能说明何时返回 429、何时排队等待、何时熔断、何时降级
 - 能为一个 FastAPI 接口画出容量预算：入口 QPS、并发数、队列长度、超时、重试次数
 - 能指出“无限 `gather` / 无限队列 / 无超时重试”的生产风险

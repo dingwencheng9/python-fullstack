@@ -9,9 +9,9 @@ import pytest
 class TestCallCounter:
     """调用计数器测试"""
 
-    def test_call_counter_counts_calls(self):
+    def test_call_counter_counts_calls(self, solutions):
         """调用计数器应该正确计数"""
-        from solutions import CallCounter
+        CallCounter = getattr(solutions, "CallCounter")
 
         @CallCounter
         def my_func():
@@ -26,9 +26,9 @@ class TestCallCounter:
         my_func()
         assert my_func.count == 3
 
-    def test_call_counter_preserves_function(self):
+    def test_call_counter_preserves_function(self, solutions):
         """调用计数器应该保留原函数功能"""
-        from solutions import CallCounter
+        CallCounter = getattr(solutions, "CallCounter")
 
         @CallCounter
         def add(a, b):
@@ -38,9 +38,9 @@ class TestCallCounter:
         assert result == 3
         assert add.count == 1
 
-    def test_call_counter_preserves_metadata(self):
+    def test_call_counter_preserves_metadata(self, solutions):
         """调用计数器应该保留函数元信息"""
-        from solutions import CallCounter
+        CallCounter = getattr(solutions, "CallCounter")
 
         @CallCounter
         def my_function():
@@ -54,9 +54,9 @@ class TestCallCounter:
 class TestSingleton:
     """单例模式测试"""
 
-    def test_singleton_returns_same_instance(self):
+    def test_singleton_returns_same_instance(self, solutions):
         """单例应该返回相同实例"""
-        from solutions import singleton
+        singleton = getattr(solutions, "singleton")
 
         @singleton
         class MyClass:
@@ -70,9 +70,9 @@ class TestSingleton:
         assert obj1.value == 10  # 第一次初始化的值
         assert obj2.value == 10  # 共享同一个实例
 
-    def test_singleton_different_classes(self):
+    def test_singleton_different_classes(self, solutions):
         """不同类的单例应该独立"""
-        from solutions import singleton
+        singleton = getattr(solutions, "singleton")
 
         @singleton
         class ClassA:
@@ -95,9 +95,10 @@ class TestSingleton:
 class TestValidate:
     """参数验证装饰器测试"""
 
-    def test_validate_passes_valid_args(self):
+    def test_validate_passes_valid_args(self, solutions):
         """有效参数应该通过验证"""
-        from solutions import validate, isinstance_arg
+        validate = getattr(solutions, "validate")
+        isinstance_arg = getattr(solutions, "isinstance_arg")
 
         @validate(
             name=isinstance_arg(str),
@@ -109,9 +110,10 @@ class TestValidate:
         result = create_person("Alice", 25)
         assert result == {"name": "Alice", "age": 25}
 
-    def test_validate_fails_on_invalid_type(self):
+    def test_validate_fails_on_invalid_type(self, solutions):
         """类型错误应该抛出异常"""
-        from solutions import validate, isinstance_arg
+        validate = getattr(solutions, "validate")
+        isinstance_arg = getattr(solutions, "isinstance_arg")
 
         @validate(name=isinstance_arg(str))
         def greet(name):
@@ -120,9 +122,9 @@ class TestValidate:
         with pytest.raises(TypeError, match="Expected str"):
             greet(123)
 
-    def test_validate_fails_on_invalid_value(self):
+    def test_validate_fails_on_invalid_value(self, solutions):
         """值范围错误应该抛出异常"""
-        from solutions import validate
+        validate = getattr(solutions, "validate")
 
         def validate_age(value):
             if not (0 <= value <= 150):
@@ -140,9 +142,9 @@ class TestValidate:
 class TestMemoized:
     """记忆化类方法测试"""
 
-    def test_memoized_caches_method_result(self):
+    def test_memoized_caches_method_result(self, solutions):
         """记忆化应该缓存方法结果"""
-        from solutions import Memoized
+        Memoized = getattr(solutions, "Memoized")
 
         class Math:
             @Memoized
@@ -152,11 +154,7 @@ class TestMemoized:
                 return self.fibonacci(n - 1) + self.fibonacci(n - 2)
 
         math = Math()
-        call_count = [0]
 
-        original_fib = math.fibonacci
-
-        # 测试缓存效果
         result1 = math.fibonacci(5)
         assert result1 == 5
 
@@ -164,9 +162,9 @@ class TestMemoized:
         result2 = math.fibonacci(5)
         assert result2 == 5
 
-    def test_memoized_different_instances(self):
+    def test_memoized_different_instances(self, solutions):
         """不同实例的缓存应该独立"""
-        from solutions import Memoized
+        Memoized = getattr(solutions, "Memoized")
 
         class Math:
             @Memoized
@@ -184,9 +182,9 @@ class TestMemoized:
 class TestClassDecoratorEdgeCases:
     """类装饰器边界情况测试"""
 
-    def test_singleton_with_complex_init(self):
+    def test_singleton_with_complex_init(self, solutions):
         """单例应该处理复杂的初始化"""
-        from solutions import singleton
+        singleton = getattr(solutions, "singleton")
 
         @singleton
         class Database:

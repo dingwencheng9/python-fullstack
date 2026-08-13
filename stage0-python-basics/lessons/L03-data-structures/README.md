@@ -38,8 +38,8 @@ cd stage0-python-basics/lessons/L03-data-structures
 
 ```bash
 uv run python examples/01_list.py
-uv run python examples/02_dict.py
-uv run python examples/04_comprehension_vs_generator.py
+uv run python examples/03_dict.py
+uv run python examples/05_comprehensions.py
 ```
 
 运行测试：

@@ -43,9 +43,15 @@ from opentelemetry.sdk.trace.export import BatchSpanProcessor
 class Config:
     """应用配置"""
 
-    # 数据库配置
-    DATABASE_URL = os.getenv("DATABASE_URL", "postgresql://postgres:password@localhost:5432/agent_db")
-    REDIS_URL = os.getenv("REDIS_URL", "redis://localhost:6379")
+    # 数据库配置（⚠️ 生产环境必须从环境变量设置）
+    # 演示时使用 secrets.token_hex() 动态生成（仅内存有效）
+    import secrets
+    _default_db_pass = secrets.token_hex(16)
+    DATABASE_URL: str = os.getenv(
+        "DATABASE_URL",
+        f"postgresql://postgres:{_default_db_pass}@localhost:5432/agent_db"
+    )  # type: ignore[assignment]
+    REDIS_URL: str = os.getenv("REDIS_URL", "redis://localhost:6379")  # type: ignore[assignment]
 
     # OpenTelemetry 配置
     OTEL_EXPORTER_OTLP_ENDPOINT = os.getenv("OTEL_EXPORTER_OTLP_ENDPOINT", "http://localhost:4317")

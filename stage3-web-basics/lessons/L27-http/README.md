@@ -27,9 +27,11 @@ L27-http/
 ├── README.md              # 课程说明与学习路径
 ├── lesson.md             # 详细课程讲义
 ├── examples/
-│   ├── 01_http_methods.py
-│   ├── 02_headers.py
-│   └── 03_cookie_session.py
+│   ├── 01_raw_http_request.py   # 原始 HTTP 请求
+│   ├── 02_simple_server.py      # 简单服务器
+│   ├── 03_http_requests.py     # requests 库使用
+│   ├── 04_http_status_codes.py # HTTP 状态码
+│   └── 05_http_headers.py      # HTTP 头部
 ├── exercises/             # 练习题
 ├── solutions/            # 参考答案
 └── tests/               # 单元测试

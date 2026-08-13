@@ -189,4 +189,7 @@ _(详细代码见 lesson.md)_
 
 ## 🔗 下一步
 
-[L52: LangChain 基础](../L56-langchain/README.md)
+完成本课后继续学习：
+
+- [L58: LangGraph 工作流编排](../L58-langgraph-adv/README.md)
+- L58 会学习 LangGraph，通过图结构编排复杂的多步骤 Agent 工作流。

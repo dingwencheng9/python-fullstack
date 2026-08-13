@@ -250,8 +250,6 @@ def test_validate_decorator():
 
 def test_decorator_chain():
     """测试装饰器链"""
-    calls = []
-
     @log
     @retry(max_attempts=2, delay=0.01)
     @validate(name=str, age=int)

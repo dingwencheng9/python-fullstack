@@ -151,7 +151,7 @@ async def test_participant_timeout_handling():
     from solutions.solution_01_two_phase_commit import Coordinator
 
     coordinator = Coordinator()
-    tx = await coordinator.begin_transaction("tx-timeout", ["slow-p1"])
+    tx = await coordinator.begin_transaction("tx-timeout", ["slow-p1"])  # noqa: F841
 
     # 不发送投票，模拟超时
     # 5秒后协调者应该超时并返回 False

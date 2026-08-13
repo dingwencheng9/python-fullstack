@@ -1,7 +1,14 @@
-"""P05 示例 2: JWT 认证与 RBAC"""
+"""P05 示例 2: JWT 认证与 RBAC
+
+⚠️ 安全警告：
+- 此文件中的 JWT 实现仅用于教学演示
+- 生产环境必须使用 python-jose + bcrypt
+- 密钥必须通过环境变量配置
+"""
 
 from __future__ import annotations
 
+import os
 import time
 import hashlib
 import hmac
@@ -10,6 +17,19 @@ import json
 from dataclasses import dataclass
 from enum import Enum
 from typing import Optional
+
+# 安全密钥获取（生产级模式）
+def _get_jwt_secret() -> str:
+    """从环境变量获取 JWT 密钥"""
+    secret = os.environ.get("JWT_SECRET_KEY")
+    if not secret:
+        raise ValueError(
+            "JWT_SECRET_KEY 环境变量未设置。\n"
+            "生产环境必须设置安全的随机密钥。\n"
+            "示例: openssl rand -hex 32"
+        )
+    return secret
+
 
 # ============ 用户角色 ============
 
@@ -30,10 +50,14 @@ ROLE_LEVELS = {
 # ============ JWT 实现 ============
 
 class JWTToken:
-    """简化的 JWT 实现 - 参考 L38"""
+    """简化的 JWT 实现 - 参考 L38
 
-    def __init__(self, secret_key: str = "taskcollab-secret-key"):
-        self.secret = secret_key
+    ⚠️ 生产环境使用 python-jose 库
+    """
+
+    def __init__(self, secret_key: str | None = None):
+        # 如果未提供密钥，从环境变量获取（生产级模式）
+        self.secret = secret_key or _get_jwt_secret()
 
     def encode(self, payload: dict, expires_in: int = 1800) -> str:
         """创建 JWT token"""
@@ -92,16 +116,37 @@ class JWTToken:
 # ============ 密码哈希 ============
 
 class PasswordHasher:
-    """简化的密码哈希 - 实际使用 bcrypt"""
+    """密码哈希 - 生产环境使用 bcrypt
+
+    ⚠️ 此实现仅用于教学演示
+    生产环境必须使用 bcrypt 或 argon2
+    """
 
     def hash(self, password: str) -> str:
-        """哈希密码"""
-        # 实际应使用 bcrypt
+        """哈希密码
+
+        ⚠️ 教学演示使用 SHA256，生产必须用 bcrypt：
+        >>> import bcrypt
+        >>> bcrypt.hashpw(password.encode(), bcrypt.gensalt()).decode()
+        """
+        # 警告：仅教学演示使用 SHA256！
+        # 生产环境必须使用 bcrypt:
+        # import bcrypt
+        # return bcrypt.hashpw(password.encode(), bcrypt.gensalt()).decode()
         import hashlib
+
         return hashlib.sha256(password.encode()).hexdigest()
 
     def verify(self, plain_password: str, hashed_password: str) -> bool:
-        """验证密码"""
+        """验证密码
+
+        ⚠️ 教学演示实现，生产环境：
+        >>> bcrypt.checkpw(plain_password.encode(), hashed_password.encode())
+        """
+        # 警告：仅教学演示使用 SHA256 比较！
+        # 生产环境必须使用 bcrypt:
+        # import bcrypt
+        # return bcrypt.checkpw(plain_password.encode(), hashed_password.encode())
         return self.hash(plain_password) == hashed_password
 
 
@@ -172,7 +217,7 @@ def demonstrate_auth():
     }
     token = jwt.encode(token_payload, expires_in=1800)
     print(f"  Token: {token[:50]}...")
-    print(f"  有效期: 30 分钟")
+    print("  有效期: 30 分钟")
 
     # 4. 解析 Token
     decoded = jwt.decode(token)

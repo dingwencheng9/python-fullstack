@@ -11,8 +11,8 @@ def square_def(x: int) -> int:
     return x * x
 
 
-# 等价的 lambda 表达式
-square_lambda = lambda x: x * x
+# ✅ 教学演示：lambda 赋值（实际项目中推荐用 def）
+square_lambda = lambda x: x * x  # noqa: E731
 
 print("=== lambda 基础 ===")
 print(f"square_def(5) = {square_def(5)}")
@@ -74,12 +74,10 @@ print(f"大于5: {gt_five}")
 
 print("\n=== lambda 限制 ===")
 
-# ✅ 正确：条件表达式
-abs_val = lambda x: x if x >= 0 else -x
+# ✅ 教学演示：lambda 条件表达式和参数
+abs_val = lambda x: x if x >= 0 else -x  # noqa: E731
+add = lambda x, y: x + y  # noqa: E731
 print(f"abs_val(-5) = {abs_val(-5)}")
-
-# ✅ 多参数 lambda
-add = lambda x, y: x + y
 print(f"add(3, 4) = {add(3, 4)}")
 
 # ❌ 错误：lambda 不能包含 if/while/for 语句（只能是表达式）

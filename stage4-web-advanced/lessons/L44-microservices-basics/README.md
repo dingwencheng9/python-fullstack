@@ -32,6 +32,32 @@
 
 ---
 
+## 🚀 快速开始
+
+```bash
+cd stage4-web-advanced/lessons/L44-microservices-basics
+
+# 运行示例代码
+python examples/01_service_discovery.py
+python examples/02_circuit_breaker.py
+python examples/03_api_gateway.py
+```
+
+## 📁 目录结构
+
+```
+L44-microservices-basics/
+├── README.md                    # 本文档
+├── lesson.md                    # 课程内容
+├── examples/                    # 示例代码
+│   ├── 01_service_discovery.py  # 服务发现
+│   ├── 02_circuit_breaker.py  # 熔断器
+│   └── 03_api_gateway.py    # API 网关
+├── exercises/                   # 练习题
+├── solutions/                   # 参考解答
+└── tests/                       # 测试套件
+```
+
 ## 🔧 环境准备
 
 ```bash

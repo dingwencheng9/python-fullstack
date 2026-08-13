@@ -560,11 +560,15 @@ function ChatComponent() {
 
 ## 📝 练习题
 
-### 练习 1: 基础 SSE 实现
+### 综合练习: Agent SSE 流式路由
 
-**文件**: `exercises/01_sse_streaming.py`
+**文件**: `exercises/exercise_01.py`
 
-实现一个简单的 SSE 端点，每秒推送当前时间：
+本练习整合了 SSE 流式路由的核心功能，包括：
+
+1. **基础 SSE 实现**：每秒推送当前时间
+2. **JWT 保护的流式接口**：添加认证机制
+3. **错误处理与超时控制**：实现优雅的错误处理
 
 ```python
 from fastapi import FastAPI
@@ -576,7 +580,7 @@ app = FastAPI()
 
 @app.get("/time")
 async def stream_time():
-    """TODO: 实现流式时间推送
+    """实现流式时间推送
 
     要求:
     - 每秒推送一次当前时间
@@ -586,58 +590,19 @@ async def stream_time():
     # 你的代码
     pass
 
-# 提示:
-# 1. 使用 async def 生成器
-# 2. 格式: event: time\ndata: {...}\n\n
-# 3. 返回 StreamingResponse
-```
-
----
-
-### 练习 2: JWT 保护的流式接口
-
-**文件**: `exercises/02_agent_router.py`
-
-为 SSE 端点添加 JWT 认证：
-
-```python
-from fastapi import FastAPI, Depends, Header, HTTPException
-
-app = FastAPI()
-
-async def verify_token(authorization: str = Header(None)) -> dict:
-    """TODO: 实现 JWT Token 验证
+@app.post("/protected/stream")
+async def protected_stream():
+    """实现受保护的流式接口
 
     要求:
-    - 检查 Authorization Header
+    - 添加 JWT Token 验证
     - 验证 Bearer Token 格式
-    - 返回用户信息
     """
     # 你的代码
     pass
 
-@app.post("/protected/stream")
-async def protected_stream(
-    # TODO: 添加 JWT 认证依赖
-):
-    """TODO: 实现受保护的流式接口"""
-    # 你的代码
-    pass
-```
-
----
-
-### 练习 3: 错误处理与超时控制
-
-**文件**: `exercises/03_checkpoint.py`
-
-实现完整的错误处理机制：
-
-```python
-import asyncio
-
 async def generate_events_with_error_handling(timeout: int = 30):
-    """TODO: 实现错误处理和超时控制
+    """实现错误处理和超时控制
 
     要求:
     - 捕获所有异常并发送 error 事件
@@ -657,6 +622,7 @@ async def generate_events_with_error_handling(timeout: int = 30):
         # 其他错误处理
         pass
 ```
+
 
 ---
 

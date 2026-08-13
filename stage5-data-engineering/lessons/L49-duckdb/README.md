@@ -14,10 +14,10 @@ DuckDB 是一个**嵌入式 OLAP 数据库**：零依赖、纯 Python、直接�
 
 ## 🎯 学习目标
 
-1. ✅ 理解 DuckDB 与 Pandas / SQLite / PostgreSQL49 的适用场景区别
+1. ✅ 理解 DuckDB 与 Pandas / SQLite / PostgreSQL 的适用场景区别
 2. ✅ 使用 DuckDB 直接查询 CSV/Parquet 文件（零导入）
 3. ✅ 实现 DuckDB + Pandas 混合分析工作流
-4. ✅ 使用 SQL49 窗口函数进行高级分析（rolling、ranking、percentile）
+4. ✅ 使用 SQL 窗口函数进行高级分析（rolling、ranking、percentile）
 5. ✅ 理解 DuckDB 在百万行数据上的性能优势
 6. ✅ 掌握 DuckDB 与 Parquet 的列式存储协同
 
@@ -25,8 +25,8 @@ DuckDB 是一个**嵌入式 OLAP 数据库**：零依赖、纯 Python、直接�
 
 ## 📋 前置知识
 
-- [L48: Pandas 完整实战](../L50-pandas-complete/) — 知道如何清洗与聚合 DataFrame
-- [L49: 数据可视化](../L48-visualization/) — 知道分析结果如何服务图表表达
+- [L47: Pandas 完整实战](../L47-pandas/) — 知道如何清洗与聚合 DataFrame
+- [L48: 数据可视化](../L48-visualization/) — 知道分析结果如何服务图表表达
 - 基础 SQL（SELECT/JOIN/GROUP BY/WINDOW）
 
 ---

@@ -1,6 +1,6 @@
 """test_generator.py - 生成器管道测试"""
+# noqa: F401 - 未来可能需要 pytest.mark 用于参数化测试
 
-import pytest
 from solutions.solution_02_generator_pipeline import (
     generator_pipeline,
     batch_generator,

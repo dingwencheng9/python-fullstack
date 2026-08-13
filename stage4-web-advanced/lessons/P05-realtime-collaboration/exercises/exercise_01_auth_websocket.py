@@ -1,12 +1,29 @@
-"""P05 练习 1: 认证与 WebSocket 整合"""
+"""P05 练习 1: 认证与 WebSocket 整合
+
+⚠️ 安全警告：此文件中的实现仅用于教学演示。
+生产环境必须使用 python-jose + bcrypt，并从环境变量获取密钥。
+"""
 
 from __future__ import annotations
 
+import os
 import asyncio
 from dataclasses import dataclass, field
 from datetime import datetime, timedelta
 from enum import Enum
 from typing import Optional
+
+# 安全密钥获取（生产级模式）
+def _get_jwt_secret() -> str:
+    """从环境变量获取 JWT 密钥"""
+    secret = os.environ.get("JWT_SECRET_KEY")
+    if not secret:
+        raise ValueError(
+            "JWT_SECRET_KEY 环境变量未设置。\n"
+            "生产环境必须设置安全的随机密钥。"
+        )
+    return secret
+
 
 # ============ 数据模型 ============
 
@@ -33,17 +50,15 @@ class User:
 
 # ============ JWT 实现 ============
 
-import base64
-import hashlib
-import hmac
-import json
-import time
-
 class JWTToken:
-    """简化的 JWT 实现 - 实际使用 python-jose"""
+    """简化的 JWT 实现 - 实际使用 python-jose
 
-    def __init__(self, secret_key: str = "your-secret-key"):
-        self.secret = secret_key
+    ⚠️ 生产环境必须从环境变量获取密钥
+    """
+
+    def __init__(self, secret_key: str | None = None):
+        # 必须从环境变量获取（生产级模式）
+        self.secret = secret_key or _get_jwt_secret()
 
     def encode(self, payload: dict, expires_in: int = 3600) -> str:
         """创建 JWT token"""
@@ -100,6 +115,13 @@ class JWTToken:
         except Exception:
             return None
 
+import base64
+import hashlib
+import hmac
+import json
+import time
+
+
 jwt_token = JWTToken()
 
 # ============ WebSocket 连接管理 ============
@@ -148,18 +170,10 @@ def exercise_01_create_token():
     # token 应该包含: {"sub": user_id, "role": role.value}
     # 过期时间: 30 分钟
 
-    user = User(
-        id=1,
-        email="alice@example.com",
-        username="alice",
-        role=UserRole.MEMBER,
-        hashed_password="xxx"
-    )
-
-    # 你的代码:
-    # token = ...
-    # assert token is not None
-    # assert "." in token
+    # 学员应实现:
+    # user = User(id=1, email="alice@example.com", username="alice",
+    #             role=UserRole.MEMBER, hashed_password="xxx")
+    # token = jwt_token.encode({"sub": user.id, "role": user.role.value})
 
     print("练习 1: 创建 JWT Token")
     print("- 实现 create_token(user) 函数")
@@ -171,13 +185,10 @@ def exercise_02_verify_token():
     # TODO: 验证 token 并返回 payload
     # 如果 token 无效或过期，返回 None
 
-    valid_token = jwt_token.encode({"sub": 1, "role": "member"})
-    invalid_token = "invalid.token.here"
-
-    # 你的代码:
+    # 学员应实现:
+    # valid_token = jwt_token.encode({"sub": 1, "role": "member"})
+    # invalid_token = "invalid.token.here"
     # payload = jwt_token.decode(valid_token)
-    # assert payload is not None
-    # assert payload["sub"] == 1
 
     print("练习 2: 验证 JWT Token")
     print("- 实现 verify_token(token) 函数")
@@ -189,16 +200,17 @@ def exercise_03_websocket_subscription():
     # TODO: 实现用户订阅和消息广播
 
     async def test_subscription():
-        user_id = 1
-        queue = asyncio.Queue()
-
-        # 订阅
+        # 学员应实现:
+        # user_id = 1
+        # queue = asyncio.Queue()
+        #
+        # # 订阅
         # manager.subscribe(user_id, queue)
-
-        # 发送消息
+        #
+        # # 发送消息
         # await manager.broadcast_to_user(user_id, {"type": "message", "content": "hello"})
-
-        # 接收消息
+        #
+        # # 接收消息
         # msg = await asyncio.wait_for(queue.get(), timeout=1)
         # assert msg["content"] == "hello"
 
@@ -214,16 +226,15 @@ def exercise_04_authenticated_websocket():
     # TODO: 实现带 JWT 认证的 WebSocket 连接
 
     async def test_auth_flow():
-        # 1. 用户登录获取 token
-        token = jwt_token.encode({"sub": 1, "role": "member"})
-
-        # 2. WebSocket 连接时验证 token
-        def verify_ws_token(token: str) -> Optional[dict]:
-            # 你的代码:
-            # return jwt_token.decode(token)
-            pass
-
-        payload = verify_ws_token(token)
+        # 学员应实现:
+        # # 1. 用户登录获取 token
+        # token = jwt_token.encode({"sub": 1, "role": "member"})
+        #
+        # # 2. WebSocket 连接时验证 token
+        # def verify_ws_token(token: str) -> Optional[dict]:
+        #     return jwt_token.decode(token)
+        #
+        # payload = verify_ws_token(token)
         # assert payload is not None
         # assert payload["sub"] == 1
 

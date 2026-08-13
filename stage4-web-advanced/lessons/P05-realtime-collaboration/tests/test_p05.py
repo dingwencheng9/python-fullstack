@@ -159,7 +159,7 @@ class TestConnectionManager:
 
     def setup_method(self):
         """每个测试前执行"""
-        from dataclasses import dataclass, field
+        from dataclasses import field
         from typing import Dict, Set
 
         class ConnectionManager:
@@ -215,12 +215,6 @@ class TestPermissionCheck:
         """测试管理员权限"""
         assert self.check_permission(self.admin, self.member) is True
         assert self.check_permission(self.admin, self.viewer) is True
-
-    def check_permission(self, user_role: str, required_role: str) -> bool:
-        # 严格模式: 必须完全匹配
-        if user_role == "admin":
-            return True
-        return user_role == required_role
 
     def check_permission_hierarchical(self, user_role: str, required_role: str) -> bool:
         # 层级模式: 上级可以访问下级

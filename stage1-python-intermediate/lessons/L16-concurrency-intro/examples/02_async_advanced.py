@@ -39,7 +39,7 @@ async def managed_connection(name: str):
 async def context_manager_demo():
     """异步上下文管理器示例"""
     # 使用类
-    async with AsyncResource() as resource:
+    async with AsyncResource():
         print("使用资源中...")
 
     print()
@@ -48,9 +48,6 @@ async def context_manager_demo():
     async with managed_connection("DB") as db:
         db["data"].append({"id": 1, "name": "Alice"})
         await asyncio.sleep(0.1)
-
-
-asyncio.run(context_manager_demo())
 
 
 # === Part 2: 异步队列与生产者-消费者 ===
@@ -133,9 +130,6 @@ async def queue_demo():
     )
 
 
-asyncio.run(queue_demo())
-
-
 # === Part 3: 异步信号量与连接池 ===
 
 class AsyncConnectionPool:
@@ -193,9 +187,6 @@ async def connection_pool_demo():
         await asyncio.gather(*tasks)
 
 
-asyncio.run(connection_pool_demo())
-
-
 # === Part 4: 异步锁与线程安全 ===
 
 class AsyncCounter:
@@ -235,9 +226,6 @@ async def lock_demo():
     print(f"最终计数: {final_count} (预期: 1000)")
 
 
-asyncio.run(lock_demo())
-
-
 # === Part 5: 事件循环深入理解 ===
 
 async def event_loop_demo():
@@ -262,9 +250,6 @@ async def event_loop_demo():
 
     print(f"最终状态: t1.done()={t1.done()}, t2.done()={t2.done()}")
     print(f"结果: {results}")
-
-
-asyncio.run(event_loop_demo())
 
 
 # === Part 6: 性能对比：串行 vs 并发 ===
@@ -305,6 +290,18 @@ async def performance_comparison():
     print(f"加速比: {seq_time / con_time:.1f}x")
 
 
-asyncio.run(performance_comparison())
+# === 主函数 ===
 
-print("\n=== 异步高级语法示例完成 ===")
+async def main() -> None:
+    """异步高级语法示例"""
+    await context_manager_demo()
+    await queue_demo()
+    await connection_pool_demo()
+    await lock_demo()
+    await event_loop_demo()
+    await performance_comparison()
+    print("\n=== 异步高级语法示例完成 ===")
+
+
+if __name__ == "__main__":
+    asyncio.run(main())

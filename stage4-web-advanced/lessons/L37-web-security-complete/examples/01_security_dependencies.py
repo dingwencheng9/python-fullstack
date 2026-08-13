@@ -55,8 +55,9 @@ except ImportError:
 # 配置
 # ============================================================
 
-# JWT 配置（✅ 从环境变量读取）
-SECRET_KEY = os.environ.get("SECRET_KEY", "dev-only-insecure-key-change-in-production")
+# JWT 配置（⚠️ 生产环境必须从环境变量读取）
+# 演示时使用 secrets.token_hex() 动态生成（仅内存有效，重启丢失）
+SECRET_KEY = os.environ.get("JWT_SECRET_KEY") or secrets.token_hex(32)
 ALGORITHM = "HS256"
 ACCESS_TOKEN_EXPIRE_MINUTES = 30
 
@@ -246,7 +247,7 @@ def decode_token(token: str) -> TokenData:
                 headers={"WWW-Authenticate": "Bearer"},
             )
         return TokenData(username=username, role=UserRole(role))
-    except jwt.PyJWTError:
+    except jwt.JWTError:
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
             detail="Token 无效",

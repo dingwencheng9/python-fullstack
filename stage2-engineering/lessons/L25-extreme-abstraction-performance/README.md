@@ -212,4 +212,7 @@ _(详细代码见 lesson.md)_
 
 ## 🔗 下一步
 
-[L24: 线程与并发](../L24-threading/README.md)
+完成本课后继续学习：
+
+- [L26: 线程与并发](../L26-threading/README.md)
+- L26 会深入线程、同步原语与 GIL，帮助你理解 Python 并发的全貌。

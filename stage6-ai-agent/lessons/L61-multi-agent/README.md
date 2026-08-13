@@ -11,17 +11,17 @@
 
 ## 📋 前置知识
 
-- [L52: LangChain 基础](../L56-langchain/)
-- [L53: Agent 基础](../L54-agent-basics/)
-- [L54: LangGraph 状态机](../L58-langgraph-adv/)
+- [L54: Agent 基础](../L54-agent-basics/)
+- [L56: LangChain 基础](../L56-langchain/)
+- [L58: LangGraph 进阶](../L58-langgraph-adv/)
 
 ## 📚 课程概览
 
-- **位置**: Stage 5 / 第 6 课
+- **位置**: Stage 6 / 第 8 课
 - **学习时长**: 4-5 小时
 - **难度**: ⭐⭐⭐⭐⭐
-- **前置课程**: L56 Agent 规划
-- **后续课程**: L57 Agent 评估与调试
+- **前置课程**: L60 Agent 规划
+- **后续课程**: L62 LangGraph Server
 - **课程主题**: 多智能体协作与编排模式
 
 本 README 是课程入口地图。详细概念、代码讲解和练习说明以 `lesson.md` 为准；这里帮助你快速判断学习顺序、运行路径和完成标准。
@@ -89,7 +89,7 @@ _(详细代码见 lesson.md)_
 
 ## 📝 课程内容
 
-### 示例 1: 基础 Agent 节点 (`examples/01_basic_agent_node.py`)
+### 示例 1: 基础 Agent 节点 (`examples/basic_agent_node_01.py`)
 
 **学习重点**:
 
@@ -107,7 +107,7 @@ _(详细代码见 lesson.md)_
 
 ---
 
-### 示例 2: Supervisor 路由 (`examples/02_supervisor_router.py`)
+### 示例 2: Supervisor 路由 (`examples/supervisor_router_02.py`)
 
 **学习重点**:
 
@@ -121,7 +121,7 @@ _(详细代码见 lesson.md)_
 
 ---
 
-### 示例 3: Human-in-the-Loop (`examples/03_human_in_the_loop.py`)
+### 示例 3: Human-in-the-Loop (`examples/human_in_the_loop_03.py`)
 
 **学习重点**:
 
@@ -177,9 +177,9 @@ START → researcher → reviewer → [判断] → researcher (修改) 或 END
 
 ### 相关课程
 
-- **L51: RAG 向量数据库** - 为 Agent 提供知识检索能力
-- **L53: Agent 基础** - 单 Agent 系统的构建
-- **L38: SSE 流式响应** - 实时反馈用户
+- **L57: RAG 向量数据库** - 为 Agent 提供知识检索能力
+- **L54: Agent 基础** - 单 Agent 系统的构建
+- **L65: SSE 流式响应** - 实时反馈用户
 
 ---
 
@@ -233,4 +233,7 @@ Agent 池管理、负载均衡、动态扩缩容应对高并发。
 
 ## 🔗 下一步
 
-[L57: 下一课](../L63-agent-evaluation/README.md)
+完成本课后继续学习：
+
+- [L62: LangGraph 高级模式与生产部署](../L62-langgraph-server/README.md)
+- L62 会学习 LangGraph 的高级模式与生产部署最佳实践。

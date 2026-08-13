@@ -1,23 +1,23 @@
-"""L12 生成器进阶 - 异步生成器测试"""
+"""L12 生成器进阶 - 异步生成器测试
+
+使用根 conftest.py 提供的 solutions fixture，避免 sys.path 污染。
+"""
 
 import pytest
-import asyncio
-import sys
-from pathlib import Path
-
-sys.path.insert(0, str(Path(__file__).parent.parent / "solutions"))
-
-from solution_03_async_generator import async_count, async_filter, async_map
 
 
 @pytest.mark.asyncio
-async def test_async_count():
+async def test_async_count(solutions):
+    async_count = getattr(solutions, "async_count")
     result = [x async for x in async_count(5)]
     assert result == [0, 1, 2, 3, 4]
 
 
 @pytest.mark.asyncio
-async def test_async_filter():
+async def test_async_filter(solutions):
+    async_filter = getattr(solutions, "async_filter")
+    async_count = getattr(solutions, "async_count")
+
     async def is_even(x):
         return x % 2 == 0
     result = [x async for x in async_filter(is_even, async_count(6))]
@@ -25,7 +25,9 @@ async def test_async_filter():
 
 
 @pytest.mark.asyncio
-async def test_async_map():
+async def test_async_map(solutions):
+    async_map = getattr(solutions, "async_map")
+    async_count = getattr(solutions, "async_count")
     result = [x async for x in async_map(lambda x: x * 2, async_count(5))]
     assert result == [0, 2, 4, 6, 8]
 

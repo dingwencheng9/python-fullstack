@@ -27,9 +27,9 @@ L31-sql-advanced/
 ├── README.md              # 课程说明与学习路径
 ├── lesson.md             # 详细课程讲义
 ├── examples/
-│   ├── 01_explain_plan.py
-│   ├── 02_index_optimization.py
-│   └── 03_window_functions.py
+│   ├── 01_window_functions.py     # 窗口函数
+│   ├── 02_cte_queries.py        # CTE 查询
+│   └── 03_query_plan_indexes.py  # 查询计划与索引
 ├── exercises/             # 练习题
 ├── solutions/            # 参考答案
 └── tests/               # 单元测试

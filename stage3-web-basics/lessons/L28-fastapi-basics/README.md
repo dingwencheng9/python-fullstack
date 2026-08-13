@@ -27,10 +27,15 @@ L28-fastapi-basics/
 ├── README.md              # 课程说明与学习路径
 ├── lesson.md             # 详细课程讲义
 ├── examples/
-│   ├── 01_fastapi_crud.py
-│   ├── 02_pydantic_validation.py
-│   ├── 03_openapi_docs.py
-│   └── 04_observability.py
+│   ├── 03_fastapi_basics.py       # FastAPI 基础
+│   ├── 04_pydantic_basics.py      # Pydantic 基础
+│   ├── 05_dependency_injection.py # 依赖注入
+│   ├── async_taskgroup.py          # 异步任务组
+│   ├── contract_first_api.py      # 契约优先 API
+│   ├── loguru_demo.py             # 日志演示
+│   ├── middleware_demo.py         # 中间件演示
+│   ├── opentelemetry_demo.py      # 可观测性演示
+│   └── prometheus_metrics.py      # 指标监控
 ├── exercises/             # 练习题
 ├── solutions/            # 参考答案
 └── tests/               # 单元测试

@@ -92,11 +92,6 @@ class ConnectionManager:
     async def broadcast_to_task(self, task_id: int, message: WebSocketMessage):
         """向任务订阅者广播消息"""
         if task_id in self.task_subscriptions:
-            msg_dict = {
-                "type": message.type.value,
-                "data": message.data,
-                "timestamp": message.timestamp
-            }
             print(f"  📢 广播到任务 {task_id} ({len(self.task_subscriptions[task_id])} 个订阅者)")
             for user_id in self.task_subscriptions[task_id]:
                 await self.send_to_user(user_id, message)
@@ -234,7 +229,7 @@ async def demonstrate_heartbeat():
     print("=" * 60)
 
     manager = ConnectionManager()
-    heartbeat = HeartbeatManager(manager, interval=5)
+    HeartbeatManager(manager, interval=5)  # noqa: F841 - 仅演示初始化
 
     # 模拟连接
     queue = asyncio.Queue()

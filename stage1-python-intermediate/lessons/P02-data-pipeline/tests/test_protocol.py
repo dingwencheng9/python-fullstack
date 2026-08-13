@@ -1,6 +1,6 @@
 """test_protocol.py - Protocol + TypeVar 类型测试"""
+# noqa: F401 - 未来可能需要 pytest.mark 用于参数化测试
 
-import pytest
 from solutions.solution_01_typed_pipeline import (
     ItemProcessor,
     UppercaseProcessor,

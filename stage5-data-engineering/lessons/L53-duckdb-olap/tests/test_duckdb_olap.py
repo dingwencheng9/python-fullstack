@@ -7,15 +7,8 @@ from __future__ import annotations
 
 import pytest
 
-
-def test_duckdb_available() -> None:
-    """测试 DuckDB 是否可用"""
-    try:
-        import duckdb
-
-        assert duckdb is not None
-    except ImportError:
-        pytest.skip("DuckDB 未安装，跳过测试")
+# 模块级别跳过
+pytest.importorskip("duckdb", reason="DuckDB 未安装")
 
 
 class TestDuckDBBasics:

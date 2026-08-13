@@ -1,5 +1,10 @@
 """L54 LangGraph 测试套件"""
 
+import pytest
+
+# 模块级别跳过
+pytest.importorskip("langgraph", reason="langgraph 未安装")
+
 from typing import TypedDict, Annotated
 from langgraph.graph import StateGraph, START, END
 from operator import add

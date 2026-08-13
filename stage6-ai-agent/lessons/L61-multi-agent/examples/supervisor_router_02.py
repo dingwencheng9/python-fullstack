@@ -227,103 +227,107 @@ def should_continue(state: SupervisorState) -> Literal["researcher", "coder", "_
 # ============================================================================
 # 第五步: 构建工作流图
 # ============================================================================
-try:
-    from langgraph.graph import StateGraph, END
+def create_supervisor_graph():
+    """
+    创建 Supervisor 工作流图
 
-    def create_supervisor_graph() -> StateGraph:
-        """
-        创建 Supervisor 工作流图
+    工作流结构:
+        START
+          ↓
+      supervisor
+          ↓
+      [should_continue] → researcher
+          ↓                   ↓
+          ↓    ← ← ← ← ← ← ←
+          ↓
+        coder
+          ↓
+      [should_continue] → END
+          ↓
+     (循环回 supervisor)
 
-        工作流结构:
-            START
-              ↓
-          supervisor
-              ↓
-          [should_continue] → researcher
-              ↓                   ↓
-              ↓    ← ← ← ← ← ← ←
-              ↓
-            coder
-              ↓
-          [should_continue] → END
-              ↓
-         (循环回 supervisor)
+    Returns:
+        编译后的工作流图
 
-        Returns:
-            编译后的工作流图
-        """
-        # 创建状态图
-        workflow = StateGraph(SupervisorState)
+    Raises:
+        ImportError: 当 langgraph 未安装时
+    """
+    try:
+        from langgraph.graph import StateGraph, END
+    except ImportError as e:
+        raise ImportError(
+            "需要安装 langgraph: uv add langgraph\n"
+            f"原始错误: {e}"
+        ) from e
 
-        # 注册节点
-        workflow.add_node("supervisor", supervisor_node)
-        workflow.add_node("researcher", researcher_node)
-        workflow.add_node("coder", coder_node)
+    # 创建状态图
+    workflow = StateGraph(SupervisorState)
 
-        # 设置入口点
-        workflow.set_entry_point("supervisor")
+    # 注册节点
+    workflow.add_node("supervisor", supervisor_node)
+    workflow.add_node("researcher", researcher_node)
+    workflow.add_node("coder", coder_node)
 
-        # 添加条件边
-        workflow.add_conditional_edges(
-            "supervisor",
-            should_continue,
-            {
-                "researcher": "researcher",
-                "coder": "coder",
-                "__end__": END,
-            },
-        )
+    # 设置入口点
+    workflow.set_entry_point("supervisor")
 
-        # researcher 和 coder 执行完后返回 supervisor
-        workflow.add_edge("researcher", "supervisor")
-        workflow.add_edge("coder", "supervisor")
+    # 添加条件边
+    workflow.add_conditional_edges(
+        "supervisor",
+        should_continue,
+        {
+            "researcher": "researcher",
+            "coder": "coder",
+            "__end__": END,
+        },
+    )
 
-        # 编译图
-        return workflow.compile()
+    # researcher 和 coder 执行完后返回 supervisor
+    workflow.add_edge("researcher", "supervisor")
+    workflow.add_edge("coder", "supervisor")
 
-    def run_example() -> None:
-        """运行示例"""
-        print("=" * 60)
-        print("L21 示例 2: Supervisor 路由模式")
-        print("=" * 60)
+    # 编译图
+    return workflow.compile()
 
-        # 创建工作流图
-        graph = create_supervisor_graph()
 
-        # 初始状态
-        initial_state: SupervisorState = {
-            "messages": [],
-            "next_agent": "",
-            "iteration": 0,
-        }
+# ============================================================================
+# 运行示例
+# ============================================================================
+def run_example() -> None:
+    """运行示例"""
+    print("=" * 60)
+    print("L21 示例 2: Supervisor 路由模式")
+    print("=" * 60)
 
-        # 添加初始消息
-        from langchain_core.messages import HumanMessage
+    # 创建工作流图
+    graph = create_supervisor_graph()
 
-        initial_state["messages"] = [HumanMessage(content="帮我分析 Python 异步编程并生成示例代码")]
+    # 初始状态
+    initial_state: SupervisorState = {
+        "messages": [],
+        "next_agent": "",
+        "iteration": 0,
+    }
 
-        # 执行工作流
-        print("\n开始执行工作流...\n")
-        result = graph.invoke(initial_state)
+    # 添加初始消息
+    from langchain_core.messages import HumanMessage
 
-        print("\n" + "=" * 60)
-        print("工作流执行完成")
-        print("=" * 60)
-        print("\n最终状态:")
-        print(f"  - 迭代次数: {result.get('iteration', 'N/A')}")
-        print(f"  - 消息数量: {len(result.get('messages', []))}")
-        print("\n消息历史:")
-        for i, msg in enumerate(result.get("messages", [])):
-            print(f"  [{i}] {type(msg).__name__}: {str(msg.content)[:60]}...")
+    initial_state["messages"] = [HumanMessage(content="帮我分析 Python 异步编程并生成示例代码")]
 
-    if __name__ == "__main__":
-        run_example()
+    # 执行工作流
+    print("\n开始执行工作流...\n")
+    result = graph.invoke(initial_state)
 
-except ImportError:
-    # LangGraph 未安装时，提供简化版本
-    print("注意: LangGraph 未安装，仅展示函数定义")
-    print("安装命令: uv add langgraph")
+    print("\n" + "=" * 60)
+    print("工作流执行完成")
+    print("=" * 60)
+    print("\n最终状态:")
+    print(f"  - 迭代次数: {result.get('iteration', 'N/A')}")
+    print(f"  - 消息数量: {len(result.get('messages', []))}")
+    print("\n消息历史:")
+    for i, msg in enumerate(result.get("messages", [])):
+        print(f"  [{i}] {type(msg).__name__}: {str(msg.content)[:60]}...")
 
-    def create_supervisor_graph() -> None:
-        """LangGraph 未安装时返回 None"""
-        return None
+
+if __name__ == "__main__":
+    run_example()

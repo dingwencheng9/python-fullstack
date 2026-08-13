@@ -14,7 +14,7 @@
 由于数据文件较大（82MB），需要运行生成脚本：
 
 ```bash
-cd stage5-data-engineering/lessons/L48-pandas-complete
+cd stage5-data-engineering/lessons/L47-pandas
 python data/generate_data.py
 ```
 
@@ -313,4 +313,7 @@ _(详细代码见 lesson.md)_
 
 ## 🔗 下一步
 
-[L49: 数据可视化](../L48-visualization/README.md)
+完成本课后继续学习：
+
+- [L48: 数据可视化](../L48-visualization/README.md)
+- L48 会学习 matplotlib/seaborn，将 Pandas 数据转换为可视化图表。

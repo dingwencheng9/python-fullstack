@@ -974,11 +974,11 @@ cd stage1-python-intermediate/lessons/L10-type-system
 ```bash
 # 基础类型、Protocol、现代泛型、Callable、类型收窄、TypedDict
 python examples/01_type_hints_basics.py
-python examples/02_protocol.py
+python examples/02_protocol_typing.py
 python examples/03_pep695_generics.py
 python examples/04_callable_types.py
 python examples/05_type_narrowing.py
-python examples/07_typeddict.py
+python examples/06_typeddict.py
 ```
 
 ### 2. 完成练习题
@@ -993,9 +993,9 @@ python exercises/03_generic_constraints.py
 ### 3. 查看参考答案
 
 ```bash
-python solutions/01_type_basics_solution.py
-python solutions/02_generic_stack_solution.py
-python solutions/03_protocol_solution.py
+python solutions/solution_01_type_narrowing.py
+python solutions/solution_02_protocol.py
+python solutions/solution_03_generic_constraints.py
 ```
 
 ### 4. 运行类型检查

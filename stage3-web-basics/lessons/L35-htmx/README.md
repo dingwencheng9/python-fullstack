@@ -27,9 +27,8 @@ L35-htmx/
 ├── README.md              # 课程说明与学习路径
 ├── lesson.md             # 详细课程讲义
 ├── examples/
-│   ├── 01_htmx_basics.py
-│   ├── 02_htmx_forms.py
-│   └── 03_htmx_sse.py
+│   ├── 01_basic_htmx.py       # HTMX 基础
+│   └── 02_crud_operations.py  # CRUD 操作
 ├── exercises/             # 练习题
 ├── solutions/            # 参考答案
 └── tests/               # 单元测试

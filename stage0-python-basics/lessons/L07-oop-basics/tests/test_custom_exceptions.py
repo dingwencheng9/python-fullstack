@@ -1,6 +1,6 @@
 """L07 OOP基础 - 自定义异常测试
 
-测试 exercises/03_custom_exceptions.py 中定义的自定义异常类。
+测试 exercises/04_custom_exceptions.py 中定义的自定义异常类。
 """
 
 import importlib.util
@@ -24,8 +24,8 @@ def _load_exercise_module(name: str, file_path: Path):
 
 @pytest.fixture(scope="module")
 def custom_exceptions_module():
-    """加载 exercises/03_custom_exceptions.py"""
-    return _load_exercise_module("_test_custom", EXERCISES_DIR / "03_custom_exceptions.py")
+    """加载 exercises/04_custom_exceptions.py"""
+    return _load_exercise_module("_test_custom", EXERCISES_DIR / "04_custom_exceptions.py")
 
 
 class TestCustomExceptions:

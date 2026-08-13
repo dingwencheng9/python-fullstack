@@ -928,7 +928,6 @@ df_flat = df.reset_index()
 - `examples/02_complex_joins.py` - 复杂连接操作示例
 - `examples/03_time_series.py` - 时间序列处理示例
 - `examples/04_window_functions.py` - 窗口函数示例
-- `examples/05_performance.py` - 性能优化示例
 
 ### 练习项目
 

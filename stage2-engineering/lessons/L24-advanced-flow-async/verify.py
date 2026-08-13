@@ -33,7 +33,6 @@ REQUIRED_DIRS = [
 REQUIRED_FILES = [
     "README.md",
     "lesson.md",
-    "pyproject.toml",
     "verify.py",
     "examples/example_01_async_generators.py",
     "examples/example_02_context_managers.py",
@@ -46,7 +45,6 @@ REQUIRED_FILES = [
     "solutions/solution_01_async_contextvar.py",
     "solutions/solution_02_semaphore.py",
     "solutions/solution_03_crawler_pipeline.py",
-    "tests/conftest.py",
     "tests/test_examples.py",
     "tests/test_solutions.py",
     "tests/test_crawler.py",

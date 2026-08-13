@@ -1046,15 +1046,10 @@ print(con.execute("""
 
 - `examples/01_duckdb_basics.py` - DuckDB 基础操作
 - `examples/02_sql_extensions.py` - SQL 扩展语法
-- `examples/03_performance.py` - 性能优化示例
-- `examples/04_pandas_integration.py` - Pandas 集成
-- `examples/05_analytics.py` - 分析案例
 
 ### 练习项目
 
 - `exercises/exercise_01_ecommerce_analytics.py` - 电商数据分析
-- `exercises/exercise_02_funnel_analysis.py` - 漏斗分析
-- `exercises/exercise_03_cohort_retention.py` - 留存分析
 
 ---
 

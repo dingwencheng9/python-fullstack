@@ -1119,7 +1119,7 @@ python exercises/01_async_basics.py
 ### 2. 完成练习题
 
 ```bash
-python exercises/01_async_website_checker.py
+python exercises/01_async_basics.py
 python exercises/02_concurrent_file_processor.py
 python exercises/03_async_rate_limiter.py
 ```

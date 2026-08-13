@@ -27,9 +27,8 @@ L29-sql-basics/
 ├── README.md              # 课程说明与学习路径
 ├── lesson.md             # 详细课程讲义
 ├── examples/
-│   ├── 01_ddl_basics.py
-│   ├── 02_dml_operations.py
-│   └── 03_joins.py
+│   ├── 03_sql_queries.py     # SQL 查询示例
+│   └── main.py               # 主程序入口
 ├── exercises/             # 练习题
 ├── solutions/            # 参考答案
 └── tests/               # 单元测试

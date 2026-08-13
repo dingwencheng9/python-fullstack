@@ -101,4 +101,7 @@ _(详细代码见 lesson.md)_
 
 ## 🔗 下一步
 
-[L53: 下一课](../L54-agent-basics/README.md)
+完成本课后继续学习：
+
+- [L57: RAG 向量数据库](../L57-rag-vector/README.md)
+- L57 会学习 RAG（检索增强生成）与向量数据库，实现基于私有知识的 AI 问答。

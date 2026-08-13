@@ -27,9 +27,8 @@ L34-websocket/
 ├── README.md              # 课程说明与学习路径
 ├── lesson.md             # 详细课程讲义
 ├── examples/
-│   ├── 01_websocket_basics.py
-│   ├── 02_websocket_chat.py
-│   └── 03_websocket_protocol.py
+│   ├── 01_chat_server.py       # WebSocket 聊天服务器
+│   └── 02_client.py           # WebSocket 客户端
 ├── exercises/             # 练习题
 ├── solutions/            # 参考答案
 └── tests/               # 单元测试

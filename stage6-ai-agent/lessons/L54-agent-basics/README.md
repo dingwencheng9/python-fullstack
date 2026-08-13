@@ -96,4 +96,7 @@ _(详细代码见 lesson.md)_
 
 ## 🔗 下一步
 
-[L54: 下一课](../L58-langgraph-adv/README.md)
+完成本课后继续学习：
+
+- [L55: MCP 协议入门](../L55-mcp-protocol/README.md)
+- L55 会学习 MCP（Model Context Protocol），理解 Agent 与工具的标准化通信协议。

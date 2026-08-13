@@ -27,9 +27,11 @@ L32-docker/
 ├── README.md              # 课程说明与学习路径
 ├── lesson.md             # 详细课程讲义
 ├── examples/
-│   ├── 01_dockerfile.py
-│   ├── 02_compose.yaml
-│   └── 03_optimization.py
+│   ├── 01_check_dockerfile.py  # Dockerfile 检查
+│   ├── 02_mock_compose.py      # Mock Compose
+│   ├── 03_docker_commands.py    # Docker 命令
+│   ├── Dockerfile.fastapi       # FastAPI Dockerfile
+│   └── docker-compose.yml      # Compose 配置
 ├── exercises/             # 练习题
 ├── solutions/            # 参考答案
 └── tests/               # 单元测试

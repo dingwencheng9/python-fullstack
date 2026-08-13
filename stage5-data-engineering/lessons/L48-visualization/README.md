@@ -94,8 +94,11 @@ _(详细代码见 lesson.md)_
 
 ## 🔗 后续课程
 
-- **L48 DuckDB 分析引擎**：继续把可视化前的数据分析下推到嵌入式 OLAP 引擎。
+- **L49 DuckDB 分析引擎**：继续把可视化前的数据分析下推到嵌入式 OLAP 引擎。
 
 ## 🔗 下一步
 
-[L50: DuckDB 分析引擎](../L49-duckdb/README.md)
+完成本课后继续学习：
+
+- [L49: DuckDB 分析引擎](../L49-duckdb/README.md)
+- L49 会学习 DuckDB，一个高性能的嵌入式 OLAP 数据库。

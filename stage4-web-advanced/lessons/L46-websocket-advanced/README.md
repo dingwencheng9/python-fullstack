@@ -1,10 +1,10 @@
 # L46: WebSocket 高级应用
 
-> Stage 4 - Web 进阶 | L47-websocket-advanced
+> Stage 4 - Web 进阶 | L46-websocket-advanced
 
 ## 📚 课程简介
 
-本课程深入讲解WebSocket 高级应用的核心概念和实践技巧。
+本课程深入讲解 WebSocket 高级应用的核心概念和实践技巧，包括 Redis Pub/Sub 集成和连接管理。
 
 ## 🚀 快速开始
 
@@ -13,28 +13,22 @@
 cat lesson.md
 
 # 运行示例代码
-cd examples
-python 01_basics.py
-
-# 完成练习
-cd ../exercises
-python 01_exercise.py
+python examples/01_websocket_manager.py
+python examples/02_redis_pubsub.py
 ```
 
 ## 📁 目录结构
 
 ```
-L47-websocket-advanced/
+L46-websocket-advanced/
 ├── README.md                    # 本文档
 ├── lesson.md                    # 课程内容
 ├── examples/                    # 示例代码
-│   └── 01_basics.py
+│   ├── 01_websocket_manager.py # WebSocket 管理器
+│   └── 02_redis_pubsub.py    # Redis Pub/Sub
 ├── exercises/                   # 练习题
-│   └── 01_exercise.py
 ├── solutions/                   # 参考解答
-│   └── 01_solution.py
 └── tests/                       # 测试套件
-    └── test_basics.py
 ```
 
 ## ✅ 完成标准
@@ -46,5 +40,5 @@ L47-websocket-advanced/
 
 ## 🔗 学习路径
 
-**前置课程**: 见 lesson.md  
+**前置课程**: 见 lesson.md
 **后续课程**: 见 lesson.md

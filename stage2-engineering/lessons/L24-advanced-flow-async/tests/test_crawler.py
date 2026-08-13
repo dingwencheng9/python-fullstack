@@ -13,32 +13,35 @@
 from __future__ import annotations
 
 import asyncio
-import sys
 from unittest.mock import AsyncMock, MagicMock, patch
 
 import pytest
 
 
-# 条件跳过：检查 solution 模块的网络依赖是否可用
-# 如果 aiohttp/asyncpg 不可用，跳过整个测试文件
-def _get_crawler_module():
-    """从 sys.modules 获取爬虫模块，处理不同命名方式"""
-    # 尝试多种可能的模块名
-    for name in ["solution_03_crawler_pipeline", "_test_L22_async_flow.solution_03_crawler_pipeline"]:
-        mod = sys.modules.get(name)
-        if mod is not None:
-            return mod
-    return None
+# ============================================================================
+# 辅助函数：获取爬虫模块
+# ============================================================================
 
 
-_crawler_module = _get_crawler_module()
-_NETWORK_DEPS_AVAILABLE = getattr(_crawler_module, "_NETWORK_DEPS_AVAILABLE", False) if _crawler_module else False
+def _get_crawler_module(solutions):
+    """从 solutions fixture 获取爬虫模块。"""
+    return getattr(solutions, "solution_03_crawler_pipeline", None)
 
-if not _NETWORK_DEPS_AVAILABLE:
-    pytest.skip("需要 aiohttp 和 asyncpg 依赖（uv add aiohttp asyncpg）", allow_module_level=True)
 
-# 为方便测试，创建简化的访问接口
-solution_03_crawler_pipeline = _crawler_module
+# ============================================================================
+# Fixtures
+# ============================================================================
+
+
+@pytest.fixture
+def crawler_module(solutions):
+    """返回爬虫模块，如果不可用则跳过测试。"""
+    mod = _get_crawler_module(solutions)
+    if mod is None:
+        pytest.skip("无法加载 solution_03_crawler_pipeline 模块")
+    if not getattr(mod, "_NETWORK_DEPS_AVAILABLE", False):
+        pytest.skip("需要 aiohttp 和 asyncpg 依赖（uv add aiohttp asyncpg）")
+    return mod
 
 
 # ============================================================================
@@ -46,9 +49,9 @@ solution_03_crawler_pipeline = _crawler_module
 # ============================================================================
 
 
-def test_crawler_config(solutions) -> None:
+def test_crawler_config(crawler_module) -> None:
     """测试爬虫配置"""
-    CrawlerConfig = solution_03_crawler_pipeline.CrawlerConfig
+    CrawlerConfig = crawler_module.CrawlerConfig
 
     config = CrawlerConfig(
         max_concurrent=10,
@@ -62,10 +65,9 @@ def test_crawler_config(solutions) -> None:
     assert config.backoff_factor == 2.0  # 默认值
 
 
-def test_crawler_stats(solutions) -> None:
+def test_crawler_stats(crawler_module) -> None:
     """测试爬虫统计"""
-    crawler_pipeline = solution_03_crawler_pipeline
-    CrawlerStats = crawler_pipeline.CrawlerStats
+    CrawlerStats = crawler_module.CrawlerStats
 
     stats = CrawlerStats(total=100, success=80, failed=20)
 
@@ -76,10 +78,9 @@ def test_crawler_stats(solutions) -> None:
     assert stats.throughput > 0
 
 
-def test_page_result_type(solutions) -> None:
+def test_page_result_type(crawler_module) -> None:
     """测试 PageResult 类型"""
-    crawler_pipeline = solution_03_crawler_pipeline
-    PageResult = crawler_pipeline.PageResult
+    PageResult = crawler_module.PageResult
 
     result: PageResult = {
         "url": "https://example.com",
@@ -99,11 +100,10 @@ def test_page_result_type(solutions) -> None:
 
 
 @pytest.mark.asyncio
-async def test_http_session(solutions) -> None:
+async def test_http_session(crawler_module) -> None:
     """测试 HTTP 会话上下文管理器"""
-    crawler_pipeline = solution_03_crawler_pipeline
-    CrawlerConfig = crawler_pipeline.CrawlerConfig
-    http_session = crawler_pipeline.http_session
+    CrawlerConfig = crawler_module.CrawlerConfig
+    http_session = crawler_module.http_session
 
     config = CrawlerConfig(timeout=10.0, max_concurrent=5)
 
@@ -118,11 +118,12 @@ async def test_http_session(solutions) -> None:
 
 
 @pytest.mark.asyncio
-async def test_crawl_page_success(solutions) -> None:
+async def test_crawl_page_success(crawler_module) -> None:
     """测试成功爬取页面"""
-    crawler_pipeline = solution_03_crawler_pipeline
-    CrawlerConfig = crawler_pipeline.CrawlerConfig
-    crawl_page = crawler_pipeline.crawl_page
+    import aiohttp
+
+    CrawlerConfig = crawler_module.CrawlerConfig
+    crawl_page = crawler_module.crawl_page
 
     config = CrawlerConfig(retry_attempts=3)
     semaphore = asyncio.Semaphore(1)
@@ -151,13 +152,12 @@ async def test_crawl_page_success(solutions) -> None:
 
 
 @pytest.mark.asyncio
-async def test_crawl_page_retry(solutions) -> None:
+async def test_crawl_page_retry(crawler_module) -> None:
     """测试爬取失败后重试"""
     import aiohttp
 
-    crawler_pipeline = solution_03_crawler_pipeline
-    CrawlerConfig = crawler_pipeline.CrawlerConfig
-    crawl_page = crawler_pipeline.crawl_page
+    CrawlerConfig = crawler_module.CrawlerConfig
+    crawl_page = crawler_module.crawl_page
 
     config = CrawlerConfig(retry_attempts=2, backoff_factor=0.1)
     semaphore = asyncio.Semaphore(1)
@@ -196,13 +196,12 @@ async def test_crawl_page_retry(solutions) -> None:
 
 
 @pytest.mark.asyncio
-async def test_crawl_page_max_retries_exceeded(solutions) -> None:
+async def test_crawl_page_max_retries_exceeded(crawler_module) -> None:
     """测试超过最大重试次数"""
     import aiohttp
 
-    crawler_pipeline = solution_03_crawler_pipeline
-    CrawlerConfig = crawler_pipeline.CrawlerConfig
-    crawl_page = crawler_pipeline.crawl_page
+    CrawlerConfig = crawler_module.CrawlerConfig
+    crawl_page = crawler_module.crawl_page
 
     config = CrawlerConfig(retry_attempts=2, backoff_factor=0.1)
     semaphore = asyncio.Semaphore(1)
@@ -229,11 +228,10 @@ async def test_crawl_page_max_retries_exceeded(solutions) -> None:
 
 
 @pytest.mark.asyncio
-async def test_crawler_pipeline_basic(solutions) -> None:
+async def test_crawler_pipeline_basic(crawler_module) -> None:
     """测试爬虫管道基本功能"""
-    crawler_pipeline = solution_03_crawler_pipeline
-    CrawlerConfig = crawler_pipeline.CrawlerConfig
-    crawler_pipeline_func = crawler_pipeline.crawler_pipeline
+    CrawlerConfig = crawler_module.CrawlerConfig
+    crawler_pipeline_func = crawler_module.crawler_pipeline
 
     config = CrawlerConfig(
         max_concurrent=2,
@@ -241,7 +239,6 @@ async def test_crawler_pipeline_basic(solutions) -> None:
         retry_attempts=1,
     )
 
-    # 使用真实的 httpbin.org 进行测试（或 Mock）
     urls = [
         "https://httpbin.org/status/200",
         "https://httpbin.org/html",
@@ -250,7 +247,7 @@ async def test_crawler_pipeline_basic(solutions) -> None:
     results: list = []
 
     # 使用 Mock 避免真实网络请求
-    with patch.object(crawler_pipeline, "http_session") as mock_session_ctx:
+    with patch.object(crawler_module, "http_session") as mock_session_ctx:
         mock_session = AsyncMock()
         mock_response = AsyncMock()
         mock_response.status = 200
@@ -281,16 +278,15 @@ async def test_crawler_pipeline_basic(solutions) -> None:
 
 
 @pytest.mark.asyncio
-async def test_db_connection(solutions) -> None:
+async def test_db_connection(crawler_module) -> None:
     """测试数据库连接（使用 Mock）"""
-    crawler_pipeline = solution_03_crawler_pipeline
-    CrawlerConfig = crawler_pipeline.CrawlerConfig
-    db_connection = crawler_pipeline.db_connection
+    CrawlerConfig = crawler_module.CrawlerConfig
+    db_connection = crawler_module.db_connection
 
     config = CrawlerConfig(db_url="postgresql://localhost/test")
 
     # Mock asyncpg.connect
-    with patch.object(crawler_pipeline, "asyncpg") as mock_asyncpg:
+    with patch.object(crawler_module, "asyncpg") as mock_asyncpg:
         mock_conn = AsyncMock()
         mock_conn.close = AsyncMock()
         # 正确设置 connect 返回协程
@@ -301,12 +297,11 @@ async def test_db_connection(solutions) -> None:
 
 
 @pytest.mark.asyncio
-async def test_save_to_database(solutions) -> None:
+async def test_save_to_database(crawler_module) -> None:
     """测试批量保存到数据库（使用 Mock）"""
-    crawler_pipeline = solution_03_crawler_pipeline
-    CrawlerConfig = crawler_pipeline.CrawlerConfig
-    PageResult = crawler_pipeline.PageResult
-    save_to_database = crawler_pipeline.save_to_database
+    CrawlerConfig = crawler_module.CrawlerConfig
+    PageResult = crawler_module.PageResult
+    save_to_database = crawler_module.save_to_database
 
     config = CrawlerConfig(db_url="postgresql://localhost/test")
 
@@ -328,7 +323,7 @@ async def test_save_to_database(solutions) -> None:
     ]
 
     # Mock 数据库连接
-    with patch.object(crawler_pipeline, "db_connection") as mock_db_ctx:
+    with patch.object(crawler_module, "db_connection") as mock_db_ctx:
         mock_conn = AsyncMock()
         mock_transaction = AsyncMock()
         mock_transaction.__aenter__ = AsyncMock()
@@ -350,10 +345,9 @@ async def test_save_to_database(solutions) -> None:
 # ============================================================================
 
 
-def test_graceful_shutdown_setup(solutions) -> None:
+def test_graceful_shutdown_setup(crawler_module) -> None:
     """测试优雅关闭设置"""
-    crawler_pipeline = solution_03_crawler_pipeline
-    GracefulShutdown = crawler_pipeline.GracefulShutdown
+    GracefulShutdown = crawler_module.GracefulShutdown
 
     shutdown = GracefulShutdown()
     shutdown.setup()
@@ -365,10 +359,9 @@ def test_graceful_shutdown_setup(solutions) -> None:
 
 
 @pytest.mark.asyncio
-async def test_graceful_shutdown_wait(solutions) -> None:
+async def test_graceful_shutdown_wait(crawler_module) -> None:
     """测试优雅关闭等待"""
-    crawler_pipeline = solution_03_crawler_pipeline
-    GracefulShutdown = crawler_pipeline.GracefulShutdown
+    GracefulShutdown = crawler_module.GracefulShutdown
 
     shutdown = GracefulShutdown()
 
@@ -391,11 +384,10 @@ async def test_graceful_shutdown_wait(solutions) -> None:
 
 
 @pytest.mark.asyncio
-async def test_full_pipeline_integration(solutions) -> None:
+async def test_full_pipeline_integration(crawler_module) -> None:
     """测试完整管道集成（使用 Mock）"""
-    crawler_pipeline = solution_03_crawler_pipeline
-    CrawlerConfig = crawler_pipeline.CrawlerConfig
-    crawler_pipeline_func = crawler_pipeline.crawler_pipeline
+    CrawlerConfig = crawler_module.CrawlerConfig
+    crawler_pipeline_func = crawler_module.crawler_pipeline
 
     config = CrawlerConfig(
         max_concurrent=3,
@@ -406,7 +398,7 @@ async def test_full_pipeline_integration(solutions) -> None:
     urls = [f"https://example.com/page{i}" for i in range(5)]
 
     # Mock HTTP 会话
-    with patch.object(crawler_pipeline, "http_session") as mock_session_ctx:
+    with patch.object(crawler_module, "http_session") as mock_session_ctx:
         mock_session = AsyncMock()
         mock_response = AsyncMock()
         mock_response.status = 200

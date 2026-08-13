@@ -39,7 +39,7 @@ python examples/02_async_advanced.py
 
 # 3) 完成练习并自检
 python exercises/01_async_basics.py
-python exercises/02_async_queues.py
+python exercises/02_concurrent_file_processor.py
 
 # 4) 运行单元测试
 uv run pytest tests -q
@@ -55,7 +55,7 @@ uv run pytest tests -q
 | 2 | 任务与异常处理 | `examples/01_async_basics.py` | `gather()`、`create_task()`、异常收集 |
 | 3 | 异步高级语法 | `examples/02_async_advanced.py` | 异步上下文管理器、异步生成器、限流 |
 | 4 | 基础练习 | `exercises/01_async_basics.py` | 并发、顺序执行、超时处理 |
-| 5 | 队列练习 | `exercises/02_async_queues.py` | `Queue.put()`、`Queue.get()`、`task_done()` |
+| 5 | 队列练习 | `exercises/02_concurrent_file_processor.py` | `Queue.put()`、`Queue.get()`、`task_done()` |
 | 6 | 自动化验证 | `tests/` | 10 个测试用例覆盖 solutions 行为 |
 
 ---
@@ -110,5 +110,5 @@ uv run pytest tests -q
 
 完成本课后继续学习：
 
-- [L15: 函数式编程](../L15-functional/README.md)
-- L15 会切换到函数式工具链，补齐 `map`、`filter`、`reduce`、高阶函数与不可变思维。
+- [L17: 函数式编程](../L17-functional/README.md)
+- L17 会切换到函数式工具链，补齐 `map`、`filter`、`reduce`、高阶函数与不可变思维。

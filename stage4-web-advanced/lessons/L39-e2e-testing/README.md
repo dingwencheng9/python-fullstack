@@ -1,10 +1,10 @@
 # L39: E2E 测试工程化
 
-> Stage 4 - Web 进阶 | L40-e2e-testing
+> Stage 4 - Web 进阶 | L39-e2e-testing
 
 ## 📚 课程简介
 
-本课程深入讲解E2E 测试工程化的核心概念和实践技巧。
+本课程深入讲解 E2E 测试工程化的核心概念和实践技巧，使用 Playwright 进行端到端测试。
 
 ## 🚀 快速开始
 
@@ -13,28 +13,26 @@
 cat lesson.md
 
 # 运行示例代码
-cd examples
-python 01_basics.py
+python examples/01_playwright_basics.py
+python examples/02_test_fixtures.py
 
 # 完成练习
-cd ../exercises
-python 01_exercise.py
+cd exercises
+python 01_playwright_basics.py
 ```
 
 ## 📁 目录结构
 
 ```
-L40-e2e-testing/
+L39-e2e-testing/
 ├── README.md                    # 本文档
 ├── lesson.md                    # 课程内容
 ├── examples/                    # 示例代码
-│   └── 01_basics.py
+│   ├── 01_playwright_basics.py # Playwright 基础
+│   └── 02_test_fixtures.py    # 测试 Fixtures
 ├── exercises/                   # 练习题
-│   └── 01_exercise.py
 ├── solutions/                   # 参考解答
-│   └── 01_solution.py
 └── tests/                       # 测试套件
-    └── test_basics.py
 ```
 
 ## ✅ 完成标准

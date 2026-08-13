@@ -39,7 +39,7 @@ def verify_token(token: str) -> dict:
         return payload
     except jwt.ExpiredSignatureError:
         raise HTTPException(status_code=401, detail="Token 已过期")
-    except jwt.InvalidTokenError:
+    except jwt.JWTError:  # jose.jwt 使用 JWTError
         raise HTTPException(status_code=401, detail="无效的 Token")
 
 

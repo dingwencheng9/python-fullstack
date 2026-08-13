@@ -1,10 +1,10 @@
 # L43: 异步任务处理
 
-> Stage 4 - Web 进阶 | L45-async-tasks
+> Stage 4 - Web 进阶 | L43-async-tasks
 
 ## 📚 课程简介
 
-本课程深入讲解异步任务处理的核心概念和实践技巧。
+本课程深入讲解异步任务处理的核心概念和实践技巧，使用 Celery 实现后台任务处理。
 
 ## 🚀 快速开始
 
@@ -13,28 +13,22 @@
 cat lesson.md
 
 # 运行示例代码
-cd examples
-python 01_basics.py
-
-# 完成练习
-cd ../exercises
-python 01_exercise.py
+python examples/01_celery_basics.py
+python examples/02_task_canvas.py
 ```
 
 ## 📁 目录结构
 
 ```
-L45-async-tasks/
+L43-async-tasks/
 ├── README.md                    # 本文档
 ├── lesson.md                    # 课程内容
 ├── examples/                    # 示例代码
-│   └── 01_basics.py
+│   ├── 01_celery_basics.py    # Celery 基础
+│   └── 02_task_canvas.py      # 任务编排
 ├── exercises/                   # 练习题
-│   └── 01_exercise.py
 ├── solutions/                   # 参考解答
-│   └── 01_solution.py
 └── tests/                       # 测试套件
-    └── test_basics.py
 ```
 
 ## ✅ 完成标准
@@ -46,5 +40,5 @@ L45-async-tasks/
 
 ## 🔗 学习路径
 
-**前置课程**: 见 lesson.md  
+**前置课程**: 见 lesson.md
 **后续课程**: 见 lesson.md

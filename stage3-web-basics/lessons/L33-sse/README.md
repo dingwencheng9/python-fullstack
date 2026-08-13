@@ -27,9 +27,15 @@ L33-sse/
 ├── README.md              # 课程说明与学习路径
 ├── lesson.md             # 详细课程讲义
 ├── examples/
-│   ├── 01_sse_basics.py
-│   ├── 02_sse_broadcast.py
-│   └── 03_progress_sse.py
+│   ├── app.py                  # SSE 基础应用
+│   ├── app_v2.py              # SSE 进阶应用
+│   ├── agent_chat_router.py    # Agent 聊天路由
+│   ├── agent_chat_router_v2.py # Agent 聊天路由 v2
+│   ├── checkpoint_system.py   # 检查点系统
+│   ├── cli_client.py          # CLI 客户端
+│   ├── cli_client_v2.py       # CLI 客户端 v2
+│   ├── frontend.html           # 前端页面
+│   └── token_control.py       # Token 控制
 ├── exercises/             # 练习题
 ├── solutions/            # 参考答案
 └── tests/               # 单元测试

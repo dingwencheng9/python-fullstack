@@ -63,8 +63,9 @@ from pydantic import BaseModel, EmailStr
 # 1. 配置 JWT 和密码加密
 # ============================================================================
 
-# ✅ 从环境变量读取密钥（生产环境必须设置）
-SECRET_KEY = os.environ.get("SECRET_KEY", "dev-only-insecure-key-change-in-production")
+# ⚠️ 生产环境必须从环境变量读取密钥
+# 演示时使用 secrets.token_hex() 动态生成（仅内存有效，重启丢失）
+SECRET_KEY = os.environ.get("JWT_SECRET_KEY") or secrets.token_hex(32)
 ALGORITHM = "HS256"
 ACCESS_TOKEN_EXPIRE_MINUTES = 30
 

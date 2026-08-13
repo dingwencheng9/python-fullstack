@@ -100,4 +100,7 @@ _(详细代码见 lesson.md)_
 
 ## 🔗 下一步
 
-[L56: MCP 协议入门](../L55-mcp-protocol/README.md)
+完成本课后继续学习：
+
+- [L65: Agent SSE 流式路由](../L65-agent-sse-router/README.md)
+- L65 会学习 SSE（Server-Sent Events）实现 Agent 的流式输出与路由。

@@ -36,11 +36,11 @@ less lesson.md
 
 # 2) 运行示例
 python examples/01_type_hints_basics.py
-python examples/02_protocol.py
+python examples/02_protocol_typing.py
 python examples/03_pep695_generics.py
 python examples/04_callable_types.py
 python examples/05_type_narrowing.py
-python examples/07_typeddict.py
+python examples/06_typeddict.py
 
 # 3) 完成练习并自检
 python exercises/01_type_narrowing.py
@@ -61,10 +61,10 @@ uv run pytest tests -q
 | ---- | ---- | -------- | ---- |
 | 1 | 类型注解基础 | `lesson.md` Part 1-3、`examples/01_type_hints_basics.py` | 函数签名、容器类型、类型别名 |
 | 2 | Callable 与高阶函数 | Part 4、`examples/04_callable_types.py` | 回调、装饰器、参数规格 |
-| 3 | Protocol | Part 5、`examples/02_protocol.py` | 结构化子类型、`@runtime_checkable` |
+| 3 | Protocol | Part 5、`examples/02_protocol_typing.py` | 结构化子类型、`@runtime_checkable` |
 | 4 | PEP 695 泛型 | Part 6、`examples/03_pep695_generics.py` | 新式泛型函数/类/类型别名 |
 | 5 | TypeGuard 与类型收窄 | `examples/05_type_narrowing.py`、练习 1 | `isinstance()`、自定义类型守卫 |
-| 6 | TypedDict 与 kwargs | Part 7、`examples/07_typeddict.py` | API/配置字典建模 |
+| 6 | TypedDict 与 kwargs | Part 7、`examples/06_typeddict.py` | API/配置字典建模 |
 | 7 | mypy 与测试 | Part 8、`tests/` | 静态检查与运行时行为的边界 |
 
 ---

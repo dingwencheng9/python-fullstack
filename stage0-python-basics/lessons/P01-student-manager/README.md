@@ -91,17 +91,17 @@ python3 -m pytest tests/ -q
 **Milestone 1: 基础数据模型**
 1. 实现 `Student` 类，包含 `__init__`、`__repr__`、`__eq__`
 2. 添加属性校验：`age > 0`、`student_id` 非空
-3. 运行 `python -m pytest tests/test_student.py -v` 验证
+3. 运行 `python -m pytest tests/test_student_manager.py -v` 验证
 
 **Milestone 2: 内存管理**
 1. 实现 `StudentManager` 的 `add`、`get`、`remove`、`update`
 2. 实现 `list_students` 返回列表副本
-3. 运行 `python -m pytest tests/test_manager.py -v` 验证
+3. 运行 `python -m pytest tests/test_student_manager.py::TestStudentManager -v` 验证
 
 **Milestone 3: 搜索与统计**
 1. 实现 `search_by_name`（不区分大小写的模糊搜索）
 2. 实现 `get_statistics`（总人数、平均/最小/最大年龄）
-3. 运行 `python -m pytest tests/test_search.py -v` 验证
+3. 运行 `python -m pytest tests/test_student_manager.py::TestSearch -v` 验证
 
 **Milestone 4: 文件持久化 + 类型检查**
 1. 实现 JSON 文件的保存与加载（使用 `pathlib.Path`）

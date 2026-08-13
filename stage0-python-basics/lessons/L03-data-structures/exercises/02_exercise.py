@@ -108,7 +108,7 @@ print(f"  获取 'email'（不存在）: {person.get('email', 'N/A')}")
 print(f"  所有键: {list(person.keys())}")
 print(f"  所有值: {list(person.values())}")
 print(f"  所有项: {list(person.items())}")
-print(f"  更新: person.update({{'age': 31}})")
+print("  更新: person.update({'age': 31})")
 person.update({'age': 31})
 print(f"  更新后: {person}")
 

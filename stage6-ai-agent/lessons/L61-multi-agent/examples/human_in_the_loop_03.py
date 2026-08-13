@@ -103,11 +103,7 @@ async def fetch_data():
     await asyncio.sleep(1)
     return "Data fetched"
 
-async def main():
-    result = await fetch_data()
-    print(result)
-
-asyncio.run(main())
+asyncio.run(fetch_data())
 ```
 """
         else:
@@ -126,38 +122,6 @@ asyncio.run(main())
 1. 补充了更详细的示例代码
 2. 优化了概念解释的清晰度
 3. 增加了最佳实践建议
-
-## 核心概念（优化版）
-1. Event Loop: 异步事件循环机制
-2. Coroutine: 协程函数与对象
-3. Task: 并发任务管理
-4. Future: 异步操作的结果容器
-
-## 完整示例
-```python
-import asyncio
-import aiohttp
-
-async def fetch_url(url: str) -> str:
-    async with aiohttp.ClientSession() as session:
-        async with session.get(url) as response:
-            return await response.text()
-
-async def main():
-    urls = ['https://example.com', 'https://python.org']
-    tasks = [fetch_url(url) for url in urls]
-    results = await asyncio.gather(*tasks)
-    for url, content in zip(urls, results):
-        print(f"{{url}}: {{len(content)}} bytes")
-
-asyncio.run(main())
-```
-
-## 最佳实践
-1. 使用 `asyncio.gather()` 并发执行多个协程
-2. 使用 `async with` 管理异步资源
-3. 避免在异步函数中使用阻塞 I/O
-4. 使用 `asyncio.create_task()` 创建后台任务
 """
 
         writer_message = AIMessage(
@@ -219,7 +183,6 @@ def approval_node(state: WritingState) -> dict[str, bool]:
             return {"approved": True}
         else:
             print("⚠️  审核未通过，需要修订")
-            # 不触发中断，让路由决定下一步
 
         return {"approved": False}
 
@@ -279,10 +242,32 @@ def should_continue(state: WritingState) -> Literal["writer", "__end__"]:
 # ============================================================================
 # 第三步: 构建工作流图
 # ============================================================================
-try:
-    from langgraph.graph import END, StateGraph
-    from langgraph.types import Command, interrupt
-    from langgraph.checkpoint.memory import MemorySaver
+def create_hitl_graph():
+    """
+    创建 Human-in-the-Loop 工作流图
+
+    流程:
+    writer -> approval -> [interrupt | writer | END]
+
+    - writer: 生成或修订内容
+    - approval: 评估是否批准
+    - interrupt: 等待人类输入的中断点
+
+    Returns:
+        编译后的工作流图
+
+    Raises:
+        ImportError: 当 langgraph 未安装时
+    """
+    try:
+        from langgraph.graph import END, StateGraph
+        from langgraph.types import Command, interrupt
+        from langgraph.checkpoint.memory import MemorySaver
+    except ImportError as e:
+        raise ImportError(
+            "需要安装 langgraph: uv add langgraph\n"
+            f"原始错误: {e}"
+        ) from e
 
     def human_review_interrupt(state: WritingState) -> Command[Literal["__end__"]]:
         """
@@ -313,53 +298,6 @@ try:
         # 这行代码不会执行，因为 interrupt() 会暂停工作流
         return Command(goto=END)
 
-    def create_hitl_graph():
-        """
-        创建 Human-in-the-Loop 工作流图
-
-        流程:
-        writer -> approval -> [interrupt | writer | END]
-
-        - writer: 生成或修订内容
-        - approval: 评估是否批准
-        - interrupt: 等待人类输入的中断点
-        """
-        workflow = StateGraph(WritingState)
-
-        # 注册节点
-        workflow.add_node("writer", writer_node)
-        workflow.add_node("approval", approval_node)
-        workflow.add_node("human_review", human_review_interrupt)
-
-        # 设置入口点
-        workflow.set_entry_point("writer")
-
-        # writer -> approval
-        workflow.add_edge("writer", "approval")
-
-        # approval 节点后的条件路由
-        # 第一次审核 -> human_review 中断
-        # 已批准 -> END
-        # 修订 -> writer
-        workflow.add_conditional_edges(
-            "approval",
-            _approval_router,
-            {
-                "human_review": "human_review",
-                "writer": "writer",
-                "__end__": END,
-            },
-        )
-
-        # human_review 中断后回到 approval（等待新反馈）
-        workflow.add_edge("human_review", "approval")
-
-        # 使用 MemorySaver 实现状态持久化
-        # 这允许通过 thread_id 恢复特定会话
-        memory = MemorySaver()
-
-        return workflow.compile(checkpointer=memory)
-
     def _approval_router(state: WritingState) -> Literal["human_review", "writer", "__end__"]:
         """
         approval 节点后的路由逻辑
@@ -387,92 +325,144 @@ try:
         # 否则继续修订
         return "writer"
 
-    # LangGraph 可用时的运行函数
-    def run_hitl_example():
-        """运行 Human-in-the-Loop 示例"""
-        print("=" * 60)
-        print("L61 示例 3: Human-in-the-Loop 工作流")
-        print("=" * 60)
+    workflow = StateGraph(WritingState)
 
-        graph = create_hitl_graph()
-        config = {"configurable": {"thread_id": "demo_session"}}
+    # 注册节点
+    workflow.add_node("writer", writer_node)
+    workflow.add_node("approval", approval_node)
+    workflow.add_node("human_review", human_review_interrupt)
 
-        # 初始状态
-        from langchain_core.messages import HumanMessage
+    # 设置入口点
+    workflow.set_entry_point("writer")
 
-        initial_state: WritingState = {
-            "messages": [HumanMessage(content="请写一篇关于 Python 异步编程的文章")],
-            "draft_content": "",
-            "human_feedback": "",
-            "revision_count": 0,
-            "approved": False,
-        }
+    # writer -> approval
+    workflow.add_edge("writer", "approval")
 
-        # 第一轮：生成初稿并中断等待审核
-        print("\n📝 第一轮：生成初稿")
-        try:
-            result = graph.invoke(initial_state, config)
-            print(f"修订次数: {result['revision_count']}")
-            print(f"草稿长度: {len(result['draft_content'])} 字符")
-        except Exception as e:
-            print(f"预期的中断: {e}")
+    # approval 节点后的条件路由
+    # 第一次审核 -> human_review 中断
+    # 已批准 -> END
+    # 修订 -> writer
+    workflow.add_conditional_edges(
+        "approval",
+        _approval_router,
+        {
+            "human_review": "human_review",
+            "writer": "writer",
+            "__end__": END,
+        },
+    )
 
-        # 第二轮：注入修改建议并继续
-        print("\n📝 第二轮：注入反馈")
-        try:
-            result = graph.invoke(
-                Command(resume={"human_feedback": "请添加更多关于 asyncio.gather 的示例"}),
-                config,
-            )
-            print(f"修订次数: {result['revision_count']}")
-        except Exception as e:
-            print(f"预期的中断: {e}")
+    # human_review 中断后回到 approval（等待新反馈）
+    workflow.add_edge("human_review", "approval")
 
-        # 第三轮：批准
-        print("\n📝 第三轮：批准")
-        try:
-            result = graph.invoke(
-                Command(resume={"human_feedback": "批准"}),
-                config,
-            )
-            print(f"修订次数: {result['revision_count']}")
-            print(f"是否批准: {result['approved']}")
-        except Exception as e:
-            print(f"预期的中断: {e}")
+    # 使用 MemorySaver 实现状态持久化
+    # 这允许通过 thread_id 恢复特定会话
+    memory = MemorySaver()
 
-    if __name__ == "__main__":
-        run_hitl_example()
+    return workflow.compile(checkpointer=memory)
 
-    def create_hitl_graph_for_test():
-        """用于测试的简化版本（不使用 interrupt）"""
-        workflow = StateGraph(WritingState)
 
-        workflow.add_node("writer", writer_node)
-        workflow.add_node("approval", approval_node)
+# ============================================================================
+# 第四步: 额外的测试用函数
+# ============================================================================
+class InterruptState(TypedDict):
+    """用于中断测试的状态结构"""
 
-        workflow.set_entry_point("writer")
-        workflow.add_edge("writer", "approval")
+    messages: Annotated[list[BaseMessage], operator.add]
+    draft_content: str
+    human_feedback: str
+    revision_count: int
+    approved: bool
+    interrupted: bool
 
-        workflow.add_conditional_edges(
-            "approval",
-            should_continue,
-            {
-                "writer": "writer",
-                "__end__": END,
-            },
+
+def process_node(state: WritingState) -> dict[str, list[BaseMessage] | str | int]:
+    """简化处理节点，用于测试"""
+    return writer_node(state)
+
+
+def create_interrupt_graph():
+    """创建带中断的测试图"""
+    try:
+        from langgraph.graph import END, StateGraph
+        from langgraph.checkpoint.memory import MemorySaver
+    except ImportError as e:
+        raise ImportError(
+            "需要安装 langgraph: uv add langgraph\n"
+            f"原始错误: {e}"
+        ) from e
+
+    workflow = StateGraph(WritingState)
+    workflow.add_node("writer", writer_node)
+    workflow.add_node("approval", approval_node)
+    workflow.set_entry_point("writer")
+    workflow.add_edge("writer", "approval")
+    workflow.add_conditional_edges(
+        "approval",
+        should_interrupt,
+        {"writer": "writer", "__end__": END},
+    )
+    memory = MemorySaver()
+    return workflow.compile(checkpointer=memory)
+
+
+# ============================================================================
+# 运行示例
+# ============================================================================
+def run_hitl_example() -> None:
+    """运行 Human-in-the-Loop 示例"""
+    from langchain.types import Command
+
+    print("=" * 60)
+    print("L61 示例 3: Human-in-the-Loop 工作流")
+    print("=" * 60)
+
+    graph = create_hitl_graph()
+    config = {"configurable": {"thread_id": "demo_session"}}
+
+    # 初始状态
+    from langchain_core.messages import HumanMessage
+
+    initial_state: WritingState = {
+        "messages": [HumanMessage(content="请写一篇关于 Python 异步编程的文章")],
+        "draft_content": "",
+        "human_feedback": "",
+        "revision_count": 0,
+        "approved": False,
+    }
+
+    # 第一轮：生成初稿并中断等待审核
+    print("\n📝 第一轮：生成初稿")
+    try:
+        result = graph.invoke(initial_state, config)
+        print(f"修订次数: {result['revision_count']}")
+        print(f"草稿长度: {len(result['draft_content'])} 字符")
+    except Exception as e:
+        print(f"预期的中断: {e}")
+
+    # 第二轮：注入修改建议并继续
+    print("\n📝 第二轮：注入反馈")
+    try:
+        result = graph.invoke(
+            Command(resume={"human_feedback": "请添加更多关于 asyncio.gather 的示例"}),
+            config,
         )
+        print(f"修订次数: {result['revision_count']}")
+    except Exception as e:
+        print(f"预期的中断: {e}")
 
-        memory = MemorySaver()
-        return workflow.compile(checkpointer=memory)
+    # 第三轮：批准
+    print("\n📝 第三轮：批准")
+    try:
+        result = graph.invoke(
+            Command(resume={"human_feedback": "批准"}),
+            config,
+        )
+        print(f"修订次数: {result['revision_count']}")
+        print(f"是否批准: {result['approved']}")
+    except Exception as e:
+        print(f"预期的中断: {e}")
 
-except ImportError:
-    print("=" * 60)
-    print("注意: LangGraph 未安装")
-    print("安装命令: uv add langgraph")
-    print("=" * 60)
 
-    def create_hitl_graph():
-        return None
-
-    def create_hitl_graph_for_test():
-        return None
+if __name__ == "__main__":
+    run_hitl_example()

@@ -31,7 +31,7 @@ def analyze_error():
     # 尝试访问不存在的键
     # 使用异常处理捕获异常，并使用 traceback 分析
     try:
-        result = data["city"]
+        data["city"]  # 故意不使用 result，作为 KeyError 演示
     except KeyError as e:
         error_msg = f"KeyError: {e}"
         # 使用 traceback.format_exc() 获取完整的 traceback 字符串
@@ -53,7 +53,7 @@ def process_user_data(raw_data):
     # 如果缺失，抛出有意义的异常
     for field in required_fields:
         if field not in raw_data:
-            raise KeyError(f"缺少必要字段: {field}")
+            raise ValueError(f"缺少必要字段: {field}")
 
 
 if __name__ == "__main__":

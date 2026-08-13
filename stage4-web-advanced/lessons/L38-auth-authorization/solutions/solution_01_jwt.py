@@ -60,7 +60,7 @@ class JWTAuth:
             return payload
         except jwt.ExpiredSignatureError:
             return None
-        except jwt.InvalidTokenError:
+        except jwt.JWTError:  # jose.jwt 使用 JWTError 而非 InvalidTokenError
             return None
 
     def refresh_access_token(self, refresh_token: str) -> str | None:

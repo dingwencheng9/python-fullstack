@@ -57,7 +57,7 @@
 ## 快速开始
 
 ```bash
-cd stage5-data-engineering/lessons/L52-async-data-pipeline
+cd stage5-data-engineering/lessons/L51-async-data-pipeline
 python examples/02_async_generator.py
 python examples/03_checkpointed_pipeline.py
 python examples/04_quality_metrics.py
@@ -67,9 +67,9 @@ pytest tests/ -v
 从仓库根目录运行：
 
 ```bash
-python3 -m py_compile $(find stage5-data-engineering/lessons/L52-async-data-pipeline -name '*.py' -not -path '*/__pycache__/*' -print)
-uv run pytest stage5-data-engineering/lessons/L52-async-data-pipeline -q --no-cov
-uv run ruff check stage5-data-engineering/lessons/L52-async-data-pipeline
+python3 -m py_compile $(find stage5-data-engineering/lessons/L51-async-data-pipeline -name '*.py' -not -path '*/__pycache__/*' -print)
+uv run pytest stage5-data-engineering/lessons/L51-async-data-pipeline -q --no-cov
+uv run ruff check stage5-data-engineering/lessons/L51-async-data-pipeline
 ```
 
 ## 练习-答案-测试对应表

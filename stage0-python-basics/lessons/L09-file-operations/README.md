@@ -105,4 +105,4 @@ python -m pytest tests/ -q
 
 完成本课后继续学习：
 
-- [L07: 面向对象基础](../L07-oop-basics/README.md)
+- [P01: 学员管理系统](../P01-student-manager/README.md)

@@ -44,8 +44,8 @@ python examples/03_class_decorators.py
 ### 3. 完成练习题
 
 ```bash
-python exercises/01_parameterized.py
-python exercises/02_chaining.py
+python exercises/01_parameterized_decorators.py
+python exercises/02_decorator_chaining.py
 python exercises/03_class_decorators.py
 ```
 
@@ -62,12 +62,12 @@ L14-decorator-advanced/
 │   ├── 02_decorator_chaining.py
 │   └── 03_class_decorators.py
 ├── exercises/          # 练习题
-│   ├── 01_parameterized.py
-│   ├── 02_chaining.py
+│   ├── 01_parameterized_decorators.py
+│   ├── 02_decorator_chaining.py
 │   └── 03_class_decorators.py
 └── solutions/          # 参考答案
-    ├── 01_parameterized.py
-    ├── 02_chaining.py
+    ├── 01_parameterized_decorators.py
+    ├── 02_decorator_chaining.py
     └── 03_class_decorators.py
 ```
 

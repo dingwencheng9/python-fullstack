@@ -69,14 +69,8 @@ def exercise_01_l1_cache():
     """练习 1: 实现 L1 本地缓存"""
     # TODO: 使用 L1Cache 实现任务数据缓存
 
-    task_data = {
-        "id": 1,
-        "title": "完成报告",
-        "status": "pending",
-        "assignee": "alice"
-    }
-
-    # 你的代码:
+    # 学员应实现:
+    # task_data = {"id": 1, "title": "完成报告", "status": "pending", "assignee": "alice"}
     # l1_cache.set("task:1", task_data, ttl=300)
     # result = l1_cache.get("task:1")
     # assert result == task_data
@@ -122,19 +116,20 @@ def exercise_03_cache_pattern():
 
     async def get_user_with_cache(user_id: int):
         """Cache-Aside 模式: 先查缓存，缓存未命中再查数据库"""
-        cache_key = f"user:{user_id}"
-
-        # 1. 先查缓存
+        # 学员应实现:
+        # cache_key = f"user:{user_id}"
+        #
+        # # 1. 先查缓存
         # cached = l1_cache.get(cache_key)
         # if cached:
         #     return cached
-
-        # 2. 缓存未命中，查数据库
+        #
+        # # 2. 缓存未命中，查数据库
         # user = await db.fetch_one("SELECT * FROM users WHERE id = ?", user_id)
-
-        # 3. 写入缓存
+        #
+        # # 3. 写入缓存
         # l1_cache.set(cache_key, user, ttl=600)
-
+        #
         # return user
         return {"id": user_id, "name": "Alice"}
 

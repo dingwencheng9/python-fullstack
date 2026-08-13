@@ -114,7 +114,7 @@ def validate(**schemas):
 
 
 def pattern_match(param_name: str, pattern: str):
-    """正则匹配验证装饰器工厂
+    r"""正则匹配验证装饰器工厂
 
     用法：
         @pattern_match("email", r"^[\w.-]+@[\w.-]+\.\w+$")

@@ -37,9 +37,9 @@ cd stage0-python-basics/lessons/L04-functions-modules
 运行示例：
 
 ```bash
-uv run python examples/00_demo.py
-uv run python examples/06_type_annotations.py
-uv run python examples/07_lambda.py
+uv run python examples/01_demo.py
+uv run python examples/07_type_annotations.py
+uv run python examples/08_lambda.py
 ```
 
 运行测试：
@@ -51,7 +51,7 @@ uv run pytest tests/ -q
 如果你当前环境没有使用 `uv`，也可以临时使用：
 
 ```bash
-python examples/00_demo.py
+python examples/01_demo.py
 python -m pytest tests/ -q
 ```
 

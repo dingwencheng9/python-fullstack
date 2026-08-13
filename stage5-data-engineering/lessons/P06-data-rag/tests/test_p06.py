@@ -21,7 +21,9 @@ class TestDataPipeline:
     def test_data_types(self):
         """测试数据类型"""
         assert self.df['amount'].dtype == np.float64
-        assert self.df['category'].dtype == object
+        # pandas 3.0+ 使用 StringDtype，兼容旧版本
+        is_str = pd.api.types.is_string_dtype(self.df['category']) or self.df['category'].dtype == object
+        assert is_str
 
     def test_aggregation(self):
         """测试聚合"""
@@ -56,7 +58,7 @@ class TestEmbedding:
     def test_cosine_similarity(self):
         """测试余弦相似度"""
         a = np.array([1.0, 0.0])
-        b = np.array([1.0, 0.0])
+        b = np.array([1.0, 0.0])  # noqa: F841
         c = np.array([0.0, 1.0])
 
         # 相同向量
