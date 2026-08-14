@@ -41,8 +41,6 @@
 
 ---
 
-
-
 ### 文件操作流程（可视化）
 
 ```mermaid
@@ -84,8 +82,6 @@ flowchart TD
 - **用户数据**：保存用户设置和状态
 
 ---
-
-
 
 ## 💭 课堂思考
 
@@ -922,8 +918,6 @@ path = Path("data") / "file.txt"
 
 ---
 
-
-
 ## 🚀 实战案例
 
 ### 案例 1: 学生数据管理器
@@ -962,7 +956,6 @@ class StudentManager:
     def get(self, student_id: str) -> dict | None:
         return self.students.get(student_id)
 
-
 # 使用
 manager = StudentManager("students.json")
 manager.add("001", "Alice", 20)
@@ -992,7 +985,6 @@ def process_log_file(log_path: str) -> dict[str, int]:
     
     return error_counts
 
-
 # 使用
 stats = process_log_file("app.log")
 for error_type, count in stats.items():
@@ -1018,15 +1010,12 @@ def batch_rename(directory: str, prefix: str) -> int:
     
     return renamed
 
-
 # 使用
 count = batch_rename("data", "backup")
 print(f"重命名了 {count} 个文件")
 ```
 
 ---
-
-
 
 ## 💡 常见文件操作陷阱
 
@@ -1360,7 +1349,6 @@ p.rmdir()
 p.unlink()      # 删除文件
 ```
 
-
 ### 🚀 典型应用场景
 
 - 📝 配置管理：读取 JSON/YAML 配置
@@ -1378,7 +1366,6 @@ p.unlink()      # 删除文件
 - [ ] 能够编写相关代码
 - [ ] 解决常见问题
 
-
 ---
 
 ## 📝 进阶预告
@@ -1393,10 +1380,7 @@ p.unlink()      # 删除文件
 
 > 💡 **学习路径**：L09 → P01（综合项目）→ Stage 1 L10（类型系统进阶）
 
-
 ---
-
-
 
 ## 🔗 下一步
 
@@ -1441,9 +1425,6 @@ p.unlink()      # 删除文件
 **准备好了吗？** 让我们一起探索面向对象编程的强大之处！
 
 👉 [开始学习 L06 - 面向对象基础](../L07-oop-basics/lesson.md)
-
-
-
 
 ## 🎓 核心知识点总结
 

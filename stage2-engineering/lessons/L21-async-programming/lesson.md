@@ -9,7 +9,6 @@
 > **最后更新**: 2026-07-23
 > **核心版本**: Python 3.13
 
-
 ---
 
 ## 前置说明
@@ -97,7 +96,6 @@ async def test_timeout():
 
 ---
 
-
 ```mermaid
 flowchart TB
     subgraph Core["asyncio 核心概念"]
@@ -123,8 +121,6 @@ flowchart TB
     style Primitives fill:#c8e6c9
     style Advanced fill:#fff3e0
 ```
-
-
 
 ### 1.4 为什么需要 asyncio.Lock
 
@@ -907,7 +903,6 @@ asyncio.run(main())
 
 ---
 
-
 ### 学习检查清单
 
 完成本课程后，确认你已经：
@@ -916,8 +911,6 @@ asyncio.run(main())
 - [ ] 掌握了主要工具和API的使用
 - [ ] 能够独立完成课程练习
 - [ ] 可选：通过本课测试 `uv run pytest tests -q`
-
-
 
 ### ⚠️ 常见陷阱
 
@@ -952,8 +945,6 @@ async with lock:
     await risky_operation()  # 自动释放锁
 ```
 
-
-
 ---
 
 ## 📖 课程总结
@@ -987,9 +978,6 @@ async with lock:
 - ✅ 理解了常见陷阱并能避免
 - ✅ 为构建生产级异步应用打下基础
 
-
-
-
 ---
 
 ## 📝 本章总结
@@ -1012,7 +1000,6 @@ async with lock:
 - ✅ 掌握了本课程的核心概念
 - ✅ 能够运用所学知识解决实际问题
 - ✅ 为后续学习打下坚实基础
-
 
 ## 下一步
 

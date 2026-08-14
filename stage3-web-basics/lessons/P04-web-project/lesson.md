@@ -9,7 +9,6 @@
 > **最后更新**: 2026-07-23
 > **核心版本**: Python 3.13
 
-
 ---
 
 ## 🎯 学习目标
@@ -428,7 +427,6 @@ class Task(Base):
     def __repr__(self) -> str:
         return f"<Task {self.title}>"
 
-
 class Tag(Base):
     """标签模型"""
     __tablename__ = "tags"
@@ -443,7 +441,6 @@ class Tag(Base):
         secondary="task_tags",
         back_populates="tags"
     )
-
 
 # 关联表
 from sqlalchemy import Table, Column, Integer

@@ -9,7 +9,6 @@
 > **最后更新**: 2026-07-23
 > **核心版本**: Python 3.13
 
-
 ---
 
 ```mermaid
@@ -404,7 +403,6 @@ print(result)
 ```
 
 ---
-
 
 ### 第六部分：DuckDB 高级特性
 
@@ -1035,8 +1033,6 @@ print(con.execute("""
     ORDER BY avg_latency DESC
 """).fetchdf())
 ```
-
-
 
 ---
 

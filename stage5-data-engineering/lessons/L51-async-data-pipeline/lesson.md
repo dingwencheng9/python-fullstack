@@ -127,7 +127,6 @@ from typing import Any
 
 NUM_WORKERS = 3
 
-
 async def producer(queue: Queue, count: int) -> None:
     """生产者 - 生成数据"""
     for i in range(count):
@@ -139,7 +138,6 @@ async def producer(queue: Queue, count: int) -> None:
     # ⚠️ 关键：每个消费者都需要一个 sentinel 才会退出
     for _ in range(NUM_WORKERS):
         await queue.put(None)
-
 
 async def consumer(queue: Queue, worker_id: int) -> None:
     """消费者 - 处理数据"""
@@ -157,7 +155,6 @@ async def consumer(queue: Queue, worker_id: int) -> None:
 
         queue.task_done()
 
-
 async def producer_consumer_pipeline() -> None:
     """生产者-消费者管道。"""
     queue: Queue = Queue(maxsize=10)  # 限制队列大小（背压控制）
@@ -172,7 +169,6 @@ async def producer_consumer_pipeline() -> None:
 
     # TaskGroup 退出时所有 worker 已通过 sentinel 自然退出
     await queue.join()
-
 
 # 运行
 asyncio.run(producer_consumer_pipeline())
@@ -190,7 +186,6 @@ asyncio.run(producer_consumer_pipeline())
 ```python
 NUM_TRANSFORMERS = 2
 NUM_LOADERS = 3
-
 
 async def multi_stage_pipeline() -> None:
     """多阶段管道 - Extract → Transform → Load。"""
@@ -221,7 +216,6 @@ async def multi_stage_pipeline() -> None:
 
         tg.create_task(_close_loaders())
 
-
 async def extractor(out_queue: Queue, count: int) -> None:
     """提取阶段。"""
     for i in range(count):
@@ -231,7 +225,6 @@ async def extractor(out_queue: Queue, count: int) -> None:
     # ⚠️ 每个 transformer worker 各发一个 sentinel
     for _ in range(NUM_TRANSFORMERS):
         await out_queue.put(None)
-
 
 async def transformer(in_queue: Queue, out_queue: Queue, worker_id: int) -> None:
     """转换阶段。"""
@@ -252,7 +245,6 @@ async def transformer(in_queue: Queue, out_queue: Queue, worker_id: int) -> None
         }
         await out_queue.put(transformed)
         in_queue.task_done()
-
 
 async def loader(in_queue: Queue, worker_id: int) -> None:
     """加载阶段。"""
@@ -828,7 +820,6 @@ async def dask_pipeline():
     result = await asyncio.to_thread(dask.compute, result)
     return result
 
-
 async def polars_async_pipeline():
     """Polars 在线程池中执行，避免阻塞 Event Loop"""
     import polars as pl
@@ -980,7 +971,6 @@ class PipelineEngine:
 - ✅ 掌握了本课程的核心概念
 - ✅ 能够运用所学知识解决实际问题
 - ✅ 为后续学习打下坚实基础
-
 
 ## 下一步
 

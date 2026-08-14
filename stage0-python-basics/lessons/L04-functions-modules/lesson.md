@@ -43,7 +43,6 @@
 
 ---
 
-
 ### 函数调用流程（可视化）
 
 理解函数的调用过程是掌握函数的关键：
@@ -853,8 +852,6 @@ print(parsed["name"])  # "Alice"
 
 ---
 
-
-
 ## 💭 课堂思考
 
 ### 思考 1: 函数为什么需要参数？
@@ -1214,22 +1211,18 @@ __all__ = ['log_info', 'log_warning', 'log_error']
 
 import datetime
 
-
 def _format_message(level: str, message: str) -> str:
     """格式化日志消息"""
     timestamp = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
     return f"[{timestamp}] [{level}] {message}"
 
-
 def log_info(message: str) -> None:
     """记录 info 级别日志"""
     print(_format_message("INFO", message))
 
-
 def log_warning(message: str) -> None:
     """记录 warning 级别日志"""
     print(_format_message("WARNING", message))
-
 
 def log_error(message: str) -> None:
     """记录 error 级别日志"""
@@ -1375,7 +1368,6 @@ if __name__ == "__main__":
 - ⚡ **性能分析**：timeit、cProfile 基础
 
 > 💡 **学习路径**：L04 → L05（调试）→ L06（异常）→ ...
-
 
 ---
 

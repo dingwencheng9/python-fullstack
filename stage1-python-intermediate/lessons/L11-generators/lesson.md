@@ -380,7 +380,6 @@ print(f"生成器时间: {time.time() - start:.2f}s")
 
 ---
 
-
 ### Part 9: 生产级应用与框架集成
 
 #### 9.1 在 FastAPI 中使用生成器
@@ -400,7 +399,6 @@ async def generate_large_report():
         # 模拟数据库查询或 API 调用
         await asyncio.sleep(0.001)
         yield f"第 {i} 行数据\n"
-
 
 @app.get("/report")
 async def get_report():
@@ -429,7 +427,6 @@ async def fetch_batch(page: int, page_size: int) -> list[dict]:
     start = page * page_size
     return [{"id": i, "name": f"用户{i}"} for i in range(start, start + page_size)]
 
-
 async def paginate_query(total: int, page_size: int = 100):
     """分页生成器：高效处理大量数据
     
@@ -446,7 +443,6 @@ async def paginate_query(total: int, page_size: int = 100):
         for item in batch:
             yield item
         page += 1
-
 
 async def main():
     # 使用生成器逐个处理所有记录
@@ -475,16 +471,13 @@ class User:
     email: str
     age: int
 
-
 def validate_email(email: str) -> bool:
     """验证邮箱格式"""
     return "@" in email and "." in email.split("@")[1]
 
-
 def validate_age(age: int) -> bool:
     """验证年龄范围"""
     return 0 < age < 150
-
 
 def filter_users(users: Iterator[dict]) -> Iterator[User]:
     """数据验证与转换管道"""
@@ -506,7 +499,6 @@ def filter_users(users: Iterator[dict]) -> Iterator[User]:
         except KeyError:
             continue  # 跳过缺失字段的记录
 
-
 def read_jsonl(filename: str) -> Iterator[dict]:
     """读取 JSON Lines 文件（流式）"""
     with open(filename, "r") as f:
@@ -514,7 +506,6 @@ def read_jsonl(filename: str) -> Iterator[dict]:
             if line.strip():
                 import json
                 yield json.loads(line)
-
 
 # 使用示例
 def process_user_file(filename: str):
@@ -540,12 +531,10 @@ def expensive_computation(n: int) -> int:
     """昂贵的计算（结果可缓存）"""
     return n * n * n
 
-
 def cached_generator(items: list[int]) -> Iterator[int]:
     """使用缓存的生成器"""
     for item in items:
         yield expensive_computation(item)
-
 
 # 另一种模式：记忆化生成器
 class MemoizedGenerator:
@@ -572,14 +561,12 @@ class MemoizedGenerator:
             self.index += 1
             return value
 
-
 def fibonacci():
     """斐波那契数列生成器"""
     a, b = 0, 1
     while True:
         yield a
         a, b = b, a + b
-
 
 # 使用记忆化
 memo_fib = MemoizedGenerator(fibonacci())
@@ -613,7 +600,6 @@ def open_logged(filename: str) -> Iterator[list[str]]:
         print(f"关闭文件: {filename}")
         print(f"共读取 {len(lines)} 行")
 
-
 # 使用生成器式上下文管理器
 with open_logged("example.txt") as lines:
     for line in lines:
@@ -639,7 +625,6 @@ def debug_generator(
         logging.debug(f"[{name}] yielding: {value}")
         yield value
 
-
 def traced_generator(
     source: Generator[T, None, None],
     name: str = "Generator"
@@ -654,7 +639,6 @@ def traced_generator(
     except Exception as e:
         print(f"[{name}] 在第 {count} 个值时异常: {e}")
         raise
-
 
 # 使用示例
 def numbers():
@@ -691,7 +675,6 @@ async def async_range(start: int, stop: int, step: int = 1):
         yield current
         current += step
 
-
 async def main():
     # 使用 async for 迭代异步生成器
     async for i in async_range(0, 10):
@@ -703,7 +686,6 @@ async def main():
         for n in [0, 10, 20]
     )
     print(f"聚合结果: {results}")
-
 
 asyncio.run(main())
 ```
@@ -779,7 +761,6 @@ def safe_generator():
     finally:
         print("生成器结束，清理资源")
 
-
 def generator_with_cleanup():
     """带清理的生成器"""
     resources = []
@@ -802,13 +783,11 @@ from typing import Generator, Iterator, TypeVar, Callable
 T = TypeVar("T")
 U = TypeVar("U")
 
-
 # 正确的类型注解
 def square_numbers(n: int) -> Generator[int, None, None]:
     """生成平方数"""
     for i in range(n):
         yield i * i
-
 
 def transform(
     items: Iterator[T],
@@ -817,7 +796,6 @@ def transform(
     """转换生成器"""
     for item in items:
         yield func(item)
-
 
 # 带发送值的生成器类型
 def echo_with_counter() -> Generator[int, int, str]:
@@ -835,7 +813,6 @@ def echo_with_counter() -> Generator[int, int, str]:
             break
     return f"共处理了 {count} 个值"
 
-
 gen = echo_with_counter()
 next(gen)  # 启动
 for i in range(5):
@@ -845,7 +822,6 @@ try:
 except StopIteration as e:
     print(e.value)  # 共处理了 5 个值
 ```
-
 
 ## 🚀 快速开始
 

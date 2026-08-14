@@ -9,7 +9,6 @@
 > **最后更新**: 2026-07-23
 > **核心版本**: Python 3.13
 
-
 ---
 
 ## 🎯 学习目标
@@ -942,7 +941,6 @@ class AuthDeps:
             return user
         return permission_checker
 
-
 # 使用示例
 auth = AuthDeps(jwt_auth, rbac)
 
@@ -1125,7 +1123,6 @@ class OAuth2Provider:
         """
         raise NotImplementedError
 
-
 class GitHubOAuth2(OAuth2Provider):
     """GitHub OAuth2 实现"""
 
@@ -1156,7 +1153,6 @@ class GitHubOAuth2(OAuth2Provider):
                 return {}
 
             return response.json()
-
 
 # FastAPI OAuth2 路由
 from fastapi import APIRouter, Query, HTTPException

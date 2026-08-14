@@ -159,7 +159,6 @@ class Point:
     def __repr__(self) -> str:
         return f"Point({self.x}, {self.y})"
 
-
 p1 = Point(1, 2)
 p2 = Point(3, 4)
 
@@ -185,7 +184,6 @@ class Point:
 
     def __repr__(self) -> str:
         return f"Point({self.x}, {self.y})"
-
 
 p = Point(2, 3)
 
@@ -240,7 +238,6 @@ class Version:
     def __repr__(self) -> str:
         return f"Version({self.major}.{self.minor}.{self.patch})"
 
-
 v1 = Version(1, 2, 3)
 v2 = Version(1, 2, 3)
 v3 = Version(1, 2, 4)
@@ -291,7 +288,6 @@ class Version:
 
     def __hash__(self) -> int:
         return hash((self.major, self.minor, self.patch))
-
 
 # 用于排序
 versions = [
@@ -445,7 +441,6 @@ class Stack:
         """len(stack)"""
         return len(self._items)
 
-
 stack = Stack()
 stack.push("apple")
 stack.push("banana")
@@ -465,7 +460,6 @@ class Stack:
     def __contains__(self, item: str) -> bool:
         """item in stack"""
         return item in self._items
-
 
 stack = Stack()
 stack.push("apple")
@@ -490,7 +484,6 @@ class Stack:
         """for item in stack"""
         return StackIterator(self._items.copy())
 
-
 class StackIterator:
     """Stack 的迭代器"""
 
@@ -508,7 +501,6 @@ class StackIterator:
         item = self._items[self._index]
         self._index += 1
         return item
-
 
 stack = Stack()
 stack.push("a")
@@ -553,7 +545,6 @@ class Counter:
 
     def reset(self) -> None:
         self._count = 0
-
 
 counter = Counter()
 
@@ -600,7 +591,6 @@ class LazyObject:
     def load(self, key: str, value: str) -> None:
         self._data[key] = value
 
-
 obj = LazyObject()
 obj.load("name", "Alice")
 obj.load("age", "30")
@@ -636,7 +626,6 @@ class ValidationObject:
             return f"[未设置: {name}]"
         return self._data[name]
 
-
 obj = ValidationObject()
 obj.name = "Alice"
 print(obj.name)  # Alice
@@ -657,8 +646,6 @@ def __setattr__(self, name: str, value: str) -> None:
 ```
 
 ---
-
-
 
 ## 💭 课堂思考
 
@@ -828,7 +815,6 @@ class Vector:
     def magnitude(self) -> float:
         return (self.x ** 2 + self.y ** 2) ** 0.5
 
-
 # 使用示例
 v1 = Vector(3, 4)
 v2 = Vector(1, 2)
@@ -861,7 +847,6 @@ class Bad:
 
     # 忘记定义 __hash__ 或哈希不一致
 
-
 # ✅ 正确
 class Good:
     def __init__(self, value: int) -> None:
@@ -884,7 +869,6 @@ class Bad:
     def __str__(self) -> str:
         return "用户友好"
 
-
 # ✅ 推荐：都实现，至少实现 __repr__
 class Good:
     def __repr__(self) -> str:
@@ -901,7 +885,6 @@ class Good:
 class Point:
     def __mul__(self, scalar: float) -> Point:
         return Point(self.x * scalar, self.y * scalar)
-
 
 # ✅ 正确：同时实现 __rmul__
 class Point:
@@ -987,7 +970,6 @@ class Money:
             return Money(0, 0)
         return Money(0, total_cents - other_cents)
 
-
 # 使用
 m1 = Money(1, 50)
 m2 = Money(2, 75)
@@ -1035,7 +1017,6 @@ print(repr(m1 + m2))  # Money(4, 25)
 - 🔒 **安全操作**：路径穿越防护、原子写入
 
 > 💡 **学习路径**：L08 → L09（文件操作）→ P01（综合项目）
-
 
 ---
 

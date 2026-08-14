@@ -75,7 +75,6 @@ for user in users:
 | **字典 (Dict)** | ✅ (Python 3.7+) | ✅ | ❌ (键) | 配置、用户信息、计数器 |
 | **集合 (Set)** | ❌ | ✅ | ❌ | 去重、成员检测、集合运算 |
 
-
 ### 数据结构选择指南（可视化）
 
 选择正确的数据结构能让代码效率提升 10 倍甚至 100 倍：
@@ -139,7 +138,6 @@ graph LR
     style ON fill:#e3f2fd,stroke:#1565c0
     style ON2 fill:#ffebee,stroke:#c62828
 ```
-
 
 ## 📋 列表（List）
 
@@ -883,8 +881,6 @@ for i, fruit in enumerate(fruits):
 ```
 ---
 
-
-
 ---
 
 ## 🚀 实战案例
@@ -1135,8 +1131,6 @@ union = set_example | {3, 4, 5}
 ```
 ---
 
-
-
 ## 💭 课堂思考
 
 ### 思考 1: 可变 vs 不可变的选择
@@ -1337,7 +1331,6 @@ if item in my_set:
 merged = dict1 | dict2  # 后者覆盖前者
 ```
 
-
 ---
 
 ## ✅ 自检清单
@@ -1367,7 +1360,6 @@ merged = dict1 | dict2  # 后者覆盖前者
 - 🏗️ **包管理**：__init__.py、相对导入
 
 > 💡 **学习路径**：L03 → L04（函数与模块）→ L05（调试）→ ...
-
 
 ---
 

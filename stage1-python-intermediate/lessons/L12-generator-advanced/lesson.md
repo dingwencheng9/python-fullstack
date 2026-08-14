@@ -491,7 +491,6 @@ def squares_gen(n):
 
 ---
 
-
 ## 💡 常见陷阱
 
 ### 陷阱 1: yield from 忘记返回值传播

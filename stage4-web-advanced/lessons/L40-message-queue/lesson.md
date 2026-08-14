@@ -9,7 +9,6 @@
 > **最后更新**: 2026-07-23
 > **核心版本**: Python 3.13
 
-
 ---
 
 ## 🎯 学习目标
@@ -667,7 +666,6 @@ class IdempotentProcessor:
 
         return {"status": "processed", "result": result}
 
-
 # 使用示例
 idempotent = IdempotentProcessor(redis_client)
 
@@ -904,7 +902,6 @@ class HeartbeatManager:
     def cleanup(self, websocket: WebSocket):
         """清理"""
         self.last_ping.pop(websocket, None)
-
 
 heartbeat_manager = HeartbeatManager(timeout=30)
 

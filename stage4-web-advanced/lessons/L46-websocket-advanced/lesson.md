@@ -9,7 +9,6 @@
 > **最后更新**: 2026-07-23
 > **核心版本**: Python 3.13
 
-
 ---
 
 ```mermaid
@@ -472,7 +471,6 @@ class RateLimiter:
 
 ---
 
-
 ---
 
 ## 6. 高并发 WebSocket 架构
@@ -498,7 +496,6 @@ from dataclasses import dataclass, field
 from typing import Dict, Set, Optional
 from collections import defaultdict
 
-
 @dataclass
 class ConnectionState:
     """连接状态"""
@@ -508,7 +505,6 @@ class ConnectionState:
     connected_at: float = field(default_factory=time.time)
     last_heartbeat: float = field(default_factory=time.time)
     message_count: int = 0
-
 
 class ConnectionPool:
     """
@@ -759,7 +755,6 @@ from typing import Optional
 import redis.asyncio as redis
 import json
 
-
 class RedisMessageBroker:
     """
     Redis 消息代理
@@ -804,7 +799,6 @@ class RedisMessageBroker:
             if message["type"] == "message":
                 data = json.loads(message["data"])
                 await callback(data)
-
 
 # 使用示例
 class WebSocketWithQueue:
@@ -884,7 +878,6 @@ WebSocket 分片架构
 import hashlib
 from fastapi import WebSocket
 
-
 class ConsistentHashRouter:
     """
     一致性哈希路由器
@@ -935,7 +928,6 @@ class ConsistentHashRouter:
         """移除节点"""
         self.nodes.remove(node)
         self._build_ring()
-
 
 # Nginx WebSocket 负载均衡配置
 """
@@ -1012,7 +1004,6 @@ WS_ERRORS = Counter(
     ["instance", "error_type"],
 )
 
-
 class WebSocketMetrics:
     """WebSocket 指标收集"""
     
@@ -1047,7 +1038,6 @@ class WebSocketMetrics:
             instance=self.instance_id,
             error_type=error_type,
         ).inc()
-
 
 # 告警规则示例
 """
@@ -1170,14 +1160,12 @@ from pydantic import BaseModel
 import uuid
 import json
 
-
 class OperationType(str, Enum):
     """操作类型"""
     INSERT = "insert"
     DELETE = "delete"
     MOVE = "move"
     STYLE = "style"
-
 
 class Operation(BaseModel):
     """操作"""
@@ -1188,7 +1176,6 @@ class Operation(BaseModel):
     data: dict
     timestamp: float
     version: int
-
 
 class WhiteboardState:
     """白板状态"""
@@ -1217,7 +1204,6 @@ class WhiteboardState:
         self.operations.append(op)
         self.version += 1
         return True
-
 
 class WhiteboardWebSocket:
     """白板 WebSocket 处理"""
@@ -1340,11 +1326,8 @@ class WhiteboardWebSocket:
                 break
 ```
 
-
-
 ---
 
 ## 🔗 下一步
-
 
 [Stage 5: 数据工程](../../../stage5-data-engineering/)

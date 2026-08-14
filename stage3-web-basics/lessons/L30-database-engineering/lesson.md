@@ -9,7 +9,6 @@
 > **最后更新**: 2026-07-23
 > **核心版本**: Python 3.13
 
-
 ## 📚 前置知识
 
 **学习本课程前，你应该掌握：**
@@ -699,7 +698,6 @@ from pydantic import BaseModel, Field
 from typing import Optional
 from datetime import datetime
 
-
 # Pydantic 模型（与 SQLAlchemy 对比）
 class UserDocument(BaseModel):
     """MongoDB 文档模型"""
@@ -708,7 +706,6 @@ class UserDocument(BaseModel):
     tags: list[str] = Field(default_factory=list)
     metadata: Optional[dict] = None
     created_at: datetime = Field(default_factory=datetime.utcnow)
-
 
 class MongoDBSession:
     """MongoDB 异步会话封装"""
@@ -726,7 +723,6 @@ class MongoDBSession:
         """关闭连接"""
         self.client.close()
 
-
 # 创建实例
 mongo = MongoDBSession()
 ```
@@ -736,19 +732,16 @@ mongo = MongoDBSession()
 ```python
 # examples/05_mongodb_async.py (续)
 
-
 async def create_user(mongo: MongoDBSession, user: UserDocument) -> str:
     """创建用户文档"""
     result = await mongo.users.insert_one(user.model_dump())
     return str(result.inserted_id)
-
 
 async def find_user_by_email(
     mongo: MongoDBSession, email: str
 ) -> Optional[dict]:
     """按邮箱查找用户"""
     return await mongo.users.find_one({"email": email})
-
 
 async def find_users_by_tags(
     mongo: MongoDBSession, tags: list[str], limit: int = 10
@@ -759,7 +752,6 @@ async def find_users_by_tags(
     ).limit(limit)
 
     return await cursor.to_list(length=limit)
-
 
 async def update_user_tags(
     mongo: MongoDBSession, user_id: str, new_tags: list[str]
@@ -795,7 +787,6 @@ async def get_user_sql(session: AsyncSession, user_id: int) -> Optional[User]:
     )
     return result.scalar_one_or_none()
 
-
 # MongoDB Motor
 async def get_user_mongo(mongo: MongoDBSession, user_id: str) -> Optional[dict]:
     return await mongo.users.find_one({"_id": user_id})
@@ -805,7 +796,6 @@ async def get_user_mongo(mongo: MongoDBSession, user_id: str) -> Optional[dict]:
 
 ```python
 # examples/05_mongodb_async.py (续)
-
 
 async def aggregate_user_stats(mongo: MongoDBSession) -> list[dict]:
     """聚合管道：统计用户标签分布"""
@@ -871,8 +861,6 @@ async def create_indexes(mongo: MongoDBSession) -> None:
 
 **课程完成**！你已掌握 SQLAlchemy 2.0 异步持久化与事务原子性的生产级实战技能。🎉
 
-
 ## 🔗 下一步
-
 
 [L31: SQL 进阶](../L31-sql-advanced/)

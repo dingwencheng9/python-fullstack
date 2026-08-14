@@ -9,7 +9,6 @@
 > **最后更新**: 2026-07-23
 > **核心版本**: Python 3.13
 
-
 ## 📚 前置知识
 
 **学习本课程前，你应该掌握：**
@@ -815,6 +814,5 @@ class HealthCheckMixin:
 **下一课**: [L63 Agent 评估与优化](../L63-agent-evaluation/lesson.md)
 
 ## 🔗 下一步
-
 
 [L63: Agent 评估与调试](../L63-agent-evaluation/)

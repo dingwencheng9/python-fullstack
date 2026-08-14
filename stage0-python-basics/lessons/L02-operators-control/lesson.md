@@ -1221,8 +1221,6 @@ else:
 
 ---
 
-
-
 ## 🎓 核心知识点总结
 
 ### Part 1: 运算符
@@ -1598,7 +1596,6 @@ for i in range(1, n + 1):
 - 🛠️ **collections 模块**：defaultdict、Counter、deque
 
 > 💡 **学习路径**：L02 → L03（数据结构）→ L04（函数与模块）→ ...
-
 
 ---
 

@@ -9,7 +9,6 @@
 > **最后更新**: 2026-07-23
 > **核心版本**: Python 3.13
 
-
 ## 📚 前置知识
 
 **学习本课程前，你应该掌握：**
@@ -603,7 +602,6 @@ function ChatComponent() {
 
 ---
 
-
 ---
 
 ## 第五章：高级 SSE 特性与最佳实践
@@ -772,7 +770,6 @@ import json
 import uuid
 
 router = APIRouter()
-
 
 @router.get("/api/v2/multiplex")
 async def multiplexed_sse():
@@ -1046,7 +1043,6 @@ SSE_LATENCY = Histogram(
     buckets=[0.001, 0.005, 0.01, 0.05, 0.1, 0.5],
 )
 
-
 @router.get("/api/events/monitored")
 async def monitored_sse():
     """带监控的 SSE 端点"""
@@ -1128,7 +1124,6 @@ class SSEWithHeartbeat {
     }
 }
 
-
 /*
 Q2: Nginx 返回 502 错误？
 
@@ -1136,7 +1131,6 @@ A: Nginx 默认会缓冲 SSE 响应，需要配置：
 - proxy_buffering off;
 - proxy_cache off;
 */
-
 
 /*
 Q3: 如何限制 SSE 连接数？
@@ -1151,7 +1145,6 @@ router = APIRouter()
 
 MAX_CONNECTIONS = 100
 connection_semaphore = asyncio.Semaphore(MAX_CONNECTIONS)
-
 
 @router.get("/api/events/limited")
 async def limited_sse():
@@ -1262,7 +1255,6 @@ from pydantic import BaseModel
 from typing import Literal
 from datetime import datetime
 
-
 class LogEntry(BaseModel):
     id: int
     timestamp: datetime
@@ -1271,13 +1263,11 @@ class LogEntry(BaseModel):
     source: str
     metadata: dict | None = None
 
-
 # services/log_processor.py
 import asyncio
 import random
 from datetime import datetime
 from models.log import LogEntry
-
 
 class LogProcessor:
     """日志处理器"""
@@ -1323,7 +1313,6 @@ class LogProcessor:
             if level_priority.get(log.level, 0) >= min_level
         ]
 
-
 # routers/sse.py
 from fastapi import APIRouter, Query
 from fastapi.responses import StreamingResponse
@@ -1332,7 +1321,6 @@ import json
 
 router = APIRouter()
 processor = LogProcessor()
-
 
 @router.get("/api/logs/stream")
 async def log_stream(
@@ -1374,7 +1362,6 @@ import pytest
 from httpx import AsyncClient, ASGITransport
 from main import app
 
-
 @pytest.mark.asyncio
 async def test_sse_connection():
     """测试 SSE 连接"""
@@ -1398,7 +1385,6 @@ async def test_sse_connection():
             assert "id" in messages[0]
             assert "level" in messages[0]
 
-
 @pytest.mark.asyncio
 async def test_sse_with_filters():
     """测试带过滤器的 SSE"""
@@ -1420,8 +1406,6 @@ async def test_sse_with_filters():
                     assert data["level"] == "ERROR"
                     break
 ```
-
-
 
 ---
 

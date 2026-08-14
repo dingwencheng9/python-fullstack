@@ -1,7 +1,4 @@
 """
-
-from __future__ import annotations
-
 example_06_python314_tstring.py — PEP 750 模板字符串（Python 3.14+）
 
 PEP 750 在 Python 3.14 引入"t-string"（template strings），是 f-string 的安全
@@ -24,6 +21,11 @@ t-string 的解法：
     1. t-string 与 f-string 语法几乎相同，差别只是前缀 t/f
     2. t"..." 返回 Template 对象（含 strings 元组 + interpolations 列表）
     3. 应用场景：SQL、HTML、shell、日志结构化、i18n
+
+⚠️ 安全说明：
+    本文件使用 exec() 仅用于教学演示 Python 3.14 t-string 语法特性。
+    exec() 在生产环境中禁止使用，会导致任意代码执行（RCE）漏洞。
+    实际代码应直接使用 t-string 字面量（Python 3.14+），无需 exec()。
 """
 
 from __future__ import annotations
@@ -57,7 +59,8 @@ for interp in tmpl.interpolations:
     print(f"    expression={interp.expression!r}, value={interp.value!r}")
 print()
 """
-    # ⚠️ 仅用于教学演示：生产环境禁止使用 exec()
+    # ⚠️ 反模式（教学演示 Python 3.14 t-string 语法）
+    # 生产环境禁止使用 exec()，会导致任意代码执行（RCE）漏洞
     exec(code)
 
 
@@ -100,7 +103,8 @@ print(f"  参数列表（独立传递）：{params}")
 print(f"  ✅ 用户输入永远不会拼进 SQL 字符串")
 print()
 '''
-    # ⚠️ 仅用于教学演示：生产环境禁止使用 exec()
+    # ⚠️ 反模式（教学演示 Python 3.14 t-string 语法）
+    # 生产环境禁止使用 exec()，会导致任意代码执行（RCE）漏洞
     # 本示例在受控环境下演示 Python 3.14 t-string 特性
     exec(code)
 
@@ -138,7 +142,8 @@ print(f"  安全 HTML 输出：{safe_html(page_template)}")
 print(f"  ✅ <script> 被自动转义为 &lt;script&gt;")
 print()
 """
-    # ⚠️ 仅用于教学演示：生产环境禁止使用 exec()
+    # ⚠️ 反模式（教学演示 Python 3.14 t-string 语法）
+    # 生产环境禁止使用 exec()，会导致任意代码执行（RCE）漏洞
     exec(code, {"html_module": html_module})
 
 
@@ -168,7 +173,8 @@ print("  使用建议：")
 print("    - 立即输出文本 → f-string")
 print("    - 文本走向不可信通道（SQL/HTML/shell）→ t-string + 专用格式化")
 """
-    # ⚠️ 仅用于教学演示：生产环境禁止使用 exec()
+    # ⚠️ 反模式（教学演示 Python 3.14 t-string 语法）
+    # 生产环境禁止使用 exec()，会导致任意代码执行（RCE）漏洞
     exec(code)
 
 

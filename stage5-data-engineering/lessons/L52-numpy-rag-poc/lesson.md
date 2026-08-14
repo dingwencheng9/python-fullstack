@@ -9,7 +9,6 @@
 > **最后更新**: 2026-07-23
 > **核心版本**: Python 3.13
 
-
 ## 📚 前置知识
 
 **学习本课程前，你应该掌握：**
@@ -135,7 +134,6 @@ def cosine_similarity(a: np.ndarray, b: np.ndarray) -> float:
     norm_b = np.linalg.norm(b)
     return dot_product / (norm_a * norm_b)
 
-
 def search(query: str, top_k: int = 3) -> list[tuple[int, float]]:
     """向量检索"""
     query_vec = mock_embedding(query)
@@ -149,7 +147,6 @@ def search(query: str, top_k: int = 3) -> list[tuple[int, float]]:
     # 返回 Top-K
     top_indices = np.argsort(similarities)[::-1][:top_k]
     return [(idx, similarities[idx]) for idx in top_indices]
-
 
 # 测试检索
 results = search("Python 编程语言")
@@ -246,7 +243,6 @@ def batch_cosine_similarity(query: np.ndarray,
     doc_norms = docs / np.linalg.norm(docs, axis=1, keepdims=True)
     return np.dot(doc_norms, query_norm)
 
-
 # 测试
 query = doc_embeddings[0]
 similarities = batch_cosine_similarity(query, doc_embeddings)
@@ -320,7 +316,6 @@ print(top_k)  # [0, 4, ...]
 from elasticsearch import AsyncElasticsearch
 from typing import Optional
 
-
 class ElasticsearchClient:
     """Elasticsearch 异步客户端封装"""
 
@@ -373,7 +368,6 @@ class ElasticsearchClient:
 ```python
 # examples/05_elasticsearch_search.py (续)
 
-
 async def search_documents(
     es: ElasticsearchClient, query: str, size: int = 10
 ) -> list[dict]:
@@ -416,7 +410,6 @@ async def search_documents(
 
 ```python
 # examples/05_elasticsearch_search.py (续)
-
 
 async def hybrid_search(
     es: ElasticsearchClient,
@@ -486,7 +479,6 @@ async def hybrid_search(
 3. 实现聚合统计 `aggs`
 
 ---
-
 
 ---
 
@@ -761,7 +753,6 @@ Embedding 质量评估指标
 from sklearn.metrics.pairwise import cosine_similarity
 import numpy as np
 
-
 def evaluate_retrieval(
     queries: list[str],
     relevant_docs: list[list[int]],
@@ -841,7 +832,6 @@ def chunk_by_sentences(text: str, overlap: int = 2) -> list[str]:
     
     return chunks
 
-
 def chunk_by_sliding_window(
     text: str, 
     chunk_size: int = 500,
@@ -858,7 +848,6 @@ def chunk_by_sliding_window(
             break
     
     return chunks
-
 
 def chunk_by_markdown(text: str) -> list[dict]:
     """按 Markdown 结构分块"""
@@ -917,7 +906,6 @@ def reciprocal_rank_fusion(results_list: list[list], k: int = 60) -> list:
     # 按分数排序
     sorted_docs = sorted(doc_scores.items(), key=lambda x: x[1], reverse=True)
     return [doc_id for doc_id, score in sorted_docs]
-
 
 # 示例
 vector_results = [1, 2, 3, 4, 5]  # 向量检索结果
@@ -992,11 +980,7 @@ def ragas_evaluate(
     return avg_scores
 ```
 
-
-
 ---
-
-
 
 ---
 
@@ -1020,7 +1004,6 @@ def ragas_evaluate(
 - ✅ 掌握了本课程的核心概念
 - ✅ 能够运用所学知识解决实际问题
 - ✅ 为后续学习打下坚实基础
-
 
 ## 下一步
 

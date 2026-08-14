@@ -43,7 +43,6 @@
 
 ---
 
-
 ### OOP 四大支柱（可视化）
 
 面向对象编程的四大核心概念：
@@ -194,8 +193,6 @@ temp.celsius = 30    # 使用 setter
 > 💡 **进阶学习**：@property 的底层原理见 [L13 描述符](../../../stage1-python-intermediate/lessons/L13-descriptors/lesson.md)。
 
 ---
-
-
 
 ### 继承层次结构（可视化）
 
@@ -800,8 +797,6 @@ print(temp.fahrenheit)  # 86.0
 temp.celsius = -300     # ValueError!
 ```
 
-
-
 ---
 
 ## ❌ 学生常见错误
@@ -920,7 +915,6 @@ class BankAccount:
         self.__balance -= amount
         self.__transaction_count += 1
         return True
-
 
 # 使用
 account = BankAccount("Alice", 1000)

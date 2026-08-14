@@ -9,7 +9,6 @@
 > **最后更新**: 2026-07-23
 > **核心版本**: Python 3.13
 
-
 ## 📚 前置知识
 
 **学习本课程前，你应该掌握：**
@@ -786,6 +785,5 @@ python examples/opentelemetry_demo.py
 ```
 
 ## 🔗 下一步
-
 
 [L28: 数据库基础与 SQL](../L29-sql-basics/)

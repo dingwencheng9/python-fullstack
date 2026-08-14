@@ -339,7 +339,6 @@ async def main():
 asyncio.run(main())
 ```
 
-
 ---
 
 ### Part 5: 常见陷阱与最佳实践
@@ -385,7 +384,6 @@ asyncio.run(main())
 
 ---
 
-
 ### Part 6: 异步 I/O 实战
 
 #### 6.1 异步文件操作
@@ -400,18 +398,15 @@ async def read_file_async(filepath: str) -> str:
     async with aiofiles.open(filepath, mode='r') as f:
         return await f.read()
 
-
 async def write_file_async(filepath: str, content: str) -> None:
     """异步写入文件"""
     async with aiofiles.open(filepath, mode='w') as f:
         await f.write(content)
 
-
 async def copy_file_async(src: str, dst: str) -> None:
     """异步复制文件"""
     content = await read_file_async(src)
     await write_file_async(dst, content)
-
 
 async def process_multiple_files(filepaths: list[str]) -> dict[str, str]:
     """并发处理多个文件"""
@@ -435,7 +430,6 @@ async def fetch_all_sequential(urls: list[str]) -> list[dict]:
             results.append({"url": url, "status": response.status_code})
     return results
 
-
 async def fetch_all_concurrent(urls: list[str]) -> list[dict]:
     """并发请求（高效）"""
     async with httpx.AsyncClient(timeout=30.0) as client:
@@ -453,7 +447,6 @@ async def fetch_all_concurrent(urls: list[str]) -> list[dict]:
                     "content_length": len(response.content)
                 })
         return results
-
 
 async def fetch_with_retry(
     url: str,
@@ -486,7 +479,6 @@ class User:
     id: int
     name: str
     email: str
-
 
 class AsyncDatabase:
     """模拟异步数据库"""
@@ -531,7 +523,6 @@ class AsyncDatabase:
             return True
         return False
 
-
 async def main():
     db = AsyncDatabase()
 
@@ -546,7 +537,6 @@ async def main():
     # 批量查询
     all_users = await db.get_all_users()
     print(f"当前用户: {[u.name for u in all_users]}")
-
 
 asyncio.run(main())
 ```
@@ -564,7 +554,6 @@ class Task:
     id: int
     data: str
     priority: int = 0
-
 
 class AsyncTaskQueue:
     """异步任务队列"""
@@ -595,7 +584,6 @@ class AsyncTaskQueue:
         """等待所有任务完成"""
         await self._queue.join()
 
-
 async def producer(queue: AsyncTaskQueue, num_tasks: int):
     """生产者：生成任务"""
     for i in range(num_tasks):
@@ -607,7 +595,6 @@ async def producer(queue: AsyncTaskQueue, num_tasks: int):
         await queue.put(task)
         print(f"[生产者] 添加任务 #{task.id}")
         await asyncio.sleep(0.1)
-
 
 async def consumer(queue: AsyncTaskQueue, consumer_id: int):
     """消费者：处理任务"""
@@ -622,7 +609,6 @@ async def consumer(queue: AsyncTaskQueue, consumer_id: int):
         queue.task_done()
         print(f"[消费者 #{consumer_id}] 完成任务 #{task.id}")
 
-
 async def main():
     queue = AsyncTaskQueue()
 
@@ -632,7 +618,6 @@ async def main():
         consumer(queue, 1),
         consumer(queue, 2),
     )
-
 
 asyncio.run(main())
 ```
@@ -677,7 +662,6 @@ class AsyncConnectionPool:
     async def __aexit__(self, *args) -> None:
         pass  # 保持连接池
 
-
 async def use_connection(pool: AsyncConnectionPool, task_id: int):
     """使用连接池"""
     conn = await pool.acquire()
@@ -688,13 +672,11 @@ async def use_connection(pool: AsyncConnectionPool, task_id: int):
         await pool.release(conn)
         print(f"[任务 {task_id}] 释放 {conn}")
 
-
 async def main():
     async with AsyncConnectionPool(max_connections=3) as pool:
         # 模拟 10 个并发请求，但只有 3 个连接
         tasks = [use_connection(pool, i) for i in range(10)]
         await asyncio.gather(*tasks)
-
 
 asyncio.run(main())
 ```
@@ -722,12 +704,10 @@ class AsyncCounter:
         async with self._lock:
             return self._count
 
-
 async def concurrent_increment(counter: AsyncCounter, num_times: int):
     """并发递增"""
     for _ in range(num_times):
         await counter.increment()
-
 
 async def main():
     counter = AsyncCounter()
@@ -737,7 +717,6 @@ async def main():
     await asyncio.gather(*tasks)
 
     print(f"最终计数: {await counter.get_count()}")  # 应该是 1000
-
 
 asyncio.run(main())
 ```
@@ -770,7 +749,6 @@ async def event_loop_explanation():
 
     print("=== 所有任务完成 ===")
 
-
 # 事件循环的三个阶段
 async def three_phases():
     """事件循环的三个阶段"""
@@ -795,7 +773,6 @@ async def three_phases():
 
     await on_ready()
     await on_run()
-
 
 asyncio.run(event_loop_explanation())
 ```
@@ -825,14 +802,12 @@ class CustomEventLoop(asyncio.AbstractEventLoop):
         task.add_done_callback(self._tasks.discard)
         return task
 
-
 # 使用默认事件循环
 async def default_loop_example():
     """使用默认事件循环"""
     loop = asyncio.get_running_loop()
     print(f"当前事件循环: {loop}")
     print(f"是否为默认循环: {loop.is_running()}")
-
 
 asyncio.run(default_loop_example())
 ```
@@ -853,7 +828,6 @@ async def async_worker(name: str, duration: float):
     print(f"[Async {name}] 完成")
     return f"{name} 结果"
 
-
 async def async_demo():
     start = time.time()
     results = await asyncio.gather(
@@ -865,14 +839,12 @@ async def async_demo():
     print(f"Async 总耗时: {elapsed:.2f}s")
     return results
 
-
 # threading 版本
 def thread_worker(name: str, duration: float, results: list):
     print(f"[Thread {name}] 开始")
     time.sleep(duration)  # 阻塞式
     print(f"[Thread {name}] 完成")
     results.append(f"{name} 结果")
-
 
 def threading_demo():
     results = []
@@ -891,14 +863,12 @@ def threading_demo():
     print(f"Thread 总耗时: {elapsed:.2f}s")
     return results
 
-
 async def main():
     print("=== asyncio 并发 ===")
     await async_demo()
 
     print("\n=== threading 并发 ===")
     threading_demo()
-
 
 asyncio.run(main())
 
@@ -921,13 +891,11 @@ def cpu_bound_task(n: int) -> int:
     result = sum(i * i for i in range(n))
     return result
 
-
 async def async_cpu_bound(n: int) -> int:
     """异步包装的 CPU 密集型任务"""
     loop = asyncio.get_running_loop()
     # 将 CPU 密集型任务放到线程池
     return await loop.run_in_executor(None, cpu_bound_task, n)
-
 
 async def main():
     n = 5_000_000
@@ -945,7 +913,6 @@ async def main():
 
     # asyncio 单线程无法并行执行 CPU 密集任务
     # multiprocessing 可以利用多核
-
 
 asyncio.run(main())
 ```
@@ -970,12 +937,10 @@ def async_timer(func):
         return result
     return wrapper
 
-
 @async_timer
 async def slow_operation():
     await asyncio.sleep(0.5)
     return "完成"
-
 
 async def performance_monitor():
     """异步性能监控"""
@@ -985,7 +950,6 @@ async def performance_monitor():
     total = time.perf_counter() - start
     print(f"\n总耗时: {total*1000:.2f}ms")
     print(f"并发数: {len(tasks)}")
-
 
 asyncio.run(performance_monitor())
 ```
@@ -1016,7 +980,6 @@ async def debug_async():
     await asyncio.gather(task1, task2)
 
     print(f"最终状态: done={task1.done()}, result={task1.result()}")
-
 
 asyncio.run(debug_async())
 ```
@@ -1053,7 +1016,6 @@ async def rate_limited():
     async with semaphore:
         await fetch_data("url")
 
-
 # ❌ 避免做法
 
 # 1. 不要混用阻塞和非阻塞代码
@@ -1079,7 +1041,6 @@ def get_user(user_id: int) -> dict:
     response = requests.get(f"https://api.example.com/users/{user_id}")
     return response.json()
 
-
 # 异步版本
 import httpx
 import asyncio
@@ -1089,14 +1050,12 @@ async def get_user_async(user_id: int) -> dict:
         response = await client.get(f"https://api.example.com/users/{user_id}")
         return response.json()
 
-
 # 批量迁移
 async def get_users_async(user_ids: list[int]) -> list[dict]:
     # 使用 gather 并发请求
     tasks = [get_user_async(uid) for uid in user_ids]
     return await asyncio.gather(*tasks)
 ```
-
 
 ## 🚀 快速开始
 

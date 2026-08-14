@@ -9,7 +9,6 @@
 > **最后更新**: 2026-07-23
 > **核心版本**: Python 3.13
 
-
 ---
 
 ## 🎯 学习目标
@@ -638,7 +637,6 @@ class LoginPage:
         expect(self.page.get_by_role("alert")).to_contain_text(message)
         return self
 
-
 # pages/dashboard_page.py
 from playwright.sync_api import Page, expect
 
@@ -662,7 +660,6 @@ class DashboardPage:
 
     def get_task_by_title(self, title: str):
         return self.page.get_by_text(title).locator("..")
-
 
 # 测试中使用
 def test_login_with_page_object(page: Page):

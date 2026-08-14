@@ -23,7 +23,6 @@
 
 ---
 
-
 ## 📖 项目导读
 
 本项目是一个**综合实战项目**，将帮助你把 Stage 0 学到的所有知识串联起来。
@@ -94,8 +93,6 @@ P01-student-manager/
 
 ## 📝 实现步骤
 
-
-
 ### 项目架构（可视化）
 
 ```mermaid
@@ -149,7 +146,6 @@ flowchart TD
 - **Manager 层**：业务逻辑，不关心存储
 - **Model 层**：数据表示，与业务无关
 - **Storage 层**：持久化，与业务无关
-
 
 ### 步骤 1: 数据模型（类定义）
 
@@ -378,7 +374,6 @@ class Student:
     def from_dict(cls, data: dict) -> "Student":
         return cls(data["name"], data["age"], data["score"])
 
-
 class StudentManager:
     """学员管理器"""
     
@@ -517,8 +512,6 @@ def update_student(
 
 ---
 
-
-
 ## 💭 课堂思考
 
 ### 思考 1: 为什么要返回副本而非原对象？
@@ -562,7 +555,6 @@ def good_list():
 - 返回值 vs 抛出异常，各有什么优劣？
 - 什么情况下应该返回 None，什么情况下应该抛异常？
 - API 设计中的一致性如何保证？
-
 
 ## 💡 最佳实践
 
@@ -609,8 +601,6 @@ pass  # TODO: 实现函数体
 ```
 
 ---
-
-
 
 ## 💡 常见项目错误
 
@@ -671,7 +661,6 @@ def load(self):
     except (json.JSONDecodeError, KeyError):
         return []
 ```
-
 
 ## 🧪 测试要点
 
@@ -840,7 +829,6 @@ class Student:
 
 ---
 
-
 ## ✅ 自检清单
 
 完成本课程后，你应该能够：
@@ -853,7 +841,6 @@ class Student:
 - [ ] 读写 JSON 文件实现数据持久化
 - [ ] 编写单元测试验证功能正确性
 - [ ] 理解 OOP 设计模式（单一职责、封装）
-
 
 ---
 
@@ -869,7 +856,6 @@ class Student:
 
 > 💡 **学习路径**：P01 → Stage 1 L10（类型系统）→ L11（迭代器）→ ...
 
-
 ---
 
 ## 🔗 下一步学习
@@ -879,7 +865,6 @@ class Student:
 - **Stage 1 L12**: Python 高级特性 - 装饰器与上下文管理器
 
 > **📌 深入学习**: 完整的正则表达式语法参见 L18（第 18 课）。
-
 
 ### 推荐练习
 
@@ -913,7 +898,6 @@ class Student:
 - 正则表达式
 
 **恭喜你完成 Stage 0！** 🎊
-
 
 ## 🎓 核心知识点总结
 

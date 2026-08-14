@@ -9,7 +9,6 @@
 > **最后更新**: 2026-07-23
 > **核心版本**: Python 3.13
 
-
 ## 📚 前置知识
 
 **学习本课程前，你应该掌握：**
@@ -1035,6 +1034,5 @@ docker compose up -d api=python-fullstack-agent:previous
 **🎉 **恭喜完成 Stage 6 AI Agent 系统全部课程！**
 
 ## 🔗 下一步
-
 
 [L65: Agent SSE 流式路由](../L65-agent-sse-router/)

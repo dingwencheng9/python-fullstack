@@ -177,12 +177,10 @@ def validate_range(min_val: float, max_val: float):
 
     return decorator
 
-
 class Slider:
     @validate_range(0, 100)
     def value(self) -> float:
         pass
-
 
 slider = Slider()
 slider.value = 50   # ✅
@@ -221,7 +219,6 @@ class Validated(Descriptor):
         """子类实现验证逻辑"""
         raise NotImplementedError
 
-
 class Integer(Validated):
     """整数验证描述符"""
 
@@ -237,7 +234,6 @@ class Integer(Validated):
             raise ValueError(f"值不能小于 {self.min_val}")
         if self.max_val is not None and value > self.max_val:
             raise ValueError(f"值不能大于 {self.max_val}")
-
 
 class String(Validated):
     """字符串验证描述符"""
@@ -262,7 +258,6 @@ class String(Validated):
                 if "@" not in value or "." not in value.split("@")[-1]:
                     raise ValueError(f"不符合 email 格式")
 
-
 # 使用示例
 class User:
     age = Integer(min_val=0, max_val=150)
@@ -273,7 +268,6 @@ class User:
         self.name = name
         self.age = age
         self.email = email
-
 
 user = User("Alice", 25, "alice@example.com")
 print(user.name, user.age, user.email)
@@ -313,7 +307,6 @@ class Lazy:
     def __set__(self, obj, value):
         raise AttributeError(f"{self.attr_name} 是只读的")
 
-
 class DatabaseConnection:
     """数据库连接类"""
     def __init__(self, dsn: str) -> None:
@@ -325,7 +318,6 @@ class DatabaseConnection:
         return {"connected": True, "dsn": self.dsn}
 
     connection = Lazy(_connect)  # 首次访问时才连接
-
 
 db = DatabaseConnection("postgresql://localhost/mydb")
 print("对象已创建，但尚未连接")
@@ -369,7 +361,6 @@ class Logged:
         logger.debug(f"设置 {self.name} = {value}")
         setattr(obj, self.private_name, value)
 
-
 class User:
     name = Logged()
     email = Logged()
@@ -380,7 +371,6 @@ class User:
 
     def __repr__(self) -> str:
         return f"User(name={self.name!r}, email={self.email!r})"
-
 
 # 配置日志
 logging.basicConfig(level=logging.DEBUG)
@@ -414,7 +404,6 @@ class Example:
         print(f"__getattribute__ called for: {name}")
         return super().__getattribute__(name)
 
-
 obj = Example()
 print(obj.regular_attr)  # __getattribute__ called
 print(obj.missing)       # __getattribute__ then __getattr__ called
@@ -446,7 +435,6 @@ class DynamicAttributes:
         else:
             self._data[name] = value
 
-
 # 使用
 obj = DynamicAttributes({"name": "Alice", "age": 25})
 print(obj.name)  # Alice
@@ -469,7 +457,6 @@ class Broken:
     def __getattribute__(self, name: str):
         # ✅ 正确：使用 super() 绕过描述符协议
         return super().__getattribute__(name) + "!"
-
 
 class Safe:
     def __getattribute__(self, name: str):
@@ -509,11 +496,9 @@ class ValidatedProperty:
         if self.func:
             self.func.__set__(obj, value)
 
-
 def validate_positive(value):
     if value <= 0:
         raise ValueError("值必须为正数")
-
 
 class Counter:
     @ValidatedProperty(validate_positive)
@@ -523,7 +508,6 @@ class Counter:
     @count.setter
     def count(self, value):
         self.__count = value
-
 
 counter = Counter()
 counter.count = 5
@@ -550,7 +534,6 @@ class Observable:
         for observer in self.observers:
             observer(obj, old_value, new_value)
 
-
 class ObservableDescriptor:
     """可观察描述符"""
 
@@ -573,15 +556,12 @@ class ObservableDescriptor:
         setattr(obj, self.private_name, value)
         self.observable.notify(obj, old_value, value)
 
-
 # 观察者回调
 def on_value_change(obj, old, new):
     print(f"值从 {old} 变为 {new}")
 
-
 observable = Observable()
 observable.add_observer(on_value_change)
-
 
 class Product:
     price = ObservableDescriptor(observable)
@@ -590,13 +570,11 @@ class Product:
         self.name = name
         self.price = price
 
-
 product = Product("iPhone", 9999)
 product.price = 8999  # 输出: 值从 9999 变为 8999
 ```
 
 ---
-
 
 ### Part 6: 描述符高级应用（进阶）
 
@@ -609,7 +587,6 @@ from abc import ABC, abstractmethod
 from typing import Any, TypeVar, Generic
 
 T = TypeVar("T")
-
 
 class Field(ABC):
     """数据库字段基类"""
@@ -628,7 +605,6 @@ class Field(ABC):
     def to_sql(self) -> str:
         """生成 SQL 定义"""
         ...
-
 
 class StringField(Field):
     """字符串字段"""
@@ -649,7 +625,6 @@ class StringField(Field):
         default = f" DEFAULT '{self.default}'" if self.default else ""
         return f"{self.column_name} VARCHAR({self.max_length}){nullable}{default}"
 
-
 class IntField(Field):
     """整数字段"""
 
@@ -669,7 +644,6 @@ class IntField(Field):
         auto = " AUTO_INCREMENT" if self.auto_increment else ""
         return f"{self.column_name} INT{auto}{nullable}"
 
-
 class ModelMeta(type):
     """模型元类：收集字段定义"""
 
@@ -684,7 +658,6 @@ class ModelMeta(type):
                 cls._fields[attr_name] = attr_value
 
         return cls
-
 
 class Model(metaclass=ModelMeta):
     """模型基类"""
@@ -702,14 +675,12 @@ class Model(metaclass=ModelMeta):
         columns = [field.to_sql() for field in cls._fields.values()]
         return f"CREATE TABLE {cls.__name__} (\n  " + ",\n  ".join(columns) + "\n)"
 
-
 class User(Model):
     """用户模型"""
     id = IntField("id", auto_increment=True, nullable=False)
     name = StringField("name", max_length=100, nullable=False)
     email = StringField("email", max_length=255)
     age = IntField("age", default=0)
-
 
 # 使用示例
 user = User(name="Alice", email="alice@example.com", age=25)
@@ -721,7 +692,6 @@ print(User.create_table_sql())
 
 ```python
 from typing import Callable, Any, get_type_hints
-
 
 class Inject:
     """依赖注入描述符"""
@@ -737,7 +707,6 @@ class Inject:
 
     def __set__(self, obj, value):
         raise AttributeError("依赖项不能直接赋值")
-
 
 class Container:
     """依赖注入容器"""
@@ -765,7 +734,6 @@ class Container:
         else:
             return factory()
 
-
 # 使用示例
 container = Container()
 
@@ -774,7 +742,6 @@ class DatabaseService:
     def query(self, sql: str):
         print(f"执行 SQL: {sql}")
 
-
 class CacheService:
     def get(self, key: str):
         return None
@@ -782,10 +749,8 @@ class CacheService:
     def set(self, key: str, value):
         print(f"缓存: {key} = {value}")
 
-
 container.register(DatabaseService, lambda: DatabaseService())
 container.register(CacheService, lambda: CacheService())
-
 
 class UserService:
     db: Inject = Inject(lambda: container.resolve(DatabaseService))
@@ -801,7 +766,6 @@ class UserService:
         self.cache.set(f"user:{user_id}", user)
         return user
 
-
 user_service = UserService()
 user_service.get_user(1)
 ```
@@ -811,7 +775,6 @@ user_service.get_user(1)
 ```python
 import time
 from functools import wraps
-
 
 class timed_property:
     """计时属性描述符"""
@@ -846,7 +809,6 @@ class timed_property:
         """获取上次执行时间（需要在实例上访问）"""
         return getattr(obj := None, self.time_name, 0) if False else None
 
-
 class DataProcessor:
     """数据处理器"""
 
@@ -862,7 +824,6 @@ class DataProcessor:
         import random
         data = [random.randint(0, 100) for _ in range(1000)]
         return sorted(data)
-
 
 # 使用示例
 processor = DataProcessor()
@@ -885,7 +846,6 @@ from typing import Any, TypeVar, Generic
 
 T = TypeVar("T")
 
-
 class Validator(ABC, Generic[T]):
     """验证器基类"""
 
@@ -893,7 +853,6 @@ class Validator(ABC, Generic[T]):
     def validate(self, value: T) -> tuple[bool, str | None]:
         """返回 (是否有效, 错误信息)"""
         ...
-
 
 class RangeValidator(Validator[int]):
     def __init__(self, min_val: int, max_val: int):
@@ -905,7 +864,6 @@ class RangeValidator(Validator[int]):
             return False, f"值必须在 {self.min_val} 到 {self.max_val} 之间"
         return True, None
 
-
 class RegexValidator(Validator[str]):
     def __init__(self, pattern: str):
         import re
@@ -915,7 +873,6 @@ class RegexValidator(Validator[str]):
         if not self.pattern.match(value):
             return False, f"值不符合模式: {self.pattern.pattern}"
         return True, None
-
 
 class ValidatedField:
     """验证字段描述符"""
@@ -941,7 +898,6 @@ class ValidatedField:
 
         setattr(obj, f"_{self.name}", value)
 
-
 class Person:
     """人物模型"""
 
@@ -959,7 +915,6 @@ class Person:
         self.name = name
         self.age = age
         self.email = email
-
 
 # 使用示例
 try:
@@ -992,7 +947,6 @@ class DescriptorExample:
 
     age = AgeField()
 
-
 class GetAttrExample:
     """__getattr__ 方式"""
 
@@ -1011,7 +965,6 @@ class GetAttrExample:
             self.__dict__["_age"] = value
         else:
             self.__dict__[name] = value
-
 
 # 选择指南
 print("""
@@ -1036,7 +989,6 @@ class BadDescriptor:
     def __get__(self, obj, objtype=None):
         return {"value": obj.__dict__.get("_value")}  # 每次创建新字典
 
-
 class GoodDescriptor:
     """高效：使用 __dict__ 直接存储"""
     def __get__(self, obj, objtype=None):
@@ -1044,7 +996,6 @@ class GoodDescriptor:
 
     def __set__(self, obj, value):
         obj.__dict__["_value"] = value
-
 
 # 使用 __slots__ 优化
 class OptimizedModel:
@@ -1086,11 +1037,9 @@ class ValidatedField:
             self.validator(value)
         setattr(obj, f"_{self.name}", value)
 
-
 def positive_validator(value):
     if value < 0:
         raise ValueError("值必须为正数")
-
 
 @dataclass
 class Account:
@@ -1112,7 +1061,6 @@ class Account:
         else:
             positive_validator(value)
             object.__setattr__(self, "_balance", value)
-
 
 # 使用示例
 account = Account(name="Alice", balance=1000)
@@ -1152,17 +1100,14 @@ class DataDescriptor:
     def __set__(self, obj, value):
         print(f"DataDescriptor.set({value})")
 
-
 class NonDataDescriptor:
     """非数据描述符"""
     def __get__(self, obj, objtype=None):
         return f"NonDataDescriptor.get()"
 
-
 class MyClass:
     data = DataDescriptor()
     non_data = NonDataDescriptor()
-
 
 obj = MyClass()
 
@@ -1212,7 +1157,6 @@ class property:
 
     def setter(self, fset):
         return type(self)(self.fget, fset, self.fdel, self.doc)
-
 
 # 实际上 property 就是用描述符实现的！
 ```
@@ -1266,17 +1210,14 @@ class CharField:
         """从数据库读取"""
         return value
 
-
 class ModelMeta(type):
     def __new__(mcs, name, bases, attrs):
         cls = super().__new__(mcs, name, bases, attrs)
         cls._meta = {"fields": {}, "table_name": name.lower()}
         return cls
 
-
 class Model(metaclass=ModelMeta):
     pass
-
 
 class User(Model):
     name = CharField(max_length=100)
@@ -1285,7 +1226,6 @@ class User(Model):
     def __init__(self, name, email):
         self.name = name
         self.email = email
-
 
 # 使用示例
 user = User(name="Alice", email="alice@example.com")
@@ -1296,7 +1236,6 @@ try:
 except ValueError as e:
     print(f"验证错误: {e}")
 ```
-
 
 ## 🚀 快速开始
 

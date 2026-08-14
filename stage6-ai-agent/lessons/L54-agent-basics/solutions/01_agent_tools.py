@@ -1,8 +1,13 @@
-"""
+"""L54 参考答案: Agent 工具与安全计算器
 
-from __future__ import annotations
+包含：
+1. _safe_eval: 用 AST 白名单替代 eval()，防止 RCE 攻击
+2. search_tool / calculator_tool: Agent 可调用的安全工具
+3. simple_agent: 基于关键字路由的简单 Agent 实现
 
-L53 参考答案
+安全说明：
+    本文件使用纯 AST 白名单求值替代 eval()，通过类型检查和操作符白名单
+    确保只能执行简单的数学表达式，不存在任意代码执行风险。
 """
 
 from __future__ import annotations

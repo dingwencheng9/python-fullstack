@@ -588,7 +588,6 @@ python examples/03_class_decorators.py
 
 ---
 
-
 ## 💡 常见陷阱
 
 ### 陷阱 1: 忘记 functools.wraps

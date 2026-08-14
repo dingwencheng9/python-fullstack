@@ -9,7 +9,6 @@
 > **最后更新**: 2026-07-23
 > **核心版本**: Python 3.13
 
-
 ---
 
 ## 🎯 课程目标
@@ -108,19 +107,16 @@ LangGraph 的核心是 **StateGraph**，由以下组件构成：
 from langgraph.graph import StateGraph, START, END
 from typing import TypedDict
 
-
 # 1. 定义状态类型
 class AgentState(TypedDict):
     """Agent 的共享状态"""
     messages: list[str]
     next_action: str | None
 
-
 # 2. 定义节点函数
 def should_continue(state: AgentState) -> str:
     """决定是否继续"""
     return END if len(state["messages"]) >= 3 else "process"
-
 
 def process_node(state: AgentState) -> AgentState:
     """处理节点"""
@@ -129,7 +125,6 @@ def process_node(state: AgentState) -> AgentState:
         "messages": state["messages"] + [new_message],
         "next_action": None,
     }
-
 
 # 3. 构建图
 builder = StateGraph(AgentState)
@@ -167,7 +162,6 @@ class GoodState(TypedDict):
     current_step: str             # 当前步骤
     intermediate_results: dict    # 中间结果
 
-
 # ❌ 避免的状态设计
 class BadState(TypedDict):
     """过于复杂或冗余"""
@@ -189,7 +183,6 @@ def simple_node(state: AgentState) -> AgentState:
     """普通处理节点"""
     return {"messages": state["messages"] + ["新消息"]}
 
-
 builder.add_node("simple", simple_node)
 ```
 
@@ -200,11 +193,9 @@ def analyze_node(state: AgentState) -> AgentState:
     """分析节点"""
     return {"analysis": "分析结果"}
 
-
 def respond_node(state: AgentState) -> AgentState:
     """响应节点"""
     return {"response": "响应内容"}
-
 
 builder.add_node("analyze", analyze_node)
 builder.add_node("respond", respond_node)
@@ -225,13 +216,11 @@ builder.add_edge("process", END)
 ```python
 from typing import Literal
 
-
 def route_based_on_intent(state: AgentState) -> Literal["analyze", "respond"]:
     """根据意图路由"""
     if "分析" in state.get("query", ""):
         return "analyze"
     return "respond"
-
 
 builder.add_conditional_edges(
     "router",
@@ -248,13 +237,11 @@ builder.add_conditional_edges(
 ```python
 """节点组合: 分析 -> 决策 -> 执行"""
 
-
 def analyze(state: AgentState) -> AgentState:
     """分析阶段"""
     query = state["query"]
     analysis = f"分析了: {query}"
     return {"analysis": analysis, "stage": "analyzed"}
-
 
 def decide(state: AgentState) -> AgentState:
     """决策阶段"""
@@ -262,13 +249,11 @@ def decide(state: AgentState) -> AgentState:
     decision = f"基于 {analysis} 做决策"
     return {"decision": decision, "stage": "decided"}
 
-
 def execute(state: AgentState) -> AgentState:
     """执行阶段"""
     decision = state.get("decision", "")
     result = f"执行: {decision}"
     return {"result": result, "stage": "completed"}
-
 
 # 构建流水线
 builder.add_node("analyze", analyze)
@@ -305,21 +290,17 @@ builder.add_edge("execute", END)
 from operator import add
 from typing import Annotated
 
-
 class StateWithReducer(TypedDict):
     """使用 Reducer 的状态"""
     messages: Annotated[list[str], add]  # 追加策略
     counter: Annotated[int, max]          # 最大值策略
     last_update: str                      # 覆盖策略（默认）
 
-
 def node_a(state: StateWithReducer) -> StateWithReducer:
     return {"messages": ["A 消息"], "counter": 1, "last_update": "A"}
 
-
 def node_b(state: StateWithReducer) -> StateWithReducer:
     return {"messages": ["B 消息"], "counter": 2, "last_update": "B"}
-
 
 # 测试合并
 # 最终 messages = ["A 消息", "B 消息"]  # 追加
@@ -343,7 +324,6 @@ def node_b(state: StateWithReducer) -> StateWithReducer:
 ```python
 from functools import reduce
 
-
 def merge_dict_values(left: dict, right: dict) -> dict:
     """深度合并字典"""
     result = left.copy()
@@ -354,12 +334,10 @@ def merge_dict_values(left: dict, right: dict) -> dict:
             result[key] = value
     return result
 
-
 class StateWithCustomReducer(TypedDict):
     """自定义 Reducer 状态"""
     config: Annotated[dict, merge_dict_values]
     history: Annotated[list[dict], add]
-
 
 def update_config(state: StateWithCustomReducer) -> StateWithCustomReducer:
     return {
@@ -367,13 +345,11 @@ def update_config(state: StateWithCustomReducer) -> StateWithCustomReducer:
         "history": [{"action": "update_config"}]
     }
 
-
 def extend_config(state: StateWithCustomReducer) -> StateWithCustomReducer:
     return {
         "config": {"timeout": 30, "retries": 3},
         "history": [{"action": "extend_config"}]
     }
-
 
 # 测试: config 会深度合并，history 会追加
 ```
@@ -398,7 +374,6 @@ result2 = graph.invoke({"messages": ["Hello"]})
 
 ```python
 from langgraph.checkpoint.memory import MemorySaver
-
 
 # 有检查点: 状态持久化
 checkpointer = MemorySaver()
@@ -425,7 +400,6 @@ result2 = graph.invoke(
 ```python
 from langgraph.checkpoint.postgres import PostgresSaver
 import psycopg
-
 
 # PostgreSQL 检查点（生产环境）
 conn = psycopg.connect("postgresql://user:pass@localhost/db")
@@ -480,7 +454,6 @@ result = graph.invoke(
 ```python
 from typing import Literal
 
-
 def route_intent(state: AgentState) -> Literal["web_search", "db_query", "respond"]:
     """根据意图路由到不同节点"""
     query = state.get("query", "").lower()
@@ -490,7 +463,6 @@ def route_intent(state: AgentState) -> Literal["web_search", "db_query", "respon
     elif any(kw in query for kw in ["查询", "用户", "订单"]):
         return "db_query"
     return "respond"
-
 
 builder.add_conditional_edges(
     "router",
@@ -527,7 +499,6 @@ def route_complex(state: AgentState) -> Literal["fast", "deep", "error"]:
     # 默认深度分析
     return "deep"
 
-
 builder.add_conditional_edges(
     "assess",
     route_complex,
@@ -553,7 +524,6 @@ def router_with_default(state: AgentState) -> str:
 
     # 没有匹配，返回特殊标记
     return "__end__"
-
 
 # 使用 default 关键字处理默认分支
 builder.add_conditional_edges(
@@ -586,7 +556,6 @@ builder.add_conditional_edges(
 ```python
 from langgraph.types import interrupt
 
-
 def should_execute_action(state: AgentState) -> AgentState:
     """决策节点"""
     action = state.get("pending_action", {})
@@ -600,7 +569,6 @@ def should_execute_action(state: AgentState) -> AgentState:
         return {"confirmed": user_input.get("confirmed", False)}
 
     return {"confirmed": True}
-
 
 def execute_action(state: AgentState) -> AgentState:
     """执行节点"""
@@ -667,7 +635,6 @@ def transfer_money(state: AgentState) -> AgentState:
 ```python
 from langchain_openai import ChatOpenAI
 
-
 llm = ChatOpenAI(model="gpt-4", streaming=True)
 
 builder = StateGraph(AgentState)
@@ -700,7 +667,6 @@ async def streaming_node(state: AgentState) -> AgentState:
         collected.append(chunk)
 
     return {"chunks": collected}
-
 
 builder.add_node("streaming", streaming_node)
 
@@ -759,7 +725,6 @@ def run_research(state: MainState) -> MainState:
     result = research_agent.invoke({"query": state["query"]})
     return {"research_result": result["summary"]}
 
-
 main_graph.add_node("research", run_research)
 ```
 
@@ -769,7 +734,6 @@ main_graph.add_node("research", run_research)
 from typing import TypedDict
 from operator import add
 
-
 # ============== 状态定义 ==============
 
 class ResearchState(TypedDict):
@@ -777,13 +741,11 @@ class ResearchState(TypedDict):
     sources: list[str]
     findings: list[str]
 
-
 class WritingState(TypedDict):
     topic: str
     outline: str | None
     draft: str | None
     revisions: list[str]
-
 
 class CoordinatorState(TypedDict):
     task: str
@@ -791,18 +753,15 @@ class CoordinatorState(TypedDict):
     writing: dict                   # 写作状态
     final_output: str | None
 
-
 # ============== 研究 Agent ==============
 
 def search_sources(state: ResearchState) -> ResearchState:
     sources = [f"source_{i}" for i in range(3)]
     return {"sources": sources}
 
-
 def analyze_findings(state: ResearchState) -> ResearchState:
     findings = [f"finding about {s}" for s in state["sources"]]
     return {"findings": findings}
-
 
 research_builder = StateGraph(ResearchState)
 research_builder.add_node("search", search_sources)
@@ -812,20 +771,16 @@ research_builder.add_edge("search", "analyze")
 research_builder.add_edge("analyze", END)
 research_agent = research_builder.compile()
 
-
 # ============== 写作 Agent ==============
 
 def create_outline(state: WritingState) -> WritingState:
     return {"outline": f"Outline for: {state['topic']}"}
 
-
 def write_draft(state: WritingState) -> WritingState:
     return {"draft": f"Draft based on: {state['outline']}"}
 
-
 def revise(state: WritingState) -> WritingState:
     return {"revisions": state.get("revisions", []) + ["revision_1"]}
-
 
 writing_builder = StateGraph(WritingState)
 writing_builder.add_node("outline", create_outline)
@@ -837,22 +792,18 @@ writing_builder.add_edge("draft", "revise")
 writing_builder.add_edge("revise", END)
 writing_agent = writing_builder.compile()
 
-
 # ============== 协调 Agent ==============
 
 def research_task(state: CoordinatorState) -> CoordinatorState:
     result = research_agent.invoke({"query": state["task"]})
     return {"research": {"findings": result["findings"]}}
 
-
 def write_task(state: CoordinatorState) -> CoordinatorState:
     result = writing_agent.invoke({"topic": state["task"]})
     return {"writing": result}
 
-
 def finalize(state: CoordinatorState) -> CoordinatorState:
     return {"final_output": f"Final: {state['task']}"}
-
 
 coord_builder = StateGraph(CoordinatorState)
 coord_builder.add_node("research", research_task)
@@ -880,7 +831,6 @@ print(result["final_output"])
 from langgraph.errors import NodeInterrupt
 from tenacity import retry, stop_after_attempt, wait_exponential
 
-
 @retry(
     stop=stop_after_attempt(3),
     wait=wait_exponential(multiplier=1, min=2, max=10)
@@ -895,7 +845,6 @@ def reliable_node(state: AgentState) -> AgentState:
     except PermanentError as e:
         return {"error": str(e)}
 
-
 def error_handler(state: AgentState) -> AgentState:
     """错误处理节点"""
     error = state.get("error", "Unknown error")
@@ -907,7 +856,6 @@ def error_handler(state: AgentState) -> AgentState:
 ```python
 from asyncio import timeout as async_timeout
 
-
 async def slow_operation(state: AgentState) -> AgentState:
     """带超时的操作"""
     try:
@@ -917,7 +865,6 @@ async def slow_operation(state: AgentState) -> AgentState:
     except asyncio.TimeoutError:
         return {"error": "操作超时"}
 
-
 builder = StateGraph(AgentState)
 builder.add_node("process", slow_operation)
 ```
@@ -926,7 +873,6 @@ builder.add_node("process", slow_operation)
 
 ```python
 from concurrent.futures import ThreadPoolExecutor
-
 
 def parallel_node(state: AgentState) -> AgentState:
     """并行执行多个任务"""
@@ -951,7 +897,6 @@ def adaptive_graph(state: AgentState) -> AgentGraph:
     elif complexity == "medium":
         return medium_graph
     return complex_graph
-
 
 def execute_adaptive(state: AgentState) -> AgentState:
     """执行自适应图"""
@@ -988,7 +933,6 @@ def execute_adaptive(state: AgentState) -> AgentState:
 ---
 
 *课程版本: v1.0 | 最后更新: 2026-07-20*
-
 
 ## 🔗 下一步
 

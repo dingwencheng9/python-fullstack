@@ -9,7 +9,6 @@
 > **最后更新**: 2026-07-23
 > **核心版本**: Python 3.13
 
-
 ## 📚 前置知识
 
 ```mermaid
@@ -59,8 +58,6 @@ flowchart TB
 > **前置要求**: 函数、类、异常、上下文管理器、pytest 基础。
 
 ---
-
-
 
 ### 为什么需要线程
 
@@ -697,7 +694,6 @@ python -m pytest stage2-engineering/lessons/L26-threading/tests/ -o addopts="" -
 - 能够运用所学知识解决实际问题
 - 为后续学习打下了坚实基础
 
-
 ### 学习检查清单
 
 完成本课程后，确认你已经：
@@ -706,8 +702,6 @@ python -m pytest stage2-engineering/lessons/L26-threading/tests/ -o addopts="" -
 - [ ] 掌握了主要工具和API的使用
 - [ ] 能够独立完成课程练习
 - [ ] 可选：通过本课测试 `uv run pytest tests -q`
-
-
 
 ---
 
@@ -731,7 +725,6 @@ python -m pytest stage2-engineering/lessons/L26-threading/tests/ -o addopts="" -
 - ✅ 掌握了本课程的核心概念
 - ✅ 能够运用所学知识解决实际问题
 - ✅ 为后续学习打下坚实基础
-
 
 ## 🔗 下一步
 

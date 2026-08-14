@@ -128,7 +128,6 @@ print(f"Speedup: {numpy_time / arrow_time:.1f}x")
 df2 = df  # 浅拷贝，修改 df2 会触发深拷贝
 df2['new_col'] = df2['old_col'] * 2  # 隐式拷贝整个 DataFrame
 
-
 > 💡 **解决的痛点**: 传统 Pandas 中 `SettingWithCopyWarning` 的困扰。
 
 ```python
@@ -383,7 +382,6 @@ print(f"Category: {df.memory_usage(deep=True).sum() / 1024**2:.2f} MB")
 # ✅ 正确：优化的实现
 df = pd.read_csv('large_file.csv')  # 10GB 文件 → OOM
 
-
 ### 4.1 分块读取 (处理 GB 级数据)
 
 ```python
@@ -623,7 +621,6 @@ df_subset['B'] = 1  # 自动 CoW，原 df 不受影响
 # ✅ 正确：优化的实现
 df[df['age'] > 30]['salary'] = df[df['age'] > 30]['salary'] * 1.1  # 静默失败
 
-
 ### 7.2 链式赋值警告消除
 
 ```python
@@ -711,7 +708,6 @@ df.loc[df['A'] > 0, 'B'] = 1
 
 # ✅ 正确：优化的实现
 df2 = df  # df2 和 df 指向同一内存
-
 
 ```python
 # ❌ 切片返回视图
@@ -1010,10 +1006,6 @@ def fast_sum(np.ndarray[double] arr):
     return total
 ```
 
-
-
-
 ## 🔗 下一步
-
 
 [L48: 数据可视化](../L48-visualization/)

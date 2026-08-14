@@ -1,9 +1,22 @@
-"""P06 练习 2: RAG 向量检索"""
+"""P06 练习 2: RAG 向量检索
+
+本练习要求学员实现：
+1. simple_embedding: 基于词频的简单 Embedding
+2. batch_embedding: 批量生成 Embedding 向量
+3. cosine_similarity: 余弦相似度计算
+4. batch_similarity: 批量相似度计算（向量化）
+5. top_k_retrieval: Top-K 语义检索
+
+技术要点：
+    - NumPy 向量化操作
+    - L2 归一化
+    - 余弦相似度计算
+    - argsort 排序
+"""
 
 from __future__ import annotations
 
 import numpy as np
-from typing import List, Tuple
 
 # ============ Embedding 实现 ============
 
@@ -27,7 +40,7 @@ def simple_embedding(text: str, dim: int = 64) -> np.ndarray:
 
     return vec
 
-def batch_embedding(texts: List[str], dim: int = 64) -> np.ndarray:
+def batch_embedding(texts: list[str], dim: int = 64) -> np.ndarray:
     """批量 Embedding"""
     # TODO: 使用 list comprehension 调用 simple_embedding
     # 提示: np.array([...])
@@ -63,10 +76,10 @@ def batch_similarity(query: np.ndarray, docs: np.ndarray) -> np.ndarray:
 
 def top_k_retrieval(
     query: str,
-    documents: List[str],
+    documents: list[str],
     embeddings: np.ndarray,
-    k: int = 3
-) -> List[Tuple[int, float]]:
+    k: int = 3,
+) -> list[tuple[int, float]]:
     """Top-K 检索"""
     # TODO: 实现 Top-K 检索
     # 1. 生成查询向量

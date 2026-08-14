@@ -9,7 +9,6 @@ L59: Agent 记忆与上下文管理 - 详细教程
 > **最后更新**: 2026-07-23
 > **核心版本**: Python 3.13
 
-
 ## 📚 前置知识
 
 **学习本课程前，你应该掌握：**
@@ -985,6 +984,5 @@ class FileMemory:
 **下一课**: [L60 Agent 任务规划](../L60-agent-planning/lesson.md)
 
 ## 🔗 下一步
-
 
 [L60: Agent 规划与推理](../L60-agent-planning/)

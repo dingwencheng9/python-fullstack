@@ -615,8 +615,6 @@ def extract_prices(text: str) -> list[tuple[str, float]]:
 
 ## 🔗 下一步
 
-
-
 恭喜完成 Stage 1 Python 进阶！🎉
 
 ---

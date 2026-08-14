@@ -198,7 +198,6 @@ prompt = """问题: 一个篮子里有 5 个苹果，小明吃掉 2 个，小红
 import os
 from openai import OpenAI
 
-
 def ask_llm(
     question: str,
     role: str = "你是一个有帮助的助手。",
@@ -222,7 +221,6 @@ def ask_llm(
     )
 
     return response.choices[0].message.content or ""
-
 
 # 使用
 if __name__ == "__main__":
@@ -621,6 +619,5 @@ RunnableParallel({
 **练习答案**: 参见 `solutions/` 目录
 
 ## 🔗 下一步
-
 
 [L56: Agent 基础与工具调用](../L54-agent-basics/)

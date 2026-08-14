@@ -198,12 +198,10 @@ import logging
 
 logging.basicConfig(level=logging.ERROR)
 
-
 def log_and_raise(func_name: str, error: Exception) -> None:
     """记录异常并重新抛出"""
     logging.error(f"异常在 {func_name}:\n{traceback.format_exc()}")
     raise error
-
 
 def risky_operation():
     """可能失败的操作"""
@@ -214,7 +212,6 @@ def risky_operation():
     except KeyError as e:
         # 记录异常并重新抛出
         log_and_raise("risky_operation", e)
-
 
 # 使用 traceback.format_exc() 获取调用栈
 def get_traceback_string() -> str:
@@ -442,8 +439,6 @@ except Exception as e:
 
 ---
 
-
-
 ## 💭 课堂思考
 
 ### 思考 1: print() 调试 vs 调试器
@@ -482,8 +477,6 @@ except Exception as e:
 - 未来趋势：uv 是否会成为主流？
 
 ---
-
-
 
 ## 💡 常见调试陷阱
 
@@ -656,8 +649,6 @@ def calculate_average(numbers):
 
 ---
 
-
-
 ## 📝 进阶预告
 
 完成本课程后，你已经掌握了调试技能。在下一课 [L06: 异常处理](../L06-exceptions/lesson.md) 中，我们将学习：
@@ -669,7 +660,6 @@ def calculate_average(numbers):
 - 🧹 **资源清理**：finally、with 语句
 
 > 💡 **学习路径**：L05 → L06（异常）→ L07（面向对象）→ ...
-
 
 ---
 

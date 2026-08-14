@@ -1330,7 +1330,6 @@ def read_lines(filename: str) -> Generator[str, None, None]:
 - 能够运用所学知识解决实际问题
 - 为后续学习打下了坚实基础
 
-
 ### 学习检查清单
 
 完成本课程后，确认你已经：
@@ -1339,8 +1338,6 @@ def read_lines(filename: str) -> Generator[str, None, None]:
 - [ ] 掌握了主要工具和API的使用
 - [ ] 能够独立完成课程练习
 - [ ] 可选：通过本课测试 `uv run pytest tests -q`
-
-
 
 ## 🔗 下一步
 

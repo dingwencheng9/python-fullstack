@@ -9,7 +9,6 @@
 > **最后更新**: 2026-07-23
 > **核心版本**: Python 3.13
 
-
 ## 📚 前置知识
 
 学习本课程前，你应该已经掌握：
@@ -505,7 +504,6 @@ raise HTTPException(
 
 ---
 
-
 ### 模块 11: 生产级背压最佳实践
 
 #### 11.1 分层背压架构
@@ -594,7 +592,6 @@ from dataclasses import dataclass, field
 from typing import Callable
 import psutil
 
-
 @dataclass
 class AdaptiveRateLimiter:
     """自适应限流器"""
@@ -668,10 +665,8 @@ class AdaptiveRateLimiter:
     def current_rate(self) -> int:
         return self._current_rate
 
-
 # 使用示例
 limiter = AdaptiveRateLimiter(base_rate=100)
-
 
 async def handle_request():
     start = time.time()
@@ -733,7 +728,6 @@ CIRCUIT_BREAKER_STATE = Gauge(
     ["service"],
 )
 
-
 # 监控中间件示例
 @app.middleware("http")
 async def monitoring_middleware(request: Request, call_next):
@@ -789,7 +783,6 @@ import time
 from dataclasses import dataclass
 from typing import Optional
 
-
 @dataclass
 class BackpressureDiagnosis:
     """背压诊断结果"""
@@ -819,7 +812,6 @@ CPU 使用: {self.cpu_usage:.1%}
 {'⚠️ 拒绝率过高，检查限流配置' if self.rejection_rate > 0.05 else '✅ 拒绝率正常'}
 {'⚠️ CPU 负载高，考虑优化或扩容' if self.cpu_usage > 0.8 else '✅ CPU 正常'}
 """
-
 
 async def diagnose_backpressure(
     queue_depth_func: callable,
@@ -881,7 +873,6 @@ async def diagnose_backpressure(
 """
 
 from dataclasses import dataclass
-
 
 @dataclass
 class BackpressureConfig:
@@ -948,7 +939,6 @@ from backpressure import (
     SemaphoreLimiter,
 )
 
-
 @pytest.mark.asyncio
 async def test_rate_limiter_backpressure():
     """测试限流器背压"""
@@ -962,7 +952,6 @@ async def test_rate_limiter_backpressure():
     # 第 11 个请求应该被限流
     result = await limiter.acquire()
     assert result is False
-
 
 @pytest.mark.asyncio
 async def test_circuit_breaker_states():
@@ -986,7 +975,6 @@ async def test_circuit_breaker_states():
     
     # 状态变为半开
     assert cb.state == "half-open"
-
 
 @pytest.mark.asyncio
 async def test_semaphore_backpressure():
@@ -1202,7 +1190,6 @@ import random
 
 T = TypeVar("T")
 
-
 async def retry_with_backoff(
     func: Callable[..., T],
     max_retries: int = 3,
@@ -1233,8 +1220,6 @@ async def retry_with_backoff(
     
     raise last_exception
 ```
-
-
 
 ---
 

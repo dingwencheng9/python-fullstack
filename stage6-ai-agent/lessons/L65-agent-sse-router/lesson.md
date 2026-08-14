@@ -9,7 +9,6 @@
 > **最后更新**: 2026-07-23
 > **核心版本**: Python 3.13
 
-
 ## 📚 前置知识
 
 **学习本课程前，你应该掌握：**
@@ -622,7 +621,6 @@ async def generate_events_with_error_handling(timeout: int = 30):
         # 其他错误处理
         pass
 ```
-
 
 ---
 

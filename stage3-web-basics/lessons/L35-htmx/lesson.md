@@ -9,7 +9,6 @@
 > **最后更新**: 2026-07-23
 > **核心版本**: Python 3.13
 
-
 ---
 
 ## 📌 学习目标
@@ -189,7 +188,6 @@ class Task(BaseModel):
             }
         }
 
-
 class TaskRepository:
     """内存任务仓库"""
 
@@ -221,7 +219,6 @@ class TaskRepository:
             return True
         return False
 
-
 # ============================================================
 # FastAPI 应用
 # ============================================================
@@ -236,7 +233,6 @@ templates = Jinja2Templates(directory=BASE_DIR / "templates")
 # 全局仓库
 task_repo = TaskRepository()
 
-
 # ============================================================
 # 辅助函数
 # ============================================================
@@ -245,13 +241,11 @@ def is_htmx_request(request: Request) -> bool:
     """检测是否为 HTMX 请求"""
     return "HX-Request" in request.headers
 
-
 def hx_redirect(location: str) -> HTMLResponse:
     """HTMX 重定向响应"""
     response = HTMLResponse(content="", status_code=200)
     response.headers["HX-Redirect"] = location
     return response
-
 
 def htmx_response(html: str, target: str | None = None) -> HTMLResponse:
     """创建 HTMX 响应"""
@@ -260,7 +254,6 @@ def htmx_response(html: str, target: str | None = None) -> HTMLResponse:
         response.headers["HX-Reswap"] = f"innerHTML"
         response.headers["HX-Retarget"] = target
     return response
-
 
 # ============================================================
 # 路由
@@ -274,7 +267,6 @@ async def index(request: Request):
         {"request": request, "tasks": task_repo.get_all()}
     )
 
-
 @app.get("/tasks", response_class=HTMLResponse)
 async def list_tasks_partial(request: Request):
     """HTMX 片段：任务列表（用于局部更新）"""
@@ -283,7 +275,6 @@ async def list_tasks_partial(request: Request):
         "tasks/list.html",
         {"request": request, "tasks": task_repo.get_all(), "partial": is_htmx}
     )
-
 
 @app.post("/tasks", response_class=HTMLResponse)
 async def create_task(request: Request, title: Annotated[str, Form()]):
@@ -303,7 +294,6 @@ async def create_task(request: Request, title: Annotated[str, Form()]):
     # 普通请求：重定向到列表页
     return hx_redirect("/")
 
-
 @app.post("/tasks/{task_id}/toggle", response_class=HTMLResponse)
 async def toggle_task(request: Request, task_id: int):
     """切换任务完成状态"""
@@ -322,7 +312,6 @@ async def toggle_task(request: Request, task_id: int):
 
     return hx_redirect("/")
 
-
 @app.delete("/tasks/{task_id}", response_class=HTMLResponse)
 async def delete_task(request: Request, task_id: int):
     """删除任务"""
@@ -336,7 +325,6 @@ async def delete_task(request: Request, task_id: int):
         return response
 
     return hx_redirect("/")
-
 
 # ============================================================
 # 启动
@@ -857,7 +845,6 @@ from fastapi.responses import StreamingResponse
 
 router = APIRouter()
 
-
 @router.get("/tasks/stream")
 async def task_stream():
     """SSE 流：推送任务更新"""
@@ -1054,21 +1041,16 @@ from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 import uvicorn
 
-
 # TODO: 实现评论数据模型
-
 
 # TODO: 实现评论仓库类
 
-
 # TODO: 实现 FastAPI 应用
-
 
 if __name__ == "__main__":
     uvicorn.run("exercise:app", host="0.0.0.0", port=8000, reload=True)
 ```
 
 ## 🔗 下一步
-
 
 [P04: Web 基础综合项目](../P04-web-project/)

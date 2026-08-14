@@ -57,8 +57,6 @@ flowchart LR
 
 ---
 
-
-
 ### 为什么需要 uv
 
 **传统方式的问题**:
@@ -526,7 +524,6 @@ def add(a: int, b: int) -> int:
     """加法"""
     return a + b
 
-
 def subtract(a: int, b: int) -> int:
     """减法"""
     return a - b
@@ -537,12 +534,10 @@ def subtract(a: int, b: int) -> int:
 ```python
 from src.calculator import add, subtract
 
-
 def test_add():
     assert add(1, 2) == 3
     assert add(-1, 1) == 0
     assert add(0, 0) == 0
-
 
 def test_subtract():
     assert subtract(5, 3) == 2
@@ -839,8 +834,6 @@ uv add --dev pytest ruff mypy
 
 ---
 
-
-
 ### 补充代码示例
 
 #### ruff 配置示例
@@ -883,7 +876,6 @@ repos:
       - id: mypy
 ```
 
-
 ## 📖 总结
 
 ### 核心知识点
@@ -899,8 +891,6 @@ repos:
 - 掌握了本课程的核心概念和工具
 - 能够运用所学知识解决实际问题
 - 为后续学习打下了坚实基础
-
-
 
 ## 🔗 下一步
 

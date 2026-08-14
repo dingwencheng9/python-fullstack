@@ -205,8 +205,51 @@ def demo_sql_injection_prevention():
     print(">>> 参数会被安全转义，不会执行 DROP TABLE")
 
 
+def demo_orm_best_practices():
+    """演示生产环境 ORM 最佳实践（SQLAlchemy 2.0）"""
+    print("\n" + "=" * 70)
+    print("生产环境最佳实践：SQLAlchemy ORM")
+    print("=" * 70)
+
+    # ✅ ORM 自动参数化，永远不拼接用户输入
+    print("\n✅ 推荐方式（SQLAlchemy ORM）:")
+    print("-" * 50)
+    print("""
+    from sqlalchemy import select
+    from sqlalchemy.ext.asyncio import AsyncSession
+
+    # 创建查询：ORM 自动处理参数化
+    query = select(User).where(User.name == user_input)
+    # 生成的 SQL: SELECT * FROM users WHERE name = :name
+    # 用户输入作为安全参数传递，绝不拼入 SQL 字符串
+
+    result = await session.execute(query)
+    user = result.scalar_one_or_none()
+    """)
+
+    print("ORM 优势:")
+    print("  1. 自动参数化 → 零 SQL 注入风险")
+    print("  2. 类型安全 → 编辑器自动补全")
+    print("  3. 可移植性 → 切换数据库只需改连接字符串")
+    print("  4. 关联查询 → relationship 自动加载")
+
+    # 对比表格
+    print("\n📊 SQL vs ORM 对比:")
+    print("-" * 50)
+    print("""
+    | 场景           | SQL 字符串拼接    | ORM 参数化查询      |
+    |----------------|------------------|-------------------|
+    | SQL 注入风险   | 高（危险）        | 低（安全）          |
+    | 类型检查       | 无               | 有（IDE 提示）      |
+    | 维护成本       | 高（手写 SQL）    | 低（自动生成）      |
+    | 数据库迁移     | 需重写 SQL       | 自动（alembic）     |
+    | 关联查询       | 手写 JOIN        | relationship 自动   |
+    """)
+
+
 if __name__ == "__main__":
     demo_basic_queries()
     demo_join_queries()
     demo_aggregation()
     demo_sql_injection_prevention()
+    demo_orm_best_practices()

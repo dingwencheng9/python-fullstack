@@ -16,7 +16,6 @@ from __future__ import annotations
 
 import ast
 import asyncio
-import operator
 import os
 import sys
 from dataclasses import dataclass, field
@@ -38,15 +37,6 @@ from mcp.types import CallToolResult, ListToolsResult, TextContent, Tool
 # ===========================================================================
 
 SERVER = Server("l57-env-server")
-
-# 安全运算符白名单（用于 run_expression）
-SAFE_OPERATORS: dict[str, object] = {
-    "+": operator.add,
-    "-": operator.sub,
-    "*": operator.mul,
-    "/": operator.truediv,
-    "**": operator.pow,
-}
 
 
 @SERVER.list_tools()
@@ -125,39 +115,53 @@ async def _get_env(key: str) -> CallToolResult:
 
 
 async def _run_expression(expr: str) -> CallToolResult:
+    """使用纯 AST 白名单安全求值数学表达式，不使用 eval()。
+
+    支持的操作符: + - * / ** // %
+    支持的操作数: 整数、浮点数
+    """
     try:
         node = ast.parse(expr, mode="eval")
-        # 仅允许常量（数字）和二元运算
-        for n in ast.walk(node):
-            if not isinstance(
-                n,
-                (
-                    ast.Expression,
-                    ast.BinOp,
-                    ast.UnaryOp,
-                    ast.Add,
-                    ast.Sub,
-                    ast.Mult,
-                    ast.Div,
-                    ast.Pow,
-                    ast.FloorDiv,
-                    ast.Mod,
-                    ast.USub,
-                    ast.UAdd,
-                    ast.Constant,
-                ),
-            ):
-                return CallToolResult(
-                    content=[TextContent(type="text", text=f"ERROR: 不支持的语法 {type(n).__name__}")],
-                    isError=True,
-                )
-        result = eval(compile(node, "<expr>", "eval"), {"__builtins__": {}}, SAFE_OPERATORS)
+
+        # 纯 AST 白名单求值器（零 eval 使用）
+        def _eval(n: ast.AST) -> int | float:
+            if isinstance(n, ast.Constant) and isinstance(n.value, (int | float)):
+                return n.value
+            if isinstance(n, ast.UnaryOp):
+                if isinstance(n.op, ast.USub):
+                    return -_eval(n.operand)
+                if isinstance(n.op, ast.UAdd):
+                    return +_eval(n.operand)
+                raise ValueError(f"不支持的单目运算符: {type(n.op).__name__}")
+            if isinstance(n, ast.BinOp):
+                left = _eval(n.left)
+                right = _eval(n.right)
+                if isinstance(n.op, ast.Add):
+                    return left + right
+                if isinstance(n.op, ast.Sub):
+                    return left - right
+                if isinstance(n.op, ast.Mult):
+                    return left * right
+                if isinstance(n.op, ast.Div):
+                    return left / right
+                if isinstance(n.op, ast.Pow):
+                    return left**right
+                if isinstance(n.op, ast.FloorDiv):
+                    return left // right
+                if isinstance(n.op, ast.Mod):
+                    return left % right
+                raise ValueError(f"不支持的运算符: {type(n.op).__name__}")
+            if isinstance(n, ast.expr_context):
+                return _eval(n.value)  # type: ignore[return-value]
+            raise ValueError(f"不支持的语法节点: {type(n).__name__}")
+
+        result = _eval(node.body)
         return CallToolResult(content=[TextContent(type="text", text=str(result))])
     except ZeroDivisionError:
         return CallToolResult(content=[TextContent(type="text", text="ERROR: 除数不能为零")], isError=True)
     except SyntaxError:
         return CallToolResult(content=[TextContent(type="text", text="ERROR: 语法错误")], isError=True)
-    except Exception as exc:
+    except (ValueError, TypeError) as exc:
         return CallToolResult(content=[TextContent(type="text", text=f"ERROR: {exc}")], isError=True)
 
 

@@ -1130,10 +1130,6 @@ print(result_polars)
 
 **下一课**: [L49 数据可视化](../L48-visualization/lesson.md)
 
-
-
-
 ## 🔗 下一步
-
 
 [L50: Pandas 数据处理实战](../L50-pandas-complete/)

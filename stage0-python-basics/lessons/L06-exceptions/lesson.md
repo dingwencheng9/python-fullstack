@@ -33,7 +33,6 @@
 
 ---
 
-
 ### 异常传播流程（可视化）
 
 ```mermaid
@@ -158,7 +157,6 @@ def safe_divide(a: float, b: float) -> float | None:
         print("错误: 除数不能为零")
         return None
 
-
 # 测试
 print(safe_divide(10, 2))  # 5.0
 print(safe_divide(10, 0))  # None
@@ -173,7 +171,6 @@ def safe_parse_int(s: str) -> int | None:
         return int(s)
     except ValueError:
         return None
-
 
 # 测试
 print(safe_parse_int("42"))    # 42
@@ -439,7 +436,6 @@ def validate_age(age: int) -> int:
         raise InvalidAgeError(age)
     return age
 
-
 # 测试
 try:
     validate_age(-5)
@@ -474,7 +470,6 @@ class InvalidAgeError(ValueError):
         self.age = age
         super().__init__(f"无效的年龄: {age}，年龄必须在 1-150 之间")
 
-
 class InvalidEmailError(ValueError):
     """邮箱验证错误"""
 
@@ -482,13 +477,11 @@ class InvalidEmailError(ValueError):
         self.email = email
         super().__init__(f"无效的邮箱地址: {email}")
 
-
 def validate_age(age: int) -> int:
     """验证年龄 (1-150)"""
     if age < 1 or age > 150:
         raise InvalidAgeError(age)
     return age
-
 
 def validate_email(email: str) -> str:
     """验证邮箱格式"""
@@ -497,7 +490,6 @@ def validate_email(email: str) -> str:
     if "@" not in email:
         raise InvalidEmailError(email)
     return email
-
 
 def register_user(username: str, age: int, email: str) -> dict[str, str]:
     """注册用户，收集所有验证错误"""
@@ -538,7 +530,6 @@ def outer():
 def inner():
     """内层函数"""
     raise RuntimeError("内部错误")
-
 
 try:
     outer()
@@ -815,9 +806,6 @@ Exception (Python 标准)
 
 ---
 
-
-
-
 ## 💭 课堂思考
 
 ### 思考 1: 为什么需要异常处理？
@@ -888,8 +876,6 @@ def parse_config():
         raise ConfigError("配置解析失败") from e  # 保留原始错误
 ```
 
-
-
 ## 🚀 实战案例
 
 ### 案例 1: 安全的数据解析器
@@ -904,7 +890,6 @@ def safe_parse_json(json_string: str) -> dict | None:
     except json.JSONDecodeError as e:
         print(f"JSON 解析失败: {e}")
         return None
-
 
 # 测试
 data1 = safe_parse_json('{"name": "Alice", "age": 25}')
@@ -934,7 +919,6 @@ def download_with_retry(url: str, max_retries: int = 3) -> str | None:
     print(f"达到最大重试次数 {max_retries}")
     return None
 
-
 # 测试
 result = download_with_retry("https://example.com/data")
 print(result)
@@ -947,13 +931,11 @@ class ConfigError(Exception):
     """配置错误基类"""
     pass
 
-
 class MissingKeyError(ConfigError):
     """缺少必需键"""
     def __init__(self, key: str) -> None:
         self.key = key
         super().__init__(f"缺少必需的配置键: {key}")
-
 
 class InvalidValueError(ConfigError):
     """值无效"""
@@ -965,7 +947,6 @@ class InvalidValueError(ConfigError):
             f"  期望: {expected}\n"
             f"  实际: {value!r}"
         )
-
 
 def validate_config(config: dict) -> None:
     """验证配置完整性"""
@@ -983,7 +964,6 @@ def validate_config(config: dict) -> None:
     if config["port"] < 1 or config["port"] > 65535:
         raise InvalidValueError("port", config["port"], "1-65535 之间的整数")
 
-
 # 测试
 try:
     validate_config({"host": "localhost", "port": 5432, "database": "mydb"})
@@ -993,8 +973,6 @@ except ConfigError as e:
 ```
 
 ---
-
-
 
 ## 💡 常见异常处理陷阱
 
@@ -1211,8 +1189,6 @@ BaseException
 
 ---
 
-
-
 ## ✅ 自检清单
 
 完成本课程后，你应该能够：
@@ -1228,7 +1204,6 @@ BaseException
 - [ ] 能够编写相关代码
 - [ ] 解决常见问题
 
-
 ---
 
 ## 📝 进阶预告
@@ -1243,10 +1218,7 @@ BaseException
 
 > 💡 **学习路径**：L06 → L07（面向对象）→ L08（魔术方法）→ ...
 
-
 ---
-
-
 
 ## 🔗 下一步
 

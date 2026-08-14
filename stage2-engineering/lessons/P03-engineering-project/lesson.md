@@ -9,7 +9,6 @@
 > **最后更新**: 2026-07-23
 > **核心版本**: Python 3.13
 
-
 ---
 
 ## 📚 项目概述
@@ -713,7 +712,6 @@ uv run ruff check stage2-engineering/lessons/P03-engineering-project
 - [ ] 配置 CI/CD 流水线
 - [ ] 测试覆盖率 ≥ 80%
 
-
 ---
 
 ## 📖 总结
@@ -731,8 +729,6 @@ uv run ruff check stage2-engineering/lessons/P03-engineering-project
 - 掌握了本课程的核心概念和工具
 - 能够运用所学知识解决实际问题
 - 为后续学习打下了坚实基础
-
-
 
 ### ⚠️ 工程化常见错误
 

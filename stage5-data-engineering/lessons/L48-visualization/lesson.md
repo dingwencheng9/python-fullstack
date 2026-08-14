@@ -1204,10 +1204,6 @@ folium.Marker([39.9, 116.4], popup='北京').add_to(m)
 m.save('map.html')
 ```
 
-
-
-
 ## 🔗 下一步
-
 
 [L49: DuckDB 嵌入式分析](../L49-duckdb/)

@@ -9,7 +9,6 @@
 > **最后更新**: 2026-07-23
 > **核心版本**: Python 3.13
 
-
 ---
 
 ```mermaid
@@ -317,7 +316,6 @@ filtered = df.query("category == 'A' and value > 10")
 ```
 
 ---
-
 
 ### 第六部分：Pandas 高级技巧
 
@@ -915,8 +913,6 @@ unstacked = stacked.unstack()  # 恢复宽格式
 # 重置索引
 df_flat = df.reset_index()
 ```
-
-
 
 ---
 

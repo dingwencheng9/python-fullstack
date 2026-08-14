@@ -9,7 +9,6 @@
 > **最后更新**: 2026-07-23
 > **核心版本**: Python 3.13
 
-
 ---
 
 ## 🎯 学习目标
@@ -546,7 +545,6 @@ class TwoPhaseCommit:
         except Exception as e:
             print(f"[{participant.participant_id}] 回滚失败: {e}")
 
-
 # 使用示例
 async def main():
     # 创建分布式事务
@@ -670,7 +668,6 @@ class Saga:
         self.state = SagaState.FAILED
         return False
 
-
 # 使用示例：订单创建 Saga
 async def create_order(order_id: str):
     saga = Saga(f"saga-{order_id}")
@@ -791,7 +788,6 @@ class RedisLock:
         else:
             print(f"释放锁失败或锁已过期: {self.lock_key}")
 
-
 # 使用示例
 async def main():
     lock = RedisLock(
@@ -809,7 +805,6 @@ async def main():
             print("库存处理完成")
     except TimeoutError as e:
         print(f"获取锁失败: {e}")
-
 
 asyncio.run(main())
 ```
