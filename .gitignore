@@ -301,3 +301,4 @@ $RECYCLE.BIN/
 # Python 版本管理
 .python-version
 .superpowers/
+.py
