@@ -132,7 +132,10 @@ uv run pytest stage2-engineering/lessons/L17-pytest-complete/solutions/*.py -q
 - [ ] 课程测试通过：`uv run pytest stage2-engineering/lessons/L17-pytest-complete/tests -q`。
 - [ ] 示例、练习、答案自检通过。
 
-## 🔗 前后衔接
+## 🔗 下一步
 
-- 上一阶段：[Stage 1: Python 进阶](../../../stage1-python-intermediate/README.md)
-- 下一课：[L20: 现代化工具链](../L20-toolchain/README.md)
+完成本课后继续学习：
+
+- [L20: 现代化工具链](../L20-toolchain/README.md)
+
+> 📖 **学习路径提示**：L20 将学习 uv、ruff、mypy 等现代 Python 工具链。

@@ -54,3 +54,13 @@ uv add langchain langchain-openai
 ---
 
 *更多内容请参考 lesson.md*
+
+---
+
+## 🔗 下一步
+
+完成本课后继续学习：
+
+- [L61: 多智能体系统](../L61-multi-agent/README.md)
+
+> 📖 **学习路径提示**：L61 将学习多智能体协作与编排。

@@ -105,7 +105,7 @@ flowchart LR
 ### 目录组织
 
 ```
-L25-engineering-project/
+P03-engineering-project/
 ├── examples/                  # 示例代码
 │   ├── 01_task_model.py       # 任务数据模型
 │   ├── 02_task_storage.py     # 异步存储层
@@ -693,15 +693,15 @@ jobs:
 
 ```bash
 python3 -m py_compile \
-  stage2-engineering/lessons/L25-engineering-project/examples/*.py \
-  stage2-engineering/lessons/L25-engineering-project/exercises/*.py \
-  stage2-engineering/lessons/L25-engineering-project/solutions/*.py \
-  stage2-engineering/lessons/L25-engineering-project/tests/*.py \
-  stage2-engineering/lessons/L25-engineering-project/*.py
+  stage2-engineering/lessons/P03-engineering-project/examples/*.py \
+  stage2-engineering/lessons/P03-engineering-project/exercises/*.py \
+  stage2-engineering/lessons/P03-engineering-project/solutions/*.py \
+  stage2-engineering/lessons/P03-engineering-project/tests/*.py \
+  stage2-engineering/lessons/P03-engineering-project/*.py
 
-uv run pytest stage2-engineering/lessons/L25-engineering-project/tests -q
-uv run python stage2-engineering/lessons/L25-engineering-project/verify.py
-uv run ruff check stage2-engineering/lessons/L25-engineering-project
+uv run pytest stage2-engineering/lessons/P03-engineering-project/tests -q
+uv run python stage2-engineering/lessons/P03-engineering-project/verify.py
+uv run ruff check stage2-engineering/lessons/P03-engineering-project
 ```
 
 ## ✅ 完成标准

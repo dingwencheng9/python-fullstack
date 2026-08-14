@@ -99,8 +99,11 @@ pytest tests/ -v
 
 ## 🔗 下一步
 
+完成本课后继续学习：
+
 - [L51: 异步数据管道](../L51-async-data-pipeline/README.md)
-- [L52: NumPy RAG PoC](../L52-numpy-rag-poc/README.md)
+
+> 📖 **学习路径提示**：L51 将学习异步数据管道的构建。
 
 ---
 

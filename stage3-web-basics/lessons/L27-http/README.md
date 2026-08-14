@@ -45,7 +45,10 @@ uv sync
 uv run pytest tests -v
 ```
 
-## 🔗 后续课程
+## 🔗 下一步
 
-- **L27 FastAPI 可观测性与契约驱动**：在理解 HTTP 基础上学习 RESTful API 设计
-- **L28 数据库基础与 SQL 入门**：理解 HTTP 后端的数据持久化层
+完成本课后继续学习：
+
+- [L28: FastAPI 基础与 RESTful API 设计](../L28-fastapi-basics/README.md)
+
+> 📖 **学习路径提示**：L28 将学习使用 FastAPI 构建 RESTful API。

@@ -92,9 +92,13 @@ _(详细代码见 lesson.md)_
 - [ ] `pytest tests/ -v` 全部通过
 - [ ] 能解释以下关键词：FastAPI、SSE、Docker、Kubernetes、Prometheus
 
-## 🔗 后续课程
+## 🔗 下一步
 
-- **Stage 5 完结**：继续把本课能力应用到下一阶段主题中。
+完成本课后继续学习：
+
+- [L65: Agent SSE 路由](../L65-agent-sse-router/README.md)
+
+> 📖 **学习路径提示**：L65 将学习 Server-Sent Events 路由在 Agent 中的应用。
 
 ---
 

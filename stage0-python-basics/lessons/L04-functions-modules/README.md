@@ -103,3 +103,9 @@ python -m pytest tests/ -q
 完成本课后继续学习：
 
 - [L05: 调试工具](../L05-debugging-tools/README.md)
+
+> 📖 **学习路径提示**：L05 是补充课程，可与 L06 并行学习，不影响主线进度。
+
+完成本课后继续学习：
+
+- [L05: 调试工具](../L05-debugging-tools/README.md)

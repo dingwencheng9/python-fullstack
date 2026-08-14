@@ -26,7 +26,10 @@
 - 路由与负载均衡策略
 - 流式输出的错误恢复
 
-## 下一步
+## 🔗 下一步
 
-- [L55 MCP 协议](../L55-mcp-protocol/) - 协议层通信
-- [L60 Agent 规划](../L60-agent-planning/) - 复杂任务规划
+完成本课后继续学习：
+
+- [P07: AI Agent 综合项目](../../stage6-ai-agent/README.md)
+
+> 📖 **里程碑**：P07 是 Stage 6 的综合项目，将整合 LangChain、LangGraph、RAG 等知识。

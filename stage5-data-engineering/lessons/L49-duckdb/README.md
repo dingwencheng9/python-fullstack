@@ -116,6 +116,8 @@ DuckDB 是数据分析报告类外包的"提速利器"：
 
 ## 🔗 下一步
 
-- [L49: 数据可视化](../L48-visualization/) — 把 DuckDB 查询结果做成图
-- [L51: RAG 向量库](../L52-numpy-rag-poc/) — DuckDB 也有向量扩展（vss）
-- [项目 3: Data Intelligence Pipeline](../../../projects/03-data-intelligence-pipeline/) — 实战中用 DuckDB
+完成本课后继续学习：
+
+- [L50: Pandas 高级操作与性能优化](../L50-pandas-complete/README.md)
+
+> 📖 **学习路径提示**：L50 将深入学习 Pandas 高级用法和性能优化。

@@ -53,5 +53,8 @@ python exercises/01_cosine_similarity.py
 
 ## 🔗 下一步
 
-- [L53: DuckDB OLAP 实战](../L53-duckdb-olap/) - 大规模数据分析
-- [L65: RAG 向量数据库](../../../stage6-ai-agent/lessons/L57-rag-vector/) - 完整 RAG 系统
+完成本课后继续学习：
+
+- [L53: DuckDB OLAP 实战](../L53-duckdb-olap/README.md)
+
+> 📖 **学习路径提示**：L53 将学习使用 DuckDB 进行大规模数据分析。

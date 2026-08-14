@@ -1279,7 +1279,7 @@ async def retry_with_backoff(
 - [ ] 能为 FastAPI 接口选择合适的 429/503/202 返回策略
 - [ ] 能设计超时、重试、熔断的组合策略
 - [ ] 能列出背压相关核心指标
-- [ ] 通过本课测试：`uv run --extra dev pytest stage4-web-advanced/lessoL36-async-backpressure/tests -q`
+- [ ] 通过本课测试：`uv run --extra dev pytest stage4-web-advanced/lessons/L36-async-backpressure/tests -q`
 
 ## 🔗 下一步
 

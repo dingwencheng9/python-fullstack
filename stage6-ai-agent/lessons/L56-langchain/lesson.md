@@ -19,9 +19,9 @@ L56: LangChain 与应用编排 - 详细教程
 
 **学习本课程前，你应该掌握：**
 
-- **L54**: LangGraph 工作流编排（理解状态机与工作流）
-- **L51**: RAG 向量数据库（理解向量存储和语义搜索）
-- **可选** L33（FastAPI 基础）：了解 HTTP 请求和 API 调用模式
+- **L54**: Agent 基础（理解 LLM 与工具调用）
+- **L55**: MCP 协议（理解标准化工具集成）
+- **可选** L19（异步编程）：了解 async/await 基础
 
 **如果你还没有学习以上课程，建议先完成前置课程。**
 
@@ -619,55 +619,6 @@ RunnableParallel({
 ---
 
 **练习答案**: 参见 `solutions/` 目录
-
----
-
-## 📝 本章总结
-
-### 核心知识点
-
-1. **LLM API 调用**：OpenAI/Anthropic/Azure OpenAI，同步/异步调用
-2. **Prompt Engineering**：Few-shot、Chain-of-Thought、角色扮演
-3. **LCEL53 表达式**：管道操作符 `|`，Runnable 接口
-4. **Chain 构建**：LLMChain、SequentialChain、RouterChain
-5. **Output Parser**：Pydantic Parser、Json Output Parser
-6. **Memory 管理**：ConversationBufferMemory、SummaryMemory
-7. **Callback 机制**：AsyncCallbackHandler，流式输出
-8. **LangSmith**：Prompt 调试、Trace 分析、性能监控
-
-### 关键要点
-
-- ✅ LangChain 简化 LLM 应用开发
-- ✅ LCEL53 是声明式 Chain 构建
-- ✅ Output Parser 保证结构化输出
-- ✅ Memory 支持多轮对话
-- ✅ Callback 支持流式和监控
-
-### 常见陷阱
-
-- ❌ Prompt 过长导致 Token 浪费
-- ❌ 不做 Output Parser（输出不稳定）
-- ❌ Memory 无限增长（内存泄漏）
-- ❌ 不使用 Callback（无法调试）
-- ❌ 硬编码 API Key（安全风险）
-
-### 实用技巧
-
-- 💡 使用 `ChatPromptTemplate` 构建 Prompt
-- 💡 使用 `|>` 管道连接 Runnable
-- 💡 使用 `PydanticOutputParser` 解析结构化输出
-- 💡 使用 `ChatMessageHistory` 管理对话历史
-- 💡 使用 `arun_in_batch` 批量处理
-- 💡 使用 `@entrypoint` 简化部署
-
-### 典型应用场景
-
-- 💬 聊天机器人（RAG + Memory）
-- 📝 文档处理（结构化提取）
-- 🔍 研究助手（多步推理）
-- 📧 邮件自动回复（意图识别）
-- 🎯 任务助手（多 Chain 路由）
-
 
 ## 🔗 下一步
 

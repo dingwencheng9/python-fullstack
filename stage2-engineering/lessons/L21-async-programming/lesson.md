@@ -29,6 +29,74 @@ asyncio.run(main())
 
 ---
 
+## 📝 练习题
+
+### 练习 1: 生产者-消费者模式
+
+在 `exercises/exercise_01_asyncio_basics.py` 中实现：
+1. 使用 `asyncio.Queue` 实现生产者-消费者模式
+2. 多个生产者并发生产数据
+3. 多个消费者并发消费数据
+
+**验收标准**：
+```python
+async def test_producer_consumer():
+    queue = AsyncQueue(maxsize=10)
+    results = []
+
+    async def producer(n: int):
+        for i in range(n):
+            await queue.put(i)
+        await queue.join()
+
+    async def consumer():
+        while True:
+            item = await queue.get()
+            results.append(item)
+            queue.task_done()
+
+    await asyncio.gather(producer(5), producer(5))
+    # results 应包含 0-9
+```
+
+### 练习 2: 并发限制器
+
+在 `exercises/exercise_03_concurrency_control.py` 中实现：
+1. 使用 `asyncio.Semaphore` 限制并发数
+2. 实现带超时的并发调用
+
+**验收标准**：
+```python
+async def test_semaphore():
+    sem = asyncio.Semaphore(2)
+    results = []
+
+    async def bounded_task(n: int):
+        async with sem:
+            results.append(n)
+
+    await asyncio.gather(*[bounded_task(i) for i in range(5)])
+    # 最多 2 个任务同时执行
+```
+
+### 练习 3: 优雅关闭
+
+在 `exercises/exercise_04_async_context.py` 中实现：
+1. 使用 `asyncio.timeout()` 实现超时控制
+2. 实现带取消的优雅关闭
+
+**验收标准**：
+```python
+async def test_timeout():
+    try:
+        async with asyncio.timeout(0.1):
+            await asyncio.sleep(1)
+    except asyncio.TimeoutError:
+        pass  # 正确超时
+```
+
+---
+
 
 ```mermaid
 flowchart TB

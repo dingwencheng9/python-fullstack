@@ -52,7 +52,11 @@ uv run python examples/01_distributed_lock.py
 
 ## 🔗 下一步
 
-- **Stage 5**: 数据工程入口课程
+完成本课后继续学习：
+
+- [L46: WebSocket 高级应用](../L46-websocket-advanced/README.md)
+
+> 📖 **学习路径提示**：L46 将学习 WebSocket 集群和 Redis Pub/Sub。
 
 ---
 

@@ -54,3 +54,13 @@ uv add qdrant-client redis
 ---
 
 *更多内容请参考 lesson.md*
+
+---
+
+## 🔗 下一步
+
+完成本课后继续学习：
+
+- [L60: Agent 规划与执行](../L60-agent-planning/README.md)
+
+> 📖 **学习路径提示**：L60 将学习 Agent 的任务规划和执行能力。

@@ -108,7 +108,7 @@ print(stream.getvalue())
 stats.dump_stats("profile.stats")
 
 # 使用 snakeviz 可视化
-# pip install snakeviz
+# uv add snakeviz
 # snakeviz profile.stats
 ```
 
@@ -116,7 +116,7 @@ stats.dump_stats("profile.stats")
 
 ```bash
 # 安装
-pip install py-spy
+uv add py-spy
 
 # 采样分析
 py-spy top -- python app.py

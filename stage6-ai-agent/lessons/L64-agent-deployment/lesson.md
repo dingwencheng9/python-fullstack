@@ -617,7 +617,7 @@ ollama serve
 ### 5.2 Ollama + LangChain 集成
 
 ```python
-# 安装: pip install langchain-ollama
+# 安装: uv add langchain-ollama
 
 from langchain_ollama import ChatOllama, OllamaEmbeddings
 
@@ -813,7 +813,7 @@ volumes:
 
 ```bash
 # 安装 vLLM
-pip install vllm
+uv add vllm
 
 # 启动 vLLM 服务器
 python -m vllm.entrypoints.openai.api_server \
@@ -1033,55 +1033,6 @@ docker compose up -d api=python-fullstack-agent:previous
 **练习答案**: 参见 `solutions/` 目录
 
 **🎉 **恭喜完成 Stage 6 AI Agent 系统全部课程！**
-
----
-
-## 📝 本章总结
-
-### 核心知识点
-
-1. **部署模式**：Serverless、容器化、K8s 自动扩缩容
-2. **API 网关**：路由、限流、认证、监控
-3. **环境隔离**：开发/测试/生产环境配置
-4. **秘密管理**：API Key、环境变量、加密存储
-5. **性能优化**：缓存、异步、批处理、模型量化
-6. **成本控制**：Token 计费、模型选择、流量优化
-7. **监控告警**：延迟、错误率、Token 消耗
-8. **容错恢复**：重试、降级、熔断、故障转移
-
-### 关键要点
-
-- ✅ Serverless 适合按需调用场景
-- ✅ 容器化适合可预测负载
-- ✅ K8s 支持弹性扩缩容
-- ✅ 监控是运维的基础
-- ✅ 成本控制是长期运营关键
-
-### 常见陷阱
-
-- ❌ 不做限流（被恶意调用）
-- ❌ 不做监控（问题难定位）
-- ❌ 不做缓存（成本浪费）
-- ❌ 不做降级（单点故障）
-- ❌ 不加密存储 API Key
-
-### 实用技巧
-
-- 💡 使用 `vLLM` 优化推理性能
-- 💡 使用 `Redis` 缓存频繁调用
-- 💡 使用 `Prometheus + Grafana` 监控
-- 💡 使用 `Sentry` 捕获异常
-- 💡 使用 `AWS Lambda` / `Vercel` Serverless
-- 💡 使用 `Kubernetes HPA` 自动扩缩容
-
-### 典型应用场景
-
-- 🌐 SaaS AI 服务（多租户隔离）
-- 📱 移动端 AI（边缘计算）
-- 🏢 企业内部 AI（私有化部署）
-- 📊 数据分析平台（批量处理）
-- 💬 客服机器人（高并发）**
-
 
 ## 🔗 下一步
 

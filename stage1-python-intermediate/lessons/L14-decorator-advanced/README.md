@@ -73,12 +73,13 @@ L14-decorator-advanced/
 
 ---
 
-## 🔗 课程衔接
+## 🔗 下一步
 
-- **前置课程**: [L13 Python 高级特性（入门）](../L13-advanced-features/lesson.md)
-- **后续课程**: 
-  - [L15 描述符与属性](../L15-descriptors/lesson.md)
-  - [L14 并发编程入门](../L14-concurrency-intro/lesson.md)
+完成本课后继续学习：
+
+- [L15: 描述符与属性](../L15-descriptors/README.md)
+
+> 📖 **学习路径提示**：L15 将学习描述符协议和高级属性管理。
 
 **Stage 2 衔接**:
 - [L20 装饰器深度探索](../../stage2-engineering/lessons/L20-decorators/lesson.md)

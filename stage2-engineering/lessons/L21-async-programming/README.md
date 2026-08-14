@@ -87,9 +87,13 @@ uv run python stage2-engineering/lessons/L19-async-programming/exercises/exercis
 
 ---
 
-## 🔗 下一课
+## 🔗 下一步
 
-[L22: 装饰器深度探索](../L22-decorators/README.md)
+完成本课后继续学习：
+
+- [L22: 装饰器深度探索](../L22-decorators/README.md)
+
+> 📖 **学习路径提示**：L22 将深入学习装饰器的设计模式和高级用法。
 
 ## 🎓 延伸阅读
 

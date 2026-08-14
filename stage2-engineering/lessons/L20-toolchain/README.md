@@ -143,6 +143,8 @@ uv run pytest tests -q
 - [GitHub Actions 文档](https://docs.github.com/en/actions)
 - [Docker 文档](https://docs.docker.com/)
 
-## 🔜 下一步
+## 🔗 下一步
 
-完成后，进入 [L21: 异步核心进阶](../L21-async-programming/README.md)。
+完成本课后继续学习：
+
+- [L21: 异步核心进阶](../L21-async-programming/README.md)

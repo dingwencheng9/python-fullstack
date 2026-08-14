@@ -2,19 +2,22 @@
 
 > **课程编号**: L20
 > **所属阶段**: Stage 2 - 现代工程
-> **预计时长**: 15-18 小时
+> **预计时长**: 15-18 小时（建议拆分学习）
 > **难度**: ⭐⭐⭐⭐☆（中高级）
 > **前置课程**: L04, L19
 > **版本**: v1.0
-> **最后更新**: 2026-07-23
+> **最后更新**: 2026-08-14
 > **核心版本**: Python 3.13
 
+---
+
+> 📌 **课程拆分建议**：本课程内容较多，建议分为两个部分学习：
+> - **L20a 工具链基础**（6-8h）：uv + Ruff + mypy + pytest
+> - **L20b Git 进阶**（4-6h）：Git 协作、rebase、bisect、钩子
 >
-> 1. 理解脚本与工程的区别，掌握项目结构设计
-> 2. 掌握 Git 工作流、约定式提交和协作开发流程
-> 3. 掌握 uv 包管理器和虚拟环境管理
-> 4. 掌握 Ruff、mypy、pytest 核心工具链
-> 5. 理解 CI/CD 概念与 GitHub Actions 完整配置（详见 L19）
+> 如已有基础，可直接跳到 **模块 4** 开始学习。
+
+> **学习目标**：
 
 ## 📚 前置知识
 
@@ -63,7 +66,7 @@ flowchart LR
 # 慢：每次创建新环境
 python -m venv .venv
 source .venv/bin/activate
-pip install pytest ruff mypy
+uv add pytest ruff mypy
 
 # 乱：多个 Python 版本
 /usr/bin/python3.11
@@ -358,7 +361,7 @@ uv pip list
 | `uv init`   | 初始化项目    | —                      |
 | `uv add`    | 添加依赖      | pip install            |
 | `uv remove` | 移除依赖      | pip uninstall          |
-| `uv sync`   | 同步依赖      | pip install -r req.txt |
+| `uv sync`   | 同步依赖      | uv sync |
 | `uv lock`   | 生成/更新锁定 | pip freeze             |
 | `uv run`    | 在环境中运行  | source venv + python   |
 | `uv build`  | 构建包        | python -m build        |
@@ -899,30 +902,10 @@ repos:
 
 
 
----
-
-## 📝 本章总结
-
-### 核心知识点
-
-| 模块 | 核心内容 | 关键工具 |
-|------|----------|----------|
-| 本课程 | 现代化工具链 | pytest |
-
-### 关键要点
-
-1. 理解本课程的核心概念
-2. 掌握主要工具和 API 的使用
-3. 能够独立完成课程练习
-
-### 学习收获
-
-完成本课程后，你已经：
-- ✅ 掌握了本课程的核心概念
-- ✅ 能够运用所学知识解决实际问题
-- ✅ 为后续学习打下坚实基础
-
-
 ## 🔗 下一步
 
-[L19: 异步编程核心](../L19-async-programming/README.md)
+完成本课后继续学习：
+
+- [L21: 异步核心进阶](../L21-async-programming/README.md)
+
+> 📖 **学习路径提示**：L21 将深入学习 asyncio 的高级特性和同步原语。

@@ -54,3 +54,13 @@ uv add langgraph langchain-core
 ---
 
 *更多内容请参考 lesson.md*
+
+---
+
+## 🔗 下一步
+
+完成本课后继续学习：
+
+- [L63: Agent 评估与测试](../L63-agent-evaluation/README.md)
+
+> 📖 **学习路径提示**：L63 将学习 Agent 的评估方法和测试策略。

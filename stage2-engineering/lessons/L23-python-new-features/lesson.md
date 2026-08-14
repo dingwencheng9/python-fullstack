@@ -215,18 +215,19 @@ if __name__ == "__main__":
 
 def level_3():
     """最深层函数"""
-    # TODO: 创建一个会引发 TypeError 的代码
-    pass
+    # ✅ 完整实现：创建会引发 TypeError 的代码
+    result = "string" + 123  # TypeError: can only concatenate str
+    return result
 
 def level_2():
     """中间层函数"""
-    # TODO: 调用 level_3
-    pass
+    # ✅ 完整实现：调用 level_3
+    return level_3()
 
 def level_1():
     """顶层函数"""
-    # TODO: 调用 level_2
-    pass
+    # ✅ 完整实现：调用 level_2
+    return level_2()
 
 # 运行并观察彩色错误堆栈
 if __name__ == "__main__":
@@ -237,10 +238,10 @@ if __name__ == "__main__":
 
 ```bash
 # 彩色输出（默认）
-python stage2-engineering/lessons/L21-python-new-features/exercises/exercise_01_error_handling.py
+python stage2-engineering/lessons/L23-python-new-features/exercises/exercise_01_error_handling.py
 
 # 非彩色输出
-NO_COLOR=1 python stage2-engineering/lessons/L21-python-new-features/exercises/exercise_01_error_handling.py
+NO_COLOR=1 python stage2-engineering/lessons/L23-python-new-features/exercises/exercise_01_error_handling.py
 
 # 思考：哪个更容易定位问题？
 ```
@@ -609,15 +610,19 @@ import time
 def benchmark_decorator(func):
     """性能测试装饰器"""
     def wrapper(*args, **kwargs):
-        # TODO: 实现基准测试逻辑
-        pass
+        # ✅ 完整实现：实现基准测试逻辑
+        start = time.perf_counter()
+        result = func(*args, **kwargs)
+        end = time.perf_counter()
+        print(f"{func.__name__}: {(end-start)*1000:.2f}ms")
+        return result
     return wrapper
 
 @benchmark_decorator
 def your_function():
     """你的测试函数"""
-    # TODO: 实现一个计算密集型函数
-    pass
+    # ✅ 完整实现：实现一个计算密集型函数
+    return sum(i * i for i in range(10000))
 
 # 运行测试
 if __name__ == "__main__":
@@ -997,30 +1002,10 @@ output = safe_html(t"<div>评论：{user_comment}</div>")
 
 
 
----
-
-## 📝 本章总结
-
-### 核心知识点
-
-| 模块 | 核心内容 | 关键工具 |
-|------|----------|----------|
-| 本课程 | Python 新特性 | pytest |
-
-### 关键要点
-
-1. 理解本课程的核心概念
-2. 掌握主要工具和 API 的使用
-3. 能够独立完成课程练习
-
-### 学习收获
-
-完成本课程后，你已经：
-- ✅ 掌握了本课程的核心概念
-- ✅ 能够运用所学知识解决实际问题
-- ✅ 为后续学习打下坚实基础
-
-
 ## 🔗 下一步
 
-[L22: 高阶流控与异步协同](../L22-advanced-flow-async/README.md)
+完成本课后继续学习：
+
+- [L24: 高阶流控与异步协同](../L24-advanced-flow-async/README.md)
+
+> 📖 **学习路径提示**：L24 将学习异步流程控制和复杂协同模式。

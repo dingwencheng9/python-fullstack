@@ -875,4 +875,4 @@ async def create_indexes(mongo: MongoDBSession) -> None:
 ## 🔗 下一步
 
 
-[L30: SQL 进阶](../L30-sql-advanced/)
+[L31: SQL 进阶](../L31-sql-advanced/)

@@ -23,41 +23,11 @@ def parse_log(filename: str) -> dict[str, int]:
     Returns:
         字典: {'INFO': count, 'ERROR': count, 'WARNING': count}
     """
-    # ========================================
-    # 👉 TODO 1: 实现日志解析
-    # ========================================
-
-    # 步骤 1: 初始化统计字典
-    # stats = {'INFO': 0, 'ERROR': 0, 'WARNING': 0}
-
-    # 步骤 2: 打开并读取文件
-    # try:
-    #     with open(filename, 'r', encoding='utf-8') as f:
-    #         for line in f:
-    #             # 步骤 3: 检查每一行包含哪种日志级别
-    #             if 'INFO' in line:
-    #                 stats['INFO'] += 1
-    #             elif 'ERROR' in line:
-    #                 stats['ERROR'] += 1
-    #             elif 'WARNING' in line:
-    #                 stats['WARNING'] += 1
-    # except FileNotFoundError:
-    #     print(f"文件 {filename} 不存在")
-    #     return stats
-
-    # 步骤 4: 返回统计结果
-    # return stats
-
-    # 💡 提示:
-    # - with open() 自动关闭文件
-    # - 'r' 是读取模式
-    # - encoding='utf-8' 处理中文
-    # - try-except 处理文件不存在的情况
-
-    # 💡 扩展:
-    # - 使用正则表达式更精确匹配
-    # - 统计每种级别的具体行号
-    # - 支持更多日志级别
+    # 实现提示：
+    # 1. 初始化统计字典 stats = {'INFO': 0, 'ERROR': 0, 'WARNING': 0}
+    # 2. 使用 with open(filename, 'r', encoding='utf-8') as f 打开文件
+    # 3. 遍历每一行，用 'INFO'/'ERROR'/'WARNING' in line 判断级别
+    # 4. try-except FileNotFoundError 处理文件不存在
 
     stats: dict[str, int] = {"INFO": 0, "ERROR": 0, "WARNING": 0}
     try:
@@ -76,43 +46,11 @@ def parse_log(filename: str) -> dict[str, int]:
 
 def find_errors(filename: str) -> list[tuple[int, str]]:
     """找出所有ERROR行"""
-    # ========================================
-    # 👉 TODO 2: 实现错误行查找
-    # ========================================
-
-    # 步骤 1: 创建列表保存错误行
-    # errors = []
-
-    # 步骤 2: 打开并读取文件
-    # try:
-    #     with open(filename, 'r', encoding='utf-8') as f:
-    #         for line_num, line in enumerate(f, 1):
-    #             # 步骤 3: 检查是否包含 ERROR
-    #             if 'ERROR' in line:
-    #                 # 保存行号和内容
-    #                 errors.append((line_num, line.strip()))
-    # except FileNotFoundError:
-    #     print(f"文件 {filename} 不存在")
-    #     return errors
-
-    # 步骤 4: 返回所有错误行
-    # return errors
-
-    # 💡 提示:
-    # - enumerate(f, 1) 从 1 开始计数行号
-    # - strip() 移除首尾空白字符
-    # - 返回 (行号, 内容) 元组列表
-    # - 处理文件不存在的异常
-
-    # 💡 扩展:
-    # - 支持多种错误级别（ERROR, CRITICAL）
-    # - 添加上下文（前后几行）
-    # - 输出到新文件
-
-    # 💡 使用示例:
-    # errors = find_errors("test.log")
-    # for line_num, content in errors:
-    #     print(f"Line {line_num}: {content}")
+    # 实现提示：
+    # 1. 创建空列表 errors = []
+    # 2. 用 enumerate(f, 1) 遍历，行号从1开始
+    # 3. 'ERROR' in line 时 append((line_num, line.strip()))
+    # 4. try-except FileNotFoundError
 
     errors: list[tuple[int, str]] = []
     try:

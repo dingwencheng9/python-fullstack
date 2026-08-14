@@ -6,19 +6,19 @@
 
 def calculate_average(numbers):
     """计算平均值"""
-    # TODO: 这个函数有个问题，请使用 pdb 调试找到它
+    # 💡 调试练习：使用 pdb 找到这个函数的问题
+    # 问题：没有检查除以零的情况
     total = 0
     for num in numbers:
         total += num
     count = len(numbers)
 
-    # 这里忘记检查除以零的情况
     return total / count
 
 
 def find_middle_element(items):
     """返回列表中间的元素"""
-    # TODO: 使用 pdb 调试找到问题
+    # 💡 调试练习：使用 pdb 找到这个函数的问题
     length = len(items)
     middle_index = length // 2
     return items[middle_index]

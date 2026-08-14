@@ -131,6 +131,10 @@ L20-decorators/
 
 ---
 
-## 🔗 下一课
+## 🔗 下一步
 
-[L24: 高阶流控与异步协同](../L24-advanced-flow-async/README.md)
+完成本课后继续学习：
+
+- [L23: Python 新特性与版本迁移](../L23-python-new-features/README.md)
+
+> 📖 **学习路径提示**：L23 将学习 Python 3.13+ 的新特性和版本迁移。

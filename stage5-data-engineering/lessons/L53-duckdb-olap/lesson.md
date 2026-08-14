@@ -406,7 +406,7 @@ print(result)
 ---
 
 
-### 第四部分：DuckDB 高级特性
+### 第六部分：DuckDB 高级特性
 
 #### 4.1 窗口函数扩展
 
@@ -608,7 +608,7 @@ con.execute("""
 """)
 ```
 
-### 第五部分：与 Python 生态集成
+### 第七部分：与 Python 生态集成
 
 #### 5.1 Pandas 集成
 
@@ -720,7 +720,7 @@ fig = px.histogram(
 fig.show()
 ```
 
-### 第六部分：生产环境部署
+### 第八部分：生产环境部署
 
 #### 6.1 嵌入式部署
 
@@ -864,7 +864,7 @@ shutil.copy2(source_db, backup_db)
 con = duckdb.connect(backup_db)
 ```
 
-### 第七部分：常见问题与面试题
+### 第九部分：常见问题与面试题
 
 #### 7.1 DuckDB vs 其他数据库
 

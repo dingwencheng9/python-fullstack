@@ -38,7 +38,13 @@ MCP（Model Context Protocol）是 **Anthropic 推出的 AI Agent 与外部工�
 - **学习时长**: 4 小时
 - **难度**: ⭐⭐⭐⭐
 - **前置课程**: L59 Agent 部署与监控
-- **后续课程**: Stage 5 完结
+## 🔗 下一步
+
+完成本课后继续学习：
+
+- [L56: LangChain 基础](../L56-langchain/README.md)
+
+> 📖 **学习路径提示**：L56 将学习使用 LangChain 构建 LLM 应用。
 - **课程主题**: Model Context Protocol (MCP) 标准化 Agent 工具集成
 
 本 README 是课程入口地图。详细概念、代码讲解和练习说明以 `lesson.md` 为准；这里帮助你快速判断学习顺序、运行路径和完成标准。

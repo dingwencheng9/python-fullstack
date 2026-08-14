@@ -43,7 +43,10 @@ uv run pytest tests -v
 uv run uvicorn examples.ws_app:app --reload
 ```
 
-## 🔗 后续课程
+## 🔗 下一步
 
-- **L34 HTMX + FastAPI 全栈开发**：综合运用实时通信技术
-- **L35 Web 基础综合项目**：构建完整实时应用
+完成本课后继续学习：
+
+- [L35: HTMX + FastAPI 全栈开发](../L35-htmx/README.md)
+
+> 📖 **学习路径提示**：L35 将学习使用 HTMX 构建交互式 Web 应用。

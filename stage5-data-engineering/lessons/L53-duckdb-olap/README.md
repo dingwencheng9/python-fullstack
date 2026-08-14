@@ -91,7 +91,11 @@ pytest tests/ -v
 
 ## 🔗 下一步
 
-- [Stage 6: AI Agent 开发](../../../stage6-ai-agent/)
+完成本课后继续学习：
+
+- [L54: Agent 基础与工具调用](../../stage6-ai-agent/lessons/L54-agent-basics/README.md)
+
+> 📖 **里程碑**：恭喜完成 Stage 5！L54 将进入 Stage 6 AI Agent 开发。
 
 ---
 

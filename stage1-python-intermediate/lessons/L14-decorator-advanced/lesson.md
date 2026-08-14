@@ -646,10 +646,6 @@ flowchart TB
 
 完成本课程后，继续学习：
 
-- [L13: 描述符与属性](../L13-descriptors/lesson.md)
-- [L14: 并发编程入门](../L14-concurrency-intro/lesson.md)
+- [L15: 描述符与属性](../L15-descriptors/lesson.md)
 
-**Stage 2 衔接**:
-- [L20: 装饰器深度探索](../../stage2-engineering/lessons/L20-decorators/lesson.md) - 深入装饰器高级模式
-
-**课程说明**: 本课程是 L13 的进阶补充，完整掌握装饰器技术后，可进入 Stage 2 学习装饰器在框架中的应用。
+> 📖 **学习路径提示**：L15 将学习描述符协议和高级属性管理。

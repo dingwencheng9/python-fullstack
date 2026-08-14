@@ -1068,58 +1068,7 @@ if __name__ == "__main__":
     uvicorn.run("exercise:app", host="0.0.0.0", port=8000, reload=True)
 ```
 
----
-
-## 📝 本章总结
-
-### 核心知识点
-
-| 模式 | 核心内容 | 关键属性 |
-|------|----------|----------|
-| **渐进式增强** | 先保证基础可用，再添加交互 | `hx-get`, `hx-post` |
-| **模板渲染** | FastAPI + Jinja2 服务端渲染 | `Jinja2Templates` |
-| **HTMX 属性** | `hx-target`, `hx-swap`, `hx-trigger` | 细粒度控制 |
-| **实时更新** | SSE + HTMX 无需 WebSocket | `hx-sse` |
-| **表单验证** | 服务器端验证 + HTMX 错误回显 | `hx-include` |
-
-### 关键要点
-
-1. **HTMX = 渐进式增强** — 不依赖 JavaScript 框架，原生 HTML 逐步升级
-2. **SSE + HTMX = 轻量实时** — 比 WebSocket 更适合简单推送场景
-3. **模板渲染 ≠ 传统 SSR** — 可以与 HTMX 结合实现 SPA 般的体验
-4. **HTMX 让后端更后端** — 减少前端复杂性，专注业务逻辑
-5. **无刷新更新** — `hx-swap` 控制内容替换位置
-
-### HTMX vs SPA 对比
-
-| 维度 | HTMX | React/Vue SPA |
-|------|------|---------------|
-| 复杂度 | 低 | 高 |
-| 首屏加载 | 快 | 慢（需加载框架） |
-| SEO | 友好 | 需要 SSR |
-| 实时性 | SSE 补充 | WebSocket 原生 |
-| 适用场景 | 内容型、CRUD | 高度交互型 |
-
-### 学习收获
-
-完成本课程后，你已经：
-- ✅ 理解 HTMX 渐进式增强理念
-- ✅ 掌握 FastAPI + Jinja2 模板开发
-- ✅ 学会使用 HTMX 属性实现交互
-- ✅ 能够实现 SSE + HTMX 实时更新
-- ✅ 为构建轻量级全栈应用奠定基础
-
----
-
-## 📚 扩展阅读
-
-- [HTMX 官方文档](https://htmx.org/docs/)
-- [Hyperscript 官方文档](https://hyperscript.org/)
-- [FastAPI 模板渲染](https://fastapi.tiangolo.com/zh/tutorial/templates/)
-- [HTMX + Alpine.js 组合](https://htmx.org/examples/alpine-mvp/)
-
-
 ## 🔗 下一步
 
 
-[L35: Web 基础综合项目](../L35-web-project/)
+[P04: Web 基础综合项目](../P04-web-project/)

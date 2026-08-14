@@ -598,7 +598,9 @@ product.price = 8999  # 输出: 值从 9999 变为 8999
 ---
 
 
-### Part 6: 描述符高级应用
+### Part 6: 描述符高级应用（进阶）
+
+> ⚠️ **进阶内容**：本节属于高级应用，初学者可先完成练习后再深入学习。
 
 #### 6.1 数据库字段映射
 
@@ -969,7 +971,9 @@ except ValueError as e:
     print(f"验证错误: {e}")
 ```
 
-### Part 7: 描述符最佳实践与性能
+### Part 7: 描述符最佳实践与性能（进阶）
+
+> **📌 提示**：本节介绍描述符的性能优化和最佳实践，适合进阶学习。
 
 #### 7.1 描述符 vs __getattr__
 
@@ -1372,165 +1376,13 @@ service.data  # 第一次访问触发加载
 service.data  # 第二次访问直接返回缓存
 ```
 
----
-
-## 📝 本章总结
-
-### 核心知识点
-
-1. **描述符协议**
-   - `__get__`、`__set__`、`__delete__`
-   - 数据描述符 vs 非数据描述符
-   - 优先级：数据描述符 > 实例字典 > 非数据描述符
-
-2. **property 装饰器**
-   - 内置的数据描述符
-   - `@property` + `@name.setter` + `@name.deleter`
-   - 用于只读属性、自动计算属性
-
-3. **自定义描述符**
-   - 验证描述符（类型检查、范围检查）
-   - 懒加载描述符（延迟初始化）
-   - 日志描述符（访问跟踪）
-
-4. **属性访问钩子**
-   - `__getattribute__`：拦截所有属性访问
-   - `__getattr__`：仅拦截不存在的属性
-   - 注意避免无限递归
-
-### 关键要点
-
-- ✅ 描述符是 Python 属性访问的核心机制
-- ✅ `property` 是最常用的数据描述符
-- ✅ 描述符可实现数据验证、懒加载、日志等功能
-- ✅ 使用 `__set_name__`（Python 3.6+）获取属性名
-- ✅ `__getattribute__` 中使用 `super()` 避免递归
-
-### 常见陷阱
-
-- ❌ 在 `__getattribute__` 中直接访问 `self.attr`（导致递归）
-- ❌ 忘记 `super().__getattribute__()` 绕过描述符协议
-- ❌ 混淆 `__getattr__` 和 `__getattribute__` 的调用时机
-- ❌ 描述符实例作为类属性时，实例字典会覆盖非数据描述符
-
-### 实用技巧
-
-- 💡 使用 `__set_name__` 自动获取属性名（Python 3.6+）
-- 💡 数据描述符用于可写属性，非数据描述符用于只读属性
-- 💡 组合多个描述符实现复杂功能
-- 💡 `functools.cached_property` 是懒加载的标准实现
-
-### 典型应用场景
-
-- ✅ 数据验证（类型、范围、格式）
-- ✅ 懒加载（按需初始化）
-- ✅ 缓存（记忆化）
-- ✅ 日志和审计
-- ✅ 自动转换（单位转换、格式化）
-- ✅ 观察者模式
-
----
-
-## 💭 课堂思考
-
-1. **描述符 vs `@property`**：`@property` 本质上是什么？它和描述符协议有什么关系？思考 `property` 作为一个"非数据描述符"的实现原理。
-
-2. **数据描述符 vs 非数据描述符**：为什么 Python 区分"数据描述符"（同时定义 `__get__` 和 `__set__`）和"非数据描述符"（只定义 `__get__`）？这种区分对属性查找顺序有什么影响？
-
-3. **描述符的实际价值**：描述符是 Python 中一个相对"高级"的概念。思考一下，为什么标准库中的 `@property`、`classmethod`、`staticmethod` 都基于描述符协议实现？
-
----
-
-## 📚 参考资料
-
-- [描述符 HowTo 指南](https://docs.python.org/zh-cn/3/howto/descriptor.html)
-- [数据描述符 vs 非数据描述符](https://docs.python.org/zh-cn/3/reference/datamodel.html#invoking-descriptors)
-- [functools.cached_property](https://docs.python.org/zh-cn/3/library/functools.html#functools.cached_property)
-
----
-
-## 📁 文件导航
-
-| 目录       | 说明         |
-| ---------- | ------------ |
-| examples/  | 示例代码     |
-| exercises/ | 练习题       |
-| solutions/ | 参考答案     |
-| tests/     | 单元测试     |
-| lesson.md  | 详细教学内容 |
-
----
-
-## ✅ 完成标准
-
-- [ ] 完成 `exercises/01_descriptors.py` 中的 3 组描述符练习
-- [ ] 理解描述符协议的实现原理
-- [ ] 掌握 property 装饰器的使用
-- [ ] 能够创建自定义描述符
-- [ ] 理解 `__getattr__` 和 `__getattribute__` 的区别
-- [ ] 通过 `uv run pytest tests -q`
-
----
-
-
-## 💡 常见陷阱
-
-### 陷阱 1: 描述符的实例顺序
-
-```python
-# ⚠️ 数据描述符优先于实例 __dict__
-class RevealAccess:
-    def __get__(self, obj, objtype=None):
-        return "accessed"
-    def __set__(self, obj, value):
-        obj.__dict__["x"] = value  # 写入实例 __dict__
-
-class MyClass:
-    x = RevealAccess()
-
-obj = MyClass()
-obj.x = 10
-print(obj.__dict__["x"])  # 10，描述符 __set__ 被调用
-```
-
-### 陷阱 2: 描述符与类属性同名
-
-```python
-# ⚠️ 实例属性会遮蔽描述符
-class Descriptor:
-    def __get__(self, obj, objtype=None):
-        return "from descriptor"
-
-class MyClass:
-    value = Descriptor()
-
-obj = MyClass()
-obj.value = 100  # 创建实例属性，遮蔽描述符
-print(obj.value)  # 100 而非 "from descriptor"
-```
-
-```mermaid
-flowchart TB
-    subgraph Descriptor["描述符协议"]
-        A[数据描述符<br/>__get__ + __set__]
-        B[非数据描述符<br/>只有 __get__]
-        C[property<br/>内置描述符]
-    end
-    
-    A --> D[优先于实例 __dict__]
-    B --> E[实例 __dict__ 优先]
-    
-    style A fill:#e8f5e9
-    style B fill:#fff8e1
-    style C fill:#e1f5fe
-```
-
 ## 🔗 下一步
 
 完成本课程后，继续学习：
 
-- [L14: 并发编程入门](../L14-concurrency-intro/lesson.md)
-- [L15: 函数式编程](../L15-functional/lesson.md)
+- [L16: 并发编程入门](../L16-concurrency-intro/lesson.md)
+
+> 📖 **学习路径提示**：L16 将学习线程、进程和协程的并发基础。
 
 ---
 

@@ -95,7 +95,7 @@ def process_data(data):
 # 使用 pdb（默认）
 export PYTHONBREAKPOINT=pdb.set_trace
 
-# 使用 ipdb（需要 pip install ipdb）
+# 使用 ipdb（需要 uv add ipdb）
 export PYTHONBREAKPOINT=ipdb.set_trace
 
 # 禁用断点（调试代码留在代码中时使用）
@@ -673,49 +673,3 @@ def calculate_average(numbers):
 
 ---
 
-
-
----
-
-## 📝 本章总结
-
-### 核心知识点
-
-| 概念 | 说明 |
-|------|------|
-| 本课程 | 调试工具 |
-
-### 关键要点
-
-1. 理解本课程的核心概念
-2. 掌握主要语法和使用方法
-3. 能够独立完成课程练习
-
-### 学习收获
-
-完成本课程后，你已经：
-- ✅ 掌握了本课程的核心概念
-- ✅ 能够编写基础的 Python 代码
-- ✅ 为后续学习打下坚实基础
-
-
-## 🔗 下一步
-
-完成本课程后，继续学习：
-
-- [L06: 异常处理](../L06-exceptions/lesson.md)
-
-在下一课中，我们将学习：
-- try-except 捕获异常
-- raise 抛出异常
-- 自定义异常类
-
-
----
-
-## 📚 延伸阅读
-
-- [Python pdb 文档](https://docs.python.org/3/library/pdb.html)
-- [Python traceback 文档](https://docs.python.org/3/library/traceback.html)
-- [uv 官方文档](https://github.com/astral-sh/uv)
-- [VS Code Python 调试](https://code.visualstudio.com/docs/python/debugging)

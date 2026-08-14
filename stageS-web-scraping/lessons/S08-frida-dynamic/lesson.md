@@ -39,7 +39,7 @@ Frida 是移动端逆向工程的瑞士军刀，提供强大的动态插桩能�
 
 ```bash
 # Frida 安装
-pip install frida frida-tools
+uv add frida frida-tools
 
 # 验证安装
 frida --version

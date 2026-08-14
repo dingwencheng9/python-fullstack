@@ -15,8 +15,6 @@
 **学习本课程前，你应该掌握：**
 
 - **L25**: 工程化综合项目（理解项目结构与测试）
-- HTTP 基本概念（请求、响应）
-- HTTP 基本概念（请求、响应）
 - 命令行基础（能使用终端）
 
 **推荐掌握**：
@@ -1071,7 +1069,7 @@ print(f"收到响应: {response.decode()}")
 
 ### 下一步
 
-继续学习 [L27: FastAPI 可观测性与契约驱动](../L28-fastapi-basics/README.md)，理解 Web 框架如何封装 socket 细节。
+继续学习 [L28: FastAPI 可观测性与契约驱动](../L28-fastapi-basics/README.md)，理解 Web 框架如何封装 socket 细节。
 
 ---
 

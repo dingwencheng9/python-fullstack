@@ -43,7 +43,11 @@ uv run pytest tests -v
 uv run uvicorn examples.htmx_app:app --reload
 ```
 
-## 🔗 后续课程
+## 🔗 下一步
 
-- **L35 Web 基础综合项目**：综合运用 HTMX 构建完整应用
-- **L36 异步背压机制**：在 HTMX 应用中加入流控
+完成本课后继续学习：
+
+- [P04: Web 基础综合项目](../../stage3-web-basics/README.md)
+- [L36: 异步背压机制](../L36-async-backpressure/README.md)
+
+> 📖 **里程碑**：P04 是 Stage 3 的综合项目，将整合 HTTP、FastAPI、SQL、Docker 和实时通信知识。

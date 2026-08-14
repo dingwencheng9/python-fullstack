@@ -73,12 +73,13 @@ L12-generator-advanced/
 
 ---
 
-## 🔗 课程衔接
+## 🔗 下一步
 
-- **前置课程**: [L11 迭代器与生成器](../L11-generators/lesson.md)
-- **后续课程**: 
-  - [L13 Python 高级特性（入门）](../L13-advanced-features/lesson.md)
-  - [L14 并发编程入门](../L14-concurrency-intro/lesson.md)
+完成本课后继续学习：
+
+- [L13: Python 高级特性](../L13-advanced-features/README.md)
+
+> 📖 **学习路径提示**：L13 将学习对象属性访问协议等高级特性。
 
 ---
 

@@ -38,7 +38,10 @@ L41-api-performance/
 - [ ] 通过练习题
 - [ ] 通过测试套件
 
-## 🔗 学习路径
+## 🔗 下一步
 
-**前置课程**: 见 lesson.md
-**后续课程**: 见 lesson.md
+完成本课后继续学习：
+
+- [L42: 缓存策略深入](../L42-caching-strategy/README.md)
+
+> 📖 **学习路径提示**：L42 将学习 Redis 缓存设计与实现。

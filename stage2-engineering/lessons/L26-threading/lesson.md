@@ -72,7 +72,7 @@ flowchart TB
 - **IO 密集型**: 等待网络、文件、数据库
   - 多线程/异步更合适（IO 时让出 GIL）
 
-## 第三章：线程基础
+## 第一章：线程基础
 
 Python 的线程由 `threading.Thread` 表示。创建线程时通常传入 `target` 函数、`args` 参数和可选的 `name`。
 线程对象创建后不会自动运行，必须调用 `start()`。
@@ -153,7 +153,7 @@ for thread in threads:
 
 ---
 
-## 第四章：同步原语
+## 第二章：同步原语
 
 同步原语用于协调多个线程访问共享资源。
 只要多个线程可能同时读写同一个可变对象，就要考虑同步。
@@ -278,7 +278,7 @@ def limited_call() -> None:
 
 ---
 
-## 第五章：队列与生产者消费者
+## 第三章：队列与生产者消费者
 
 生产者消费者是并发编程中最常见的模型之一。
 生产者负责生成任务或数据，消费者负责处理任务或数据。
@@ -377,7 +377,7 @@ priority, name = jobs.get()
 
 ---
 
-## 第六章：线程池
+## 第四章：线程池
 
 手动创建线程适合学习生命周期，但真实项目中更常使用线程池。
 `concurrent.futures.ThreadPoolExecutor` 提供固定数量工作线程和统一的 Future 接口。
@@ -460,7 +460,7 @@ Future 支持 `cancel()`，但只能取消尚未开始执行的任务。
 
 ---
 
-## 第七章：GIL 与 Python 3.13 Free-threading
+## 第五章：GIL 与 Python 3.13 Free-threading
 
 GIL 是 Global Interpreter Lock，全局解释器锁。
 在传统 CPython 中，同一进程内通常只有一个线程能执行 Python 字节码。
@@ -528,7 +528,7 @@ CPU 密集型推理或批处理可以放入进程池或外部服务。
 
 ---
 
-## 第八章：实战与陷阱
+## 第六章：实战与陷阱
 
 本章把前面的知识合在一起：实现一个可测试的并发下载器，并识别常见并发陷阱。
 下载器的核心设计是把真实网络函数独立成 `fetch_url(url)`。
@@ -615,8 +615,8 @@ def parallel_download(urls: list[str], max_workers: int = 5) -> dict[str, str]:
 ## 验证命令
 
 ```bash
-ruff check stage2-engineering/lessons/L24-threading/
-python -m pytest stage2-engineering/lessons/L24-threading/tests/ -o addopts="" -v
+ruff check stage2-engineering/lessons/L26-threading/
+python -m pytest stage2-engineering/lessons/L26-threading/tests/ -o addopts="" -v
 ```
 
 如果 `.venv/bin/python` 不存在，可以使用系统 `python`。

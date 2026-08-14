@@ -8,6 +8,8 @@
 - 测试验证模块可加载、变量存在、无语法错误
 """
 
+from __future__ import annotations
+
 import importlib.util
 import subprocess
 import sys

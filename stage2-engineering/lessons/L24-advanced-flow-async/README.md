@@ -78,4 +78,6 @@ uv run pytest tests/ -v
 
 ## 🔗 下一步
 
-[L26: 线程与并发](../L26-threading/README.md)
+完成本课后继续学习：
+
+- [L25: 极限抽象与性能优化](../L25-extreme-abstraction-performance/README.md)

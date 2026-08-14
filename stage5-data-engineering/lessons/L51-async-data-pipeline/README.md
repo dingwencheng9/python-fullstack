@@ -104,3 +104,13 @@ uv run ruff check stage5-data-engineering/lessons/L51-async-data-pipeline
 - 在 L51 内增强生产级数据管道主题；
 - 在后续综合项目中加入 Airflow/Prefect、Kafka/Flink、dbt/湖仓、MLOps/Feature Store 等企业级专题；
 - 在 CI 中加入 Stage 5 基础必跑与完整数据栈可选跑两层质量门禁。
+
+---
+
+## 🔗 下一步
+
+完成本课后继续学习：
+
+- [P06: 数据工程综合项目](../../stage5-data-engineering/README.md)
+
+> 📖 **里程碑**：P06 是 Stage 5 的综合项目，将整合 Pandas、DuckDB、数据可视化等知识。

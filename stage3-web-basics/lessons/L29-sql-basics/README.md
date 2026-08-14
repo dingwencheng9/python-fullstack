@@ -42,7 +42,10 @@ uv sync
 uv run pytest tests -v
 ```
 
-## 🔗 后续课程
+## 🔗 下一步
 
-- **L29 异步数据持久化与事务原子性**：深入事务与异步 ORM
-- **L30 SQL 进阶 - 高级特性与性能优化**：性能调优与高级 SQL
+完成本课后继续学习：
+
+- [L30: 数据库工程与 ORM](../L30-database-engineering/README.md)
+
+> 📖 **学习路径提示**：L30 将学习数据库工程、ORM 和数据建模。

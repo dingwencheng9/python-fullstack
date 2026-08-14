@@ -50,7 +50,10 @@ uv run pytest tests -v
 uv run uvicorn examples.sse_app:app --reload
 ```
 
-## 🔗 后续课程
+## 🔗 下一步
 
-- **L33 WebSocket 实时通信**：学习全双工实时通信
-- **L34 HTMX + FastAPI 全栈开发**：使用 HTMX 集成 SSE
+完成本课后继续学习：
+
+- [L34: WebSocket 实时通信](../L34-websocket/README.md)
+
+> 📖 **学习路径提示**：L34 将学习 WebSocket，实现客户端与服务器的全双工实时通信。

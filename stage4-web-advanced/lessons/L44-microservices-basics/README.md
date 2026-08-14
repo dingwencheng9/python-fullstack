@@ -220,5 +220,10 @@ async def discover_service(service_name: str) -> str:
 
 ---
 
-**课程版本**: v1.0
-**最后更新**: 2026-07-22
+## 🔗 下一步
+
+完成本课后继续学习：
+
+- [L45: 分布式系统实战](../L45-distributed-systems/README.md)
+
+> 📖 **学习路径提示**：L45 将深入分布式系统，学习一致性、可用性和分区容错性。

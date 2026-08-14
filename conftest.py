@@ -204,7 +204,12 @@ def _discover_lessons() -> dict[Path, tuple[Path, Literal["solutions"] | Literal
         if not lessons_dir.is_dir():
             continue
         for lesson_dir in sorted(lessons_dir.iterdir()):
-            if not lesson_dir.is_dir() or not (lesson_dir.name.startswith("L") or lesson_dir.name.startswith("P")):
+            if not lesson_dir.is_dir():
+                continue
+            # 支持所有课程目录命名规范: L*, P*, K*, A*, S*, M*, R*
+            name = lesson_dir.name
+            is_lesson = name[0] in "ALKPSMR" and name[1:].split("-")[0].isdigit()
+            if not is_lesson:
                 continue
             tests_dir = lesson_dir / "tests"
             solutions_dir = lesson_dir / "solutions"
@@ -237,7 +242,8 @@ def _get_lesson_dir(file_path: str) -> Path | None:
         if tests_index < 2:
             return None
         lesson_dir = Path(*parts[:tests_index])
-        if lesson_dir.name.startswith("L") or lesson_dir.name.startswith("P"):
+        # 支持所有课程目录命名规范: L*, P*, K*, A*, S*, M*, R*
+        if lesson_dir.name[0] in "ALKPSMR" and lesson_dir.name[1:].split("-")[0].isdigit():
             return lesson_dir.resolve()
         return None
     except Exception:

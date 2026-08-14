@@ -90,9 +90,13 @@ _(详细代码见 lesson.md)_
 - [ ] `pytest tests/ -v` 全部通过
 - [ ] 能解释以下关键词：Agent Loop、ReAct、Tool Calling、StructuredTool、Token 追踪
 
-## 🔗 后续课程
+## 🔗 下一步
 
-- **L54 LangGraph 状态机**：继续把本课能力应用到下一阶段主题中。
+完成本课后继续学习：
+
+- [L55: MCP 协议](../L55-mcp-protocol/README.md)
+
+> 📖 **学习路径提示**：L55 将学习 Model Context Protocol 协议。
 
 ## 🔗 下一步
 

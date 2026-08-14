@@ -47,7 +47,10 @@ docker build -t myapp:latest .
 docker compose up
 ```
 
-## 🔗 后续课程
+## 🔗 下一步
 
-- **L35 Web 基础综合项目**：使用 Docker 部署完整 Web 应用
-- **K02 Kubernetes 基础**：容器编排进阶
+完成本课后继续学习：
+
+- [L33: SSE 服务器推送事件](../L33-sse/README.md)
+
+> 📖 **学习路径提示**：L33 将学习 Server-Sent Events，实现服务器向客户端的实时推送。

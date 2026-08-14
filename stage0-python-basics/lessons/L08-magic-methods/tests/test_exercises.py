@@ -3,6 +3,8 @@
 测试 exercises/ 目录下学员编写的代码。
 """
 
+from __future__ import annotations
+
 import importlib.util
 from pathlib import Path
 

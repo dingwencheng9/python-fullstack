@@ -53,7 +53,7 @@ uv venv && source .venv/bin/activate
 uv add apktool jadx frida-tools
 
 # 安装 Objection（动态分析）
-pip install objection
+uv add objection
 
 # 模拟器连接
 adb connect localhost:5555

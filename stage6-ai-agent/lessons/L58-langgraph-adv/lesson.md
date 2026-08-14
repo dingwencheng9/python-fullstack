@@ -4,7 +4,7 @@
 > **所属阶段**: Stage 6 - AI Agent 开发
 > **预计时长**: 4-6 小时
 > **难度**: ⭐⭐⭐☆☆（中级）
-> **前置课程**: L56 LangChain
+> **前置课程**: L56 LangChain 与应用编排, L57 RAG 向量数据库
 > **版本**: v1.0
 > **最后更新**: 2026-07-23
 > **核心版本**: Python 3.13
@@ -992,5 +992,8 @@ def execute_adaptive(state: AgentState) -> AgentState:
 
 ## 🔗 下一步
 
+完成本课后继续学习：
 
-[L55: LangChain 基础与应用](../L56-langchain/)
+- [L59: Agent 记忆系统](../L59-agent-memory/README.md)
+
+> 📖 **学习路径提示**：L59 将学习 Agent 的记忆管理和上下文维护。

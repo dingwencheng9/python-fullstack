@@ -111,7 +111,7 @@ uv run pytest tests -q
 
 完成本课后进入 Stage 2 现代工程：
 
-- [L17: pytest 完整实战](../../../stage2-engineering/lessons/L17-pytest-complete/README.md)
-- [Stage 2 概览](../../../stage2-engineering/README.md)
+- [L19: pytest 完整实战](../../stage2-engineering/lessons/L19-pytest-complete/README.md)
+- [Stage 2 概览](../../stage2-engineering/README.md)
 
-恭喜完成 Stage 1 Python 进阶！🎉
+🎉 恭喜完成 Stage 1 Python 进阶！

@@ -392,7 +392,7 @@ with rate_limit(calls=5, period=60) as allow:
 
 ## Part 5: 异常进阶
 
-### 9.1 suppress 选择性忽略异常
+### 5.1 suppress 选择性忽略异常
 
 ```python
 from contextlib import suppress
@@ -412,7 +412,7 @@ with suppress(FileNotFoundError, PermissionError):
     os.remove("file.txt")
 ```
 
-### 9.2 ExitStack 组合多个上下文管理器
+### 5.2 ExitStack 组合多个上下文管理器
 
 ```python
 from contextlib import ExitStack
@@ -427,7 +427,7 @@ with ExitStack() as stack:
     process_all(files)
 ```
 
-### 9.3 redirect_stdout/stderr 重定向输出
+### 5.3 redirect_stdout/stderr 重定向输出
 
 ```python
 from contextlib import redirect_stdout, redirect_stderr
@@ -445,7 +445,7 @@ with redirect_stderr(null_device):
     dangerous_operation()
 ```
 
-### 9.4 异常作为控制流（慎用）
+### 5.4 异常作为控制流（慎用）
 
 ```python
 # 反模式：使用异常代替 if/else
@@ -462,7 +462,7 @@ class Registry:
         return self._data.get(key, default)
 ```
 
-### 9.5 异常层次设计
+### 5.5 异常层次设计
 
 ```python
 # 自定义异常层次结构
@@ -493,7 +493,7 @@ except AppError:
     show_generic_error()
 ```
 
-### 9.6 traceback 完整处理
+### 5.6 traceback 完整处理
 
 ```python
 import traceback
@@ -563,170 +563,6 @@ python exercises/02_context_managers.py
 4. `LazyResource`：进入上下文时才初始化资源，退出时释放资源。
 
 重点检查：`__exit__()` 返回 `False` 表示不抑制异常；`finally` 是资源清理的关键。
-
----
-
-## 📝 本章总结
-
-### 核心知识点
-
-1. **闭包（Closure）**
-   - 内层函数引用外层函数的变量
-   - 外层函数返回内层函数
-   - 变量在外层函数结束后仍然存活
-   - 使用 `nonlocal` 修改外层变量
-
-2. **装饰器基础**
-   - 装饰器是接受函数并返回新函数的可调用对象
-   - `@decorator` 语法等价于 `func = decorator(func)`
-   - 装饰器在函数定义时执行（不是调用时）
-   - 使用 `functools.wraps` 保留原函数元数据
-
-3. **装饰器模式**
-   - 无参装饰器：`@decorator`
-   - 带参装饰器：`@decorator(arg)` （返回装饰器的函数）
-   - 装饰器链：`@dec1 @dec2 func` 从下往上执行
-
-
-4. **上下文管理器协议**
-   - `__enter__()`: 进入时执行，返回对象给 `as` 子句
-   - `__exit__()`: 退出时执行，异常处理
-   - `@contextmanager`: 使用生成器简化实现
-   - 资源清理、事务管理、限流等场景
-
-### 关键要点
-
-- ✅ 闭包捕获的是变量引用，不是值的拷贝
-- ✅ 装饰器可以叠加使用，执行顺序从下往上
-- ✅ 必须使用 `@functools.wraps` 保留原函数的 `__name__` 和 `__doc__`
-- ✅ 装饰器可以修改参数、返回值或函数行为
-- ✅ 类也可以作为装饰器（实现 `__call__` 方法）
-- ✅ 上下文管理器确保资源正确释放（即使发生异常）
-
-### 常见陷阱
-
-- ❌ 忘记在装饰器内层函数中调用原函数
-- ❌ 忘记使用 `@functools.wraps` 导致元数据丢失
-- ❌ 在闭包中修改外层变量时忘记使用 `nonlocal`
-- ❌ 混淆装饰器定义时和调用时的执行时机
-- ❌ 带参装饰器忘记返回真正的装饰器函数
-- ❌ 在 `@contextmanager` 中忘记 try-finally
-
-### 实用技巧
-
-- 💡 使用 `*args, **kwargs` 让装饰器适用于任意函数
-- 💡 装饰器可以有副作用（如注册、验证）
-- 💡 使用闭包实现简单的状态管理（如计数器）
-- 💡 组合多个小装饰器而非创建复杂的单一装饰器
-- 💡 使用 `@contextmanager` 简化上下文管理器实现
-- 💡 上下文管理器可以嵌套使用
-
-### 典型应用场景
-
-- ⏱️ 性能监控和计时
-- 📝 日志记录和调试
-- 🔒 权限验证和访问控制
-- 💾 结果缓存和记忆化
-- 🔄 自动重试和错误处理
-- 📊 函数调用统计
-- 🗄️ 数据库事务管理
-- 📁 文件资源管理
-- 🚦 速率限制
-
----
-
-## 💭 课堂思考
-
-1. **闭包与面向对象**：Python 的闭包可以实现类似面向对象的状态封装。思考一下，闭包和类在实现"带状态的功能"时各有什么优缺点？
-
-2. **装饰器的执行时机**：装饰器 `@my_decorator` 是在函数定义时执行还是函数调用时执行？为什么这个设计选择很重要？
-
-3. **上下文管理器的异常语义**：`__exit__` 方法接收 `exc_type, exc_val, exc_tb` 三个参数。如果 `__exit__` 返回 `True`，会发生什么？返回 `False` 呢？
-
----
-
-## 📚 参考资料
-
-- [PEP 318 - Decorators](https://peps.python.org/pep-0318/)
-- [PEP 343 - The 'with' Statement](https://peps.python.org/pep-0343/)
-- [functools 模块文档](https://docs.python.org/zh-cn/3/library/functools.html)
-- [contextlib 模块文档](https://docs.python.org/zh-cn/3/library/contextlib.html)
-
----
-
-## 📁 文件导航
-
-| 目录       | 说明         |
-| ---------- | ------------ |
-| examples/  | 示例代码     |
-| exercises/ | 练习题       |
-| solutions/ | 参考答案     |
-| tests/     | 单元测试     |
-| lesson.md  | 详细教学内容 |
-
----
-
-## ✅ 完成标准
-
-- [ ] 完成所有练习题（2 个）
-- [ ] 理解闭包的作用域规则
-- [ ] 掌握装饰器的实现和应用
-- [ ] 理解上下文管理器协议
-- [ ] 能够组合装饰器与上下文管理器
-- [ ] 本课测试通过：`uv run pytest stage1-python-intermediate/lessons/L13-advanced-features/tests -q`
-
----
-
-
-## 💡 常见陷阱
-
-### 陷阱 1: 可变默认参数
-
-```python
-# ❌ 危险：默认参数在函数定义时创建
-def bad_append(item, items=[]):
-    items.append(item)
-    return items
-
-print(bad_append(1))  # [1]
-print(bad_append(2))  # [1, 2] 累积了！
-
-# ✅ 正确：使用 None
-def good_append(item, items=None):
-    if items is None:
-        items = []
-    items.append(item)
-    return items
-```
-
-### 陷阱 2: 闭包变量捕获
-
-```python
-# ❌ 闭包晚期绑定
-funcs = [lambda x: x*i for i in range(3)]
-print(funcs[0](1))  # 2 而非 0
-
-# ✅ 正确：使用默认参数捕获
-funcs = [lambda x, i=i: x*i for i in range(3)]
-print(funcs[0](1))  # 0
-```
-
-```mermaid
-flowchart TB
-    subgraph Advanced["高级特性"]
-        A[上下文管理器<br/>with 语句]
-        B[生成器<br/>yield]
-        C[闭包<br/>自由变量]
-    end
-    
-    A --> D[__enter__ / __exit__]
-    B --> E[yield / next]
-    C --> F[nonlocal 声明]
-    
-    style A fill:#e8f5e9
-    style B fill:#fff8e1
-    style C fill:#fce4ec
-```
 
 ## 🔗 下一步
 

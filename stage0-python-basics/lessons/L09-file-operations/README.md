@@ -106,3 +106,9 @@ python -m pytest tests/ -q
 完成本课后继续学习：
 
 - [P01: 学员管理系统](../P01-student-manager/README.md)
+
+> 📖 **里程碑**：P01 是 Stage 0 的综合项目，将整合语法、数据结构、函数、文件操作、OOP 和异常处理知识。
+
+完成本课后继续学习：
+
+- [P01: 学员管理系统](../P01-student-manager/README.md)

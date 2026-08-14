@@ -50,8 +50,10 @@ uv run pytest tests -v
 uv run uvicorn examples.main:app --reload
 ```
 
-## 🔗 后续课程
+## 🔗 下一步
 
-- **L28 数据库基础与 SQL 入门**：为 FastAPI 添加数据库持久化
-- **L32 SSE 服务器推送事件**：学习实时通信
-- **L34 HTMX + FastAPI 全栈开发**：构建交互式 Web 应用
+完成本课后继续学习：
+
+- [L29: SQL 基础与数据库入门](../L29-sql-basics/README.md)
+
+> 📖 **学习路径提示**：L29 将学习 SQL 基础和数据库操作。

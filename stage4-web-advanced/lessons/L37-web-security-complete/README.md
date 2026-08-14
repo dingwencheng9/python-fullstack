@@ -280,5 +280,8 @@ Redis 实现分布式限流，防御暴力破解和 DDoS 攻击。
 
 ## 🔗 下一步
 
-- [L38: 认证与授权](./lesson.md)
-- [Stage 4 概览](../../README.md)
+完成本课后继续学习：
+
+- [L38: 认证与授权](../L38-auth-authorization/README.md)
+
+> 📖 **学习路径提示**：L38 将学习 JWT、OAuth2 等认证授权机制。

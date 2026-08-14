@@ -241,4 +241,6 @@ export PYTHON_COLORS=0
 
 ## 🔗 下一步
 
-[L25: 极限抽象与性能优化](../L25-extreme-abstraction-performance/README.md)
+完成本课后继续学习：
+
+- [L24: 高阶流控与异步协同](../L24-advanced-flow-async/README.md)

@@ -360,6 +360,55 @@ class PerformanceMetrics:
         return self.total_time / self.calls if self.calls else 0
 ```
 
+### 挑战 4: 集成测试编写
+
+> **📌 集成测试指南**：集成测试验证多个组件协同工作。P02 的数据管道特别适合集成测试。
+
+```python
+# tests/test_integration.py
+import pytest
+from pipeline import TypedPipeline, Validator, Transform, AsyncProcessor
+
+@pytest.fixture
+def sample_data():
+    return [
+        {"id": "1", "name": "Alice", "age": 25},
+        {"id": "2", "name": "Bob", "age": 30},
+    ]
+
+@pytest.mark.asyncio
+async def test_full_pipeline(sample_data):
+    """端到端集成测试"""
+    pipeline = (
+        TypedPipeline()
+        .add(Validator(schema={"name": str, "age": int}))
+        .add(Transform(fn=lambda x: {**x, "age": x["age"] + 1}))
+        .add(AsyncProcessor(max_concurrent=2))
+    )
+
+    results = await pipeline.process(sample_data)
+
+    assert len(results) == 2
+    assert results[0]["age"] == 26  # 验证转换生效
+
+@pytest.mark.asyncio
+async def test_pipeline_error_handling():
+    """错误处理集成测试"""
+    invalid_data = [{"id": "1", "name": "Alice", "age": "invalid"}]
+
+    pipeline = TypedPipeline().add(Validator(schema={"age": int}))
+
+    # 验证错误被正确传播
+    with pytest.raises(ValidationError):
+        await pipeline.process(invalid_data)
+```
+
+> 💡 **集成测试最佳实践**：
+> 1. 使用 fixture 管理测试数据
+> 2. 分离单元测试和集成测试
+> 3. 使用 `@pytest.mark.asyncio` 处理异步测试
+> 4. 验证错误处理和边界情况
+
 ---
 
 ## ✅ 完成标准

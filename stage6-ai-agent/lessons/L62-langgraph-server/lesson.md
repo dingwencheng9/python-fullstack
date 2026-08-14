@@ -296,7 +296,7 @@ result = app.invoke(input_data, config)
 - ✅ 高可用 Redis Cluster
 
 ```python
-# 安装: pip install langgraph-checkpoint-redis
+# 安装: uv add langgraph-checkpoint-redis
 
 from langgraph.checkpoint.redis import RedisSaver
 from langgraph.graph import StateGraph, START, END
@@ -994,56 +994,10 @@ START → [A, B, C 并行] → Merge → END
 
 **练习答案**: 参见 `solutions/` 目录
 
----
-
-## 📝 本章总结
-
-### 核心知识点
-
-1. **LangGraph 图结构**：StateGraph、节点、边、条件边
-2. **状态管理**：TypedDict 状态、状态更新、状态合并
-3. **条件分支**：路由函数、条件边、多分支切换
-4. **持久化**：CheckpointSaver、状态保存与恢复
-5. **流式输出**：Token 流、节点流、状态流
-6. **Human-in-the-Loop**：中断、审批、动态修改状态
-7. **多 Agent 协作**：子图调用、状态传递、共享上下文
-8. **生产部署**：序列化图结构、API 服务化、监控
-
-### 关键要点
-
-- ✅ LangGraph = 有状态的可视化工作流
-- ✅ 状态是跨节点共享的数据
-- ✅ Checkpoint 支持断点恢复
-- ✅ Human-in-the-Loop 实现人工干预
-- ✅ 流式输出提升用户体验
-
-### 常见陷阱
-
-- ❌ 状态定义过于复杂（难以维护）
-- ❌ 忘记保存 Checkpoint（无法恢复）
-- ❌ 条件边逻辑错误（死循环或死路）
-- ❌ 不处理流式中断
-- ❌ 多 Agent 状态混淆
-
-### 实用技巧
-
-- 💡 使用 `START → node → END` 简化图定义
-- 💡 使用 `@entrypoint` 部署图结构
-- 💡 使用 `MemorySaver` 开发环境存储
-- 💡 使用 `sqlite` 或 `postgres` 生产存储
-- 💡 使用 `interrupt()` 插入人工审批点
-- 💡 使用 `update_state()` 动态修改状态
-
-### 典型应用场景
-
-- 🔄 复杂工作流自动化（多步骤审批）
-- 💬 对话系统（带记忆的聊天机器人）
-- 📝 文档处理流水线（解析 → 提取 → 生成）
-- 🎮 游戏 AI（NPC 决策树）
-- 🔧 DevOps 自动化（部署流水线）
-
-
 ## 🔗 下一步
 
+完成本课后继续学习：
 
-[L59: Agent 记忆管理](../L59-agent-memory/)
+- [L63: Agent 评估与测试](../L63-agent-evaluation/README.md)
+
+> 📖 **学习路径提示**：L63 将学习 Agent 的评估方法和测试策略。

@@ -116,6 +116,8 @@ python3 -m pytest tests/ -q
 
 ## 🔗 下一步
 
-[P01: 学员管理系统](../P01-student-manager/README.md)
+完成本课后继续学习：
 
-下一课会把 Stage 0 的语法、数据结构、函数、文件、OOP、魔术方法和异常处理整合到一个基础项目中。
+- [L07: 面向对象基础](../L07-oop-basics/README.md)
+
+> 📖 **学习路径提示**：L07 将学习类、对象、继承等 OOP 核心概念，为 L08 魔术方法和后续 Stage 1 打基础。

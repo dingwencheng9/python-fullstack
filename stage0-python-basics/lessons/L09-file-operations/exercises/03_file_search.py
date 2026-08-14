@@ -13,8 +13,8 @@ from pathlib import Path
 
 
 # ========================================
-# 👉 TODO 1: 搜索特定扩展名的文件
-# ========================================
+# 函数实现
+# ==========================================
 
 
 def find_by_extension(root_dir: str, extensions: list[str]) -> list[str]:
@@ -27,14 +27,11 @@ def find_by_extension(root_dir: str, extensions: list[str]) -> list[str]:
     Returns:
         所有匹配文件的绝对路径列表
     """
-    # 提示:
+    # 实现提示：
     # 1. 使用 Path(root_dir).rglob('*') 递归遍历
     # 2. 检查每个路径是否为文件（.is_file()）
-    # 3. 检查扩展名是否在 extensions 列表中
+    # 3. 检查扩展名是否在 extensions 列表中（统一小写匹配）
     # 4. 返回所有匹配文件的绝对路径（str 或 Path）
-
-    # 扩展名应统一转为小写以支持不区分大小写匹配
-    # 使用 str(path).lower().endswith(ext.lower()) 忽略大小写
 
     # 💡 扩展:
     # - 支持 * 通配符匹配
@@ -72,7 +69,7 @@ def find_large_files(root_dir: str, min_size_bytes: int) -> list[tuple[str, int]
     Returns:
         [(文件路径, 大小字节数), ...] 按大小降序排列
     """
-    # 提示:
+    # 实现提示：
     # 1. 遍历目录（可使用 os.walk 或 pathlib.rglob）
     # 2. 检查每个文件的大小（path.stat().st_size）
     # 3. 过滤出超过 min_size_bytes 的文件
@@ -112,7 +109,7 @@ def find_recent_files(root_dir: str, days: int = 7) -> list[tuple[str, float]]:
     Returns:
         [(文件路径, 修改时间戳), ...] 按修改时间降序排列
     """
-    # 提示:
+    # 实现提示：
     # 1. 使用 datetime.now() - timedelta(days=days) 计算截止时间
     # 2. 使用 path.stat().st_mtime 获取修改时间戳
     # 3. 比较时间戳，过滤出 recent_time > cutoff_time 的文件
@@ -155,7 +152,7 @@ def find_in_directories(root_dirs: list[str], pattern: str) -> dict[str, list[st
     Returns:
         {目录: [匹配文件列表], ...}
     """
-    # 提示:
+    # 实现提示：
     # 1. 对每个 root_dir 调用 Path(root_dir).glob(pattern)
     # 2. 将结果按目录分组
     # 3. 返回字典 {root_dir: [files...]}

@@ -11,7 +11,7 @@ class TestConfiguration:
 
     def test_settings_defaults(self) -> None:
         """测试默认配置"""
-        from example_02_environment_config import Settings
+        from examples.environment_config import Settings
 
         settings = Settings()
 
@@ -22,7 +22,7 @@ class TestConfiguration:
 
     def test_settings_custom_values(self) -> None:
         """测试自定义配置"""
-        from example_02_environment_config import Settings
+        from examples.environment_config import Settings
 
         settings = Settings(
             app_name="custom-agent",
@@ -34,7 +34,7 @@ class TestConfiguration:
 
     def test_api_key_validation(self) -> None:
         """测试 API Key 验证"""
-        from example_02_environment_config import validate_api_key
+        from examples.environment_config import validate_api_key
 
         # 有效格式
         assert validate_api_key("sk-test12345678") is True
@@ -54,7 +54,7 @@ class TestMetrics:
 
     def test_counter_increment(self) -> None:
         """测试计数器增加"""
-        from example_03_prometheus_metrics import Counter
+        from examples.prometheus_metrics import Counter
 
         counter = Counter("test_counter", "Test counter")
         counter.inc()
@@ -64,7 +64,7 @@ class TestMetrics:
 
     def test_histogram_observe(self) -> None:
         """测试直方图观察"""
-        from example_03_prometheus_metrics import Histogram
+        from examples.prometheus_metrics import Histogram
 
         histogram = Histogram("test_histogram", "Test histogram")
         histogram.observe(0.1)
@@ -76,7 +76,7 @@ class TestMetrics:
 
     def test_gauge_set_value(self) -> None:
         """测试仪表设置值"""
-        from example_03_prometheus_metrics import Gauge
+        from examples.prometheus_metrics import Gauge
 
         gauge = Gauge("test_gauge", "Test gauge")
         gauge.set(10)
@@ -94,7 +94,7 @@ class TestTracing:
 
     def test_tracer_create_span(self) -> None:
         """测试创建追踪跨度"""
-        from example_04_otel_tracing import Tracer, SpanStatus
+        from examples.otel_tracing import Tracer, SpanStatus
 
         tracer = Tracer("test-service")
         span = tracer.start_span("test-span")
@@ -106,7 +106,7 @@ class TestTracing:
 
     def test_span_attributes(self) -> None:
         """测试跨度属性"""
-        from example_04_otel_tracing import Tracer
+        from examples.otel_tracing import Tracer
 
         tracer = Tracer("test-service")
         span = tracer.start_span("test-span")
@@ -119,7 +119,7 @@ class TestTracing:
 
     def test_span_duration(self) -> None:
         """测试跨度持续时间"""
-        from example_04_otel_tracing import Tracer
+        from examples.otel_tracing import Tracer
 
         tracer = Tracer("test-service")
         span = tracer.start_span("test-span")
@@ -138,7 +138,7 @@ class TestLogging:
 
     def test_log_level_filtering(self) -> None:
         """测试日志级别过滤"""
-        from example_05_structured_logging import StructuredLogger, LogLevel
+        from examples.structured_logging import StructuredLogger, LogLevel
 
         logger = StructuredLogger("test", min_level=LogLevel.WARNING)
 
@@ -151,7 +151,7 @@ class TestLogging:
 
     def test_agent_logger(self) -> None:
         """测试 Agent 日志记录"""
-        from example_05_structured_logging import AgentLogger
+        from examples.structured_logging import AgentLogger
 
         agent_log = AgentLogger("test")
 
@@ -168,7 +168,7 @@ class TestLogging:
 
     def test_cost_logging(self) -> None:
         """测试成本日志"""
-        from example_05_structured_logging import AgentLogger
+        from examples.structured_logging import AgentLogger
 
         agent_log = AgentLogger("test")
 
@@ -192,7 +192,7 @@ class TestHealthCheck:
 
     def test_health_status(self) -> None:
         """测试健康状态"""
-        from example_01_dockerfile_agent import AgentServer
+        from examples.dockerfile_agent import AgentServer
 
         server = AgentServer()
         health = server.health_check()
@@ -203,7 +203,7 @@ class TestHealthCheck:
 
     def test_readiness_check(self) -> None:
         """测试就绪检查"""
-        from example_01_dockerfile_agent import AgentServer
+        from examples.dockerfile_agent import AgentServer
 
         server = AgentServer()
         ready = server.readiness_check()

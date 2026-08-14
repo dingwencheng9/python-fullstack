@@ -513,9 +513,9 @@ with open('chinese.txt', 'r', encoding='utf-8') as f:
 3. **最后 latin-1**：`file_path.read_text(encoding='latin-1')` — 兼容所有字节
 4. **全部失败**：抛出 `UnicodeDecodeError`
 
-> 💡 **L08 将学到**：如何用 `try/except` 捕获 `UnicodeDecodeError` 并实现自动回退。
+> 💡 **L06 将学到**：如何用 `try/except` 捕获 `UnicodeDecodeError` 并实现自动回退。
 
-> 💡 **L08 将学到**：如何用 `try/except` 捕获 `UnicodeDecodeError` 并回退。
+> 💡 **L06 将学到**：如何用 `try/except` 捕获 `UnicodeDecodeError` 并回退。
 
 ### 编码转换
 
@@ -1296,7 +1296,7 @@ with open('file.txt') as f:
 > 💡 **L04 将学到**：以下逻辑封装为实用函数。
 
 **1. 安全读取 JSON**：
-> 💡 **L08 将学到**：如何用 `try/except` 捕获 `FileNotFoundError` 和 `JSONDecodeError`。
+> 💡 **L06 将学到**：如何用 `try/except` 捕获 `FileNotFoundError` 和 `JSONDecodeError`。
 **执行步骤**：
 1. 读取文件文本：`path.read_text(encoding='utf-8')`
 2. 解析 JSON：`json.loads(text)`
@@ -1398,30 +1398,6 @@ p.unlink()      # 删除文件
 
 
 
----
-
-## 📝 本章总结
-
-### 核心知识点
-
-| 概念 | 说明 |
-|------|------|
-| 本课程 | 文件操作 |
-
-### 关键要点
-
-1. 理解本课程的核心概念
-2. 掌握主要语法和使用方法
-3. 能够独立完成课程练习
-
-### 学习收获
-
-完成本课程后，你已经：
-- ✅ 掌握了本课程的核心概念
-- ✅ 能够编写基础的 Python 代码
-- ✅ 为后续学习打下坚实基础
-
-
 ## 🔗 下一步
 
 - 完成 `exercises/` 目录下的练习题巩固知识
@@ -1468,84 +1444,6 @@ p.unlink()      # 删除文件
 
 
 
-
-## 💡 常见文件操作陷阱
-
-### 陷阱 1: 忘记关闭文件
-
-```python
-# ❌ 错误：忘记关闭文件
-f = open('data.txt', 'r')
-content = f.read()
-# 如果这行出错，文件永远不会关闭
-
-# ✅ 正确：使用 with 语句
-with open('data.txt', 'r') as f:
-    content = f.read()
-# with 块结束后自动关闭
-```
-
-### 陷阱 2: 编码问题
-
-```python
-# ❌ 错误：假设默认编码
-with open('data.txt', 'r') as f:
-    content = f.read()  # 在 Windows 上可能出错
-
-# ✅ 正确：显式指定编码
-with open('data.txt', 'r', encoding='utf-8') as f:
-    content = f.read()
-```
-
-### 陷阱 3: 路径穿越
-
-```python
-# ❌ 错误：用户可能输入恶意路径
-filename = input("文件名: ")
-with open(filename, 'r') as f:  # 用户可能输入 "../../../etc/passwd"
-    content = f.read()
-
-# ✅ 正确：使用 pathlib 验证路径
-from pathlib import Path
-user_input = input("文件名: ")
-base = Path.cwd()
-target = (base / user_input).resolve()
-
-# 确保路径在安全范围内
-if not target.is_relative_to(base):
-    raise ValueError("非法路径")
-    
-with open(target, 'r', encoding='utf-8') as f:
-    content = f.read()
-```
-
-### 陷阱 4: 写入时不使用 'b' 模式
-
-```python
-# ❌ 错误：在文本模式写入 bytes
-with open('data.bin', 'w') as f:
-    f.write(b'hello')  # TypeError
-
-# ✅ 正确：使用二进制模式
-with open('data.bin', 'wb') as f:
-    f.write(b'hello')
-```
-
-### 陷阱 5: 不检查文件是否存在就删除
-
-```python
-# ❌ 错误：文件不存在时删除会报错
-import os
-os.remove('nonexistent.txt')  # FileNotFoundError
-
-# ✅ 正确：先检查
-from pathlib import Path
-path = Path('file.txt')
-if path.exists():
-    path.unlink()
-```
-
----
 
 ## 🎓 核心知识点总结
 

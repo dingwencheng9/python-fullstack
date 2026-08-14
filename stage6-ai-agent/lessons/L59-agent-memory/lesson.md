@@ -2,10 +2,9 @@ L59: Agent 记忆与上下文管理 - 详细教程
 
 > **所属阶段**: Stage 6 - AI Agent 开发
 > **课程编号**: L59
-> **所属阶段**: Stage 6 - AI Agent 开发
 > **预计时长**: 3-4 小时
 > **难度**: ⭐⭐⭐⭐⭐（AI Agent 专家级）
-> **前置课程**: L57 RAG 向量数据库
+> **前置课程**: L57 RAG 向量数据库, L58 LangGraph 工作流编排
 > **版本**: v1.0
 > **最后更新**: 2026-07-23
 > **核心版本**: Python 3.13
@@ -15,7 +14,8 @@ L59: Agent 记忆与上下文管理 - 详细教程
 
 **学习本课程前，你应该掌握：**
 
-- **L56**: Agent 基础与工具调用
+- **L57**: RAG 向量数据库（理解向量检索）
+- **L58**: LangGraph 工作流编排（理解状态机）
 
 **如果你还没有学习以上课程，建议先完成前置课程。**
 
@@ -23,7 +23,7 @@ L59: Agent 记忆与上下文管理 - 详细教程
 
 > **课程定位**: Stage 6 AI Agent 系统 - 长期对话上下文管理
 > **前置课程**: L57 RAG 向量数据库, L58 LangGraph 进阶
-> **后续课程**: L60 Agent 规划, L63 Agent 评估  
+> **后续课程**: L60 Agent 规划与推理, L61 多 Agent 系统  
 > **学习时长**: 3-4 小时
 
 ---
@@ -192,7 +192,7 @@ result = app.invoke({"messages": [("user", "你好")]}, config)
 - ✅ 支持 Redis Cluster（高可用）
 
 ```python
-# 安装: pip install langgraph-checkpoint-redis
+# 安装: uv add langgraph-checkpoint-redis
 
 from langgraph.checkpoint.redis import RedisSaver
 from langgraph.graph import StateGraph, START, END
@@ -983,55 +983,6 @@ class FileMemory:
 **练习答案**: 参见 `solutions/` 目录
 
 **下一课**: [L60 Agent 任务规划](../L60-agent-planning/lesson.md)
-
----
-
-## 📝 本章总结
-
-### 核心知识点
-
-1. **记忆类型**：短期记忆（对话历史）、长期记忆（向量存储）
-2. **ConversationMemory**：Buffer、Window、Token 限制
-3. **SummaryMemory**：摘要历史，减少 Token 消耗
-4. **向量记忆**：VectorStore-backed Memory，语义检索
-5. **知识图谱记忆**：GraphMemory，实体关系存储
-6. **记忆选择**：根据场景选择合适的记忆类型
-7. **记忆压缩**：摘要、提取关键词、重要性评分
-8. **记忆融合**：多源记忆整合，去重与排序
-
-### 关键要点
-
-- ✅ 短期记忆用于当前会话
-- ✅ 长期记忆用于跨会话持久化
-- ✅ 向量记忆支持语义检索
-- ✅ 需要定期压缩和清理记忆
-- ✅ 不同场景用不同的记忆策略
-
-### 常见陷阱
-
-- ❌ 记忆无限增长（Token 溢出）
-- ❌ 不做记忆索引（检索效率低）
-- ❌ 忽略记忆过期（数据陈旧）
-- ❌ 记忆检索粒度不匹配
-- ❌ 多会话记忆混淆
-
-### 实用技巧
-
-- 💡 使用 `ConversationSummaryMemory` 压缩历史
-- 💡 使用 `VectorStoreRetrieverMemory` 语义检索
-- 💡 使用 `tiktoken` 计算 Token 数量
-- 💡 使用 `pruning` 策略删除低价值记忆
-- 💡 使用 `time-weighted` 优先检索最近记忆
-- 💡 使用 `importance-weighted` 保留重要记忆
-
-### 典型应用场景
-
-- 💬 客服机器人（跨会话上下文）
-- 📚 个人助手（学习用户偏好）
-- 📖 研究助手（积累领域知识）
-- 💼 办公助手（会议记录、项目记忆）
-- 🎮 游戏 NPC（角色记忆）
-
 
 ## 🔗 下一步
 

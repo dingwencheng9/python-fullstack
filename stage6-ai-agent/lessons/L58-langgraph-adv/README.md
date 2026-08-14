@@ -28,7 +28,10 @@
 - 人机协同与流式输出
 - 多 Agent 子图协作
 
-## 下一步
+## 🔗 下一步
 
-- [L62 LangGraph 服务端部署](../L62-langgraph-server/) - 高级模式
-- [L59 Agent 记忆系统](../L59-agent-memory/) - 记忆与上下文
+完成本课后继续学习：
+
+- [L59: Agent 记忆系统](../L59-agent-memory/README.md)
+
+> 📖 **学习路径提示**：L59 将学习 Agent 的记忆管理和上下文维护。

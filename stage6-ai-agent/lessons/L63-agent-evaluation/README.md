@@ -93,9 +93,13 @@ _(详细代码见 lesson.md)_
 - [ ] `pytest tests/ -v` 全部通过
 - [ ] 能解释以下关键词：Agent 评估、LLM-as-Judge、LangSmith、Profiling、自动化测试
 
-## 🔗 后续课程
+## 🔗 下一步
 
-- **L57 Agent 部署与监控**：继续把本课能力应用到下一阶段主题中。
+完成本课后继续学习：
+
+- [L64: Agent 部署与运维](../L64-agent-deployment/README.md)
+
+> 📖 **学习路径提示**：L64 将学习 Agent 的生产部署和运维监控。
 
 ## 🔗 下一步
 

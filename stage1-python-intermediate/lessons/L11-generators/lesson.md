@@ -883,6 +883,22 @@ python exercises/03_itertools_exercises.py
 2. `Fibonacci(count)`：生成指定数量的斐波那契数。
 3. `Range(start, stop, step)`：模拟内置 `range()` 的正向迭代。
 
+**验收标准**：
+
+```python
+# Counter 验收
+counter = Counter(3)
+assert list(counter) == [1, 2, 3]
+
+# Fibonacci 验收
+fib = Fibonacci(5)
+assert list(fib) == [1, 1, 2, 3, 5]
+
+# Range 验收
+r = Range(0, 5, 2)
+assert list(r) == [0, 2, 4]
+```
+
 重点检查：`__iter__()` 应返回自身，`__next__()` 应在结束时抛出 `StopIteration`。
 
 ### 练习 2: 生成器函数
@@ -895,6 +911,16 @@ python exercises/03_itertools_exercises.py
 4. `chunked(iterable, size)`：按大小分块。
 5. `flatten(nested)`：展平嵌套列表。
 
+**验收标准**：
+
+```python
+assert list(count_up(3)) == [1, 2, 3]
+assert list(squares(4)) == [0, 1, 4, 9]
+assert list(chain([1, 2], ['a', 'b'])) == [1, 2, 'a', 'b']
+assert list(chunked([1,2,3,4,5], 2)) == [[1,2], [3,4], [5]]
+assert list(flatten([[1,2], [3, [4]]])) == [1, 2, 3, 4]
+```
+
 ### 练习 3: itertools 实战
 
 在 `exercises/03_itertools_exercises.py` 中练习：
@@ -904,147 +930,18 @@ python exercises/03_itertools_exercises.py
 3. `sliding_window()`：生成固定宽度窗口。
 4. `powerset()`：生成所有子集。
 
----
-
-## 📝 本章总结
-
-### 核心知识点
-
-1. **生成器函数（Generator Function）**
-   - 使用 `yield` 关键字代替 `return`
-   - 惰性计算：需要时才生成值
-   - 自动实现迭代器协议
-   - 函数状态在 yield 处暂停和恢复
-
-2. **生成器表达式（Generator Expression）**
-   - 语法：`(x * 2 for x in range(10))`
-   - 类似列表推导式但使用 `()` 而非 `[]`
-   - 内存高效：不会一次性生成所有元素
-   - 适合链式操作和管道处理
-
-3. **迭代器协议（Iterator Protocol）**
-   - `__iter__()`: 返回迭代器对象自身
-   - `__next__()`: 返回下一个值，结束时抛出 `StopIteration`
-   - 所有生成器都是迭代器
-   - 迭代器只能遍历一次
-
-4. **itertools 模块**
-   - 无限迭代器：`count()`, `cycle()`, `repeat()`
-   - 终止迭代器：`chain()`, `compress()`, `islice()`
-   - 组合迭代器：`product()`, `permutations()`, `combinations()`
-
-### 关键要点
-
-- ✅ 生成器比列表内存效率高，适合处理大数据
-- ✅ `yield` 保存函数状态，下次调用从断点继续
-- ✅ 生成器是"一次性的"，遍历后需要重新创建
-- ✅ 使用 `next()` 手动迭代，或用 `for` 循环自动迭代
-- ✅ 生成器适合数据流处理和管道操作
-
-### 常见陷阱
-
-- ❌ 尝试对生成器使用 `len()` 或索引访问
-- ❌ 多次遍历同一个生成器（需要重新创建）
-- ❌ 在生成器中使用 `return` 返回值（应使用 `yield`）
-- ❌ 忘记生成器是惰性的，不会立即执行
-- ❌ 在需要多次访问数据时使用生成器（应转为列表）
-
-### 实用技巧
-
-- 💡 组合多个小生成器构建数据管道
-- 💡 使用 `itertools.islice()` 限制生成器输出
-- 💡 使用 `itertools.tee()` 创建生成器的多个副本
-- 💡 用生成器替代列表推导式处理大文件
-- 💡 L12 将学到：`yield from` 委托简化嵌套循环
-
-### 典型应用场景
-
-- 📂 读取大文件（逐行处理，不加载全部到内存）
-- 🔢 无限序列（斐波那契数列、质数生成）
-- 🔄 数据管道（过滤 → 转换 → 聚合）
-- 📊 分批处理（数据库分页查询）
-
----
-
-## 💭 课堂思考
-
-1. **惰性求值的权衡**：生成器的惰性求值可以处理无限序列，但为什么 `list(fibonacci())` 会导致内存耗尽？思考一下，在什么场景下应该用生成器，在什么场景下应该用列表。
-
-2. **生成器 vs 迭代器**：Python 中"生成器"和"迭代器"是同一个东西吗？它们的区别和联系是什么？
-
-3. **itertools 的设计哲学**：`itertools` 遵循什么原则使它能够高效处理大数据？`islice` 和普通切片 `list[:5]` 的本质区别是什么？
-
----
-
-## 📚 参考资料
-
-- [Python 迭代器文档](https://docs.python.org/zh-cn/3/library/stdtypes.html#iterator-types)
-- [itertools 模块文档](https://docs.python.org/zh-cn/3/library/itertools.html)
-- [生成器详解](https://docs.python.org/zh-cn/3/howto/functional.html#generators)
-
----
-
-## 📁 文件导航
-
-| 目录       | 说明         |
-| ---------- | ------------ |
-| examples/  | 示例代码     |
-| exercises/ | 练习题       |
-| solutions/ | 参考答案     |
-| tests/     | 单元测试     |
-| lesson.md  | 详细教学内容 |
-
----
-
-## ✅ 完成标准
-
-- [ ] 完成所有练习题（3 个）
-- [ ] 理解生成器的惰性求值机制
-- [ ] 掌握迭代器协议
-- [ ] 熟练使用 itertools 模块
-- [ ] 能够构建数据处理管道
-- [ ] 本课测试通过：`uv run pytest stage1-python-intermediate/lessons/L11-generators/tests -q`
-
----
-
-
-## 💡 常见陷阱
-
-### 陷阱 1: 生成器只能遍历一次
+**验收标准**：
 
 ```python
-# ❌ 误解：生成器可以重复使用
-gen = (x**2 for x in range(5))
-print(list(gen))  # [0, 1, 4, 9, 16]
-print(list(gen))  # [] 再次遍历得到空结果
+from itertools import count
 
-# ✅ 正确做法：每次需要时创建新生成器
-```
-
-### 陷阱 2: 在生成器中修改外部状态
-
-```python
-# ❌ 副作用导致难以调试
-counter = 0
-def bad_gen():
-    global counter
-    while counter < 5:
-        counter += 1
-        yield counter
-
-# ✅ 正确做法：使用参数传递状态
-```
-
-```mermaid
-flowchart LR
-    A[可迭代对象] --> B[迭代器]
-    B --> C{has next?}
-    C -->|Yes| D[yield item]
-    D --> B
-    C -->|No| E[StopIteration]
-    
-    style B fill:#fff9c4
-    style D fill:#c8e6c9
+assert list(first_n(count(), 3)) == [0, 1, 2]
+assert list(take_while(count(), lambda x: x < 3)) == [0, 1, 2]
+data = [('a', 1), ('b', 2), ('a', 3)]
+groups = group_by_key(data, key=lambda x: x[0])
+assert list(groups) == [('a', [1, 3]), ('b', [2])]
+assert list(sliding_window([1,2,3,4], 2)) == [[1,2], [2,3], [3,4]]
+assert list(powerset([1,2])) == [(), (1,), (2,), (1,2)]
 ```
 
 ## 🔗 下一步

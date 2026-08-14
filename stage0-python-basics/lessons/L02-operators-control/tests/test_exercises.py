@@ -4,6 +4,8 @@
 演示型练习是完整实现，学员运行并观察输出。
 """
 
+from __future__ import annotations
+
 import importlib.util
 import subprocess
 import sys

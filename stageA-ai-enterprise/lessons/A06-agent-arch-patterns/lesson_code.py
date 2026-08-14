@@ -15,14 +15,12 @@ A06: Agent 架构设计模式 - 核心实现
 from __future__ import annotations
 
 from abc import ABC, abstractmethod
+from collections.abc import Callable
 from dataclasses import dataclass, field
 from datetime import datetime
 from enum import Enum
 from typing import TYPE_CHECKING, Any, Generic, TypeVar
 from typing_extensions import override
-
-if TYPE_CHECKING:
-    from collections.abc import Callable
 
 ToolFunc = Callable[[dict[str, Any]], str]
 

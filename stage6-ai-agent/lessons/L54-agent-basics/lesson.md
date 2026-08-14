@@ -16,9 +16,8 @@ L54: Agent 基础与工具调用 - 详细教程
 
 ---
 
-> **课程定位**: Stage 6 AI Agent 系统 - 从 LLM 到自主 Agent  
-> **前置要求**: L55 LangChain 基础（理解 Chain 与 Prompt）  
-> **后续课程**: L54 LangGraph, L54 Agent 记忆  
+> **课程定位**: Stage 6 AI Agent 系统 - 从 LLM 到自主 Agent
+> **后续课程**: L55 MCP 协议（理解标准化工具集成）  
 > **学习时长**: 4-5 小时
 
 ---
@@ -188,7 +187,7 @@ weather_tool = StructuredTool.from_function(
 **Instructor** 是基于 Pydantic 的结构化输出库，提供自动重试、验证失败重试循环，是 Agent 稳定性的核心保障。
 
 ```python
-# 安装: pip install instructor
+# 安装: uv add instructor
 
 import instructor
 from pydantic import BaseModel, Field
@@ -689,56 +688,10 @@ result = await tool_with_timeout(
 
 **练习答案**: 参见 `solutions/` 目录
 
----
-
-## 📝 本章总结
-
-### 核心知识点
-
-1. **Agent 架构**：思考 → 行动 → 观察循环（ReAct 模式）
-2. **工具定义**：Function Calling、Tool Schema、参数校验
-3. **Agent 类型**：ReAct、Plan-and-Execute、Self-Ask
-4. **Tool 选择**：Function Calling 自动选择、Router 路由
-5. **错误处理**：重试机制、降级策略、回退方案
-6. **安全验证**：工具参数校验、权限控制、审计日志
-7. **性能优化**：并行工具调用、缓存结果、超时控制
-8. **多工具协作**：工具链、依赖解析、并行执行
-
-### 关键要点
-
-- ✅ Agent = LLM + Tools + Loop
-- ✅ ReAct 是主流 Agent 范式
-- ✅ 工具必须有清晰的 Schema
-- ✅ 需要错误处理和重试机制
-- ✅ 多工具需要协调和依赖管理
-
-### 常见陷阱
-
-- ❌ 工具定义不清晰（参数模糊）
-- ❌ 不处理工具调用失败
-- ❌ Agent 陷入无限循环
-- ❌ 不限制工具调用次数
-- ❌ 忽略工具执行的副作用
-
-### 实用技巧
-
-- 💡 使用 `@tool` 装饰器定义工具
-- 💡 使用 `WikipediaQueryRun` 内置工具
-- 💡 使用 `create_react_agent` 快速创建
-- 💡 使用 `max_iterations` 限制循环次数
-- 💡 使用 `early_stopping` 条件提前退出
-- 💡 使用 `handle_parsing_errors` 处理解析错误
-
-### 典型应用场景
-
-- 🔍 研究助手（搜索 + 分析）
-- 💻 代码助手（搜索 + 生成 + 执行）
-- 📊 数据分析（查询 + 处理 + 可视化）
-- 🎯 推荐系统（多维度检索 + 排序）
-- 🤖 自动化工作流（多步骤任务执行）
-
-
 ## 🔗 下一步
 
+完成本课后继续学习：
 
-[L62: LangGraph 进阶](../L62-langgraph-server/)
+- [L55: MCP 协议](../L55-mcp-protocol/README.md)
+
+> 📖 **学习路径提示**：L55 将学习 Model Context Protocol 协议。

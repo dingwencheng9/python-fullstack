@@ -14,8 +14,8 @@ L55: MCP 协议与标准化工具集成 - 详细教程
 
 **学习本课程前，你应该掌握：**
 
-- **L56**: Agent 基础与工具调用
-- **L59**: Agent 规划与推理
+- **L54**: Agent 基础与工具调用（理解 ReAct 模式与工具调用）
+- **L56**: LangChain 与应用编排（可选，理解 Chain 基础）
 
 **如果你还没有学习以上课程，建议先完成前置课程。**
 
@@ -921,25 +921,10 @@ class ProtocolVersion:
         return client.split("-")[0] == server.split("-")[0]
 ```
 
----
-
-## 📝 本章总结
-
-### 核心知识点
-
-1. **MCP 协议**：Model Context Protocol，服务级工具集成协议
-2. **协议角色**：Host（宿主）、Client（客户端）、Server（服务端）
-3. **JSON-RPC 2.0**：MCP 的传输格式，请求/响应结构
-4. **SSE 传输**：Server-Sent Events 实现实时通信
-5. **资源管理**：Resource 资源，Server 提供数据给 Client
-6. **Prompt 模板**：预定义 Prompt，支持参数化
-7. **工具调用**：Tool Calling，Server 暴露可调用工具
-8. **权限模型**：角色权限、频率限制、超时控制
-9. **审计日志**：完整的操作记录与查询
-10. **版本协商**：向后兼容的版本策略
-
-
 ## 🔗 下一步
 
+完成本课后继续学习：
 
-[L61: 多智能体编排](../L61-multi-agent/)
+- [L56: LangChain 基础与应用](../L56-langchain/README.md)
+
+> 📖 **学习路径提示**：L56 将学习 LangChain 的基本用法。
