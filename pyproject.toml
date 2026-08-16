@@ -20,7 +20,7 @@ members = [
     "stageA-ai-enterprise",
     "stageK-devops",
     "stageM-enterprise",
-    "stageP-web-scraping",
+    "stageS-web-scraping",
     "stageR-frontier",
     # Projects 综合项目
     "projects/01-web-scraper",

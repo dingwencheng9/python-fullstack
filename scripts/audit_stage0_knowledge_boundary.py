@@ -5,11 +5,10 @@ Stage 0 知识点越界全面审查脚本
 """
 
 import ast
+from dataclasses import dataclass, field
+from pathlib import Path
 import re
 import sys
-from pathlib import Path
-from dataclasses import dataclass, field
-from typing import Optional
 
 # 知识点边界定义
 KNOWLEDGE_BOUNDARY = {
@@ -235,7 +234,7 @@ class AuditResult:
         }
 
 
-def extract_lesson_from_path(path: Path) -> Optional[str]:
+def extract_lesson_from_path(path: Path) -> str | None:
     """从文件路径提取课程编号"""
     path_str = str(path)
     for lesson in LESSON_ORDER:
@@ -259,13 +258,13 @@ def detect_syntax_violations(content: str, path: Path) -> list[Violation]:
     except SyntaxError:
         return violations
 
-    lines = content.split('\n')
+    lines = content.split("\n")
 
     class SyntaxVisitor(ast.NodeVisitor):
         def visit(self, node):
             node_type = type(node).__name__
             if node_type in forbidden:
-                line_no = getattr(node, 'lineno', 0)
+                line_no = getattr(node, "lineno", 0)
                 snippet = lines[line_no - 1].strip() if line_no <= len(lines) else ""
 
                 # 处理 ClassDef 特殊逻辑
@@ -310,13 +309,13 @@ def detect_annotation_violations(content: str, path: Path) -> list[Violation]:
     if not forbidden_patterns:
         return violations
 
-    lines = content.split('\n')
+    lines = content.split("\n")
 
     for i, line in enumerate(lines, 1):
         for pattern in forbidden_patterns:
             if re.search(pattern, line):
                 # 检查是否是注释（# 后的内容）
-                comment_pos = line.find('#')
+                comment_pos = line.find("#")
                 match_pos = re.search(pattern, line).start()
                 if comment_pos != -1 and comment_pos < match_pos:
                     continue  # 跳过注释中的内容
@@ -347,13 +346,13 @@ def detect_term_violations(content: str, path: Path) -> list[Violation]:
     if not forbidden_terms:
         return violations
 
-    lines = content.split('\n')
+    lines = content.split("\n")
 
     for i, line in enumerate(lines, 1):
         # 跳过代码块
-        if line.strip().startswith('```'):
+        if line.strip().startswith("```"):
             continue
-        if line.strip().startswith('#'):
+        if line.strip().startswith("#"):
             continue  # 跳过注释
 
         for term in forbidden_terms:
@@ -379,15 +378,15 @@ def audit_file(path: Path) -> list[Violation]:
     violations = []
 
     try:
-        content = path.read_text(encoding='utf-8')
-    except Exception as e:
+        content = path.read_text(encoding="utf-8")
+    except Exception:
         return violations
 
     violations.extend(detect_syntax_violations(content, path))
     violations.extend(detect_annotation_violations(content, path))
 
     # lesson.md 和 README.md 检查术语
-    if path.suffix == '.md':
+    if path.suffix == ".md":
         violations.extend(detect_term_violations(content, path))
 
     return violations
@@ -419,26 +418,26 @@ def generate_report(result: AuditResult) -> str:
     report.append("")
     report.append("## 执行摘要")
     report.append("")
-    report.append(f"| 指标 | 数值 |")
-    report.append(f"|------|------|")
+    report.append("| 指标 | 数值 |")
+    report.append("|------|------|")
     report.append(f"| 审查文件总数 | {summary['total_files']} |")
     report.append(f"| 发现违规数 | {summary['total_violations']} |")
     report.append("")
     report.append("### 按违规类型分布")
     report.append("")
-    for t, count in sorted(summary['by_type'].items(), key=lambda x: -x[1]):
+    for t, count in sorted(summary["by_type"].items(), key=lambda x: -x[1]):
         report.append(f"- **{t}**: {count} 个")
     report.append("")
     report.append("### 按严重程度分布")
     report.append("")
     for s in ["CRITICAL", "HIGH", "MEDIUM"]:
-        count = summary['by_severity'].get(s, 0)
+        count = summary["by_severity"].get(s, 0)
         report.append(f"- **{s}**: {count} 个")
     report.append("")
     report.append("### 按课程分布")
     report.append("")
     for lesson in LESSON_ORDER:
-        count = summary['by_lesson'].get(lesson, 0)
+        count = summary["by_lesson"].get(lesson, 0)
         if count > 0:
             report.append(f"- **{lesson}**: {count} 个违规")
     report.append("")
@@ -528,7 +527,7 @@ def main():
     # 保存报告
     report_path = Path("/Users/nexo/python-fullstack/docs/stage0-audit-report.md")
     report_path.parent.mkdir(parents=True, exist_ok=True)
-    report_path.write_text(report, encoding='utf-8')
+    report_path.write_text(report, encoding="utf-8")
     print(f"📄 报告已保存至: {report_path}")
 
     # 打印摘要
