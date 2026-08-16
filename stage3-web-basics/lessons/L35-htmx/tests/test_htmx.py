@@ -8,8 +8,12 @@ from __future__ import annotations
 from pathlib import Path
 
 import importlib.util
-from fastapi.testclient import TestClient
 import pytest
+
+# 跳过 FastAPI 未安装的测试
+fastapi = pytest.importorskip("fastapi")
+from fastapi.testclient import TestClient
+
 jinja2 = pytest.importorskip("jinja2")
 
 

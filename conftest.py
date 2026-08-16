@@ -443,6 +443,11 @@ def pytest_pycollect_makemodule(module_path: Path, parent: object) -> None:
 
 def pytest_configure(config: object) -> None:
     """pytest 初始化 - 清理可能冲突的模块。"""
+    global _LOADED_MODULES, _LESSON_MAP, _REPO_ROOT  # noqa: PLW0603
+    # 清理所有缓存，确保每次测试运行都重新加载
+    _LOADED_MODULES = {}
+    _LESSON_MAP = None
+    _REPO_ROOT = None
     for module_name in list(sys.modules):
         if module_name in ("solutions", "examples") or module_name.startswith(
             ("_test_solutions", "_test_examples", "solution_", "example_", "tests.conftest")

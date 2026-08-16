@@ -31,6 +31,7 @@ members = [
     "stage7-ai-enterprise",
     "stage8-devops-enterprise",
     "stage9-enterprise-business",
+    "stagep-web-scraping",
     "web-scraper",
 ]
 
@@ -4018,6 +4019,7 @@ dependencies = [
     { name = "pyyaml" },
     { name = "requests" },
     { name = "rich" },
+    { name = "sqlalchemy", extra = ["asyncio"] },
     { name = "tomli" },
     { name = "tomli-w" },
     { name = "zai-sdk" },
@@ -4197,6 +4199,7 @@ requires-dist = [
     { name = "rich", specifier = ">=13.9.0,<14.0" },
     { name = "ruff", marker = "extra == 'dev'", specifier = ">=0.8.0,<2.0" },
     { name = "seaborn", marker = "extra == 'viz'", specifier = ">=0.13.0,<1.0" },
+    { name = "sqlalchemy", extras = ["asyncio"], specifier = ">=2.0.50" },
     { name = "sqlalchemy", extras = ["asyncio"], marker = "extra == 'web'", specifier = ">=2.0.0,<3.0" },
     { name = "strawberry-graphql", extras = ["fastapi"], marker = "extra == 'web'", specifier = ">=0.240.0,<1.0" },
     { name = "tiktoken", marker = "extra == 'ai'", specifier = ">=0.8.0" },
@@ -4909,6 +4912,14 @@ source = { virtual = "stageK-devops" }
 name = "stage9-enterprise-business"
 version = "0.1.0"
 source = { virtual = "stageM-enterprise" }
+
+[[package]]
+name = "stagep-web-scraping"
+version = "1.0.0"
+source = { virtual = "stageS-web-scraping" }
+
+[package.metadata]
+provides-extras = ["dev"]
 
 [[package]]
 name = "starlette"

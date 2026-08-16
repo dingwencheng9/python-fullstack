@@ -2,6 +2,11 @@
 
 from __future__ import annotations
 
+import pytest
+
+# P04 需要 FastAPI，如果未安装则跳过相关测试
+fastapi = pytest.importorskip("fastapi")
+
 
 class TestProjectStructure:
     """测试项目结构"""
