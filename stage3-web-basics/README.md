@@ -1,7 +1,7 @@
 # Stage 3: Web 开发基础
 
 > **阶段编号**: Stage 3  
-> **课程数量**: 10 课 (L26-L35)  
+> **课程数量**: 10 课 (L27-L35)  
 > **预计学时**: ~56 小时  
 > **前置要求**: Stage 2（现代化基础内功）
 
@@ -11,29 +11,29 @@
 
 | 编号 | 课程名称 | 学时 | 难度 |
 |------|----------|------|------|
-| L26 | [HTTP 协议与抓包基础](lessons/L26-http/) | 3-4h | ⭐⭐⭐ |
-| L27 | [FastAPI 可观测性与契约驱动](lessons/L27-fastapi-basics/) | 4-5h | ⭐⭐⭐⭐ |
-| L28 | [数据库基础与 SQL 入门](lessons/L28-sql-basics/) | 4-5h | ⭐⭐⭐ |
-| L29 | [异步数据持久化与事务原子性](lessons/L29-database-engineering/) | 4-5h | ⭐⭐⭐⭐ |
-| L30 | [SQL 进阶](lessons/L30-sql-advanced/) | 4-5h | ⭐⭐⭐⭐ |
-| L31 | [Docker 容器化部署](lessons/L31-docker/) | 2-3h | ⭐⭐⭐ |
-| L32 | [SSE 服务器推送事件](lessons/L32-sse/) | 4-5h | ⭐⭐⭐⭐ |
-| L33 | [WebSocket 实时通信](lessons/L33-websocket/) | 3-4h | ⭐⭐⭐⭐ |
-| L34 | [HTMX + FastAPI 全栈开发](lessons/L34-htmx/) | 4h | ⭐⭐⭐⭐ |
-| L35 | [Web 基础综合项目](lessons/L35-web-project/) | 10-12h | ⭐⭐⭐⭐⭐ |
+| L27 | [HTTP 协议与抓包基础](lessons/L27-http/) | 3-4h | ⭐⭐⭐ |
+| L28 | [FastAPI 可观测性与契约驱动](lessons/L28-fastapi-basics/) | 4-5h | ⭐⭐⭐⭐ |
+| L29 | [数据库基础与 SQL 入门](lessons/L29-sql-basics/) | 4-5h | ⭐⭐⭐ |
+| L30 | [异步数据持久化与事务原子性](lessons/L30-database-engineering/) | 4-5h | ⭐⭐⭐⭐ |
+| L31 | [SQL 进阶](lessons/L31-sql-advanced/) | 4-5h | ⭐⭐⭐⭐ |
+| L32 | [Docker 容器化部署](lessons/L32-docker/) | 2-3h | ⭐⭐⭐ |
+| L33 | [SSE 服务器推送事件](lessons/L33-sse/) | 4-5h | ⭐⭐⭐⭐ |
+| L34 | [WebSocket 实时通信](lessons/L34-websocket/) | 3-4h | ⭐⭐⭐⭐ |
+| L35 | [HTMX + FastAPI 全栈开发](lessons/L35-htmx/) | 4h | ⭐⭐⭐⭐ |
+| P04 | [Web 基础综合项目](lessons/P04-web-project/) | 10-12h | ⭐⭐⭐⭐⭐ |
 
 ---
 
 ## 🎯 学习路径
 
 ```
-L26 HTTP 协议 → L27 FastAPI → L28 SQL 基础
+L27 HTTP 协议 → L28 FastAPI → L29 SQL 基础
          ↓              ↓               ↓
-L29 异步持久化 → L30 SQL 进阶 → L31 Docker
+L30 异步持久化 → L31 SQL 进阶 → L32 Docker
          ↓              ↓               ↓
-L32 SSE ← L33 WebSocket → L34 HTMX
+L33 SSE ← L34 WebSocket → L35 HTMX
                    ↓
-          L35 Web 基础综合项目
+          P04 Web 基础综合项目
 ```
 
 ---
