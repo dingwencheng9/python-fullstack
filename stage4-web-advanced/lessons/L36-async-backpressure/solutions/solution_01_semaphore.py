@@ -1,21 +1,6 @@
-"""练习 1：Semaphore 信号量控制并发
+"""参考答案 1：Semaphore 信号量控制并发
 
-目标：使用 asyncio.Semaphore 实现带并发限制的 API 调用
-
-场景：
-一家电商系统需要调用多个供应商的库存接口。
-每个供应商最多同时处理 5 个请求，超过的请求需要等待。
-
-要求：
-1. 实现 SemaphoreControlledClient 类
-2. 限制每个供应商最多 5 个并发请求
-3. 当并发满时，请求应该等待而不是被拒绝
-4. 统计每个供应商的成功/失败/等待请求数
-
-提示：
-- 使用 asyncio.Semaphore 控制并发
-- 使用 asyncio.Lock 保护统计数据的更新
-- 考虑使用 asyncio.wait_for 添加超时
+基于 exercise_01_semaphore.py 的参考答案
 """
 
 import asyncio
@@ -43,7 +28,7 @@ class SemaphoreControlledClient:
     """带 Semaphore 并发控制的 API 客户端"""
 
     def __init__(self, max_concurrent: int = 5):
-        # TODO: 初始化 Semaphore 和各供应商的统计
+        # 为每个供应商创建独立的 Semaphore 和统计
         self._semaphores: dict[str, asyncio.Semaphore] = {}
         self._stats: dict[str, SupplierStats] = {}
         self._max_concurrent = max_concurrent
@@ -69,7 +54,9 @@ class SemaphoreControlledClient:
         try:
             async with asyncio.timeout(timeout):
                 async with semaphore:
+                    # 模拟 API 调用
                     wait_time = asyncio.get_event_loop().time() - start_time
+                    # 更新统计
                     async with stats.lock:
                         stats.success_count += 1
                         stats.total_wait_time += wait_time
@@ -100,7 +87,14 @@ class SemaphoreControlledClient:
         self,
         calls: list[tuple[str, str]],
     ) -> list[RequestResult]:
-        """批量调用多个供应商"""
+        """批量调用多个供应商
+
+        Args:
+            calls: [(supplier_id, product_id), ...]
+
+        Returns:
+            所有调用结果
+        """
         tasks = [self.call_supplier(supplier_id, product_id) for supplier_id, product_id in calls]
         return await asyncio.gather(*tasks)
 
