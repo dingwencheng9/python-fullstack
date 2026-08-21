@@ -23,7 +23,7 @@
 本课文件已按当前仓库结构展平到各目录根部：
 
 ```text
-L17-pytest-complete/
+L19-pytest-complete/
 ├── README.md
 ├── lesson.md
 ├── pyproject.toml
@@ -77,29 +77,29 @@ L17-pytest-complete/
 
 ```bash
 # 课程基线测试
-uv run pytest stage2-engineering/lessons/L17-pytest-complete/tests -q
+uv run pytest stage2-engineering/lessons/L19-pytest-complete/tests -q
 
 # pytest 示例
 uv run pytest \
-  stage2-engineering/lessons/L17-pytest-complete/examples/01_basic_test.py \
-  stage2-engineering/lessons/L17-pytest-complete/examples/02_fixture_demo.py \
-  stage2-engineering/lessons/L17-pytest-complete/examples/03_parametrize_demo.py \
-  stage2-engineering/lessons/L17-pytest-complete/examples/04_mock_demo.py \
+  stage2-engineering/lessons/L19-pytest-complete/examples/01_basic_test.py \
+  stage2-engineering/lessons/L19-pytest-complete/examples/02_fixture_demo.py \
+  stage2-engineering/lessons/L19-pytest-complete/examples/03_parametrize_demo.py \
+  stage2-engineering/lessons/L19-pytest-complete/examples/04_mock_demo.py \
   -q
 
 # CI/CD 示例脚本
-uv run python stage2-engineering/lessons/L17-pytest-complete/examples/01_validate_ci.py
-uv run python stage2-engineering/lessons/L17-pytest-complete/examples/02_matrix_report.py
+uv run python stage2-engineering/lessons/L19-pytest-complete/examples/01_validate_ci.py
+uv run python stage2-engineering/lessons/L19-pytest-complete/examples/02_matrix_report.py
 
 # 练习自检
 uv run pytest \
-  stage2-engineering/lessons/L17-pytest-complete/exercises/exercise_01_write_fixture.py \
-  stage2-engineering/lessons/L17-pytest-complete/exercises/exercise_02_parametrize_calc.py \
-  stage2-engineering/lessons/L17-pytest-complete/exercises/exercise_03_mock_api.py \
+  stage2-engineering/lessons/L19-pytest-complete/exercises/exercise_01_write_fixture.py \
+  stage2-engineering/lessons/L19-pytest-complete/exercises/exercise_02_parametrize_calc.py \
+  stage2-engineering/lessons/L19-pytest-complete/exercises/exercise_03_mock_api.py \
   -q
 
 # 参考答案自检
-uv run pytest stage2-engineering/lessons/L17-pytest-complete/solutions/*.py -q
+uv run pytest stage2-engineering/lessons/L19-pytest-complete/solutions/*.py -q
 ```
 
 ## 🎯 课程内容
@@ -129,7 +129,7 @@ uv run pytest stage2-engineering/lessons/L17-pytest-complete/solutions/*.py -q
 - [ ] 能独立编写至少 3 类测试：正常路径、边界条件、异常路径。
 - [ ] 能使用 mock 隔离 HTTP 请求。
 - [ ] 能读懂 `.github/workflows/ci.yml` 的触发、矩阵、质量门和依赖安装步骤。
-- [ ] 课程测试通过：`uv run pytest stage2-engineering/lessons/L17-pytest-complete/tests -q`。
+- [ ] 课程测试通过：`uv run pytest stage2-engineering/lessons/L19-pytest-complete/tests -q`。
 - [ ] 示例、练习、答案自检通过。
 
 ## 🔗 下一步

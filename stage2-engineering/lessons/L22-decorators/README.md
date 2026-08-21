@@ -40,7 +40,7 @@
 ### 前置要求
 
 - 已完成 Stage 1 的函数、闭包、类和上下文管理基础。
-- 已完成 [L18: 工具链生态](../L18-toolchain/README.md) 与 [L19: 异步编程核心](../L19-async-programming/README.md)。
+- 已完成 [L18: 工具链生态](../L20-toolchain/README.md) 与 [L19: 异步编程核心](../L21-async-programming/README.md)。
 - 使用 Python 3.13+ 与项目统一的 `uv` 环境。
 
 ### 常用命令
@@ -49,23 +49,23 @@
 
 ```bash
 # 课程结构与关键模块验证
-uv run python stage2-engineering/lessons/L20-decorators/verify.py
+uv run python stage2-engineering/lessons/L22-decorators/verify.py
 
 # 运行单元测试
-uv run pytest stage2-engineering/lessons/L20-decorators/tests -q
+uv run pytest stage2-engineering/lessons/L22-decorators/tests -q
 
 # 运行代表性示例
-uv run python stage2-engineering/lessons/L20-decorators/examples/demo_decorators.py
-uv run python stage2-engineering/lessons/L20-decorators/examples/python313_decorators.py
-uv run python stage2-engineering/lessons/L20-decorators/examples/async_decorators_modern.py
+uv run python stage2-engineering/lessons/L22-decorators/examples/demo_decorators.py
+uv run python stage2-engineering/lessons/L22-decorators/examples/python313_decorators.py
+uv run python stage2-engineering/lessons/L22-decorators/examples/async_decorators_modern.py
 
 # 运行练习自检
-uv run python stage2-engineering/lessons/L20-decorators/exercises/exercise_01_basic_decorators.py
-uv run python stage2-engineering/lessons/L20-decorators/exercises/exercise_02_parameterized_decorators.py
-uv run python stage2-engineering/lessons/L20-decorators/exercises/exercise_03_class_decorators.py
-uv run python stage2-engineering/lessons/L20-decorators/exercises/exercise_04_basic_practice.py
-uv run python stage2-engineering/lessons/L20-decorators/exercises/exercise_05_advanced_decorators.py
-uv run python stage2-engineering/lessons/L20-decorators/exercises/exercise_06_practical_decorators.py
+uv run python stage2-engineering/lessons/L22-decorators/exercises/exercise_01_basic_decorators.py
+uv run python stage2-engineering/lessons/L22-decorators/exercises/exercise_02_parameterized_decorators.py
+uv run python stage2-engineering/lessons/L22-decorators/exercises/exercise_03_class_decorators.py
+uv run python stage2-engineering/lessons/L22-decorators/exercises/exercise_04_basic_practice.py
+uv run python stage2-engineering/lessons/L22-decorators/exercises/exercise_05_advanced_decorators.py
+uv run python stage2-engineering/lessons/L22-decorators/exercises/exercise_06_practical_decorators.py
 ```
 
 ---
@@ -73,7 +73,7 @@ uv run python stage2-engineering/lessons/L20-decorators/exercises/exercise_06_pr
 ## 📂 课程结构
 
 ```text
-L20-decorators/
+L22-decorators/
 ├── README.md
 ├── lesson.md
 ├── pyproject.toml

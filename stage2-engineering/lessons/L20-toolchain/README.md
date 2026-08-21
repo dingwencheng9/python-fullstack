@@ -46,7 +46,7 @@
 本课程目录已扁平化：示例、练习、答案和测试文件直接放在对应目录下，不再使用 `environment/`、`toolchain/` 二级目录。
 
 ```text
-L18-toolchain/
+L20-toolchain/
 ├── lesson.md
 ├── README.md
 ├── pyproject.toml
@@ -95,19 +95,19 @@ L18-toolchain/
 uv sync
 
 # 验证课程目录和依赖状态
-uv run python stage2-engineering/lessons/L18-toolchain/verify.py
+uv run python stage2-engineering/lessons/L20-toolchain/verify.py
 
 # 运行一个配置示例
-uv run python stage2-engineering/lessons/L18-toolchain/examples/example_02_pyproject_config.py
+uv run python stage2-engineering/lessons/L20-toolchain/examples/example_02_pyproject_config.py
 
 # 运行一个练习自检
-uv run python stage2-engineering/lessons/L18-toolchain/exercises/exercise_02_intermediate.py
+uv run python stage2-engineering/lessons/L20-toolchain/exercises/exercise_02_intermediate.py
 
-# 运行 L18 测试
-uv run pytest stage2-engineering/lessons/L18-toolchain/tests -q
+# 运行 L20 测试
+uv run pytest stage2-engineering/lessons/L20-toolchain/tests -q
 ```
 
-如果你已经 `cd stage2-engineering/lessons/L18-toolchain`，命令可简化为：
+如果你已经 `cd stage2-engineering/lessons/L20-toolchain`，命令可简化为：
 
 ```bash
 uv run python verify.py

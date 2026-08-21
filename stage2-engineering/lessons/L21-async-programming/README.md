@@ -43,24 +43,24 @@
 从仓库根目录运行：
 
 ```bash
-# 课程结构验证
-uv run python stage2-engineering/lessons/L19-async-programming/verify.py
+# 检查课程结构
+ls stage2-engineering/lessons/L21-async-programming/
 
 # 运行单元测试
-uv run pytest stage2-engineering/lessons/L19-async-programming/tests -q
+uv run pytest stage2-engineering/lessons/L21-async-programming/tests -q
 
 # 运行核心演示
-uv run python stage2-engineering/lessons/L19-async-programming/examples/demo_async.py
-uv run python stage2-engineering/lessons/L19-async-programming/examples/06_producer_consumer.py
-uv run python stage2-engineering/lessons/L19-async-programming/examples/08_modern_taskgroup.py
-uv run python stage2-engineering/lessons/L19-async-programming/examples/ex09_pep695_async_generics.py
+uv run python stage2-engineering/lessons/L21-async-programming/examples/demo_async.py
+uv run python stage2-engineering/lessons/L21-async-programming/examples/06_producer_consumer.py
+uv run python stage2-engineering/lessons/L21-async-programming/examples/08_modern_taskgroup.py
+uv run python stage2-engineering/lessons/L21-async-programming/examples/ex09_pep695_async_generics.py
 
 # 运行练习自检
-uv run python stage2-engineering/lessons/L19-async-programming/exercises/exercise_01_asyncio_basics.py
-uv run python stage2-engineering/lessons/L19-async-programming/exercises/exercise_02_async_await.py
-uv run python stage2-engineering/lessons/L19-async-programming/exercises/exercise_03_concurrency_control.py
-uv run python stage2-engineering/lessons/L19-async-programming/exercises/exercise_04_async_context.py
-uv run python stage2-engineering/lessons/L19-async-programming/exercises/exercise_05_async_patterns.py
+uv run python stage2-engineering/lessons/L21-async-programming/exercises/exercise_01_asyncio_basics.py
+uv run python stage2-engineering/lessons/L21-async-programming/exercises/exercise_02_async_await.py
+uv run python stage2-engineering/lessons/L21-async-programming/exercises/exercise_03_concurrency_control.py
+uv run python stage2-engineering/lessons/L21-async-programming/exercises/exercise_04_async_context.py
+uv run python stage2-engineering/lessons/L21-async-programming/exercises/exercise_05_async_patterns.py
 ```
 
 > `examples/07_async_http_real.py` 是真实 HTTP 示例，依赖网络与 `aiohttp`，按需单独运行。
@@ -70,7 +70,7 @@ uv run python stage2-engineering/lessons/L19-async-programming/exercises/exercis
 ## 完成标准
 
 - [ ] 阅读 `lesson.md`，理解 Queue/Event/Condition/TaskGroup/as_completed 用法。
-- [ ] 运行 `verify.py` 成功。
+- [ ] 确认课程目录结构完整（README.md, lesson.md, examples/, exercises/, solutions/, tests/）。
 - [ ] 完成 5 个练习脚本自检。
 - [ ] 通过 `tests/` 下全部测试。
 
